@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Prettus\Repository\Providers\RepositoryServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->register(RepositoryServiceProvider::class);
     }
 }

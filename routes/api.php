@@ -12,7 +12,19 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+if (\App::environment('local', 'staging')) {
+// cors not working from middleware
+    header('Access-Control-Allow-Origin:  *');
+    header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PATCH, PUT, DELETE');
+    header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, X-CSRF-Token, Origin, Authorization');
 
+}
 Route::get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:api');
+})->middleware('jwt.auth');
+Route::get('/users', 'Api\AuthController@getUsers')->middleware('jwt.auth');
+
+Route::resource('authenticate', 'Api\AuthController', ['only' => ['index']]);
+Route::post('authenticate', 'Api\AuthController@authenticate');
+Route::post('register', 'Api\AuthController@register');
+Route::post('getUser', 'Api\AuthController@getAuthenticatedUser');
