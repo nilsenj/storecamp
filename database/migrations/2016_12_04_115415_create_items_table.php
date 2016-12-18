@@ -18,6 +18,7 @@ class CreateItemsTable extends Migration
             $table->string('name');
             $table->integer('quantity')->default(0);
             $table->string('articul');
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +30,7 @@ class CreateItemsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('items');
+
     }
 }

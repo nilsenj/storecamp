@@ -10,24 +10,45 @@
         "barryvdh/laravel-ide-helper": "^2.2",
         "doctrine/dbal": "^2.5",
         "prettus/l5-repository": "^2.6",
-        "tymon/jwt-auth": "^0.5.9"
+        "tymon/jwt-auth": "^0.5.9",
+        "acacha/admin-lte-template-laravel": "^3.1",
+        "intervention/image": "dev-master",
+        "codezero/mailer": "dev-master",
+        "davejamesmiller/laravel-breadcrumbs": "dev-master",
+        "cviebrock/eloquent-sluggable": ">=3.0.0-alpha",
+        "laravel/socialite": "^3.0@dev",
+        "laravelcollective/html": "^5.3",
+        "league/fractal": "^0.14.0",
+        "prettus/laravel-validation": "1.1.*"
+
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~5.0",
         "symfony/css-selector": "3.1.*",
-        "symfony/dom-crawler": "3.1.*"
+        "symfony/dom-crawler": "3.1.*",
+        "laracasts/generators": "dev-master",
+        "doctrine/dbal": "^2.6@dev",
+        "laracasts/flash": "dev-master",
+        "Landish/Pagination": "dev-master"
     },
     "autoload": {
         "classmap": [
-            "database"
+            "database",
+            "App/Core/Models",
+            "App/Core/Presenters",
+            "App/Core/Repositories"
         ],
         "psr-4": {
             "App\\": "app/",
             "Core\\": "app/Core/",
-            "Components\\": "components/",
-            "App\\Core\\APIs\\": "app/Core/apis/",
+            "Core\\Components\\": "app/Core/components/",
+            "App\\Core\\APIs\\": "app/Core/APIs/",
+            "App\\Core\\APIs\\Youtube\\": "app/Core/APIs/Youtube/",
+            "App\\Core\\Repositories\\": "App/Core/Repositories/",
+            "App\\Core\\Access\\": "App/Core/Access/",
+            "App\\Core\\Access\\Commands\\": "App/Core/Access/commands/",
             "App\\Core\\Abstracts\\": "app/Core/abstracts/",
             "App\\Core\\Drivers\\": "app/Core/drivers/",
             "App\\Core\\Interfaces\\": "app/Core/interfaces/",

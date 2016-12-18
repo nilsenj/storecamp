@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Prettus\Repository\Providers\RepositoryServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        \Illuminate\Pagination\LengthAwarePaginator::defaultView('partials.paginator');
     }
 
     /**
@@ -24,6 +23,49 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register(RepositoryServiceProvider::class);
+        $this->app->register(\Prettus\Repository\Providers\RepositoryServiceProvider::class);
+        if ($this->app->environment() == 'local') {
+            $this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
+        }
+        $this->app->bind(
+            'App\Core\Repositories\CategoryRepository',
+            'App\Core\Repositories\CategoryRepositoryEloquent'
+        );
+        $this->app->bind(
+            'App\Core\Repositories\UserRepository',
+            'App\Core\Repositories\UserRepositoryEloquent'
+        );
+        $this->app->bind(
+            'App\Core\Repositories\RolesRepository',
+            'App\Core\Repositories\RolesRepositoryEloquent'
+        );
+        $this->app->bind(
+            'App\Core\Repositories\GoodsRepository',
+            'App\Core\Repositories\GoodsRepositoryEloquent'
+        );
+        $this->app->bind(
+            'App\Core\Repositories\PermissionRepository',
+            'App\Core\Repositories\PermissionRepositoryEloquent'
+        );
+//        $this->app->bind(
+//            'App\Core\Repositories\CategoryRepository',
+//            'App\Core\Repositories\EloquentCategoryRepository'
+//        );
+//        $this->app->bind(
+//            'STMAG\Repositories\Roles\RolesRepository',
+//            'STMAG\Repositories\Roles\EloquentRolesRepository'
+//        );
+//        $this->app->bind(
+//            'STMAG\Repositories\Permissions\PermissionRepository',
+//            'STMAG\Repositories\Permissions\EloquentPermissionRepository'
+//        );
+//        $this->app->bind(
+//            'STMAG\Repositories\Users\UserRepository',
+//            'STMAG\Repositories\Users\EloquentUserRepository'
+//        );
+//        $this->app->bind(
+//            'STMAG\Repositories\Goods\GoodsRepository',
+//            'STMAG\Repositories\Goods\EloquentGoodsRepository'
+//        );
     }
 }
