@@ -15,11 +15,11 @@ class UserTableSeeder extends Seeder
         \Illuminate\Database\Eloquent\Model::unguard();
 
         $user = User::UpdateOrCreate([
-            'name' => 'moes',
+            'name' => 'nilsenj',
 
-            'email' => 'mmoes@combird.nl',
+            'email' => 'nilsenj@yandex.ua',
 
-            'password' => 'moes-dev-01'
+            'password' => 'nilsenj1992'
         ]);
 
         $user->attachRole(1);

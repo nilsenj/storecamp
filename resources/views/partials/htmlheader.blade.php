@@ -1,10 +1,11 @@
 <head>
     <meta charset="UTF-8">
-    <title> Магазин специальной одежды - @yield('htmlheader_title', env("APP_NAME") ) </title>
+    <title> Online Store Platform- @yield('htmlheader_title', env("APP_NAME") ) </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href="{{ asset('/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/css/main/app.css') }}" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons -->

@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.coffee"],"names":[],"mappings":"AAAA;EAAA,OAAO,CAAC,GAAR,CAAY,gBAAZ;AAAA","file":"app.js","sourcesContent":["console.log('app.js is here')"]}

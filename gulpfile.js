@@ -13,17 +13,25 @@
 //  |
 //  */
 //
-// elixir((mix) => {
-//     mix.sass('app.scss')
-//        .webpack('app.js');
-//     mix.browserSync({
-//         proxy: 'storecamp.io'
-//     });
-// });
 var elixir = require('laravel-elixir'),
     gulp = require('gulp'),
     php = require('gulp-connect-php');
+require('laravel-elixir-js-uglify');
 
+elixir((mix) => {
+    mix.less('app.less');
+    mix.less('admin-lte/AdminLTE.less');
+    mix.less('bootstrap/bootstrap.less');
+    mix.coffee('../coffee/adminLte.coffee', 'public/js/admin.js');
+    mix.uglify('admin.js', 'public/js', 'resources/assets/js/admin.js');
+    mix.coffee('../coffee/main.coffee', 'public/js/app.js');
+    mix.sass('../sass/app.scss', 'public/css/main/app.css');
+    mix.browserSync({
+        proxy: 'storecamp.io',
+        port: 3344
+    });
+
+});
 // create a task to serve the app
 gulp.task('serve', function() {
 
@@ -34,7 +42,13 @@ gulp.task('serve', function() {
     });
 
 });
-
+// create a task to serve the app
+gulp.task('test', function() {
+    elixir((mix) => {
+        mix.phpUnit();
+        mix.phpSpec();
+    });
+});
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -46,11 +60,7 @@ gulp.task('serve', function() {
  |
  */
 
-elixir(function(mix) {
-    mix.less('app.less');
-    mix.less('admin-lte/AdminLTE.less');
-    mix.less('bootstrap/bootstrap.less');
-});
+
 //elixir(function(mix) {
 //    mix.copy('fonts/', 'public/fonts/');
 //});
