@@ -2,25 +2,22 @@
 <h1>
     @section('breadcrumb')
         {{--{!! Breadcrumbs::render('admin') !!}--}}
-
-        {!! Breadcrumbs::render('categories', 'Категории') !!}
+        {!! Breadcrumbs::render('categories', 'Categories') !!}
     @endsection
 @section('contentheader_title')
-
-        Все категории ({!! \App\Core\Entities\Category::all()->count() !!})
+        All Categories({!! \App\Core\Entities\Category::all()->count() !!})
         &middot;
     @endsection
 @section('contentheader_description')
-        <b>{!! link_to_route('admin::categories::create', 'Добавить новую') !!}</b>
+        <b>{!! link_to_route('admin::categories::create', 'Add New Category') !!}</b>
 @endsection
 </h1>
-
 @section('main-content')
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Список категорий товара</h3>
+                    <h3 class="box-title">List of categories</h3>
                     <div class="box-tools">
                         <form action="#" method="get" class="input-group" style="width: 150px;">
                             <input type="text" name="q" class="form-control input-sm pull-right" placeholder="Search">
@@ -35,11 +32,11 @@
                     <table class="table table-hover">
                         <thead>
                         <th>№</th>
-                        <th>Название</th>
-                        <th>Slug</th>
-                        <th>Описание</th>
-                        <th>Когда Создана</th>
-                        <th class="text-center">Действия</th>
+                        <th>Name</th>
+                        <th>Display Name</th>
+                        <th>Description</th>
+                        <th>Created</th>
+                        <th class="text-center">Actions</th>
                         </thead>
                         <tbody>
                         @foreach ($categories as $category)
@@ -52,7 +49,6 @@
             </div><!-- /.box -->
         </div>
     </div>
-
     <div class="text-center">
         {!! $categories->links() !!}
         {{--{!! pagination_links($categories) !!}--}}

@@ -21,7 +21,7 @@ class PermissionsController extends Controller
     public function __construct(\App\Core\Repositories\PermissionRepository $repository){
 
         $this->repository = $repository;
-        $this->middleware('isAdmin');
+        $this->middleware('role:Admin');
 
     }
     /**
@@ -52,7 +52,7 @@ class PermissionsController extends Controller
      */
     public function create()
     {
-        $permissions = Permission::all()->lists('slug', 'id');
+        $permissions = Permission::all()->pluck('slug', 'id');
         return view('admin.permissions.create')->with('permissions', $permissions);
     }
 
@@ -84,10 +84,10 @@ class PermissionsController extends Controller
      * @param $slug
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
-    public function edit($slug)
+    public function edit($id)
     {
         try {
-            $permission = Permission::findBySlug($slug);
+            $permission = Permission::find($id);
 
             return view('admin.permissions.edit', compact('permission'));
         } catch (ModelNotFoundException $e) {

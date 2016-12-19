@@ -3,12 +3,12 @@
 <h1>
 
     @section('contentheader_title')
-        Изменить Роль
+        Edit Role
         &middot;
     @endsection
     @section('contentheader_description')
 
-        <b>{!! link_to_route('admin::roles::index', 'Назад') !!}</b>
+        <b>{!! link_to_route('admin::roles::index', 'Back') !!}</b>
     @endsection
 </h1>
 

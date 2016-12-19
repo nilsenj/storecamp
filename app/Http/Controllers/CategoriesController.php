@@ -12,8 +12,6 @@ use App\Core\Validators\Category\CategoriesFormRequest;
 use App\Core\Validators\Category\CategoriesUpdateFormRequest;
 use Illuminate\Support\Facades\Redirect;
 
-
-
 class CategoriesController extends Controller
 {
     protected $repository;
@@ -22,19 +20,21 @@ class CategoriesController extends Controller
         $this->repository = $repository;
         $this->middleware('isAdmin');
     }
+
     /**
      * Redirect not found.
-     *
-     * @return Response
+     * @return Redirect
      */
     protected function redirectNotFound()
     {
         return redirect('admin.categories.index');
     }
+
     /**
      * Display a listing of categories
      *
-     * @return Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -44,10 +44,11 @@ class CategoriesController extends Controller
 
         return view('admin.categories.index', compact('categories', 'no'));
     }
+
     /**
      * Show the form for creating a new category
      *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -58,23 +59,23 @@ class CategoriesController extends Controller
      * @param CategoriesFormRequest $request
      * @return Redirect
      */
-    public function store(CategoriesFormRequest $request)
+    public function store(Request $request)
     {
         $data = $request->all();
 
-        $category = Category::create($data);
+        $category = $this->repository->create($data);
 
         return redirect('admin/categories');
     }
 
     /**
      * @param $slug
-     * @return Response|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|Redirect|\Illuminate\View\View
      */
     public function show($slug)
     {
         try {
-            $category = Category::findBySlug($slug);
+            $category = $this->repository->findByField('slug', $slug);
             $categories = Category::all();
             return view('admin.categories.show', compact('category', 'categories'));
         } catch (ModelNotFoundException $e) {
@@ -84,13 +85,13 @@ class CategoriesController extends Controller
 
     /**
      * @param $slug
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|Redirect|\Illuminate\View\View
      */
     public function edit($slug)
     {
         try {
-            $category = Category::findBySlug($slug);
-            $categories = Category::all();
+            $category = $this->repository->findByField('slug', $slug)->first();
+            $categories = $this->repository->all();
 
             return view('admin.categories.edit', compact('category', 'categories'));
         } catch (ModelNotFoundException $e) {
@@ -107,18 +108,19 @@ class CategoriesController extends Controller
     {
         try {
             $data = $request->all();
-            $category = Category::findBySlug($slug);
+            $category = $this->repository->findByField('slug', $slug);
             $category->update($data);
             return redirect('admin/categories');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }
     }
+
     /**
      * Remove the specified category from storage.
      *
-     * @param  int $id
-     * @return Response
+     * @param $id
+     * @return Response|Redirect
      */
     public function destroy($id)
     {

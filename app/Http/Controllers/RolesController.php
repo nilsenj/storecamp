@@ -52,7 +52,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-        $permissions = Permission::all()->pluck('slug', 'id');
+        $permissions = Permission::all()->pluck('name', 'id');
         return view('admin.roles.create')->with('permissions', $permissions);
     }
 

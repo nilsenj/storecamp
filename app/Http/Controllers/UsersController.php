@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Bican\Roles\Models\Role;
+use App\Core\Entities\Role;
+use App\Core\Repositories\RolesRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -12,9 +13,8 @@ use App\Core\Repositories\UserRepository;
 use App\Core\Validation\User\UsersUpdateFormRequest;
 use App\Core\Validation\User\UsersFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use DB;
-//use App\Http\Controllers\Auth;
 use Illuminate\Support\Facades\Auth;
+
 class UsersController extends Controller
 {
     /**
@@ -23,19 +23,29 @@ class UsersController extends Controller
     protected $users;
 
     /**
-     * @param UserRepository $repository
+     * @var UserRepository
      */
-    public function __construct(UserRepository $repository)
+    protected $repository;
+
+    protected $rolesRepository;
+
+    /**
+     * UsersController constructor.
+     * @param UserRepository $repository
+     * @param RolesRepository $rolesRepository
+     */
+    public function __construct(UserRepository $repository, RolesRepository $rolesRepository)
     {
         $this->repository = $repository;
-        $this->middleware('role:admin');
+        $this->rolesRepository = $rolesRepository;
+        $this->middleware('role:Admin');
     }
     /**
      * Redirect not found.
      *
      * @return Response
      */
-    protected function redirectNotFound()
+    private function redirectNotFound()
     {
         return redirect('admin.users.index');
     }
@@ -58,7 +68,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $roles = Role::all()->lists('slug', 'id');
+        $roles = $this->rolesRepository->all()->pluck('name', 'id');
         return view('admin.users.create', compact('roles'));
     }
 
@@ -75,13 +85,13 @@ class UsersController extends Controller
     }
 
     /**
-     * @param $slug
+     * @param $id
      * @return Response|\Illuminate\View\View
      */
-    public function show($slug)
+    public function show($id)
     {
         try {
-            $user = User::findBySlug($slug);
+            $user = $this->repository->find($id);
             $role = $this->repository->getRole($user);
             return view('admin.users.show', compact('user', 'role'));
         } catch (ModelNotFoundException $e) {
@@ -90,15 +100,15 @@ class UsersController extends Controller
     }
 
     /**
-     * @param $slug
+     * @param $id
      * @return Response|\Illuminate\View\View
      */
-    public function edit($slug)
+    public function edit($id)
     {
         try {
-            $user = User::findBySlug($slug);
+            $user = $this->repository->find($id);
 
-            $roles = Role::all()->lists('slug', 'id');
+            $roles = $this->rolesRepository->all()->pluck('name', 'id');
 
             $role = $this->repository->getRole($user);
 
@@ -110,15 +120,15 @@ class UsersController extends Controller
 
     /**
      * @param UsersUpdateFormRequest $request
-     * @param $slug
+     * @param $id
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(UsersUpdateFormRequest $request, $slug)
+    public function update(UsersUpdateFormRequest $request, $id)
     {
         try {
             $data = ! $request->has('password') ? $request->except('password') : $request->all();
 
-            $user = User::findBySlug($slug);
+            $user = $this->repository->find($id);
 
             $user->update($data);
 
@@ -130,13 +140,13 @@ class UsersController extends Controller
     }
 
     /**
-     * @param $slug
+     * @param $id
      * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroy($slug)
+    public function destroy($id)
     {
         try {
-            $this->repository->delete($slug);
+            $this->repository->delete($id);
             return redirect('admin/users');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();

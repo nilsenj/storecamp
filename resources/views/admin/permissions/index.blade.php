@@ -3,15 +3,15 @@
     @section('breadcrumb')
         {{--{!! Breadcrumbs::render('admin') !!}--}}
 
-        {!! Breadcrumbs::render('permissions', 'Привилегии') !!}
+        {!! Breadcrumbs::render('permissions', 'Privileges') !!}
     @endsection
     @section('contentheader_title')
 
-        Количество привилегий ({!! \App\Permission::all()->count() !!})
+        All Privileges ({!! \App\Core\Entities\Permission::all()->count() !!})
         &middot;
     @endsection
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::permissions::create', 'Добавить новую привилегию') !!}</b>
+        <b>{!! link_to_route('admin::permissions::create', 'Add New Privilege') !!}</b>
     @endsection
 </h1>
 
@@ -20,7 +20,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Список привилегий товара</h3>
+                    <h3 class="box-title">List Permissions </h3>
                     <div class="box-tools">
                         <form action="#" method="get" class="input-group" style="width: 150px;">
                             <input type="text" name="q" class="form-control input-sm pull-right" placeholder="Search">
@@ -35,11 +35,11 @@
                     <table class="table table-hover">
         <thead>
         <th>№</th>
-        <th>Название</th>
+        <th>Name</th>
         <th>Alias</th>
-        <th>Описание</th>
-        <th>Создана</th>
-        <th class="text-center">Действия</th>
+        <th>Description</th>
+        <th>Created</th>
+        <th class="text-center">Actions</th>
         </thead>
         <tbody>
         @foreach ($permissions as $permission)
@@ -50,7 +50,7 @@
                 <td>{!! $permission->description !!}</td>
                 <td>{!! $permission->created_at !!}</td>
                 <td class="text-center">
-                    <a href="{!! route('admin::permissions::edit', $permission->slug) !!}">Edit</a>
+                    <a href="{!! route('admin::permissions::edit', $permission->id) !!}">Edit</a>
                     &middot;
                     {{--@include('admin::partials.modal', ['data' => $role, 'name' => 'roles'])--}}
                 </td>
@@ -64,11 +64,7 @@
         </div>
     </div>
     <div class="text-center">
-        {!! (new App\Pagination($permissions))->render() !!}
+        {!! $permissions->links() !!}
         {{--{!! pagination_links($categories) !!}--}}
     </div>
-
-
 @endsection
-
-@stop

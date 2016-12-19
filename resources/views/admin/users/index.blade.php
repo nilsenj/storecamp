@@ -7,11 +7,11 @@
     @endsection
     @section('contentheader_title')
 
-        Количество пользователей ({!! \App\User::all()->count() !!})
+        Amount of Users ({!! \App\Core\Entities\User::all()->count() !!})
         &middot;
     @endsection
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::users::create', 'Добавить нового пользователя') !!}</b>
+        <b>{!! link_to_route('admin::users::create', 'Add New User') !!}</b>
     @endsection
 </h1>
 
@@ -24,7 +24,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Список пользователей магазина</h3>
+                    <h3 class="box-title">List of Users</h3>
                     <div class="box-tools">
                         <form action="#" method="get" class="input-group" style="width: 150px;">
                             <input type="text" name="q" class="form-control input-sm pull-right" placeholder="Search">
@@ -39,11 +39,11 @@
                     <table class="table table-hover">
         <thead>
         <th>№</th>
-        <th>Имя</th>
+        <th>Name</th>
         <th>Email</th>
-        <th>Создан</th>
-        <th>Роль</th>
-        <th class="text-center">Действия</th>
+        <th>Created</th>
+        <th>Role</th>
+        <th class="text-center">Actions</th>
         </thead>
         <tbody>
         @foreach ($users as $user)
@@ -57,7 +57,7 @@
                         {{ $role->name }}
                     @endforeach</td>
                 <td class="text-center">
-                    <a href="{!! route('admin::users::edit', $user->slug) !!}">Изменить</a>
+                    <a href="{!! route('admin::users::edit', $user->id) !!}">Edit</a>
                     &middot;
                     {{--@include('admin::partials.modal', ['data' => $user, 'name' => 'users'])--}}
                 </td>
@@ -71,7 +71,6 @@
     </div>
     </div>
     <div class="text-center">
-        {!! (new App\Pagination($users))->render() !!}
+        {!! $users->links() !!}
     </div>
     @endsection
-@stop

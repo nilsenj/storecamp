@@ -2,13 +2,13 @@
 
 <h1>
 @section('contentheader_title')
-        Добавить новую категорию
+        Create new Category
         &middot;
     @endsection
 
     @section('contentheader_description')
 
-        <b>{!! link_to_route('admin::categories::index', 'Назад') !!}</b>
+        <b>{!! link_to_route('admin::categories::index', 'Back') !!}</b>
 
     @endsection
 </h1>

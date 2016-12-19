@@ -15,8 +15,8 @@ use Illuminate\Support\Str;
 use Laracasts\Flash\Flash;
 use App\Core\Uploader\ImageUploader;
 use App\Core\Repositories\GoodsRepository;
-use App\Core\Validation\Good\GoodsFormRequest as Create;
-use App\Core\Validation\Good\GoodsUpdateFormRequest as Update;
+use App\Core\Validators\Good\GoodsFormRequest as Create;
+use App\Core\Validators\Good\GoodsUpdateFormRequest as Update;
 
 class GoodsController extends Controller
 {
@@ -68,7 +68,7 @@ class GoodsController extends Controller
      */
     public function create()
     {
-        $categories = Category::all()->lists("slug", 'id');
+        $categories = Category::all()->pluck("slug", 'id');
         return view('admin.goods.create', compact('categories'));
     }
 

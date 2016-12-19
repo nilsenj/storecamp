@@ -29,18 +29,18 @@
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
-            <li class="header">Меню Магазина</li>
+            <li class="header">Store's Menu</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="{{ route('admin::dashboard') }}"><i class='fa fa-th'></i> <span>Виджеты</span></a></li>
-            <li><a href="{{ route('admin::categories::index') }}"><i class='fa fa-archive'></i> <span>Категории</span></a></li>
-            <li><a href="{{ route('admin::roles::index') }}"><i class='fa  fa-street-view'></i> <span>Роли</span></a></li>
-            <li><a href="{{ route('admin::permissions::index') }}"><i class='fa fa-user-md'></i> <span>Привилегии</span></a></li>
-            <li><a href="{{ route('admin::users::index') }}"><i class='fa fa-users'></i> <span>Пользователи</span></a></li>
+            <li><a href="{{ route('admin::dashboard') }}"><i class='fa fa-th'></i> <span>Widgets</span></a></li>
+            <li><a href="{{ route('admin::categories::index') }}"><i class='fa fa-archive'></i> <span>Categories</span></a></li>
+            <li><a href="{{ route('admin::roles::index') }}"><i class='fa  fa-street-view'></i> <span>Roles</span></a></li>
+            <li><a href="{{ route('admin::permissions::index') }}"><i class='fa fa-user-md'></i> <span>Privileges</span></a></li>
+            <li><a href="{{ route('admin::users::index') }}"><i class='fa fa-users'></i> <span>Users</span></a></li>
             <li class="treeview">
-                <a href="{{ route('admin::goods::index') }}"><i class='fa fa-link'></i> <span>Товар</span> <i class="fa fa-good pull-right"></i></a>
+                <a href="{{ route('admin::goods::index') }}"><i class='fa fa-link'></i> <span>Goods</span> <i class="fa fa-good pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('admin::goods::index') }}">Список</a></li>
-                    <li><a href="{{ route('admin::goods::create') }}">Создать</a></li>
+                    <li><a href="{{ route('admin::goods::index') }}">List</a></li>
+                    <li><a href="{{ route('admin::goods::create') }}">Create</a></li>
                 <!--    <li><a href="#">Link in level 2</a></li> -->
                 </ul>
             </li>

@@ -27,7 +27,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="fixed sidebar-mini skin-black">
+<body class="fixed sidebar-mini skin-blue">
 <div class="wrapper">
 
     @include('partials.mainheader')

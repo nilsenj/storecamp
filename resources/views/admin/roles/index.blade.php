@@ -3,15 +3,15 @@
     @section('breadcrumb')
         {{--{!! Breadcrumbs::render('admin') !!}--}}
 
-        {!! \Breadcrumbs::render('roles', 'Роли') !!}
+        {!! \Breadcrumbs::render('roles', 'Roles') !!}
     @endsection
     @section('contentheader_title')
 
-        Количество ролей ({!! \App\Core\Entities\Role::all()->count() !!})
+        All Roles Count ({!! \App\Core\Entities\Role::all()->count() !!})
         &middot;
     @endsection
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::roles::create', 'Добавить новую роль') !!}</b>
+        <b>{!! link_to_route('admin::roles::create', 'Add New Role') !!}</b>
     @endsection
 </h1>
 
@@ -20,7 +20,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Список ролей товара</h3>
+                    <h3 class="box-title">List of Roles</h3>
                     <div class="box-tools">
                         <form action="#" method="get" class="input-group" style="width: 150px;">
                             <input type="text" name="q" class="form-control input-sm pull-right" placeholder="Search">
@@ -35,12 +35,12 @@
                     <table class="table table-hover">
         <thead>
         <th>№</th>
-        <th>Название</th>
+        <th>Name</th>
         <th>Alias</th>
-        <th>Описание</th>
-        <th>Привилегии</th>
-        <th>Создана</th>
-        <th class="text-center">Действия</th>
+        <th>Description</th>
+        <th>Privilege</th>
+        <th>Created</th>
+        <th class="text-center">Actions</th>
         </thead>
         <tbody>
         @foreach ($roles as $role)

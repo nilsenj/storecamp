@@ -11,7 +11,7 @@
 </div>
 
     <div class="form-group">
-        {!! Form::label('fileupload', 'Нажмите загрузить фото',['class' => 'filelabel']) !!}
+        {!! Form::label('fileupload', 'Press to upload photo',['class' => 'filelabel']) !!}
         @if(isset($pictures))
             {!! Form::file('image[]', ['id' => 'fileupload' ,'value'=> $pictures,'class' => 'file-input', 'multiple'=>'true']) !!}
         @else
@@ -21,21 +21,15 @@
     </div>
     <div class="form-group p">
     @if(isset($good))
-
             @if($good->picture())
                 @foreach ($pictures as $picture)
                     <div class="col-sm-6 col-md-4">
                         <div class="thumbnail">
-
                             <img class="img-responsive" src="{!! asset('images/goods/' .  $picture->path) !!}">
-
-
                         </div>
                     </div>
                 @endforeach
-
             @endif
-
     @endif
     </div>
     <div class="clearfix"></div>
@@ -62,7 +56,7 @@
     </div>
 
 <div class="form-group">
-    {!! Form::submit(isset($good) ? 'Изменить' : 'Сохранить', ['class' => 'btn btn-primary']) !!}
+    {!! Form::submit(isset($good) ? 'Edit' : 'Save', ['class' => 'btn btn-primary']) !!}
 </div>
 {!! Form::close() !!}
     <style>

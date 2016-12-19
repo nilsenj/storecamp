@@ -3,35 +3,35 @@
 // Home
 Breadcrumbs::register('/', function($breadcrumbs)
 {
-    $breadcrumbs->push('Главная', route('home::'));
+    $breadcrumbs->push('Main', route('home::'));
 });
 
 // / > About
 Breadcrumbs::register('about', function($breadcrumbs)
 {
     $breadcrumbs->parent('/');
-    $breadcrumbs->push('О нас', route('about'));
+    $breadcrumbs->push('About', route('about'));
 });
 
 // / > Admin
 Breadcrumbs::register('admin', function($breadcrumbs)
 {
     $breadcrumbs->parent('/');
-    $breadcrumbs->push('Админ-Панель', route('admin::dashboard'));
+    $breadcrumbs->push('Admin Panel', route('admin::dashboard'));
 });
 
 // / > [Category]
 Breadcrumbs::register('categories', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin');
-    $breadcrumbs->push('Категории', route('admin::categories::index'));
+    $breadcrumbs->push('Categories', route('admin::categories::index'));
 });
 
 // / > [roles]
 Breadcrumbs::register('roles', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin');
-    $breadcrumbs->push('Роли', route('admin::roles::index'));
+    $breadcrumbs->push('Roles', route('admin::roles::index'));
 });
 
 // / > [permissions]
@@ -45,12 +45,12 @@ Breadcrumbs::register('permissions', function($breadcrumbs)
 Breadcrumbs::register('users', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin');
-    $breadcrumbs->push('Пользователи', route('admin::users::index'));
+    $breadcrumbs->push('Users', route('admin::users::index'));
 });
 Breadcrumbs::register('goods', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin');
-    $breadcrumbs->push('Товар', route('admin::goods::index'));
+    $breadcrumbs->push('Goods', route('admin::goods::index'));
 });
 
 // / > [Category] > [Page]

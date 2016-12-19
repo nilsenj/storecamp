@@ -26,6 +26,7 @@ elixir((mix) => {
     mix.uglify('admin.js', 'public/js', 'resources/assets/js/admin.js');
     mix.coffee('../coffee/main.coffee', 'public/js/app.js');
     mix.sass('../sass/app.scss', 'public/css/main/app.css');
+    mix.copy('bower_components/summernote/dist/', 'public/plugins/summernote/');
     mix.browserSync({
         proxy: 'storecamp.io',
         port: 3344

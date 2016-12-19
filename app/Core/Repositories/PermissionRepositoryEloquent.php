@@ -26,7 +26,7 @@ class PermissionRepositoryEloquent extends BaseRepository implements PermissionR
 
     public function perPage()
     {
-        return 10;
+        return 20;
     }
     public function getModel()
     {

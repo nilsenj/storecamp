@@ -6,7 +6,7 @@
  * Time: 8:17 PM
  */
 
-namespace App\Core\Validation\Good;
+namespace App\Core\Validators\Good;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -40,9 +40,7 @@ class GoodsFormRequest extends FormRequest{
      */
     public function rules()
     {
-
         return $this->rules;
-
     }
 
 }

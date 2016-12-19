@@ -2,7 +2,7 @@
 
 <h1>
     @section('contentheader_title')
-        Изменить товар
+        Edit good
         &middot;
     @endsection
 

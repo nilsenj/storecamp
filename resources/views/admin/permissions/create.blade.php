@@ -2,13 +2,13 @@
 
 <h1>
     @section('contentheader_title')
-        Добавить новую привилегию
+        Add new Privilege
         &middot;
     @endsection
 
     @section('contentheader_description')
 
-        <b>{!! link_to_route('admin::permissions::index', 'Назад') !!}</b>
+        <b>{!! link_to_route('admin::permissions::index', 'Back') !!}</b>
 
     @endsection
 </h1>
@@ -27,4 +27,3 @@
 {!! Form::close() !!}
     </div>
 @endsection
-@stop
