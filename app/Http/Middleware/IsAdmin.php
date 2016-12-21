@@ -17,7 +17,7 @@ class IsAdmin
     {
         if (\Auth::user()) {
 
-            if ($request->user()->isAdmin() || $request->user()->isManager()) {
+            if ($request->user()->isAdmin()) {
 
                 return $next($request);
 

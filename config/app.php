@@ -190,6 +190,15 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         App\Core\Access\AccessServiceProvider::class,
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
+        Laracasts\Generators\GeneratorsServiceProvider::class,
+        Webpatser\Countries\CountriesServiceProvider::class,
+        Camroncade\Timezone\TimezoneServiceProvider::class,
+        Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
+        A6digital\Image\DefaultProfileImageServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
+        \Cviebrock\ImageValidator\ImageValidatorServiceProvider::class,
 
     ],
 

@@ -188,4 +188,8 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
 
         return $query->where('user_id', '=', \Auth::id());
     }
+    public function getRole(){
+
+        return $this->roles()->first();
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.28 on 2016-12-18.
+ * Generated for Laravel 5.3.28 on 2016-12-21.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -7345,6 +7345,61 @@ namespace {
     }
 
 
+    class Redis extends \Illuminate\Support\Facades\Redis{
+        
+        /**
+         * Get a specific Redis connection instance.
+         *
+         * @param string $name
+         * @return \Predis\ClientInterface|null 
+         * @static 
+         */
+        public static function connection($name = 'default'){
+            return \Illuminate\Redis\Database::connection($name);
+        }
+        
+        /**
+         * Run a command against the Redis database.
+         *
+         * @param string $method
+         * @param array $parameters
+         * @return mixed 
+         * @static 
+         */
+        public static function command($method, $parameters = array()){
+            return \Illuminate\Redis\Database::command($method, $parameters);
+        }
+        
+        /**
+         * Subscribe to a set of given channels for messages.
+         *
+         * @param array|string $channels
+         * @param \Closure $callback
+         * @param string $connection
+         * @param string $method
+         * @return void 
+         * @static 
+         */
+        public static function subscribe($channels, $callback, $connection = null, $method = 'subscribe'){
+            \Illuminate\Redis\Database::subscribe($channels, $callback, $connection, $method);
+        }
+        
+        /**
+         * Subscribe to a set of given channels with wildcards.
+         *
+         * @param array|string $channels
+         * @param \Closure $callback
+         * @param string $connection
+         * @return void 
+         * @static 
+         */
+        public static function psubscribe($channels, $callback, $connection = null){
+            \Illuminate\Redis\Database::psubscribe($channels, $callback, $connection);
+        }
+        
+    }
+
+
     class Request extends \Illuminate\Support\Facades\Request{
         
         /**
@@ -13818,6 +13873,56 @@ namespace {
          */
         public static function setView($view){
             return \DaveJamesMiller\Breadcrumbs\Manager::setView($view);
+        }
+        
+    }
+
+
+    class DefaultProfileImage extends \A6digital\Image\Facades\DefaultProfileImage{
+        
+        /**
+         * 
+         *
+         * @param string $name
+         * @param int $size
+         * @return \A6digital\Image\ImageManagerStatic 
+         * @throws Exception
+         * @static 
+         */
+        public static function create($name = '', $size = 512, $background_color = '#666', $text_color = '#FFF', $font_file = '../../../font/OpenSans-Semibold.ttf'){
+            return \A6digital\Image\DefaultProfileImage::create($name, $size, $background_color, $text_color, $font_file);
+        }
+        
+    }
+
+
+    class Timezone extends \Camroncade\Timezone\Facades\Timezone{
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function selectForm($selected = null, $placeholder = null, $selectAttributes = array(), $optionAttributes = array()){
+            return \Camroncade\Timezone\Timezone::selectForm($selected, $placeholder, $selectAttributes, $optionAttributes);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function convertFromUTC($timestamp, $timezone, $format = 'Y-m-d H:i:s'){
+            return \Camroncade\Timezone\Timezone::convertFromUTC($timestamp, $timezone, $format);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function convertToUTC($timestamp, $timezone, $format = 'Y-m-d H:i:s'){
+            return \Camroncade\Timezone\Timezone::convertToUTC($timestamp, $timezone, $format);
         }
         
     }

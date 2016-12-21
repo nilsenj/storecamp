@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\User;
+use App\Core\Entities\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use JWTAuth;
@@ -88,6 +88,7 @@ class AuthController extends Controller
 
     public function getUsers() {
         $users = User::all();
+
         return response()->json(compact('users'));
 
     }

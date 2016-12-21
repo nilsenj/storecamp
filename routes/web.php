@@ -213,3 +213,39 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
 
 
 });
+Route::get('/admin/log-viewer', [
+    'as'    => 'log-viewer::dashboard',
+    'uses'  => 'LogViewerController@index',
+]);
+
+Route::group([
+    'prefix' => '/admin/log-viewer/logs',
+], function() {
+    $this->get('/', [
+        'as'    => 'log-viewer::logs.list',
+        'uses'  => 'LogViewerController@listLogs',
+    ]);
+
+    $this->delete('delete', [
+        'as'    => 'log-viewer::logs.delete',
+        'uses'  => 'LogViewerController@delete',
+    ]);
+
+});
+Route::group([
+    'prefix'    => '/admin/log-viewer/{date}',
+], function() {
+    $this->get('/', [
+        'as' => 'log-viewer::logs.show',
+        'uses' => 'LogViewerController@show',
+    ]);
+
+    $this->get('download', [
+        'as' => 'log-viewer::logs.download',
+        'uses' => 'LogViewerController@download',
+    ]);
+    $this->get('{level}', [
+        'as'    => 'log-viewer::logs.filter',
+        'uses'  => 'LogViewerController@showByLevel',
+    ]);
+});

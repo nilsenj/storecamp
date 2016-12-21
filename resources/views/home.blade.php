@@ -1,10 +1,7 @@
 @extends('app')
-
 @section('htmlheader_title')
     Home
 @endsection
-
-
 @section('main-content')
 <div class="container">
 	<div class="row">

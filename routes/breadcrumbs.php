@@ -38,7 +38,7 @@ Breadcrumbs::register('roles', function($breadcrumbs)
 Breadcrumbs::register('permissions', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin');
-    $breadcrumbs->push('Привилегии', route('admin::permissions::index'));
+    $breadcrumbs->push('Privileges', route('admin::permissions::index'));
 });
 
 // / > [permissions]

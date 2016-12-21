@@ -18,7 +18,7 @@ class CategoriesController extends Controller
     public function __construct(CategoryRepository $repository)
     {
         $this->repository = $repository;
-        $this->middleware('isAdmin');
+        $this->middleware('role:Admin');
     }
 
     /**

@@ -27,11 +27,11 @@ elixir((mix) => {
     mix.coffee('../coffee/main.coffee', 'public/js/app.js');
     mix.sass('../sass/app.scss', 'public/css/main/app.css');
     mix.copy('bower_components/summernote/dist/', 'public/plugins/summernote/');
+    mix.copy('bower_components/dropzone/dist/', 'public/plugins/dropzone/');
     mix.browserSync({
         proxy: 'storecamp.io',
         port: 3344
     });
-
 });
 // create a task to serve the app
 gulp.task('serve', function() {

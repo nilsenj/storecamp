@@ -44,6 +44,16 @@
                 <!--    <li><a href="#">Link in level 2</a></li> -->
                 </ul>
             </li>
+            <li class="nav-header" role="presentation">Logs management</li>
+            <li class="nav-item" role="presentation"><a role="menuitem" tabindex="-1"
+                                                        href="{{ route('log-viewer::dashboard') }}">
+                    <i class='text-danger fa fa-bug'></i>
+                    <span class="nav-text">LogViewer</span> </a></li>
+            {{--<li class="nav-item" role="presentation">--}}
+                {{--<a role="menuitem" tabindex="-1" class="" href="{!! route('web::admin::dblogs::allUsersAdmin') !!}">--}}
+                    {{--<i class='text-info fa fa-th'></i>--}}
+                    {{--<span class="nav-text">Users - DB logs</span></a>--}}
+            {{--</li>--}}
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

@@ -1,0 +1,21 @@
+{
+  "name": "storecamp",
+  "description": "store api and admin panel",
+  "main": "",
+  "authors": [
+    "Nikolenko Ivan(nilsenj) <ni_cole@i.ua>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/nilsenj/storecamp",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "dropzone": "^4.3.0",
+    "summernote": "^0.8.2"
+  }
+}

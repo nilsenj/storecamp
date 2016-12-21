@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Core\Access\Middleware\AccessPermission;
 use App\Core\Access\Middleware\AccessRole;
+use App\Http\Middleware\UserAdditionalInfo;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -59,6 +60,7 @@ class Kernel extends HttpKernel
         'isAdmin' => \App\Http\Middleware\IsAdmin::class,
         'role' => AccessRole::class,
         'permission' => AccessPermission::class,
+        'user.additional' => UserAdditionalInfo::class,
         'shouldBeUnique' => \App\Http\Middleware\ElementShouldBeUnique::class,
     ];
 }
