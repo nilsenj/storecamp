@@ -2,13 +2,13 @@
 
 <h1>
     @section('contentheader_title')
-        Edit good
+        Edit product
         &middot;
     @endsection
 
     @section('contentheader_description')
 
-        <b>{!! link_to_route('admin::goods::index', 'Назад') !!}</b>
+        <b>{!! link_to_route('admin::products::index', 'Назад') !!}</b>
 
     @endsection
 </h1>
@@ -16,7 +16,7 @@
 
     <div>
 
-        @include('admin.goods.form')
+        @include('admin.products.form')
 
     </div>
 @endsection

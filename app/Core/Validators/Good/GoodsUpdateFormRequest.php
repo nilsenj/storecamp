@@ -6,7 +6,7 @@
  * Time: 8:17 PM
  */
 
-namespace App\Core\Validators\Good;
+namespace App\Core\Validators\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -33,7 +33,7 @@ class GoodsUpdateFormRequest extends FormRequest{
     {
         return [
             'title' => 'required',
-            'slug' => 'required|unique:goods,slug,' . Request::segment(4),
+            'slug' => 'required|unique:products,slug,' . Request::segment(4),
             'body' => 'required',
             'price' => 'required',
         ];

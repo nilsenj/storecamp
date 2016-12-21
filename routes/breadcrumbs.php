@@ -47,10 +47,10 @@ Breadcrumbs::register('users', function($breadcrumbs)
     $breadcrumbs->parent('admin');
     $breadcrumbs->push('Users', route('admin::users::index'));
 });
-Breadcrumbs::register('goods', function($breadcrumbs)
+Breadcrumbs::register('products', function($breadcrumbs)
 {
     $breadcrumbs->parent('admin');
-    $breadcrumbs->push('Goods', route('admin::goods::index'));
+    $breadcrumbs->push('Goods', route('admin::products::index'));
 });
 
 // / > [Category] > [Page]

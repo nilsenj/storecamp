@@ -116,7 +116,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
         ]);
 
     });
-    Route::group(['prefix' => 'goods', 'as' => 'goods::'], function(){
+    Route::group(['prefix' => 'products', 'as' => 'products::'], function(){
 
         Route::get('/', [
             'uses' => 'GoodsController@index',

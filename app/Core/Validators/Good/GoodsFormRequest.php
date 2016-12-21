@@ -6,7 +6,7 @@
  * Time: 8:17 PM
  */
 
-namespace App\Core\Validators\Good;
+namespace App\Core\Validators\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -14,7 +14,7 @@ class GoodsFormRequest extends FormRequest{
 
     protected $rules = [
         'title' => 'required|min:2',
-        'slug' => 'required|unique:goods,slug',
+        'slug' => 'required|unique:products,slug',
         'body' => 'required|min:20',
         'price' => 'required|numeric',
         'image' => 'required',

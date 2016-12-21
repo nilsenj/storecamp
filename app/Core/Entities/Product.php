@@ -6,11 +6,13 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Good extends Model implements Transformable
+class Product extends Model implements Transformable
 {
     use TransformableTrait;
     use \Cviebrock\EloquentSluggable\Sluggable;
+    use HasMediaTrait;
 
 
     /**
@@ -23,14 +25,14 @@ class Good extends Model implements Transformable
         'body',
         'price',
         'availability',
-        'published_at',
+        'date_available',
         'slug',
         'count',
         'category_id'
 
     ];
 
-    protected $dates = ['published_at'];
+    protected $dates = ['date_available'];
 
     /**
      * Return the sluggable configuration array for this model.
@@ -83,15 +85,15 @@ class Good extends Model implements Transformable
      * @param $date
      */
     public function setPublishedAtAttribute ($date) {
-        $this->attributes['published_at'] = Carbon::createFromFormat('Y-m-d', $date);
+        $this->attributes['date_available'] = Carbon::createFromFormat('Y-m-d', $date);
     }
 
     public function scopeUnpublished($query) {
-        $query->where('published_at', '>', Carbon::now());
+        $query->where('date_available', '>', Carbon::now());
     }
 
     public function scopePublished($query) {
-        $query->where('published_at', '<=', Carbon::now());
+        $query->where('date_available', '<=', Carbon::now());
     }
 
     public function scopeNewest($query)
@@ -112,7 +114,7 @@ class Good extends Model implements Transformable
      */
     public function scopeOnlyGood($query)
     {
-        return $query->whereType('good');
+        return $query->whereType('product');
     }
 
     /**
@@ -152,7 +154,7 @@ class Good extends Model implements Transformable
 
     public static function image_path($file)
     {
-        return public_path("images/goods/{$file}");
+        return public_path("images/products/{$file}");
     }
 
 }

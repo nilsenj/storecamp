@@ -2,14 +2,14 @@
 <h1>
     @section('breadcrumb')
         {{--{!! Breadcrumbs::render('admin') !!}--}}
-        {!! Breadcrumbs::render('goods', 'Goods') !!}
+        {!! Breadcrumbs::render('products', 'Goods') !!}
     @endsection
     @section('contentheader_title')
-        All goods ({!! \App\Core\Entities\Good::all()->count() !!})
+        All products ({!! \App\Core\Entities\Product::all()->count() !!})
         &middot;
     @endsection
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::goods::create', 'Add new good') !!}</b>
+        <b>{!! link_to_route('admin::products::create', 'Add new product') !!}</b>
     @endsection
 </h1>
 @section('main-content')
@@ -54,9 +54,9 @@
                 <td>{!! $good->price ? $good->price : null !!}</td>
                 <td>{!! $good->created_at !!}</td>
                 <td class="text-center">
-                        <a href="{!! route('admin::goods::edit', $good->id) !!}">Edit</a>
+                        <a href="{!! route('admin::products::edit', $good->id) !!}">Edit</a>
                         &middot;
-                        {{--@include('admin::partials.modal', ['data' => $good, 'name' => 'goods'])--}}
+                        {{--@include('admin::partials.modal', ['data' => $good, 'name' => 'products'])--}}
 
                 </td>
             </tr>

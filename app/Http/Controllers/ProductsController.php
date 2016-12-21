@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Core\Entities\Category;
-//use App\Good;
-//use App\Picture;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -14,11 +12,11 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Str;
 use Laracasts\Flash\Flash;
 use App\Core\Uploader\ImageUploader;
-use App\Core\Repositories\GoodsRepository;
-use App\Core\Validators\Good\GoodsFormRequest as Create;
-use App\Core\Validators\Good\GoodsUpdateFormRequest as Update;
+use App\Core\Repositories\ProductsRepository;
+use App\Core\Validators\Product\GoodsFormRequest as Create;
+use App\Core\Validators\Product\GoodsUpdateFormRequest as Update;
 
-class GoodsController extends Controller
+class ProductsController extends Controller
 {
     protected $articles;
     /**
@@ -29,9 +27,9 @@ class GoodsController extends Controller
     protected $repository;
     /**
      * @param ImageUploader $uploader
-     * @param GoodsRepository $repository
+     * @param ProductsRepository $repository
      */
-    public function __construct(ImageUploader $uploader, GoodsRepository $repository)
+    public function __construct(ImageUploader $uploader, ProductsRepository $repository)
     {
         $this->uploader = $uploader;
         $this->repository = $repository;
@@ -45,7 +43,7 @@ class GoodsController extends Controller
      */
     protected function redirectNotFound()
     {
-        return redirect('admin/goods')
+        return redirect('admin/products')
             ->with(\Flash::error('Товар не найден!'));
     }
 
@@ -58,7 +56,7 @@ class GoodsController extends Controller
     {
         $goods = $this->repository->allOrSearch(Input::get('q'));
         $no = $goods->firstItem();
-        return view('admin.goods.index', compact('goods', 'no'));
+        return view('admin.products.index', compact('products', 'no'));
     }
 
     /**
@@ -69,7 +67,7 @@ class GoodsController extends Controller
     public function create()
     {
         $categories = Category::all()->pluck("slug", 'id');
-        return view('admin.goods.create', compact('categories'));
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
@@ -91,7 +89,7 @@ class GoodsController extends Controller
 
         $data['category_id'] = $category;
 
-        $this->repository->create($data);
+        $product = $this->repository->create($data);
 
         if (Input::hasFile('image')) {
             // upload image
@@ -99,32 +97,29 @@ class GoodsController extends Controller
 
             foreach($images as $image){
 
-                $this->uploader->upload($image)->save('images/goods');
+                $this->uploader->upload($image)->save('images/products');
 
-                $good = $this->repository->getmodel()->findBySlug($data['slug']);
 
                 $picture = Picture::create(['path' => $this->uploader->getFilename()]);
 
-                $good->picture()->attach($picture);
+                $product->picture()->attach($picture);
 
             }
 
         }
 
-        return redirect('admin/goods');
+        return redirect('admin/products');
     }
 
     /**
-     * Display the specified article.
-     *
-     * @param  int $id
-     * @return Response
+     * @param $id
+     * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($id)
     {
         try {
-            $good = $this->repository->getmodel()->findBySlugOrId($id);;
-            return view('admin.goods.show', compact('good'));
+            $product = $this->repository->getmodel()->find($id);;
+            return view('admin.products.show', compact('product'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }
@@ -132,21 +127,21 @@ class GoodsController extends Controller
 
     /**
      * @param $id
-     * @return Response|\Illuminate\View\View
+     * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
         try {
-            $good = $this->repository->getmodel()->findBySlugOrId($id);
+            $product = $this->repository->getmodel()->find($id);
 
             $categories = Category::all()->lists("slug", 'id');
 
             $pictures = array();
 
-            if ($good->picture()) {
+            if ($product->picture()) {
 
 
-                foreach ($good->picture()->get() as $key => $picture) {
+                foreach ($product->picture()->get() as $key => $picture) {
 
                     $pictures[$key] = $picture;
 
@@ -154,23 +149,25 @@ class GoodsController extends Controller
 
             }
 
-            return view('admin.goods.edit', compact('good', 'categories', 'pictures'));
+            return view('admin.products.edit', compact('product', 'categories', 'pictures'));
 
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }
     }
+
     /**
      * Update the specified article in storage.
      *
-     * @param  int $id
-     * @return Response
+     * @param Update $request
+     * @param $id
+     * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Update $request, $id)
     {
         try {
 
-            $good = $this->repository->getmodel()->findBySlugOrId($id);
+            $product = $this->repository->getmodel()->find($id);
 
             $data = $request->all();
 
@@ -182,39 +179,39 @@ class GoodsController extends Controller
 
             $data['slug'] = Str::slug($data['title']);
 
-            if (\Input::hasFile('image')) {
+            if (Input::hasFile('image')) {
                 // upload image
-                $images = \Input::file('image');
+                $images = Input::file('image');
 
                 $paths = array();
 
-                foreach ($good->picture()->get() as $pictures) {
+                foreach ($product->picture()->get() as $pictures) {
 
                     $this->repository->getmodel()->deleteImage($pictures->path);
 
                 }
-                $good->picture()->detach();
+                $product->picture()->detach();
 
-                $good->update($data);
+                $product->update($data);
 
                 foreach($images as $key => $image){
 
-                    $this->uploader->upload($image)->save('images/goods');
+                    $this->uploader->upload($image)->save('images/products');
 
-                    $good = $this->repository->getmodel()->indBySlug($data['slug']);
+                    $product = $this->repository->getmodel()->indBySlug($data['slug']);
 
                     $picture = Picture::create(['path' => $this->uploader->getFilename()]);
 
-                    $good->picture()->attach($picture);
+                    $product->picture()->attach($picture);
 
                 }
 
 
             }
-            $good->update($data);
+            $product->update($data);
 
 
-            return redirect('admin/goods');
+            return redirect('admin/products');
 
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
@@ -230,7 +227,7 @@ class GoodsController extends Controller
     {
         try {
             $this->repository->delete($id);
-            return redirect('admin/goods');
+            return redirect('admin/products');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }

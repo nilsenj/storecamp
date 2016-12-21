@@ -5,12 +5,12 @@ namespace App\Core\Repositories;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface GoodsRepository
+ * Interface ProductsRepository
  * @package namespace App\Core\Repositories;
  */
-interface GoodsRepository extends RepositoryInterface
+interface ProductsRepository extends RepositoryInterface
 {
-    public function getGood();
+    public function getProduct();
     public function getModel();
 
 }

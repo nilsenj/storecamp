@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Good;
+use App\Product;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -90,12 +90,12 @@ class PagesController extends Controller
     public function showGood($id,$slug)
     {
         try {
-            $good = Good::with('user', 'category')
+            $good = Product::with('user', 'category')
                 ->whereId(intval($id))
                 ->orWhere('slug', $slug)
                 ->firstOrFail();
 
-            return view('site.good',compact('good'));
+            return view('site.product',compact('product'));
 
         } catch (ModelNotFoundException $e) {
 

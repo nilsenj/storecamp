@@ -40,8 +40,8 @@ class AppServiceProvider extends ServiceProvider
             'App\Core\Repositories\RolesRepositoryEloquent'
         );
         $this->app->bind(
-            'App\Core\Repositories\GoodsRepository',
-            'App\Core\Repositories\GoodsRepositoryEloquent'
+            'App\Core\Repositories\ProductsRepository',
+            'App\Core\Repositories\ProductsRepositoryEloquent'
         );
         $this->app->bind(
             'App\Core\Repositories\PermissionRepository',

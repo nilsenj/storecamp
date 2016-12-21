@@ -4,14 +4,14 @@ namespace App\Core\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\GoodsRepository;
-use App\Core\Entities\Good;
+use App\Core\Repositories\ProductsRepository;
+use App\Core\Entities\Product;
 
 /**
- * Class GoodsRepositoryEloquent
+ * Class ProductsRepositoryEloquent
  * @package namespace App\Core\Repositories;
  */
-class GoodsRepositoryEloquent extends BaseRepository implements GoodsRepository
+class ProductsRepositoryEloquent extends BaseRepository implements ProductsRepository
 {
     /**
      * Specify Model class name
@@ -20,7 +20,7 @@ class GoodsRepositoryEloquent extends BaseRepository implements GoodsRepository
      */
     public function model()
     {
-        return Good::class;
+        return Product::class;
     }
 
     
@@ -43,7 +43,7 @@ class GoodsRepositoryEloquent extends BaseRepository implements GoodsRepository
         return new $model;
     }
 
-    public function getGood()
+    public function getProduct()
     {
         return $this->getModel()->onlyGood();
     }
@@ -56,13 +56,13 @@ class GoodsRepositoryEloquent extends BaseRepository implements GoodsRepository
     }
     public function getAll()
     {
-        return $this->getGood()->latest()->paginate($this->perPage());
+        return $this->getProduct()->latest()->paginate($this->perPage());
     }
     public function search($searchQuery)
     {
         $search = "%{$searchQuery}%";
 
-        return $this->getGood()->where('title', 'like', $search)
+        return $this->getProduct()->where('title', 'like', $search)
             ->orWhere('body', 'like', $search)
             ->orWhere('id', '=', $searchQuery)
             ->paginate($this->perPage())
@@ -70,11 +70,11 @@ class GoodsRepositoryEloquent extends BaseRepository implements GoodsRepository
     }
     public function findById($id)
     {
-        return $this->getGood()->find($id);
+        return $this->getProduct()->find($id);
     }
     public function findBy($key, $value, $operator = '=')
     {
-        return $this->getGood()->where($key, $operator, $value)->paginate($this->perPage());
+        return $this->getProduct()->where($key, $operator, $value)->paginate($this->perPage());
     }
     public function delete($id)
     {

@@ -37,10 +37,10 @@
             <li><a href="{{ route('admin::permissions::index') }}"><i class='fa fa-user-md'></i> <span>Privileges</span></a></li>
             <li><a href="{{ route('admin::users::index') }}"><i class='fa fa-users'></i> <span>Users</span></a></li>
             <li class="treeview">
-                <a href="{{ route('admin::goods::index') }}"><i class='fa fa-link'></i> <span>Goods</span> <i class="fa fa-good pull-right"></i></a>
+                <a href="{{ route('admin::products::index') }}"><i class='fa fa-link'></i> <span>Goods</span> <i class="fa fa-good pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('admin::goods::index') }}">List</a></li>
-                    <li><a href="{{ route('admin::goods::create') }}">Create</a></li>
+                    <li><a href="{{ route('admin::products::index') }}">List</a></li>
+                    <li><a href="{{ route('admin::products::create') }}">Create</a></li>
                 <!--    <li><a href="#">Link in level 2</a></li> -->
                 </ul>
             </li>

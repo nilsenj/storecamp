@@ -6,6 +6,7 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class Category extends Model implements Transformable
 {
@@ -13,6 +14,7 @@ class Category extends Model implements Transformable
 
     use \Cviebrock\EloquentSluggable\Sluggable;
     use SluggableScopeHelpers;
+    use HasMediaTrait;
 
     /**
      * @var array
@@ -32,9 +34,9 @@ class Category extends Model implements Transformable
             ]
         ];
     }
-    public function good()
+    public function product()
     {
-        return $this->hasMany(Good::class);
+        return $this->hasMany(Product::class);
     }
     /**
      * @param $query

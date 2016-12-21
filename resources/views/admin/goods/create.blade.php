@@ -1,15 +1,15 @@
 @extends('admin/app')
 <h1>
     @section('contentheader_title')
-        Add New Good
+        Add New Product
         &middot;
     @endsection
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::goods::index', 'Back') !!}</b>
+        <b>{!! link_to_route('admin::products::index', 'Back') !!}</b>
     @endsection
 </h1>
 @section('main-content')
     <div>
-        @include('admin.goods.form')
+        @include('admin.products.form')
     </div>
 @endsection

@@ -69,7 +69,7 @@ class ImageUploader
 
         $this->filename = $this->getRandomFilename();
 
-        $this->path = 'images/goods';
+        $this->path = 'images/products';
 
         if (! is_dir($path = $this->getDestinationDirectory())) {
 

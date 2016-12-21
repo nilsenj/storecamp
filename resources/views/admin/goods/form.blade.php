@@ -1,8 +1,8 @@
 
     @if(isset($good))
-        {!! Form::model($good, ['method' => 'PATCH', 'files' => true, 'route' => ['admin::goods::update', $good->id]]) !!}
+        {!! Form::model($good, ['method' => 'PATCH', 'files' => true, 'route' => ['admin::products::update', $good->id]]) !!}
     @else
-        {!! Form::open(['files' => true, 'route' => 'admin::goods::store']) !!}
+        {!! Form::open(['files' => true, 'route' => 'admin::products::store']) !!}
     @endif
 <div class="form-group">
     {!! Form::label('title', 'Title:') !!}
@@ -25,7 +25,7 @@
                 @foreach ($pictures as $picture)
                     <div class="col-sm-6 col-md-4">
                         <div class="thumbnail">
-                            <img class="img-responsive" src="{!! asset('images/goods/' .  $picture->path) !!}">
+                            <img class="img-responsive" src="{!! asset('images/products/' .  $picture->path) !!}">
                         </div>
                     </div>
                 @endforeach

@@ -13466,6 +13466,59 @@ namespace {
     }
 
 
+    class Image extends \Intervention\Image\Facades\Image{
+        
+        /**
+         * Overrides configuration settings
+         *
+         * @param array $config
+         * @static 
+         */
+        public static function configure($config = array()){
+            return \Intervention\Image\ImageManager::configure($config);
+        }
+        
+        /**
+         * Initiates an Image instance from different input types
+         *
+         * @param mixed $data
+         * @return \Intervention\Image\Image 
+         * @static 
+         */
+        public static function make($data){
+            return \Intervention\Image\ImageManager::make($data);
+        }
+        
+        /**
+         * Creates an empty image canvas
+         *
+         * @param integer $width
+         * @param integer $height
+         * @param mixed $background
+         * @return \Intervention\Image\Image 
+         * @static 
+         */
+        public static function canvas($width, $height, $background = null){
+            return \Intervention\Image\ImageManager::canvas($width, $height, $background);
+        }
+        
+        /**
+         * Create new cached image and run callback
+         * (requires additional package intervention/imagecache)
+         *
+         * @param \Closure $callback
+         * @param integer $lifetime
+         * @param boolean $returnObj
+         * @return \Image 
+         * @static 
+         */
+        public static function cache($callback, $lifetime = null, $returnObj = false){
+            return \Intervention\Image\ImageManager::cache($callback, $lifetime, $returnObj);
+        }
+        
+    }
+
+
     class Flash extends \Laracasts\Flash\Flash{
         
         /**
@@ -13891,6 +13944,239 @@ namespace {
          */
         public static function create($name = '', $size = 512, $background_color = '#666', $text_color = '#FFF', $font_file = '../../../font/OpenSans-Semibold.ttf'){
             return \A6digital\Image\DefaultProfileImage::create($name, $size, $background_color, $text_color, $font_file);
+        }
+        
+    }
+
+
+    class LogViewer extends \Arcanedev\LogViewer\Facades\LogViewer{
+        
+        /**
+         * Get the log levels.
+         *
+         * @param bool $flip
+         * @return array 
+         * @static 
+         */
+        public static function levels($flip = false){
+            return \Arcanedev\LogViewer\LogViewer::levels($flip);
+        }
+        
+        /**
+         * Get the translated log levels.
+         *
+         * @param string|null $locale
+         * @return array 
+         * @static 
+         */
+        public static function levelsNames($locale = null){
+            return \Arcanedev\LogViewer\LogViewer::levelsNames($locale);
+        }
+        
+        /**
+         * Set the log storage path.
+         *
+         * @param string $path
+         * @return \Arcanedev\LogViewer\LogViewer 
+         * @static 
+         */
+        public static function setPath($path){
+            return \Arcanedev\LogViewer\LogViewer::setPath($path);
+        }
+        
+        /**
+         * Get the log pattern.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getPattern(){
+            return \Arcanedev\LogViewer\LogViewer::getPattern();
+        }
+        
+        /**
+         * Set the log pattern.
+         *
+         * @param string $date
+         * @param string $prefix
+         * @param string $extension
+         * @return \Arcanedev\LogViewer\LogViewer 
+         * @static 
+         */
+        public static function setPattern($prefix = 'laravel-', $date = '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]', $extension = '.log'){
+            return \Arcanedev\LogViewer\LogViewer::setPattern($prefix, $date, $extension);
+        }
+        
+        /**
+         * Get all logs.
+         *
+         * @return \Arcanedev\LogViewer\Entities\LogCollection 
+         * @static 
+         */
+        public static function all(){
+            return \Arcanedev\LogViewer\LogViewer::all();
+        }
+        
+        /**
+         * Paginate all logs.
+         *
+         * @param int $perPage
+         * @return \Illuminate\Pagination\LengthAwarePaginator 
+         * @static 
+         */
+        public static function paginate($perPage = 30){
+            return \Arcanedev\LogViewer\LogViewer::paginate($perPage);
+        }
+        
+        /**
+         * Get a log.
+         *
+         * @param string $date
+         * @return \Arcanedev\LogViewer\Entities\Log 
+         * @static 
+         */
+        public static function get($date){
+            return \Arcanedev\LogViewer\LogViewer::get($date);
+        }
+        
+        /**
+         * Get the log entries.
+         *
+         * @param string $date
+         * @param string $level
+         * @return \Arcanedev\LogViewer\Entities\LogEntryCollection 
+         * @static 
+         */
+        public static function entries($date, $level = 'all'){
+            return \Arcanedev\LogViewer\LogViewer::entries($date, $level);
+        }
+        
+        /**
+         * Download a log file.
+         *
+         * @param string $date
+         * @param string|null $filename
+         * @param array $headers
+         * @return \Symfony\Component\HttpFoundation\BinaryFileResponse 
+         * @static 
+         */
+        public static function download($date, $filename = null, $headers = array()){
+            return \Arcanedev\LogViewer\LogViewer::download($date, $filename, $headers);
+        }
+        
+        /**
+         * Get logs statistics.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function stats(){
+            return \Arcanedev\LogViewer\LogViewer::stats();
+        }
+        
+        /**
+         * Get logs statistics table.
+         *
+         * @param string|null $locale
+         * @return \Arcanedev\LogViewer\Tables\StatsTable 
+         * @static 
+         */
+        public static function statsTable($locale = null){
+            return \Arcanedev\LogViewer\LogViewer::statsTable($locale);
+        }
+        
+        /**
+         * Delete the log.
+         *
+         * @param string $date
+         * @return bool 
+         * @static 
+         */
+        public static function delete($date){
+            return \Arcanedev\LogViewer\LogViewer::delete($date);
+        }
+        
+        /**
+         * Get all valid log files.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function files(){
+            return \Arcanedev\LogViewer\LogViewer::files();
+        }
+        
+        /**
+         * List the log files (only dates).
+         *
+         * @return array 
+         * @static 
+         */
+        public static function dates(){
+            return \Arcanedev\LogViewer\LogViewer::dates();
+        }
+        
+        /**
+         * Get logs count.
+         *
+         * @return int 
+         * @static 
+         */
+        public static function count(){
+            return \Arcanedev\LogViewer\LogViewer::count();
+        }
+        
+        /**
+         * Get entries total from all logs.
+         *
+         * @param string $level
+         * @return int 
+         * @static 
+         */
+        public static function total($level = 'all'){
+            return \Arcanedev\LogViewer\LogViewer::total($level);
+        }
+        
+        /**
+         * Get logs tree.
+         *
+         * @param bool $trans
+         * @return array 
+         * @static 
+         */
+        public static function tree($trans = false){
+            return \Arcanedev\LogViewer\LogViewer::tree($trans);
+        }
+        
+        /**
+         * Get logs menu.
+         *
+         * @param bool $trans
+         * @return array 
+         * @static 
+         */
+        public static function menu($trans = true){
+            return \Arcanedev\LogViewer\LogViewer::menu($trans);
+        }
+        
+        /**
+         * Determine if the log folder is empty or not.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function isEmpty(){
+            return \Arcanedev\LogViewer\LogViewer::isEmpty();
+        }
+        
+        /**
+         * Get the LogViewer version.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function version(){
+            return \Arcanedev\LogViewer\LogViewer::version();
         }
         
     }
