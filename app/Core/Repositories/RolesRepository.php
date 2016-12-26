@@ -8,9 +8,9 @@
 
 namespace App\Core\Repositories;
 
-use Prettus\Repository;
+use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
-interface RolesRepository extends Repository\Contracts\RepositoryInterface {
+interface RolesRepository extends RepositoryInterface {
 
     public function renew($data, $dataPerm, $role);
     public function getModel();

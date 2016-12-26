@@ -2,8 +2,7 @@
 
 namespace App\Core\Repositories;
 
-use Prettus\Repository\Contracts\RepositoryInterface;
-
+use RepositoryLab\Repository\Contracts\RepositoryInterface;
 /**
  * Interface PermissionRepository
  * @package namespace App\Core\Repositories;

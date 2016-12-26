@@ -20,7 +20,7 @@ class PagesController extends Controller
     public function index()
     {
 
-        foreach (File::allFiles(app_path() . '/Core/Repositories') as $partial) {
+        foreach (\File::allFiles(app_path() . '/Core/Repositories') as $partial) {
             require $partial->getPathname();
         }
         return view('home');
