@@ -1,6 +1,6 @@
+<?php $user = Auth::user() ? Auth::user() : null; ?>
 <!-- Main Header -->
 <header class="main-header">
-
     <!-- Logo -->
     <a href="{{ url('/admin/dashboard') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -115,14 +115,14 @@
                         <!-- The user image in the navbar-->
                         <img src="/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                        <span class="hidden-xs">{{ Auth::user()->name }}</span>
+                        <span class="hidden-xs">@if($user){{ $user->name }}@else Not available right now @endif</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
                             <img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
                             <p>
-                                {{ Auth::user()->name }}
+                                @if($user){{ $user->name }}@else Not available right now @endif
                                 <small>Member since Nov. 2012</small>
                             </p>
                         </li>

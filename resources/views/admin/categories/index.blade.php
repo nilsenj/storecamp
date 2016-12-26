@@ -31,7 +31,7 @@
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <thead>
-                        <th>№</th>
+                        <th>#</th>
                         <th>Name</th>
                         <th>Display Name</th>
                         <th>Description</th>
@@ -40,6 +40,7 @@
                         </thead>
                         <tbody>
                         @foreach ($categories as $category)
+                            <?php $no++; ?>
                             @include('admin.categories.category', [$category, $no])
                         @endforeach
                         </tbody>

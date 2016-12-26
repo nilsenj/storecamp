@@ -1,25 +1,20 @@
-@extends('app')
-
-@section('htmlheader_title')
-    Страница не найдена
-@endsection
-
-@section('contentheader_title')
-    404 Код ошибки страницы
-@endsection
-
-@section('$contentheader_description')
-@endsection
-
+@extends('admin/app')
+<h1>
+    @section('contentheader_title')
+        Sorry Nothing Found
+    @endsection
+    @section('contentheader_description')
+        Please try another link!!!
+    @endsection
+</h1>
 @section('main-content')
-
 <div class="error-page">
     <h2 class="headline text-yellow"> 404</h2>
     <div class="error-content">
-        <h3><i class="fa fa-warning text-yellow"></i> Упс! Страница не найдена.</h3>
+        <h3><i class="fa fa-warning text-yellow"></i> OOps! Page Not Found.</h3>
         <p>
-            Мы не смогли ничего найти по заданному запросу.
-            В то же самое время  вы можете <a href='{{ url('/admin/dashboard') }}'>вернуться на главную админки</a> или попробуйте использовать наш поиск.
+            We could't find anything.
+            At the same time you can go <a href='{{ url('/admin/dashboard') }}'>back to admin panel</a> Or Try our search.
         </p>
         <form class='search-form'>
             <div class='input-group'>

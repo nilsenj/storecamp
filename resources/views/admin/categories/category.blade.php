@@ -1,5 +1,5 @@
 <tr>
-    <td><?php $no++ ;?></td>
+    <td>{{ $no }}</td>
     <td>{{ $category->name }}</td>
     <td>{{ $category->slug }}</td>
     <td>
