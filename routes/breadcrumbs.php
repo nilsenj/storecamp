@@ -27,6 +27,24 @@ Breadcrumbs::register('categories', function($breadcrumbs)
     $breadcrumbs->push('Categories', route('admin::categories::index'));
 });
 
+// / > [Logs]
+Breadcrumbs::register('LogViewer', function($breadcrumbs)
+{
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push('LogViewer', route('log-viewer::dashboard'));
+});
+
+Breadcrumbs::register('LogsDashboard', function($breadcrumbs)
+{
+    $breadcrumbs->parent('LogViewer');
+    $breadcrumbs->push('LogsDashboard', route('log-viewer::logs.list'));
+});
+
+Breadcrumbs::register('Logs', function($breadcrumbs)
+{
+    $breadcrumbs->parent('LogViewer');
+    $breadcrumbs->push(Request::segment(3), route('log-viewer::logs.show', Request::segment(3)));
+});
 // / > [roles]
 Breadcrumbs::register('roles', function($breadcrumbs)
 {

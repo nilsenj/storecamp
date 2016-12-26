@@ -188,11 +188,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'uses' => 'CategoriesController@create',
             'as' => 'create'
         ]);
-        Route::get('edit/{slug}', [
+        Route::get('edit/{id}', [
             'uses' => 'CategoriesController@edit',
             'as' => 'edit'
         ]);
-        Route::put('update/{slug}', [
+        Route::put('update/{id}', [
             'uses' => 'CategoriesController@update',
             'as' => 'update'
         ]);
@@ -207,6 +207,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
         Route::post('store', [
             'uses' => 'CategoriesController@store',
             'as' => 'store'
+        ]);
+        Route::get('description/{id}', [
+            'uses' => 'CategoriesController@getDescription',
+            'as' => 'description'
         ]);
     });
 
@@ -232,6 +236,7 @@ Route::group([
     ]);
 
 });
+
 Route::group([
     'prefix'    => '/admin/log-viewer/{date}',
 ], function() {

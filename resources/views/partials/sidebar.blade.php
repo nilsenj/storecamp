@@ -44,11 +44,28 @@
                 <!--    <li><a href="#">Link in level 2</a></li> -->
                 </ul>
             </li>
-            <li class="nav-header" role="presentation">Logs management</li>
-            <li class="nav-item" role="presentation"><a role="menuitem" tabindex="-1"
-                                                        href="{{ route('log-viewer::dashboard') }}">
-                    <i class='text-danger fa fa-bug'></i>
-                    <span class="nav-text">LogViewer</span> </a></li>
+            <li class="header">Administration</li>
+            <li class="treeview {{ Route::is('log-viewer::logs.list') || Route::is('log-viewer::logs.show') ? 'active' : '' }}">
+                <a href="{{ route('log-viewer::dashboard') }}">
+                    <i class='fa fa-link'></i>
+                    <span>LogsViewer</span>
+                    <i class="fa fa-bug pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="{{ route('log-viewer::dashboard') }}">
+                            <i class="fa fa-dashboard"></i> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('log-viewer::logs.list') }}">
+                            <i class="fa fa-archive"></i> Logs
+                        </a>
+                    </li>
+                    <!--    <li><a href="#">Link in level 2</a></li> -->
+                </ul>
+            </li>
+
             {{--<li class="nav-item" role="presentation">--}}
                 {{--<a role="menuitem" tabindex="-1" class="" href="{!! route('web::admin::dblogs::allUsersAdmin') !!}">--}}
                     {{--<i class='text-info fa fa-th'></i>--}}

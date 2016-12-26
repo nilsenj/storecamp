@@ -27,6 +27,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
+@yield('styles-add')
 <body class="fixed sidebar-mini skin-blue">
 <div class="wrapper">
 
@@ -59,5 +60,6 @@ desired effect
 
 @include('partials.scripts')
 @yield("scripts-add")
+@stack('scripts-add_on')
 </body>
 </html>

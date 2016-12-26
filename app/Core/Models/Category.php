@@ -50,11 +50,11 @@ class Category extends Model implements Transformable
 
     public function parent()
     {
-        return $this->belongsTo('App\Core\Entities\Category', 'parent_id');
+        return $this->belongsTo('App\Core\Models\Category', 'parent_id');
     }
 
     public function children()
     {
-        return $this->hasMany('App\Core\Entities\Category', 'parent_id');
+        return $this->hasMany('App\Core\Models\Category', 'parent_id');
     }
 }

@@ -4,13 +4,13 @@
         {{--{!! Breadcrumbs::render('admin') !!}--}}
         {!! Breadcrumbs::render('categories', 'Categories') !!}
     @endsection
-@section('contentheader_title')
+    @section('contentheader_title')
         All Categories({!! \App\Core\Models\Category::all()->count() !!})
         &middot;
     @endsection
-@section('contentheader_description')
+    @section('contentheader_description')
         <b>{!! link_to_route('admin::categories::create', 'Add New Category') !!}</b>
-@endsection
+    @endsection
 </h1>
 @section('main-content')
     <div class="row">
@@ -53,4 +53,10 @@
         {!! $categories->links() !!}
         {{--{!! pagination_links($categories) !!}--}}
     </div>
+
+@endsection
+
+@include('admin.components.modal-description')
+@section('scripts-add')
+
 @endsection

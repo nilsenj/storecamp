@@ -1,9 +1,31 @@
-@extends('log-viewer::_template.master')
+@extends('admin.app')
+<h1>
+    @section('breadcrumb')
+        {!! Breadcrumbs::render('Logs', 'Logs') !!}
+    @endsection
+    @section('contentheader_title')
+        Log files count({!! count($stats->rows()) !!})
+        &middot;
+    @endsection
+    @section('contentheader_description')
+        @if(!Route::is('log-viewer::dashboard'))
+            <b>
+                <a href="{{ route('log-viewer::dashboard') }}">
+                    <i class="fa fa-dashboard"></i> Dashboard
+                </a>
+            </b>
+        @else
+            <b>
+                <a href="{{ route('log-viewer::logs.list') }}">
+                    <i class="fa fa-archive"></i>See All Logs
+                </a>
+            </b>
+        @endif
+    @endsection
+</h1>
+@section('main-content')
+    <h1 class="page-header">List of Logs</h1>
 
-@section('content')
-    <h1 class="page-header">Logs</h1>
-
-    {!! $rows->render() !!}
 
     <div class="table-responsive">
         <table class="table table-condensed table-hover table-stats">
@@ -67,7 +89,6 @@
     {!! $rows->render() !!}
 @endsection
 
-@section('modals')
     {{-- DELETE MODAL --}}
     <div id="delete-log-modal" class="modal fade">
         <div class="modal-dialog">
@@ -93,9 +114,8 @@
             </form>
         </div>
     </div>
-@endsection
 
-@section('scripts')
+@section('scripts-add')
     <script>
         $(function () {
             var deleteLogModal = $('div#delete-log-modal'),

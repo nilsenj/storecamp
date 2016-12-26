@@ -3,7 +3,7 @@
     @section('breadcrumb')
         {{--{!! Breadcrumbs::render('admin') !!}--}}
 
-        {!! Breadcrumbs::render('users', 'Пользователи') !!}
+        {!! Breadcrumbs::render('users', 'Users') !!}
     @endsection
     @section('contentheader_title')
 

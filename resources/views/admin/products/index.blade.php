@@ -72,4 +72,5 @@
         {!! $products->links() !!}
         {{--{!! pagination_links($categories) !!}--}}
     </div>
+
 @endsection

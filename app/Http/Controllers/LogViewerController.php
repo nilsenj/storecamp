@@ -45,7 +45,7 @@ class LogViewerController extends LogBaseController
         $chartData = $this->prepareChartData($stats);
         $percents  = $this->calcPercentages($stats->footer(), $stats->header());
 
-        return $this->view('dashboard', compact('chartData', 'percents'));
+        return $this->view('dashboard', compact('chartData', 'percents', 'stats'));
     }
 
     /**
@@ -61,7 +61,7 @@ class LogViewerController extends LogBaseController
         $headers = $stats->header();
         $rows    = $this->paginate($stats->rows(), $request);
 
-        return $this->view('logs', compact('headers', 'rows', 'footer'));
+        return $this->view('logs', compact('headers', 'rows', 'footer', 'stats'));
     }
 
     /**
@@ -73,11 +73,12 @@ class LogViewerController extends LogBaseController
      */
     public function show($date)
     {
+        $stats   = $this->logViewer->statsTable();
         $log     = $this->getLogOrFail($date);
         $levels  = $this->logViewer->levelsNames();
         $entries = $log->entries()->paginate($this->perPage);
 
-        return $this->view('show', compact('log', 'levels', 'entries'));
+        return $this->view('show', compact('log', 'levels', 'entries', 'stats'));
     }
 
     /**

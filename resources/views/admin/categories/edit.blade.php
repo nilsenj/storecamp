@@ -18,7 +18,7 @@
             {{--{!! Form::open(['files' => true, 'route' => 'admin::categories::store']) !!}--}}
         {{--@endif--}}
 
-            {!! Form::model($category, ['route' => ['admin::categories::update', $category->slug], 'method' => 'PUT', 'class' => '']) !!}
+            {!! Form::model($category, ['route' => ['admin::categories::update', $category->id], 'method' => 'PUT', 'class' => '']) !!}
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">

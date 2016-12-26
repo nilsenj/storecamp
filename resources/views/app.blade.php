@@ -27,6 +27,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
+@yield("styles-add")
 <body class="fixed sidebar-mini skin-black">
 <div class="wrapper">
 

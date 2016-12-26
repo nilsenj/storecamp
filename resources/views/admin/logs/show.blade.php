@@ -1,6 +1,21 @@
-@extends('log-viewer::_template.master')
-
-@section('content')
+@extends('admin.app')
+<h1>
+    @section('breadcrumb')
+        {!! Breadcrumbs::render('Logs', $log->date ) !!}
+    @endsection
+    @section('contentheader_title')
+        Log files count({!! count($stats->rows()) !!})
+        &middot;
+    @endsection
+    @section('contentheader_description')
+            <b>
+                <a href="{{ route('log-viewer::logs.list') }}">
+                    <i class="fa fa-archive"></i>See All Logs
+                </a>
+            </b>
+    @endsection
+</h1>
+@section('main-content')
     <h1 class="page-header">Log [{{ $log->date }}]</h1>
 
     <div class="row">
@@ -65,7 +80,7 @@
                 @endif
 
                 <div class="table-responsive">
-                    <table id="entries" class="table table-condensed">
+                    <table id="entries" style="word-break: break-all;" class="table table-condensed">
                         <thead>
                             <tr>
                                 <th>ENV</th>
@@ -130,7 +145,6 @@
     </div>
 @endsection
 
-@section('modals')
     {{-- DELETE MODAL --}}
     <div id="delete-log-modal" class="modal fade">
         <div class="modal-dialog">
@@ -156,9 +170,13 @@
             </form>
         </div>
     </div>
+@section('styles-add')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.15.35/css/bootstrap-datetimepicker.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700|Source+Sans+Pro:400,600' rel='stylesheet' type='text/css'>
+    @include('admin.logs._template.style')
 @endsection
-
-@section('scripts')
+@include('admin.logs._template.footer')
+@section('scripts-add')
     <script>
         $(function () {
             var deleteLogModal = $('div#delete-log-modal'),

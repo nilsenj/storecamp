@@ -56,7 +56,7 @@ class CategoriesController extends Controller
     }
 
     /**
-     * @param CategoriesFormRequest $request
+     * @param Request $request
      * @return Redirect
      */
     public function store(Request $request)
@@ -69,13 +69,13 @@ class CategoriesController extends Controller
     }
 
     /**
-     * @param $slug
+     * @param $id
      * @return \Illuminate\Contracts\View\Factory|Redirect|\Illuminate\View\View
      */
-    public function show($slug)
+    public function show($id)
     {
         try {
-            $category = $this->repository->findByField('slug', $slug);
+            $category = $this->repository->findByField('id', $id)->first();
             $categories = Category::all();
             return view('admin.categories.show', compact('category', 'categories'));
         } catch (ModelNotFoundException $e) {
@@ -83,14 +83,25 @@ class CategoriesController extends Controller
         }
     }
 
+    public function getDescription($id) {
+        try {
+            return response()->json('Error Appeared', 404);
+            $category = $this->repository->find($id)->first();
+            $description = $category->description;
+            return response()->json($description);
+        } catch (ModelNotFoundException $e) {
+            return response()->json($e->getMessage(), $e->getCode());
+        }
+    }
+
     /**
-     * @param $slug
+     * @param $id
      * @return \Illuminate\Contracts\View\Factory|Redirect|\Illuminate\View\View
      */
-    public function edit($slug)
+    public function edit($id)
     {
         try {
-            $category = $this->repository->findByField('slug', $slug)->first();
+            $category = $this->repository->findByField('id', $id)->first();
             $categories = $this->repository->all();
 
             return view('admin.categories.edit', compact('category', 'categories'));
@@ -101,14 +112,14 @@ class CategoriesController extends Controller
 
     /**
      * @param CategoriesUpdateFormRequest $request
-     * @param $slug
-     * @return Response|Redirect
+     * @param $id
+     * @return Redirect
      */
-    public function update(CategoriesUpdateFormRequest $request, $slug)
+    public function update(CategoriesUpdateFormRequest $request, $id)
     {
         try {
             $data = $request->all();
-            $category = $this->repository->findByField('slug', $slug);
+            $category = $this->repository->findByField('id', $id)->first();
             $category->update($data);
             return redirect('admin/categories');
         } catch (ModelNotFoundException $e) {
