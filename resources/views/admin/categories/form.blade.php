@@ -9,7 +9,7 @@
     {!! Form::text('slug', null, ['class' => 'form-control']) !!}
     {!! $errors->first('slug', '<div class="text-danger">:message</div>') !!}
 </div>
-@include('partials.description')
+@include('admin.components.description-form')
 <div class="form-group">
     {!! Form::submit(isset($model) ? 'Update' : 'Save', ['class' => 'btn btn-primary']) !!}
 </div>

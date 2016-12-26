@@ -3,7 +3,7 @@
     {!! Form::textarea('description', null, ['class' => 'form-control description']) !!}
     {!! $errors->first('description', '<div class="text-danger">:message</div>') !!}
     </div>
-@section('scripts_add')
+@push('scripts-add_on')
     <!-- include summernote css/js-->
     <link rel="stylesheet" href="{{asset('plugins/summernote/summernote.css')}}">
     <script src="{{asset('plugins/summernote/summernote.js')}}"></script>
@@ -16,4 +16,4 @@
             });
         });
     </script>
-@endsection
+@endpush

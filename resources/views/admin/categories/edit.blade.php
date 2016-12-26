@@ -58,7 +58,7 @@
                 {!! Form::label('slug', 'Slug', ['class' => 'col-sm-2 control-label']) !!}
                     {!! Form::text('slug', null, ['class' => 'form-control', 'placeholder' => 'eg category-name']) !!}
             </div>
-           @include('partials.description')
+           @include('admin.components.description-form')
             <div class="form-group">
                     {!! Form::submit('Update', ['class' => 'btn btn-lg btn-primary']) !!}
             </div>
