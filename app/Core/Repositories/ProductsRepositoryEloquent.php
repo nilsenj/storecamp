@@ -13,6 +13,7 @@ use App\Core\Models\Product;
  */
 class ProductsRepositoryEloquent extends BaseRepository implements ProductsRepository
 {
+
     /**
      * Specify Model class name
      *
@@ -23,8 +24,6 @@ class ProductsRepositoryEloquent extends BaseRepository implements ProductsRepos
         return Product::class;
     }
 
-    
-
     /**
      * Boot up the repository, pushing criteria
      */
@@ -32,10 +31,11 @@ class ProductsRepositoryEloquent extends BaseRepository implements ProductsRepos
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-    public function perPage()
-    {
-        return 10;
-    }
+
+
+    /**
+     * @return mixed
+     */
     public function getModel()
     {
         $model = $this->model();
@@ -43,10 +43,10 @@ class ProductsRepositoryEloquent extends BaseRepository implements ProductsRepos
         return new $model;
     }
 
-    public function getProduct()
-    {
-        return $this->getModel()->onlyGood();
-    }
+    /**
+     * @param null $searchQuery
+     * @return mixed
+     */
     public function allOrSearch($searchQuery = null)
     {
         if (is_null($searchQuery)) {
@@ -54,37 +54,59 @@ class ProductsRepositoryEloquent extends BaseRepository implements ProductsRepos
         }
         return $this->search($searchQuery);
     }
+
+    /**
+     * @return mixed
+     */
     public function getAll()
     {
-        return $this->getProduct()->latest()->paginate($this->perPage());
+        return $this->getModel()->latest()->paginate();
     }
+
+    /**
+     * @param $searchQuery
+     * @return mixed
+     */
     public function search($searchQuery)
     {
         $search = "%{$searchQuery}%";
 
-        return $this->getProduct()->where('title', 'like', $search)
+        return $this->getModel()->where('title', 'like', $search)
             ->orWhere('body', 'like', $search)
             ->orWhere('id', '=', $searchQuery)
             ->paginate($this->perPage())
             ;
     }
-    public function findById($id)
-    {
-        return $this->getProduct()->find($id);
-    }
+
+    /**
+     * @param $key
+     * @param $value
+     * @param string $operator
+     * @return mixed
+     */
     public function findBy($key, $value, $operator = '=')
     {
-        return $this->getProduct()->where($key, $operator, $value)->paginate($this->perPage());
+        return $this->getModel()->where($key, $operator, $value)->paginate($this->perPage());
     }
+
+    /**
+     * @param $id
+     * @return bool
+     */
     public function delete($id)
     {
-        $good = $this->findById($id);
+        $good = $this->find($id);
         if (!is_null($good)) {
             $good->delete();
             return true;
         }
         return false;
     }
+
+    /**
+     * @param array $data
+     * @return mixed
+     */
     public function create(array $data)
     {
         return $this->getModel()->create($data);

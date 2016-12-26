@@ -119,29 +119,29 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
     Route::group(['prefix' => 'products', 'as' => 'products::'], function(){
 
         Route::get('/', [
-            'uses' => 'GoodsController@index',
+            'uses' => 'ProductsController@index',
             'as' => 'index'
 
         ]);
         Route::get('create', [
-            'uses' => 'GoodsController@create',
+            'uses' => 'ProductsController@create',
             'as' => 'create'
 
         ]);
         Route::get('edit/{id}', [
-            'uses' => 'GoodsController@edit',
+            'uses' => 'ProductsController@edit',
             'as' => 'edit'
         ]);
         Route::put('update/{id}', [
-            'uses' => 'GoodsController@update',
+            'uses' => 'ProductsController@update',
             'as' => 'update'
         ]);
         Route::delete('{id}', [
-            'uses' => 'GoodsController@destroy',
+            'uses' => 'ProductsController@destroy',
             'as' => 'delete'
         ]);
         Route::post('store', [
-            'uses' => 'GoodsController@store',
+            'uses' => 'ProductsController@store',
             'as' => 'store'
         ]);
 

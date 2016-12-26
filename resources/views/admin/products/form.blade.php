@@ -1,6 +1,6 @@
 
-    @if(isset($good))
-        {!! Form::model($good, ['method' => 'PATCH', 'files' => true, 'route' => ['admin::products::update', $good->id]]) !!}
+    @if(isset($product))
+        {!! Form::model($product, ['method' => 'PATCH', 'files' => true, 'route' => ['admin::products::update', $product->id]]) !!}
     @else
         {!! Form::open(['files' => true, 'route' => 'admin::products::store']) !!}
     @endif
@@ -20,8 +20,8 @@
         {!! $errors->first('image', '<div class="text-danger">:message</div>') !!}
     </div>
     <div class="form-group p">
-    @if(isset($good))
-            @if($good->picture())
+    @if(isset($product))
+            @if($product->picture())
                 @foreach ($pictures as $picture)
                     <div class="col-sm-6 col-md-4">
                         <div class="thumbnail">
@@ -56,7 +56,7 @@
     </div>
 
 <div class="form-group">
-    {!! Form::submit(isset($good) ? 'Edit' : 'Save', ['class' => 'btn btn-primary']) !!}
+    {!! Form::submit(isset($product) ? 'Edit' : 'Save', ['class' => 'btn btn-primary']) !!}
 </div>
 {!! Form::close() !!}
     <style>

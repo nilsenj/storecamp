@@ -2,10 +2,10 @@
 <h1>
     @section('breadcrumb')
         {{--{!! Breadcrumbs::render('admin') !!}--}}
-        {!! Breadcrumbs::render('products', 'Goods') !!}
+        {!! Breadcrumbs::render('products', 'Products') !!}
     @endsection
     @section('contentheader_title')
-        All products ({!! \App\Core\Entities\Product::all()->count() !!})
+        All products ({!! \App\Core\Models\Product::all()->count() !!})
         &middot;
     @endsection
     @section('contentheader_description')
@@ -40,23 +40,23 @@
         <th class="text-center">Action</th>
         </thead>
         <tbody>
-        @foreach ($goods as $good)
+        @foreach ($products as $product)
             <tr>
                 <td>{!! $no !!}</td>
-                <td>{!! $good->title !!}</td>
-                <td>{!! $good->user->name !!}</td>
+                <td>{!! $product->title !!}</td>
+                <td>{!! $product->user->name !!}</td>
                 <td>
-                    @foreach ($good->category()->get() as $category)
+                    @foreach ($product->category()->get() as $category)
                         {{ $category->name }}
                     @endforeach
-                    {{--{!!$good->category()->get('name')!!}--}}
+                    {{--{!!$product->category()->get('name')!!}--}}
                 </td>
-                <td>{!! $good->price ? $good->price : null !!}</td>
-                <td>{!! $good->created_at !!}</td>
+                <td>{!! $product->price ? $product->price : null !!}</td>
+                <td>{!! $product->created_at !!}</td>
                 <td class="text-center">
-                        <a href="{!! route('admin::products::edit', $good->id) !!}">Edit</a>
+                        <a href="{!! route('admin::products::edit', $product->id) !!}">Edit</a>
                         &middot;
-                        {{--@include('admin::partials.modal', ['data' => $good, 'name' => 'products'])--}}
+                        {{--@include('admin::partials.modal', ['data' => $product, 'name' => 'products'])--}}
 
                 </td>
             </tr>
@@ -69,7 +69,7 @@
         </div>
     </div>
     <div class="text-center">
-        {!! $goods->links() !!}
+        {!! $products->links() !!}
         {{--{!! pagination_links($categories) !!}--}}
     </div>
 @endsection

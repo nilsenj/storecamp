@@ -7,7 +7,7 @@
     @endsection
     @section('contentheader_title')
 
-        All Roles Count ({!! \App\Core\Entities\Role::all()->count() !!})
+        All Roles Count ({!! \App\Core\Models\Role::all()->count() !!})
         &middot;
     @endsection
     @section('contentheader_description')

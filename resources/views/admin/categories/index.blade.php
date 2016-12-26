@@ -5,7 +5,7 @@
         {!! Breadcrumbs::render('categories', 'Categories') !!}
     @endsection
 @section('contentheader_title')
-        All Categories({!! \App\Core\Entities\Category::all()->count() !!})
+        All Categories({!! \App\Core\Models\Category::all()->count() !!})
         &middot;
     @endsection
 @section('contentheader_description')

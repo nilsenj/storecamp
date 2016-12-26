@@ -7,7 +7,7 @@
     @endsection
     @section('contentheader_title')
 
-        Amount of Users ({!! \App\Core\Entities\User::all()->count() !!})
+        Amount of Users ({!! \App\Core\Models\User::all()->count() !!})
         &middot;
     @endsection
     @section('contentheader_description')

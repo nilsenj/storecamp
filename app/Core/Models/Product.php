@@ -100,22 +100,7 @@ class Product extends Model implements Transformable
     {
         return $query->orderBy('created_at', 'desc');
     }
-    /**
-     * @param $query
-     * @return mixed
-     */
-    public function scopeOnlyPage($query)
-    {
-        return $query->whereType('page');
-    }
-    /**
-     * @param $query
-     * @return mixed
-     */
-    public function scopeOnlyGood($query)
-    {
-        return $query->whereType('product');
-    }
+
 
     /**
      * @param $query

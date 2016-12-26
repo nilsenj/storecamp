@@ -46,25 +46,5 @@ class AppServiceProvider extends ServiceProvider
             'App\Core\Repositories\PermissionRepository',
             'App\Core\Repositories\PermissionRepositoryEloquent'
         );
-//        $this->app->bind(
-//            'App\Core\Repositories\CategoryRepository',
-//            'App\Core\Repositories\EloquentCategoryRepository'
-//        );
-//        $this->app->bind(
-//            'STMAG\Repositories\Roles\RolesRepository',
-//            'STMAG\Repositories\Roles\EloquentRolesRepository'
-//        );
-//        $this->app->bind(
-//            'STMAG\Repositories\Permissions\PermissionRepository',
-//            'STMAG\Repositories\Permissions\EloquentPermissionRepository'
-//        );
-//        $this->app->bind(
-//            'STMAG\Repositories\Users\UserRepository',
-//            'STMAG\Repositories\Users\EloquentUserRepository'
-//        );
-//        $this->app->bind(
-//            'STMAG\Repositories\Goods\GoodsRepository',
-//            'STMAG\Repositories\Goods\EloquentGoodsRepository'
-//        );
     }
 }

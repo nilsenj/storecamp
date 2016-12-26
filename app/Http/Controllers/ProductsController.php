@@ -54,8 +54,8 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $goods = $this->repository->allOrSearch(Input::get('q'));
-        $no = $goods->firstItem();
+        $products = $this->repository->allOrSearch(Input::get('q'));
+        $no = $products->firstItem();
         return view('admin.products.index', compact('products', 'no'));
     }
 

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Input;
 use Redirect;
 
 class PagesController extends Controller
@@ -19,10 +20,11 @@ class PagesController extends Controller
      */
     public function index()
     {
-
+        $arrReps = [];
         foreach (\File::allFiles(app_path() . '/Core/Repositories') as $partial) {
-            require $partial->getPathname();
+            $arrReps[] = pathinfo($partial->getPathname(), PATHINFO_FILENAME);
         }
+        dd($arrReps);
         return view('home');
     }
 

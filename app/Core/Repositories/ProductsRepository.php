@@ -9,7 +9,6 @@ use RepositoryLab\Repository\Contracts\RepositoryInterface;
  */
 interface ProductsRepository extends RepositoryInterface
 {
-    public function getProduct();
     public function getModel();
 
 }

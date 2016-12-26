@@ -7,7 +7,7 @@
     @endsection
     @section('contentheader_title')
 
-        All Privileges ({!! \App\Core\Entities\Permission::all()->count() !!})
+        All Privileges ({!! \App\Core\Models\Permission::all()->count() !!})
         &middot;
     @endsection
     @section('contentheader_description')

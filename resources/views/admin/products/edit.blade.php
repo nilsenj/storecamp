@@ -8,7 +8,7 @@
 
     @section('contentheader_description')
 
-        <b>{!! link_to_route('admin::products::index', 'Назад') !!}</b>
+        <b>{!! link_to_route('admin::products::index', 'Back') !!}</b>
 
     @endsection
 </h1>
