@@ -83,10 +83,14 @@ class CategoriesController extends Controller
         }
     }
 
+    /**
+     * get category description for json
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getDescription($id) {
         try {
-            return response()->json('Error Appeared', 404);
-            $category = $this->repository->find($id)->first();
+            $category = $this->repository->find($id);
             $description = $category->description;
             return response()->json($description);
         } catch (ModelNotFoundException $e) {
