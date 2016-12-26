@@ -2,10 +2,10 @@
 
 namespace App\Core\Repositories;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
 use App\Core\Repositories\ProductsRepository;
-use App\Core\Entities\Product;
+use App\Core\Models\Product;
 
 /**
  * Class ProductsRepositoryEloquent

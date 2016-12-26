@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.28 on 2016-12-21.
+ * Generated for Laravel 5.3.28 on 2016-12-25.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -11399,6 +11399,42 @@ namespace {
     class View extends \Illuminate\Support\Facades\View{
         
         /**
+         * Get a evaluated view contents for the given view.
+         *
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @return \Illuminate\View\View 
+         * @static 
+         */
+        public static function make($view, $data = array(), $mergeData = array()){
+            return \Robbo\Presenter\View\Factory::make($view, $data, $mergeData);
+        }
+        
+        /**
+         * Add a piece of shared data to the factory.
+         *
+         * @param string $key
+         * @param mixed $value
+         * @return void 
+         * @static 
+         */
+        public static function share($key, $value = null){
+            \Robbo\Presenter\View\Factory::share($key, $value);
+        }
+        
+        /**
+         * Decorate an object with a presenter.
+         *
+         * @param mixed $value
+         * @return mixed 
+         * @static 
+         */
+        public static function decorate($value){
+            return \Robbo\Presenter\View\Factory::decorate($value);
+        }
+        
+        /**
          * Get the evaluated view contents for the given view.
          *
          * @param string $path
@@ -11408,20 +11444,8 @@ namespace {
          * @static 
          */
         public static function file($path, $data = array(), $mergeData = array()){
-            return \Illuminate\View\Factory::file($path, $data, $mergeData);
-        }
-        
-        /**
-         * Get the evaluated view contents for the given view.
-         *
-         * @param string $view
-         * @param array $data
-         * @param array $mergeData
-         * @return \Illuminate\Contracts\View\View 
-         * @static 
-         */
-        public static function make($view, $data = array(), $mergeData = array()){
-            return \Illuminate\View\Factory::make($view, $data, $mergeData);
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::file($path, $data, $mergeData);
         }
         
         /**
@@ -11433,7 +11457,8 @@ namespace {
          * @static 
          */
         public static function of($view, $data = array()){
-            return \Illuminate\View\Factory::of($view, $data);
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::of($view, $data);
         }
         
         /**
@@ -11445,7 +11470,8 @@ namespace {
          * @static 
          */
         public static function name($view, $name){
-            \Illuminate\View\Factory::name($view, $name);
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::name($view, $name);
         }
         
         /**
@@ -11457,7 +11483,8 @@ namespace {
          * @static 
          */
         public static function alias($view, $alias){
-            \Illuminate\View\Factory::alias($view, $alias);
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::alias($view, $alias);
         }
         
         /**
@@ -11468,7 +11495,8 @@ namespace {
          * @static 
          */
         public static function exists($view){
-            return \Illuminate\View\Factory::exists($view);
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::exists($view);
         }
         
         /**
@@ -11482,7 +11510,8 @@ namespace {
          * @static 
          */
         public static function renderEach($view, $data, $iterator, $empty = 'raw|'){
-            return \Illuminate\View\Factory::renderEach($view, $data, $iterator, $empty);
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::renderEach($view, $data, $iterator, $empty);
         }
         
         /**
@@ -11494,19 +11523,8 @@ namespace {
          * @static 
          */
         public static function getEngineFromPath($path){
-            return \Illuminate\View\Factory::getEngineFromPath($path);
-        }
-        
-        /**
-         * Add a piece of shared data to the environment.
-         *
-         * @param array|string $key
-         * @param mixed $value
-         * @return mixed 
-         * @static 
-         */
-        public static function share($key, $value = null){
-            return \Illuminate\View\Factory::share($key, $value);
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::getEngineFromPath($path);
         }
         
         /**
@@ -11518,7 +11536,8 @@ namespace {
          * @static 
          */
         public static function creator($views, $callback){
-            return \Illuminate\View\Factory::creator($views, $callback);
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::creator($views, $callback);
         }
         
         /**
@@ -11529,7 +11548,8 @@ namespace {
          * @static 
          */
         public static function composers($composers){
-            return \Illuminate\View\Factory::composers($composers);
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::composers($composers);
         }
         
         /**
@@ -11542,7 +11562,8 @@ namespace {
          * @static 
          */
         public static function composer($views, $callback, $priority = null){
-            return \Illuminate\View\Factory::composer($views, $callback, $priority);
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::composer($views, $callback, $priority);
         }
         
         /**
@@ -11553,7 +11574,8 @@ namespace {
          * @static 
          */
         public static function callComposer($view){
-            \Illuminate\View\Factory::callComposer($view);
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::callComposer($view);
         }
         
         /**
@@ -11564,7 +11586,8 @@ namespace {
          * @static 
          */
         public static function callCreator($view){
-            \Illuminate\View\Factory::callCreator($view);
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::callCreator($view);
         }
         
         /**
@@ -11576,7 +11599,8 @@ namespace {
          * @static 
          */
         public static function startSection($section, $content = ''){
-            \Illuminate\View\Factory::startSection($section, $content);
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::startSection($section, $content);
         }
         
         /**
@@ -11588,7 +11612,8 @@ namespace {
          * @static 
          */
         public static function inject($section, $content){
-            \Illuminate\View\Factory::inject($section, $content);
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::inject($section, $content);
         }
         
         /**
@@ -11598,7 +11623,8 @@ namespace {
          * @static 
          */
         public static function yieldSection(){
-            return \Illuminate\View\Factory::yieldSection();
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::yieldSection();
         }
         
         /**
@@ -11610,7 +11636,8 @@ namespace {
          * @static 
          */
         public static function stopSection($overwrite = false){
-            return \Illuminate\View\Factory::stopSection($overwrite);
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::stopSection($overwrite);
         }
         
         /**
@@ -11621,7 +11648,8 @@ namespace {
          * @static 
          */
         public static function appendSection(){
-            return \Illuminate\View\Factory::appendSection();
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::appendSection();
         }
         
         /**
@@ -11633,7 +11661,8 @@ namespace {
          * @static 
          */
         public static function yieldContent($section, $default = ''){
-            return \Illuminate\View\Factory::yieldContent($section, $default);
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::yieldContent($section, $default);
         }
         
         /**
@@ -11645,7 +11674,8 @@ namespace {
          * @static 
          */
         public static function startPush($section, $content = ''){
-            \Illuminate\View\Factory::startPush($section, $content);
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::startPush($section, $content);
         }
         
         /**
@@ -11656,7 +11686,8 @@ namespace {
          * @static 
          */
         public static function stopPush(){
-            return \Illuminate\View\Factory::stopPush();
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::stopPush();
         }
         
         /**
@@ -11668,7 +11699,8 @@ namespace {
          * @static 
          */
         public static function yieldPushContent($section, $default = ''){
-            return \Illuminate\View\Factory::yieldPushContent($section, $default);
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::yieldPushContent($section, $default);
         }
         
         /**
@@ -11678,7 +11710,8 @@ namespace {
          * @static 
          */
         public static function flushSections(){
-            \Illuminate\View\Factory::flushSections();
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::flushSections();
         }
         
         /**
@@ -11688,7 +11721,8 @@ namespace {
          * @static 
          */
         public static function flushSectionsIfDoneRendering(){
-            \Illuminate\View\Factory::flushSectionsIfDoneRendering();
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::flushSectionsIfDoneRendering();
         }
         
         /**
@@ -11698,7 +11732,8 @@ namespace {
          * @static 
          */
         public static function incrementRender(){
-            \Illuminate\View\Factory::incrementRender();
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::incrementRender();
         }
         
         /**
@@ -11708,7 +11743,8 @@ namespace {
          * @static 
          */
         public static function decrementRender(){
-            \Illuminate\View\Factory::decrementRender();
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::decrementRender();
         }
         
         /**
@@ -11718,7 +11754,8 @@ namespace {
          * @static 
          */
         public static function doneRendering(){
-            return \Illuminate\View\Factory::doneRendering();
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::doneRendering();
         }
         
         /**
@@ -11729,7 +11766,8 @@ namespace {
          * @static 
          */
         public static function addLoop($data){
-            \Illuminate\View\Factory::addLoop($data);
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::addLoop($data);
         }
         
         /**
@@ -11739,7 +11777,8 @@ namespace {
          * @static 
          */
         public static function incrementLoopIndices(){
-            \Illuminate\View\Factory::incrementLoopIndices();
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::incrementLoopIndices();
         }
         
         /**
@@ -11749,7 +11788,8 @@ namespace {
          * @static 
          */
         public static function popLoop(){
-            \Illuminate\View\Factory::popLoop();
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::popLoop();
         }
         
         /**
@@ -11759,7 +11799,8 @@ namespace {
          * @static 
          */
         public static function getFirstLoop(){
-            return \Illuminate\View\Factory::getFirstLoop();
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::getFirstLoop();
         }
         
         /**
@@ -11769,7 +11810,8 @@ namespace {
          * @static 
          */
         public static function getLoopStack(){
-            return \Illuminate\View\Factory::getLoopStack();
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::getLoopStack();
         }
         
         /**
@@ -11780,7 +11822,8 @@ namespace {
          * @static 
          */
         public static function addLocation($location){
-            \Illuminate\View\Factory::addLocation($location);
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::addLocation($location);
         }
         
         /**
@@ -11792,7 +11835,8 @@ namespace {
          * @static 
          */
         public static function addNamespace($namespace, $hints){
-            \Illuminate\View\Factory::addNamespace($namespace, $hints);
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::addNamespace($namespace, $hints);
         }
         
         /**
@@ -11804,7 +11848,8 @@ namespace {
          * @static 
          */
         public static function prependNamespace($namespace, $hints){
-            \Illuminate\View\Factory::prependNamespace($namespace, $hints);
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::prependNamespace($namespace, $hints);
         }
         
         /**
@@ -11817,7 +11862,8 @@ namespace {
          * @static 
          */
         public static function addExtension($extension, $engine, $resolver = null){
-            \Illuminate\View\Factory::addExtension($extension, $engine, $resolver);
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::addExtension($extension, $engine, $resolver);
         }
         
         /**
@@ -11827,7 +11873,8 @@ namespace {
          * @static 
          */
         public static function getExtensions(){
-            return \Illuminate\View\Factory::getExtensions();
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::getExtensions();
         }
         
         /**
@@ -11837,7 +11884,8 @@ namespace {
          * @static 
          */
         public static function getEngineResolver(){
-            return \Illuminate\View\Factory::getEngineResolver();
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::getEngineResolver();
         }
         
         /**
@@ -11847,7 +11895,8 @@ namespace {
          * @static 
          */
         public static function getFinder(){
-            return \Illuminate\View\Factory::getFinder();
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::getFinder();
         }
         
         /**
@@ -11858,7 +11907,8 @@ namespace {
          * @static 
          */
         public static function setFinder($finder){
-            \Illuminate\View\Factory::setFinder($finder);
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::setFinder($finder);
         }
         
         /**
@@ -11868,7 +11918,8 @@ namespace {
          * @static 
          */
         public static function getDispatcher(){
-            return \Illuminate\View\Factory::getDispatcher();
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::getDispatcher();
         }
         
         /**
@@ -11879,7 +11930,8 @@ namespace {
          * @static 
          */
         public static function setDispatcher($events){
-            \Illuminate\View\Factory::setDispatcher($events);
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::setDispatcher($events);
         }
         
         /**
@@ -11889,7 +11941,8 @@ namespace {
          * @static 
          */
         public static function getContainer(){
-            return \Illuminate\View\Factory::getContainer();
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::getContainer();
         }
         
         /**
@@ -11900,7 +11953,8 @@ namespace {
          * @static 
          */
         public static function setContainer($container){
-            \Illuminate\View\Factory::setContainer($container);
+            //Method inherited from \Illuminate\View\Factory            
+            \Robbo\Presenter\View\Factory::setContainer($container);
         }
         
         /**
@@ -11912,7 +11966,8 @@ namespace {
          * @static 
          */
         public static function shared($key, $default = null){
-            return \Illuminate\View\Factory::shared($key, $default);
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::shared($key, $default);
         }
         
         /**
@@ -11922,7 +11977,8 @@ namespace {
          * @static 
          */
         public static function getShared(){
-            return \Illuminate\View\Factory::getShared();
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::getShared();
         }
         
         /**
@@ -11933,7 +11989,8 @@ namespace {
          * @static 
          */
         public static function hasSection($name){
-            return \Illuminate\View\Factory::hasSection($name);
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::hasSection($name);
         }
         
         /**
@@ -11943,7 +12000,8 @@ namespace {
          * @static 
          */
         public static function getSections(){
-            return \Illuminate\View\Factory::getSections();
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::getSections();
         }
         
         /**
@@ -11953,164 +12011,8 @@ namespace {
          * @static 
          */
         public static function getNames(){
-            return \Illuminate\View\Factory::getNames();
-        }
-        
-    }
-
-
-    class JWTAuth extends \Tymon\JWTAuth\Facades\JWTAuth{
-        
-        /**
-         * Find a user using the user identifier in the subject claim.
-         *
-         * @param bool|string $token
-         * @return mixed 
-         * @static 
-         */
-        public static function toUser($token = false){
-            return \Tymon\JWTAuth\JWTAuth::toUser($token);
-        }
-        
-        /**
-         * Generate a token using the user identifier as the subject claim.
-         *
-         * @param mixed $user
-         * @param array $customClaims
-         * @return string 
-         * @static 
-         */
-        public static function fromUser($user, $customClaims = array()){
-            return \Tymon\JWTAuth\JWTAuth::fromUser($user, $customClaims);
-        }
-        
-        /**
-         * Attempt to authenticate the user and return the token.
-         *
-         * @param array $credentials
-         * @param array $customClaims
-         * @return false|string 
-         * @static 
-         */
-        public static function attempt($credentials = array(), $customClaims = array()){
-            return \Tymon\JWTAuth\JWTAuth::attempt($credentials, $customClaims);
-        }
-        
-        /**
-         * Authenticate a user via a token.
-         *
-         * @param mixed $token
-         * @return mixed 
-         * @static 
-         */
-        public static function authenticate($token = false){
-            return \Tymon\JWTAuth\JWTAuth::authenticate($token);
-        }
-        
-        /**
-         * Refresh an expired token.
-         *
-         * @param mixed $token
-         * @return string 
-         * @static 
-         */
-        public static function refresh($token = false){
-            return \Tymon\JWTAuth\JWTAuth::refresh($token);
-        }
-        
-        /**
-         * Invalidate a token (add it to the blacklist).
-         *
-         * @param mixed $token
-         * @return bool 
-         * @static 
-         */
-        public static function invalidate($token = false){
-            return \Tymon\JWTAuth\JWTAuth::invalidate($token);
-        }
-        
-        /**
-         * Get the token.
-         *
-         * @return bool|string 
-         * @static 
-         */
-        public static function getToken(){
-            return \Tymon\JWTAuth\JWTAuth::getToken();
-        }
-        
-        /**
-         * Get the raw Payload instance.
-         *
-         * @param mixed $token
-         * @return \Tymon\JWTAuth\Payload 
-         * @static 
-         */
-        public static function getPayload($token = false){
-            return \Tymon\JWTAuth\JWTAuth::getPayload($token);
-        }
-        
-        /**
-         * Parse the token from the request.
-         *
-         * @param string $query
-         * @return \JWTAuth 
-         * @static 
-         */
-        public static function parseToken($method = 'bearer', $header = 'authorization', $query = 'token'){
-            return \Tymon\JWTAuth\JWTAuth::parseToken($method, $header, $query);
-        }
-        
-        /**
-         * Set the identifier.
-         *
-         * @param string $identifier
-         * @return $this 
-         * @static 
-         */
-        public static function setIdentifier($identifier){
-            return \Tymon\JWTAuth\JWTAuth::setIdentifier($identifier);
-        }
-        
-        /**
-         * Get the identifier.
-         *
-         * @return string 
-         * @static 
-         */
-        public static function getIdentifier(){
-            return \Tymon\JWTAuth\JWTAuth::getIdentifier();
-        }
-        
-        /**
-         * Set the token.
-         *
-         * @param string $token
-         * @return $this 
-         * @static 
-         */
-        public static function setToken($token){
-            return \Tymon\JWTAuth\JWTAuth::setToken($token);
-        }
-        
-        /**
-         * Set the request instance.
-         *
-         * @param \Request $request
-         * @static 
-         */
-        public static function setRequest($request){
-            return \Tymon\JWTAuth\JWTAuth::setRequest($request);
-        }
-        
-        /**
-         * Get the JWTManager instance.
-         *
-         * @return \Tymon\JWTAuth\JWTManager 
-         * @static 
-         */
-        public static function manager(){
-            return \Tymon\JWTAuth\JWTAuth::manager();
+            //Method inherited from \Illuminate\View\Factory            
+            return \Robbo\Presenter\View\Factory::getNames();
         }
         
     }

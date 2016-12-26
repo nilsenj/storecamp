@@ -13,7 +13,17 @@ class CreateBasketsTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('baskets', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            if ((DB::connection()->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME) == 'mysql') && version_compare(DB::connection()->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION), '5.7.8', 'ge')) {
+                $table->json('contents')->nullable();
+            } else {
+                $table->text('contents')->nullable();
+            }
+            $table->double('max_capacity', 11, 3);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +33,6 @@ class CreateBasketsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('baskets');
     }
 }

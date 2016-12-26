@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Core\Entities\Role;
-use App\Core\Entities\Permission;
+use App\Core\Models\Role;
+use App\Core\Models\Permission;
 
 class AccessSeeder extends Seeder
 {

@@ -169,7 +169,6 @@ return [
 
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        Prettus\Repository\Providers\RepositoryServiceProvider::class,
         Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class,
 
         /*
@@ -199,6 +198,12 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
         \Cviebrock\ImageValidator\ImageValidatorServiceProvider::class,
+        \RepositoryLab\Repository\RepositoryServiceProvider::class,
+        App\Providers\PresentersServiceProvider::class,
+        App\Providers\RepositoriesServiceProvider::class,
+        App\Providers\TransformersServiceProvider::class,
+        \App\Providers\ModelServiceProvider::class,
+        \Robbo\Presenter\PresenterServiceProvider::class,
 
     ],
 

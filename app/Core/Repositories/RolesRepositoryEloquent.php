@@ -2,10 +2,11 @@
 
 namespace App\Core\Repositories;
 
-use App\Core\Entities\Role;
-use App\Core\Entities\Permission;
+use App\Core\Models\Role;
+use App\Core\Models\Permission;
 use Illuminate\Support\Facades\Input;
-use Prettus\Repository\Eloquent\BaseRepository;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
 
 class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
 {
@@ -19,16 +20,36 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
         return Role::class;
     }
 
+    /**
+     * Boot up the repository, pushing criteria
+     */
+    public function boot()
+    {
+        $this->pushCriteria(app(RequestCriteria::class));
+    }
+
+    /**
+     * @return int
+     */
     public function perPage()
     {
         return 10;
     }
+
+    /**
+     * @return mixed
+     */
     public function getModel()
     {
         $model = Role::class;
 
         return new $model;
     }
+
+    /**
+     * @param null $searchQuery
+     * @return mixed
+     */
     public function allOrSearch($searchQuery = null)
     {
         if (is_null($searchQuery)) {
@@ -36,10 +57,19 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
         }
         return $this->search($searchQuery);
     }
+
+    /**
+     * @return mixed
+     */
     public function getAll()
     {
         return $this->getModel()->latest()->paginate($this->perPage());
     }
+
+    /**
+     * @param $searchQuery
+     * @return mixed
+     */
     public function search($searchQuery)
     {
         $search = "%{$searchQuery}%";
@@ -49,15 +79,31 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
             ->paginate($this->perPage())
             ;
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function findById($id)
     {
         return $this->getModel()->find($id);
     }
+
+    /**
+     * @param $key
+     * @param $value
+     * @param string $operator
+     * @return mixed
+     */
     public function findBy($key, $value, $operator = '=')
     {
         return $this->getModel()->where($key, $operator, $value)->paginate($this->perPage());
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function delete($id)
     {
         $role = $this->findById($id);
@@ -67,6 +113,11 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
         }
         return false;
     }
+
+    /**
+     * @param array $data
+     * @return mixed
+     */
     public function create(array $data)
     {
         $listIds = $data['permissions'];
@@ -79,6 +130,11 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
 
     }
 
+    /**
+     * @param $data
+     * @param $dataPerm
+     * @param $role
+     */
     public function renew($data, $dataPerm, $role){
 
         $role->update($data);

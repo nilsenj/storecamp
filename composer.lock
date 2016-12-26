@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "68a03b02f96ca30d4096ab7d2a9861a5",
-    "content-hash": "c49bae1cbadf87d5d3c47b587df4e562",
+    "content-hash": "aec3548e8973b31e5a3f1923901f422d",
     "packages": [
         {
             "name": "a6digital/laravel-default-profile-image",
@@ -46,7 +45,7 @@
             "keywords": [
                 "laravel default profile image"
             ],
-            "time": "2015-05-01 17:03:54"
+            "time": "2015-05-01T17:03:54+00:00"
         },
         {
             "name": "acacha/admin-lte-template-laravel",
@@ -110,20 +109,20 @@
                 "template",
                 "theme"
             ],
-            "time": "2016-12-19 13:23:04"
+            "time": "2016-12-19T13:23:04+00:00"
         },
         {
             "name": "acacha/helpers",
-            "version": "0.1.2",
+            "version": "0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/acacha/helpers.git",
-                "reference": "35a60fe05d8007a77833b530479daa7ab7e5794f"
+                "reference": "02a461ffbcd7991c7758d78d0764fd3f9bb4582f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/acacha/helpers/zipball/35a60fe05d8007a77833b530479daa7ab7e5794f",
-                "reference": "35a60fe05d8007a77833b530479daa7ab7e5794f",
+                "url": "https://api.github.com/repos/acacha/helpers/zipball/02a461ffbcd7991c7758d78d0764fd3f9bb4582f",
+                "reference": "02a461ffbcd7991c7758d78d0764fd3f9bb4582f",
                 "shasum": ""
             },
             "require": {
@@ -140,6 +139,9 @@
                 }
             },
             "autoload": {
+                "psr-4": {
+                    "Acacha\\Helpers\\": "src"
+                },
                 "files": [
                     "src/helpers.php"
                 ]
@@ -163,7 +165,7 @@
                 "helpers",
                 "laravel"
             ],
-            "time": "2016-12-19 11:05:08"
+            "time": "2016-12-24T09:40:05+00:00"
         },
         {
             "name": "acacha/user",
@@ -217,7 +219,7 @@
                 "acacha",
                 "user"
             ],
-            "time": "2016-12-05 13:39:37"
+            "time": "2016-12-05T13:39:37+00:00"
         },
         {
             "name": "anahkiasen/underscore-php",
@@ -267,7 +269,7 @@
                 "laravel",
                 "toolkit"
             ],
-            "time": "2015-05-16 19:24:58"
+            "time": "2015-05-16T19:24:58+00:00"
         },
         {
             "name": "arcanedev/log-viewer",
@@ -330,7 +332,7 @@
                 "log-viewer",
                 "logviewer"
             ],
-            "time": "2016-12-19 18:50:02"
+            "time": "2016-12-19T18:50:02+00:00"
         },
         {
             "name": "arcanedev/support",
@@ -389,7 +391,7 @@
                 "laravel",
                 "support"
             ],
-            "time": "2016-12-19 18:56:46"
+            "time": "2016-12-19T18:56:46+00:00"
         },
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -455,7 +457,7 @@
                 "phpstorm",
                 "sublime"
             ],
-            "time": "2016-11-15 08:21:23"
+            "time": "2016-11-15T08:21:23+00:00"
         },
         {
             "name": "barryvdh/reflection-docblock",
@@ -504,7 +506,7 @@
                     "email": "mike.vanriel@naenius.com"
                 }
             ],
-            "time": "2016-06-13 19:28:20"
+            "time": "2016-06-13T19:28:20+00:00"
         },
         {
             "name": "camroncade/timezone",
@@ -545,7 +547,7 @@
             ],
             "description": "Helps manage timezones in Laravel. Includes <select> form builder for timezones.",
             "homepage": "http://www.camroncade.com/managing-timezones-with-laravel/",
-            "time": "2015-05-20 20:32:03"
+            "time": "2015-05-20T20:32:03+00:00"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -599,7 +601,7 @@
                 "class",
                 "preload"
             ],
-            "time": "2016-09-16 12:50:15"
+            "time": "2016-09-16T12:50:15+00:00"
         },
         {
             "name": "cocur/slugify",
@@ -663,7 +665,7 @@
                 "slug",
                 "slugify"
             ],
-            "time": "2016-08-09 20:10:17"
+            "time": "2016-08-09T20:10:17+00:00"
         },
         {
             "name": "codezero/mailer",
@@ -712,7 +714,7 @@
                 "message",
                 "php"
             ],
-            "time": "2016-07-12 18:44:16"
+            "time": "2016-07-12T18:44:16+00:00"
         },
         {
             "name": "creativeorange/gravatar",
@@ -756,7 +758,7 @@
                 "gravatar",
                 "laravel"
             ],
-            "time": "2016-07-27 16:49:05"
+            "time": "2016-07-27T16:49:05+00:00"
         },
         {
             "name": "cviebrock/eloquent-sluggable",
@@ -807,7 +809,7 @@
                 "laravel",
                 "slug"
             ],
-            "time": "2016-11-09 15:42:49"
+            "time": "2016-11-09T15:42:49+00:00"
         },
         {
             "name": "cviebrock/image-validator",
@@ -857,7 +859,58 @@
                 "laravel",
                 "validator"
             ],
-            "time": "2016-12-13 15:03:00"
+            "time": "2016-12-13T15:03:00+00:00"
+        },
+        {
+            "name": "darrylkuhn/dialect",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/darrylkuhn/dialect.git",
+                "reference": "d749cdc26bf8a52ccfe93a0433f47b78f0748458"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/darrylkuhn/dialect/zipball/d749cdc26bf8a52ccfe93a0433f47b78f0748458",
+                "reference": "d749cdc26bf8a52ccfe93a0433f47b78f0748458",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "4.*|5.*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "dev-master",
+                "illuminate/database": "4.*|5.*",
+                "phpunit/phpunit": "4.*",
+                "symfony/process": "~2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Eloquent\\Dialect\\": "src/Dialect/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Darryl Kuhn",
+                    "email": "darryl.kuhn@gmail.com"
+                }
+            ],
+            "description": "Provides JSON datatype support for the Eloquent ORM",
+            "keywords": [
+                "eloquent",
+                "illuminate",
+                "json",
+                "laravel",
+                "schema-free",
+                "schemaless"
+            ],
+            "time": "2016-06-17T00:11:13+00:00"
         },
         {
             "name": "davejamesmiller/laravel-breadcrumbs",
@@ -906,7 +959,7 @@
             "keywords": [
                 "laravel"
             ],
-            "time": "2016-10-09 07:45:41"
+            "time": "2016-10-09T07:45:41+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -939,7 +992,7 @@
                 "MIT"
             ],
             "description": "implementation of xdg base directory specification for php",
-            "time": "2014-10-24 07:27:01"
+            "time": "2014-10-24T07:27:01+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1007,7 +1060,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2016-10-24 11:45:47"
+            "time": "2016-10-24T11:45:47+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -1077,7 +1130,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2016-10-29 11:16:17"
+            "time": "2016-10-29T11:16:17+00:00"
         },
         {
             "name": "doctrine/collections",
@@ -1143,7 +1196,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2015-04-14 22:21:58"
+            "time": "2015-04-14T22:21:58+00:00"
         },
         {
             "name": "doctrine/common",
@@ -1216,7 +1269,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2016-12-03 08:15:01"
+            "time": "2016-12-03T08:15:01+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -1288,7 +1341,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2016-12-04 05:57:28"
+            "time": "2016-12-04T05:57:28+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -1355,7 +1408,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2015-11-06 14:35:42"
+            "time": "2015-11-06T14:35:42+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -1409,7 +1462,66 @@
                 "lexer",
                 "parser"
             ],
-            "time": "2014-09-09 13:34:57"
+            "time": "2014-09-09T13:34:57+00:00"
+        },
+        {
+            "name": "graham-campbell/manager",
+            "version": "v2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GrahamCampbell/Laravel-Manager.git",
+                "reference": "fd9052082e2c69c9a67d3e8d7dfa94cb33f8ab0b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-Manager/zipball/fd9052082e2c69c9a67d3e8d7dfa94cb33f8ab0b",
+                "reference": "fd9052082e2c69c9a67d3e8d7dfa94cb33f8ab0b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "5.1.*|5.2.*|5.3.*",
+                "illuminate/support": "5.1.*|5.2.*|5.3.*",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "graham-campbell/testbench-core": "^1.1",
+                "mockery/mockery": "^0.9.4",
+                "phpunit/phpunit": "^4.8|^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GrahamCampbell\\Manager\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graham Campbell",
+                    "email": "graham@alt-three.com"
+                }
+            ],
+            "description": "Manager Provides Some Manager Functionality For Laravel 5",
+            "keywords": [
+                "Graham Campbell",
+                "GrahamCampbell",
+                "Laravel Manager",
+                "Laravel-Manager",
+                "connector",
+                "framework",
+                "interface",
+                "laravel",
+                "manager"
+            ],
+            "time": "2016-04-26T14:27:59+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1471,7 +1583,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2016-10-08 15:01:37"
+            "time": "2016-10-08T15:01:37+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1522,7 +1634,7 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2016-12-20 10:07:11"
+            "time": "2016-12-20T10:07:11+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1580,7 +1692,64 @@
                 "stream",
                 "uri"
             ],
-            "time": "2016-06-24 23:00:38"
+            "time": "2016-06-24T23:00:38+00:00"
+        },
+        {
+            "name": "hashids/hashids",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ivanakimov/hashids.php.git",
+                "reference": "6bd7ceffb2ccddef6cd64e88f1717f97d131cc3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ivanakimov/hashids.php/zipball/6bd7ceffb2ccddef6cd64e88f1717f97d131cc3c",
+                "reference": "6bd7ceffb2ccddef6cd64e88f1717f97d131cc3c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.3 || ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8 || ^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hashids\\": "lib/Hashids/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Akimov",
+                    "email": "ivan@barreleye.com",
+                    "homepage": "https://twitter.com/IvanAkimov"
+                }
+            ],
+            "description": "Generate short, unique, non-sequential ids (like YouTube and Bitly) from numbers.",
+            "homepage": "http://hashids.org/php",
+            "keywords": [
+                "bitly",
+                "decode",
+                "encode",
+                "hash",
+                "hashid",
+                "hashids",
+                "ids",
+                "obfuscate",
+                "youtube"
+            ],
+            "time": "2016-01-21T04:26:38+00:00"
         },
         {
             "name": "intervention/image",
@@ -1642,7 +1811,7 @@
                 "thumbnail",
                 "watermark"
             ],
-            "time": "2016-09-01 17:04:03"
+            "time": "2016-09-01T17:04:03+00:00"
         },
         {
             "name": "intervention/imagecache",
@@ -1695,7 +1864,7 @@
                 "imagick",
                 "laravel"
             ],
-            "time": "2015-09-22 15:22:47"
+            "time": "2015-09-22T15:22:47+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -1738,7 +1907,7 @@
                     "homepage": "http://www.acci.cz"
                 }
             ],
-            "time": "2014-04-08 15:00:19"
+            "time": "2014-04-08T15:00:19+00:00"
         },
         {
             "name": "jakub-onderka/php-console-highlighter",
@@ -1782,7 +1951,7 @@
                     "homepage": "http://www.acci.cz/"
                 }
             ],
-            "time": "2015-04-20 18:58:01"
+            "time": "2015-04-20T18:58:01+00:00"
         },
         {
             "name": "jeremeamia/SuperClosure",
@@ -1840,7 +2009,53 @@
                 "serialize",
                 "tokenizer"
             ],
-            "time": "2016-12-07 09:37:55"
+            "time": "2016-12-07T09:37:55+00:00"
+        },
+        {
+            "name": "juggl/unique-hashids",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Jugglio/UniqueHashids.git",
+                "reference": "39e9d6be0acd04f4b392cf5cdebc290231f0537b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Jugglio/UniqueHashids/zipball/39e9d6be0acd04f4b392cf5cdebc290231f0537b",
+                "reference": "39e9d6be0acd04f4b392cf5cdebc290231f0537b",
+                "shasum": ""
+            },
+            "require": {
+                "vinkla/hashids": "~2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Juggl\\UniqueHashids\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sven Luijten",
+                    "email": "svenluijten@outlook.com",
+                    "homepage": "http://svenluijten.com"
+                }
+            ],
+            "description": "Easily create unique ids for a Laravel model.",
+            "homepage": "https://github.com/Jugglio/UniqueHashids",
+            "keywords": [
+                "Unique ID",
+                "hashids",
+                "id",
+                "laravel",
+                "unique"
+            ],
+            "abandoned": "sven/unique-hashids",
+            "time": "2015-12-26T16:25:48+00:00"
         },
         {
             "name": "laravel/framework",
@@ -1968,7 +2183,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2016-12-15 18:03:17"
+            "time": "2016-12-15T18:03:17+00:00"
         },
         {
             "name": "laravel/socialite",
@@ -2022,7 +2237,7 @@
                 "laravel",
                 "oauth"
             ],
-            "time": "2015-11-08 18:05:00"
+            "time": "2015-11-08T18:05:00+00:00"
         },
         {
             "name": "laravelcollective/html",
@@ -2076,7 +2291,7 @@
             ],
             "description": "HTML and Form Builders for the Laravel Framework",
             "homepage": "http://laravelcollective.com",
-            "time": "2016-08-27 23:52:43"
+            "time": "2016-08-27T23:52:43+00:00"
         },
         {
             "name": "league/flysystem",
@@ -2159,7 +2374,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2016-10-19 20:38:46"
+            "time": "2016-10-19T20:38:46+00:00"
         },
         {
             "name": "league/fractal",
@@ -2222,7 +2437,7 @@
                 "league",
                 "rest"
             ],
-            "time": "2016-07-21 09:56:14"
+            "time": "2016-07-21T09:56:14+00:00"
         },
         {
             "name": "league/glide",
@@ -2283,7 +2498,7 @@
                 "manipulation",
                 "processing"
             ],
-            "time": "2016-11-14 16:36:03"
+            "time": "2016-11-14T16:36:03+00:00"
         },
         {
             "name": "league/oauth1-client",
@@ -2346,7 +2561,7 @@
                 "tumblr",
                 "twitter"
             ],
-            "time": "2016-08-17 00:36:58"
+            "time": "2016-08-17T00:36:58+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2424,7 +2639,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2016-11-26 00:15:39"
+            "time": "2016-11-26T00:15:39+00:00"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -2468,7 +2683,7 @@
                 "cron",
                 "schedule"
             ],
-            "time": "2016-01-26 21:23:30"
+            "time": "2016-01-26T21:23:30+00:00"
         },
         {
             "name": "namshi/jose",
@@ -2518,7 +2733,7 @@
                 "jwt",
                 "token"
             ],
-            "time": "2015-06-29 05:41:44"
+            "time": "2015-06-29T05:41:44+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -2565,7 +2780,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2015-11-04 20:07:17"
+            "time": "2015-11-04T20:07:17+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -2616,7 +2831,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2016-12-06 11:30:35"
+            "time": "2016-12-06T11:30:35+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -2664,7 +2879,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-11-07 23:38:38"
+            "time": "2016-11-07T23:38:38+00:00"
         },
         {
             "name": "patchwork/utf8",
@@ -2723,7 +2938,7 @@
                 "utf-8",
                 "utf8"
             ],
-            "time": "2016-05-18 13:57:10"
+            "time": "2016-05-18T13:57:10+00:00"
         },
         {
             "name": "phpseclib/phpseclib",
@@ -2821,7 +3036,7 @@
                 "x.509",
                 "x509"
             ],
-            "time": "2015-01-28 21:50:33"
+            "time": "2015-01-28T21:50:33+00:00"
         },
         {
             "name": "predis/predis",
@@ -2871,107 +3086,7 @@
                 "predis",
                 "redis"
             ],
-            "time": "2016-06-16 16:22:20"
-        },
-        {
-            "name": "prettus/l5-repository",
-            "version": "2.6.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/andersao/l5-repository.git",
-                "reference": "05945e652bfdacd456128d69bcae91701ccc9e32"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/andersao/l5-repository/zipball/05945e652bfdacd456128d69bcae91701ccc9e32",
-                "reference": "05945e652bfdacd456128d69bcae91701ccc9e32",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/config": "~5.0",
-                "illuminate/console": "~5.0",
-                "illuminate/database": "~5.0",
-                "illuminate/filesystem": "~5.0",
-                "illuminate/http": "~5.0",
-                "illuminate/pagination": "~5.0",
-                "illuminate/support": "~5.0",
-                "prettus/laravel-validation": "1.1.*"
-            },
-            "suggest": {
-                "league/fractal": "Required to use the Fractal Presenter (0.12.*).",
-                "robclancy/presenter": "Required to use the Presenter Model (1.3.*)"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "2.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Prettus\\Repository\\": "src/Prettus/Repository/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Anderson Andrade",
-                    "email": "contato@andersonandra.de",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Laravel 5 - Repositories to  the database layer",
-            "keywords": [
-                "cache",
-                "eloquent",
-                "laravel",
-                "model",
-                "repository"
-            ],
-            "time": "2016-06-27 10:43:22"
-        },
-        {
-            "name": "prettus/laravel-validation",
-            "version": "1.1.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/andersao/laravel-validator.git",
-                "reference": "c3501ba6b6312b8e98098783901060c0aff2b29d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/andersao/laravel-validator/zipball/c3501ba6b6312b8e98098783901060c0aff2b29d",
-                "reference": "c3501ba6b6312b8e98098783901060c0aff2b29d",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "~5.0|~5.1",
-                "illuminate/validation": "~5.0|~5.1",
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Prettus\\Validator\\": "src/Prettus/Validator/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Anderson Andrade",
-                    "email": "contato@andersonandra.de"
-                }
-            ],
-            "description": "Laravel Validation Service",
-            "keywords": [
-                "laravel",
-                "service",
-                "validation"
-            ],
-            "time": "2015-06-08 23:53:46"
+            "time": "2016-06-16T16:22:20+00:00"
         },
         {
             "name": "psr/http-message",
@@ -3021,7 +3136,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06 14:39:51"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/log",
@@ -3068,7 +3183,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-10-10 12:19:37"
+            "time": "2016-10-10T12:19:37+00:00"
         },
         {
             "name": "psy/psysh",
@@ -3141,7 +3256,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2016-12-07 17:15:07"
+            "time": "2016-12-07T17:15:07+00:00"
         },
         {
             "name": "ramsey/uuid",
@@ -3223,7 +3338,7 @@
                 "identifier",
                 "uuid"
             ],
-            "time": "2016-11-22 19:21:44"
+            "time": "2016-11-22T19:21:44+00:00"
         },
         {
             "name": "robclancy/presenter",
@@ -3274,7 +3389,7 @@
                 "laravel",
                 "presenter"
             ],
-            "time": "2015-03-14 08:14:37"
+            "time": "2015-03-14T08:14:37+00:00"
         },
         {
             "name": "spatie/laravel-glide",
@@ -3317,7 +3432,7 @@
             ],
             "description": "Easily convert images with Glide",
             "homepage": "https://github.com/spatie/laravel-glide",
-            "time": "2016-05-05 15:35:48"
+            "time": "2016-05-05T15:35:48+00:00"
         },
         {
             "name": "spatie/laravel-medialibrary",
@@ -3384,7 +3499,7 @@
                 "media",
                 "spatie"
             ],
-            "time": "2016-12-17 13:48:05"
+            "time": "2016-12-17T13:48:05+00:00"
         },
         {
             "name": "spatie/pdf-to-image",
@@ -3434,7 +3549,7 @@
                 "pdf-to-image",
                 "spatie"
             ],
-            "time": "2016-12-14 15:37:00"
+            "time": "2016-12-14T15:37:00+00:00"
         },
         {
             "name": "spatie/string",
@@ -3487,7 +3602,7 @@
                 "spatie",
                 "string"
             ],
-            "time": "2016-12-01 13:46:28"
+            "time": "2016-12-01T13:46:28+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3540,7 +3655,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2016-11-24 01:01:23"
+            "time": "2016-11-24T01:01:23+00:00"
         },
         {
             "name": "symfony/class-loader",
@@ -3596,7 +3711,7 @@
             ],
             "description": "Symfony ClassLoader Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-29 08:26:13"
+            "time": "2016-11-29T08:26:13+00:00"
         },
         {
             "name": "symfony/console",
@@ -3657,7 +3772,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2016-12-08 14:58:14"
+            "time": "2016-12-08T14:58:14+00:00"
         },
         {
             "name": "symfony/debug",
@@ -3714,7 +3829,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-15 12:55:20"
+            "time": "2016-11-15T12:55:20+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -3774,7 +3889,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-10-13 06:29:04"
+            "time": "2016-10-13T06:29:04+00:00"
         },
         {
             "name": "symfony/finder",
@@ -3823,7 +3938,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2016-12-13 09:38:21"
+            "time": "2016-12-13T09:38:21+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -3876,7 +3991,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-27 04:21:07"
+            "time": "2016-11-27T04:21:07+00:00"
         },
         {
             "name": "symfony/http-kernel",
@@ -3958,7 +4073,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "time": "2016-12-13 12:52:10"
+            "time": "2016-12-13T12:52:10+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -4017,7 +4132,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-php56",
@@ -4073,7 +4188,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/polyfill-util",
@@ -4125,7 +4240,7 @@
                 "polyfill",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/process",
@@ -4174,7 +4289,7 @@
             ],
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-24 01:08:05"
+            "time": "2016-11-24T01:08:05+00:00"
         },
         {
             "name": "symfony/routing",
@@ -4249,7 +4364,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2016-11-25 12:27:14"
+            "time": "2016-11-25T12:27:14+00:00"
         },
         {
             "name": "symfony/translation",
@@ -4313,7 +4428,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-18 21:15:08"
+            "time": "2016-11-18T21:15:08+00:00"
         },
         {
             "name": "symfony/var-dumper",
@@ -4376,7 +4491,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2016-12-08 14:58:14"
+            "time": "2016-12-08T14:58:14+00:00"
         },
         {
             "name": "tymon/jwt-auth",
@@ -4439,7 +4554,69 @@
                 "laravel",
                 "tymon"
             ],
-            "time": "2016-02-18 09:22:36"
+            "time": "2016-02-18T09:22:36+00:00"
+        },
+        {
+            "name": "vinkla/hashids",
+            "version": "2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vinkla/laravel-hashids.git",
+                "reference": "77238d50efa2473cdf627d2e0b6a1834037c5b66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vinkla/laravel-hashids/zipball/77238d50efa2473cdf627d2e0b6a1834037c5b66",
+                "reference": "77238d50efa2473cdf627d2e0b6a1834037c5b66",
+                "shasum": ""
+            },
+            "require": {
+                "graham-campbell/manager": "^2.4",
+                "hashids/hashids": "^1.0",
+                "illuminate/contracts": "5.1.* || 5.2.* || 5.3.*",
+                "illuminate/support": "5.1.* || 5.2.* || 5.3.*",
+                "php": "^5.6.4 || ^7.0"
+            },
+            "require-dev": {
+                "graham-campbell/testbench": "^3.2",
+                "mockery/mockery": "^0.9.5",
+                "phpunit/phpunit": "^5.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Vinkla\\Hashids\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vincent Klaiber",
+                    "email": "hello@vinkla.com"
+                }
+            ],
+            "description": "A Hashids bridge for Laravel",
+            "keywords": [
+                "bitly",
+                "decrypt",
+                "encrypt",
+                "hash",
+                "hashid",
+                "hashids",
+                "ids",
+                "laravel",
+                "obfuscate",
+                "youtube"
+            ],
+            "time": "2016-07-11T19:13:05+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -4489,7 +4666,7 @@
                 "env",
                 "environment"
             ],
-            "time": "2016-09-01 10:05:43"
+            "time": "2016-09-01T10:05:43+00:00"
         },
         {
             "name": "webpatser/laravel-countries",
@@ -4541,7 +4718,7 @@
                 "iso_3166_3",
                 "laravel"
             ],
-            "time": "2015-06-10 07:52:21"
+            "time": "2015-06-10T07:52:21+00:00"
         }
     ],
     "packages-dev": [
@@ -4597,7 +4774,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14 21:17:01"
+            "time": "2015-06-14T21:17:01+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -4645,7 +4822,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-04-29 12:21:54"
+            "time": "2016-04-29T12:21:54+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -4690,7 +4867,7 @@
             "keywords": [
                 "test"
             ],
-            "time": "2015-05-11 14:41:42"
+            "time": "2015-05-11T14:41:42+00:00"
         },
         {
             "name": "landish/pagination",
@@ -4731,7 +4908,7 @@
                 "laravel",
                 "pagination"
             ],
-            "time": "2015-11-24 12:45:06"
+            "time": "2015-11-24T12:45:06+00:00"
         },
         {
             "name": "laracasts/flash",
@@ -4774,7 +4951,7 @@
                 }
             ],
             "description": "Easy flash notifications",
-            "time": "2016-07-12 13:53:03"
+            "time": "2016-07-12T13:53:03+00:00"
         },
         {
             "name": "laracasts/generators",
@@ -4818,20 +4995,20 @@
                 "generators",
                 "laravel"
             ],
-            "time": "2016-08-19 13:03:53"
+            "time": "2016-08-19T13:03:53+00:00"
         },
         {
             "name": "mockery/mockery",
-            "version": "0.9.6",
+            "version": "0.9.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/padraic/mockery.git",
-                "reference": "65d4ca18e15cb02eeb1e5336f884e46b9b905be0"
+                "reference": "4de7969f4664da3cef1ccd83866c9f59378c3371"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/padraic/mockery/zipball/65d4ca18e15cb02eeb1e5336f884e46b9b905be0",
-                "reference": "65d4ca18e15cb02eeb1e5336f884e46b9b905be0",
+                "url": "https://api.github.com/repos/padraic/mockery/zipball/4de7969f4664da3cef1ccd83866c9f59378c3371",
+                "reference": "4de7969f4664da3cef1ccd83866c9f59378c3371",
                 "shasum": ""
             },
             "require": {
@@ -4883,7 +5060,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2016-09-30 12:09:40"
+            "time": "2016-12-19T14:50:55+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -4925,7 +5102,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2016-10-31 17:19:45"
+            "time": "2016-10-31T17:19:45+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -4979,7 +5156,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2015-12-27 11:43:31"
+            "time": "2015-12-27T11:43:31+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -5024,7 +5201,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2016-09-30 07:12:33"
+            "time": "2016-09-30T07:12:33+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -5071,7 +5248,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2016-11-25 06:54:22"
+            "time": "2016-11-25T06:54:22+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -5134,7 +5311,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2016-11-21 14:58:47"
+            "time": "2016-11-21T14:58:47+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5197,7 +5374,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-20 15:22:42"
+            "time": "2016-12-20T15:22:42+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -5244,7 +5421,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2016-10-03 07:40:28"
+            "time": "2016-10-03T07:40:28+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -5285,7 +5462,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21 13:50:34"
+            "time": "2015-06-21T13:50:34+00:00"
         },
         {
             "name": "phpunit/php-timer",
@@ -5329,7 +5506,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2016-05-12 18:03:57"
+            "time": "2016-05-12T18:03:57+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -5378,7 +5555,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2016-11-15 14:06:22"
+            "time": "2016-11-15T14:06:22+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -5460,7 +5637,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-13 16:19:44"
+            "time": "2016-12-13T16:19:44+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -5519,7 +5696,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2016-12-08 20:27:08"
+            "time": "2016-12-08T20:27:08+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -5564,7 +5741,7 @@
             ],
             "description": "Looks up which function or method a line of code belongs to",
             "homepage": "https://github.com/sebastianbergmann/code-unit-reverse-lookup/",
-            "time": "2016-02-13 06:45:14"
+            "time": "2016-02-13T06:45:14+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -5628,7 +5805,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2016-11-19 09:18:40"
+            "time": "2016-11-19T09:18:40+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -5680,7 +5857,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2015-12-08 07:14:41"
+            "time": "2015-12-08T07:14:41+00:00"
         },
         {
             "name": "sebastian/environment",
@@ -5730,7 +5907,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2016-11-26 07:53:53"
+            "time": "2016-11-26T07:53:53+00:00"
         },
         {
             "name": "sebastian/exporter",
@@ -5797,7 +5974,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2016-11-19 08:54:04"
+            "time": "2016-11-19T08:54:04+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -5848,7 +6025,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2015-10-12 03:26:01"
+            "time": "2015-10-12T03:26:01+00:00"
         },
         {
             "name": "sebastian/object-enumerator",
@@ -5894,7 +6071,7 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2016-11-19 07:35:10"
+            "time": "2016-11-19T07:35:10+00:00"
         },
         {
             "name": "sebastian/recursion-context",
@@ -5947,7 +6124,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2016-11-19 07:33:16"
+            "time": "2016-11-19T07:33:16+00:00"
         },
         {
             "name": "sebastian/resource-operations",
@@ -5989,7 +6166,7 @@
             ],
             "description": "Provides a list of PHP built-in functions that operate on resources",
             "homepage": "https://www.github.com/sebastianbergmann/resource-operations",
-            "time": "2015-07-28 20:34:47"
+            "time": "2015-07-28T20:34:47+00:00"
         },
         {
             "name": "sebastian/version",
@@ -6032,7 +6209,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2016-10-03 07:35:21"
+            "time": "2016-10-03T07:35:21+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -6085,7 +6262,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-03 08:04:31"
+            "time": "2016-11-03T08:04:31+00:00"
         },
         {
             "name": "symfony/dom-crawler",
@@ -6141,7 +6318,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-            "time": "2016-12-10 14:24:45"
+            "time": "2016-12-10T14:24:45+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -6196,7 +6373,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-12-10 10:07:06"
+            "time": "2016-12-10T10:07:06+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -6246,7 +6423,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2016-11-23 20:04:58"
+            "time": "2016-11-23T20:04:58+00:00"
         }
     ],
     "aliases": [],

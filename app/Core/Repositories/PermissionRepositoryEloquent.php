@@ -2,9 +2,9 @@
 
 namespace App\Core\Repositories;
 
-use App\Core\Entities\Permission;
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
+use App\Core\Models\Permission;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
 use App\Core\Repositories\PermissionRepository;
 
 /**

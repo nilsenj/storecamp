@@ -1,7 +1,7 @@
 <?php
 /*
 |--------------------------------------------------------------------------
-| Prettus Repository Config
+| RepositoryLab Repository Config
 |--------------------------------------------------------------------------
 |
 |
@@ -14,8 +14,8 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'pagination' => [
-        'limit' => 15
+    'pagination'=>[
+        'limit'=>10
     ],
 
     /*
@@ -30,11 +30,11 @@ return [
     JsonApiSerializer
 
     */
-    'fractal'    => [
-        'params'     => [
-            'include' => 'include'
+    'fractal'=>[
+        'params'=>[
+            'include'=>'include'
         ],
-        'serializer' => League\Fractal\Serializer\DataArraySerializer::class
+        'serializer' => League\Fractal\Serializer\JsonApiSerializer::class
     ],
 
     /*
@@ -43,106 +43,143 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'cache'      => [
-        /*
-         |--------------------------------------------------------------------------
-         | Cache Status
-         |--------------------------------------------------------------------------
-         |
-         | Enable or disable cache
-         |
-         */
-        'enabled'    => true,
+//    'cache'=>[
+//        /*
+//         |--------------------------------------------------------------------------
+//         | Cache Status
+//         |--------------------------------------------------------------------------
+//         |
+//         | Enable or disable cache
+//         |
+//         */
+//        'enabled'   => true,
+//
+//        /*
+//         |--------------------------------------------------------------------------
+//         | Cache Minutes
+//         |--------------------------------------------------------------------------
+//         |
+//         | Time of expiration cache
+//         |
+//         */
+//        'minutes'   => 30,
+//
+//        /*
+//         |--------------------------------------------------------------------------
+//         | Cache Repository
+//         |--------------------------------------------------------------------------
+//         |
+//         | Instance of Illuminate\Contracts\Cache\Repository
+//         |
+//         */
+//        'repository'=> Illuminate\Contracts\Cache\Repository::class,
+//
+//        /*
+//          |--------------------------------------------------------------------------
+//          | Cache Clean Listener
+//          |--------------------------------------------------------------------------
+//          |
+//          |
+//          |
+//          */
+//        'clean'     => [
+//
+//            /*
+//              |--------------------------------------------------------------------------
+//              | Enable clear cache on repository changes
+//              |--------------------------------------------------------------------------
+//              |
+//              */
+//            'enabled' => true,
+//
+//            /*
+//              |--------------------------------------------------------------------------
+//              | Actions in Repository
+//              |--------------------------------------------------------------------------
+//              |
+//              | create : Clear Cache on create Entry in repository
+//              | update : Clear Cache on update Entry in repository
+//              | delete : Clear Cache on delete Entry in repository
+//              |
+//              */
+//            'on' => [
+//                'create'=>true,
+//                'update'=>true,
+//                'delete'=>true,
+//            ]
+//        ],
+//
+//        'params'    => [
+//            /*
+//            |--------------------------------------------------------------------------
+//            | Skip Cache Params
+//            |--------------------------------------------------------------------------
+//            |
+//            |
+//            | Ex: http://prettus.local/?search=lorem&skipCache=true
+//            |
+//            */
+//            'skipCache'=>'skipCache'
+//        ],
+//
+//        /*
+//       |--------------------------------------------------------------------------
+//       | Methods Allowed
+//       |--------------------------------------------------------------------------
+//       |
+//       | methods cacheable : all, paginate, find, findByField, findWhere, getByCriteria
+//       |
+//       | Ex:
+//       |
+//       | 'only'  =>['all','paginate'],
+//       |
+//       | or
+//       |
+//       | 'except'  =>['find'],
+//       */
+//        'allowed'=>[
+//            'only'  =>['all', 'paginate','find'],
+//            'except'=>null
+//        ]
+//    ],
+    'cache'=>[
+        //Enable or disable cache repositories
+        'enabled'   => false,
 
-        /*
-         |--------------------------------------------------------------------------
-         | Cache Minutes
-         |--------------------------------------------------------------------------
-         |
-         | Time of expiration cache
-         |
-         */
-        'minutes'    => 30,
+        //Lifetime of cache
+        'minutes'   => 30,
 
-        /*
-         |--------------------------------------------------------------------------
-         | Cache Repository
-         |--------------------------------------------------------------------------
-         |
-         | Instance of Illuminate\Contracts\Cache\Repository
-         |
-         */
-        'repository' => 'cache',
+        //Repository Cache, implementation Illuminate\Contracts\Cache\Repository
+        'repository'=> 'cache',
 
-        /*
-          |--------------------------------------------------------------------------
-          | Cache Clean Listener
-          |--------------------------------------------------------------------------
-          |
-          |
-          |
-          */
-        'clean'      => [
-
-            /*
-              |--------------------------------------------------------------------------
-              | Enable clear cache on repository changes
-              |--------------------------------------------------------------------------
-              |
-              */
+        //Sets clearing the cache
+        'clean'     => [
+            //Enable, disable clearing the cache on changes
             'enabled' => true,
 
-            /*
-              |--------------------------------------------------------------------------
-              | Actions in Repository
-              |--------------------------------------------------------------------------
-              |
-              | create : Clear Cache on create Entry in repository
-              | update : Clear Cache on update Entry in repository
-              | delete : Clear Cache on delete Entry in repository
-              |
-              */
-            'on'      => [
-                'create' => true,
-                'update' => true,
-                'delete' => true,
+            'on' => [
+                //Enable, disable clearing the cache when you create an item
+                'create'=>true,
+
+                //Enable, disable clearing the cache when upgrading an item
+                'update'=>true,
+
+                //Enable, disable clearing the cache when you delete an item
+                'delete'=>true,
             ]
         ],
-
-        'params'     => [
-            /*
-            |--------------------------------------------------------------------------
-            | Skip Cache Params
-            |--------------------------------------------------------------------------
-            |
-            |
-            | Ex: http://prettus.local/?search=lorem&skipCache=true
-            |
-            */
-            'skipCache' => 'skipCache'
+        'params' => [
+            //Request parameter that will be used to bypass the cache repository
+            'skipCache'=>'skipCache'
         ],
+        'allowed'=>[
+            //Allow caching only for some methods
+            'only'  =>['all', 'paginate', 'find'],
 
-        /*
-       |--------------------------------------------------------------------------
-       | Methods Allowed
-       |--------------------------------------------------------------------------
-       |
-       | methods cacheable : all, paginate, find, findByField, findWhere, getByCriteria
-       |
-       | Ex:
-       |
-       | 'only'  =>['all','paginate'],
-       |
-       | or
-       |
-       | 'except'  =>['find'],
-       */
-        'allowed'    => [
-            'only'   => null,
-            'except' => null
-        ]
+            //Allow caching for all available methods, except
+            'except'=>null
+        ],
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Criteria Config
@@ -151,7 +188,7 @@ return [
     | Settings of request parameters names that will be used by Criteria
     |
     */
-    'criteria'   => [
+    'criteria'=>[
         /*
         |--------------------------------------------------------------------------
         | Accepted Conditions
@@ -167,9 +204,8 @@ return [
         | $query->where('foo','like','bar')
         |
         */
-        'acceptedConditions' => [
-            '=',
-            'like'
+        'acceptedConditions'=>[
+            '=','like'
         ],
         /*
         |--------------------------------------------------------------------------
@@ -203,13 +239,13 @@ return [
         |   http://prettus.local/?search=lorem&orderBy=id&sortedBy=desc
         |
         */
-        'params'             => [
-            'search'       => 'search',
-            'searchFields' => 'searchFields',
-            'filter'       => 'filter',
-            'orderBy'      => 'orderBy',
-            'sortedBy'     => 'sortedBy',
-            'with'         => 'with'
+        'params'=>[
+            'search'        =>'q',
+            'searchFields'  =>'searchFields',
+            'filter'        =>'filter',
+            'orderBy'       =>'orderBy',
+            'sortedBy'      =>'sortedBy',
+            'with'          =>'with'
         ]
     ],
     /*
@@ -218,20 +254,16 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'generator'  => [
-        'basePath'      => app_path().'\Core',
-        'rootNamespace' => 'App\\Core\\',
-        'paths'         => [
-            'models'       => 'Entities',
-            'repositories' => 'Repositories',
-            'interfaces'   => 'Repositories',
-            'transformers' => 'Transformers',
-            'presenters'   => 'Presenters',
-            'validators'   => 'Validators',
-            'controllers'  => 'Http/Controllers',
-            'provider'     => 'RepositoryServiceProvider',
-            'criteria'     => 'Criteria',
-            'stubsOverridePath' => app_path().'\Core'
+    'generator'=>[
+        'basePath'=> app_path().'\Core',
+        'rootNamespace'=>'App\\Core\\',
+        'paths'=>[
+            'models'=>'Models',
+            'repositories'=>'Repositories',
+            'controllers'=> 'Controllers',
+            'interfaces'=>'Repositories',
+            'transformers'=>'Transformers',
+            'presenters'=>'Presenters'
         ]
     ]
 ];

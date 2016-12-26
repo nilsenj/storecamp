@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Core\Entities\Category;
+use App\Core\Models\Category;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;

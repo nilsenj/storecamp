@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Core\Entities\Permission;
-use App\Core\Entities\Role;
+use App\Core\Models\Permission;
+use App\Core\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Input;
 use App\Http\Controllers\Controller;
 use App\Core\Repositories\RolesRepository;
-use App\Core\Entities\User;
+use App\Core\Models\User;
 use App\Core\Validation\Role\RolesFormRequest;
 use App\Core\Validation\Role\RolesUpdateFormRequest;
 

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Core\Entities\Role;
+use App\Core\Models\Role;
 use App\Core\Repositories\RolesRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
-use App\Core\Entities\User;
+use App\Core\Models\User;
 use Illuminate\Support\Facades\Input;
 use App\Core\Repositories\UserRepository;
 use App\Core\Validation\User\UsersUpdateFormRequest;
