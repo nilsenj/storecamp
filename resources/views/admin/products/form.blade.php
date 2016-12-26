@@ -44,11 +44,12 @@
         {!! $errors->first('category_id', '<div class="text-danger">:message</div>') !!}
     </div>
 
-<div class="form-group">
-    {!! Form::label('body', 'Body:') !!}
-    {!! Form::textarea('body', null, ['class' => 'form-control', 'id' => 'ckeditor']) !!}
-    {!! $errors->first('body', '<div class="text-danger">:message</div>') !!}
-</div>
+{{--<div class="form-group">--}}
+    {{--{!! Form::label('body', 'Body:') !!}--}}
+    {{--{!! Form::textarea('body', null, ['class' => 'form-control', 'id' => 'ckeditor']) !!}--}}
+    {{--{!! $errors->first('body', '<div class="text-danger">:message</div>') !!}--}}
+{{--</div>--}}
+    @include('admin.components.description-form', [$property_name='body'])
     <div class="form-group">
         {!! Form::label('price', 'Price:') !!}
         {!! Form::text('price', null, ['class' => 'form-control']) !!}
