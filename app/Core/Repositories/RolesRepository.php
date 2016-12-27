@@ -14,4 +14,5 @@ interface RolesRepository extends RepositoryInterface {
 
     public function renew($data, $dataPerm, $role);
     public function getModel();
+    public function store(array $data);
 }

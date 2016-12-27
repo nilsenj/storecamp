@@ -6,7 +6,6 @@
         {!! \Breadcrumbs::render('roles', 'Roles') !!}
     @endsection
     @section('contentheader_title')
-
         All Roles Count ({!! \App\Core\Models\Role::all()->count() !!})
         &middot;
     @endsection
@@ -14,7 +13,6 @@
         <b>{!! link_to_route('admin::roles::create', 'Add New Role') !!}</b>
     @endsection
 </h1>
-
 @section('main-content')
     <div class="row">
         <div class="col-xs-12">
@@ -44,7 +42,6 @@
         </thead>
         <tbody>
         @foreach ($roles as $role)
-
             <tr>
                 <td>{!! $no++ !!}</td>
                 <td>{!! $role->name !!}</td>
@@ -73,6 +70,4 @@
         {{--{!! $roles->links() !!}--}}
         {{--{!! pagination_links($categories) !!}--}}
     </div>
-
-
 @endsection

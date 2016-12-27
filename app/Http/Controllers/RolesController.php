@@ -48,12 +48,12 @@ class RolesController extends Controller
     }
 
     /**
-     * @return $this
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
         $permissions = Permission::all()->pluck('name', 'id');
-        return view('admin.roles.create')->with('permissions', $permissions);
+        return view('admin.roles.create', compact('permissions'));
     }
 
     /**
@@ -64,7 +64,7 @@ class RolesController extends Controller
     {
         $data = $request->all();
 
-        $this->repository->create($data);
+        $this->repository->store($data);
 
         return redirect('admin/roles');
     }

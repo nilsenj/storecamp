@@ -40,7 +40,7 @@ Auth::routes();
 Route::get('/logout', ['uses' => 'Auth\LoginController@logout']);
 
 Route::get('/home', 'HomeController@index');
-Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], function(){
+Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], function () {
 
     Route::get('dashboard', [
         'uses' => 'AdminController@show',
@@ -54,7 +54,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
     Route::get('sales', [
         'uses' => 'AdminController@sales'
     ]);
-    Route::group(['prefix' => 'users', 'as' => 'users::'], function() {
+    Route::group(['prefix' => 'users', 'as' => 'users::'], function () {
 
         Route::get('/', [
             'uses' => 'UsersController@index',
@@ -86,7 +86,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
 
     });
 
-    Route::group(['prefix' => 'roles', 'as' => 'roles::'], function(){
+    Route::group(['prefix' => 'roles', 'as' => 'roles::'], function () {
 
         Route::get('/', [
             'uses' => 'RolesController@index',
@@ -116,7 +116,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
         ]);
 
     });
-    Route::group(['prefix' => 'products', 'as' => 'products::'], function(){
+    Route::group(['prefix' => 'products', 'as' => 'products::'], function () {
 
         Route::get('/', [
             'uses' => 'ProductsController@index',
@@ -147,38 +147,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
 
     });
 
-    Route::group(['prefix' => 'permissions', 'as' => 'permissions::'], function(){
-
-        Route::get('/', [
-            'uses' => 'PermissionsController@index',
-            'as' => 'index'
-
-        ]);
-        Route::get('create', [
-            'uses' => 'PermissionsController@create',
-            'as' => 'create'
-
-        ]);
-        Route::get('edit/{slug}', [
-            'uses' => 'PermissionsController@edit',
-            'as' => 'edit'
-        ]);
-        Route::put('update/{slug}', [
-            'uses' => 'PermissionsController@update',
-            'as' => 'update'
-        ]);
-        Route::delete('{id}', [
-            'uses' => 'PermissionsController@destroy',
-            'as' => 'delete'
-        ]);
-        Route::post('store', [
-            'uses' => 'PermissionsController@store',
-            'as' => 'store'
-        ]);
-
-    });
-
-    Route::group(['prefix' => 'categories', 'as' => 'categories::'], function(){
+    Route::group(['prefix' => 'categories', 'as' => 'categories::'], function () {
         Route::get('/', [
             'uses' => 'CategoriesController@index',
             'as' => 'index'
@@ -215,42 +184,40 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
     });
 
 
-
-});
-Route::get('/admin/log-viewer', [
-    'as'    => 'log-viewer::dashboard',
-    'uses'  => 'LogViewerController@index',
-]);
-
-Route::group([
-    'prefix' => '/admin/log-viewer/logs',
-], function() {
-    $this->get('/', [
-        'as'    => 'log-viewer::logs.list',
-        'uses'  => 'LogViewerController@listLogs',
-    ]);
-
-    $this->delete('delete', [
-        'as'    => 'log-viewer::logs.delete',
-        'uses'  => 'LogViewerController@delete',
-    ]);
-
 });
 
-Route::group([
-    'prefix'    => '/admin/log-viewer/{date}',
-], function() {
-    $this->get('/', [
-        'as' => 'log-viewer::logs.show',
-        'uses' => 'LogViewerController@show',
+Route::group(
+    ['prefix' => '/admin/log-viewer',], function () {
+    Route::get('/', [
+        'as' => 'log-viewer::dashboard',
+        'uses' => 'LogViewerController@index',
     ]);
+    Route::group(
+        ['prefix' => '/logs',], function () {
+        $this->get('/', [
+            'as' => 'log-viewer::logs.list',
+            'uses' => 'LogViewerController@listLogs',
+        ]);
 
-    $this->get('download', [
-        'as' => 'log-viewer::logs.download',
-        'uses' => 'LogViewerController@download',
-    ]);
-    $this->get('{level}', [
-        'as'    => 'log-viewer::logs.filter',
-        'uses'  => 'LogViewerController@showByLevel',
-    ]);
+        $this->delete('delete', [
+            'as' => 'log-viewer::logs.delete',
+            'uses' => 'LogViewerController@delete',
+        ]);
+
+    });
+    Route::group(['prefix' => '/{date}'], function () {
+        $this->get('/', [
+            'as' => 'log-viewer::logs.show',
+            'uses' => 'LogViewerController@show',
+        ]);
+
+        $this->get('download', [
+            'as' => 'log-viewer::logs.download',
+            'uses' => 'LogViewerController@download',
+        ]);
+        $this->get('{level}', [
+            'as' => 'log-viewer::logs.filter',
+            'uses' => 'LogViewerController@showByLevel',
+        ]);
+    });
 });

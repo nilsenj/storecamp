@@ -25,7 +25,7 @@ class RolesUpdateFormRequest extends Request
     {
            return [
                'name' => 'required',
-               'slug' => ''
+               'display_name' => 'unique:roles,display_name'
            ];
     }
 }

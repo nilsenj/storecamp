@@ -1,7 +1,5 @@
 @extends('admin/app')
-
 <h1>
-
     @section('contentheader_title')
         Edit Role
         &middot;
@@ -11,7 +9,6 @@
         <b>{!! link_to_route('admin::roles::index', 'Back') !!}</b>
     @endsection
 </h1>
-
 @section('main-content')
     <div>
         @if(isset($role))

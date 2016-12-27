@@ -7,7 +7,7 @@
 <div class="form-group">
     {!! Form::label('display_name', 'Alias of role:') !!}
     {!! Form::text('display_name', null, ['class' => 'form-control']) !!}
-    {!! $errors->first('slug', '<div class="text-danger">:message</div>') !!}
+    {!! $errors->first('display_name', '<div class="text-danger">:message</div>') !!}
 </div>
 
 <div class="form-group">

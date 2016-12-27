@@ -15,6 +15,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
 class Role extends AccessRole implements Transformable
 {
     use TransformableTrait;
+    
     protected $fillable = ['name', 'display_name', 'description'];
 
     /**
@@ -38,9 +39,12 @@ class Role extends AccessRole implements Transformable
      */
     public function scopeWhereAdmin($query){
 
-       $query->where("name", "admin");
+       $query->where("name", "Admin");
     }
 
+    /**
+     * detach all permissions
+     */
     public function detachAllPermissions()
     {
         $this->perms()->sync([]);

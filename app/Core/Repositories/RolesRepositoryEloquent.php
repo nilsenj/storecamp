@@ -118,7 +118,7 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
      * @param array $data
      * @return mixed
      */
-    public function create(array $data)
+    public function store(array $data)
     {
         $listIds = $data['permissions'];
         $roleCreate = $this->getModel()->create($data);
