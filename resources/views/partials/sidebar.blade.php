@@ -47,7 +47,23 @@
                 </ul>
             </li>
             <li class="header">Administration</li>
-            <li><a href="{{ route('admin::roles::index') }}"><i class='fa  fa-street-view'></i> <span>Access</span></a>
+            <li class="treeview {{ Route::is('admin::roles::create') ? 'active' : '' }}">
+                <a href="{{ route('admin::roles::index') }}">
+                    <i class="fa  fa-street-view"></i>
+                    <span>Access</span>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="{{ route('admin::roles::index') }}">
+                            <i class="fa fa-link"></i> All roles
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin::roles::create') }}">
+                            <i class="fa fa-link"></i> Create role
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="treeview {{ Route::is('log-viewer::logs.list') || Route::is('log-viewer::logs.show') ? 'active' : '' }}">
                 <a href="{{ route('log-viewer::dashboard') }}">
