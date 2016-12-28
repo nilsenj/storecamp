@@ -29,8 +29,7 @@ elixir((mix) => {
     mix.copy('bower_components/summernote/dist/', 'public/plugins/summernote/');
     mix.copy('bower_components/dropzone/dist/', 'public/plugins/dropzone/');
     mix.browserSync({
-        proxy: 'storecamp.io',
-        port: 3344
+        proxy: 'www.storecamp.io'
     });
 });
 // create a task to serve the app

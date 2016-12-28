@@ -39,6 +39,7 @@
                         <th class="text-center">Actions</th>
                         </thead>
                         <tbody>
+
                         @foreach ($categories as $category)
                             <?php $no++; ?>
                             @include('admin.categories.category', [$category, $no])

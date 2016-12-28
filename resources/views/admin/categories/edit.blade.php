@@ -42,14 +42,9 @@
     </div>
     <div class="form-group">
         {!! Form::label('parent_id', 'Parent', ['class' => 'col-sm-2 control-label']) !!}
-        <select name="parent_id" class="form-control">
-            <option value="" selected disabled style="display:none">choose parent category</option>
-            @foreach ($categories as $category)
-                @foreach ($category->children as $child)
-                    <option value="{{ $category->id }}">{{ $child->name }}</option>
-                @endforeach
-            @endforeach
-        </select>
+        {!! Form::text('parent_id', null, ['class' => '', 'type' => 'hidden', 'hidden', 'placeholder' => 'please choose parent category']) !!}
+        <div class="clearfix"></div>
+        @include('admin.components.modal-category_chooser', $category)
     </div>
     <div class="form-group">
         {!! Form::label('slug', 'Slug', ['class' => 'col-sm-2 control-label']) !!}

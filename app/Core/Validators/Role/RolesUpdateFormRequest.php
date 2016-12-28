@@ -2,10 +2,12 @@
 
 namespace App\Core\Validation\Role;
 
+use App\Core\Models\Role;
 use Illuminate\Foundation\Http\FormRequest as Request;
 
 class RolesUpdateFormRequest extends Request
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -23,9 +25,10 @@ class RolesUpdateFormRequest extends Request
      */
     public function rules()
     {
+
            return [
                'name' => 'required',
-               'display_name' => 'unique:roles,display_name'
+               'display_name' => 'required|unique:roles,display_name,' . $this->id
            ];
     }
 }

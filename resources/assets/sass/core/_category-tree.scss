@@ -1,0 +1,15 @@
+.category {
+  li {
+    list-style-type: none;
+    a {
+      padding: 3px;
+      margin: 0;
+      width: auto!important;
+      height: auto!important;
+      i {
+        padding-right: 5px;
+        display: inline-block!important;
+      }
+    }
+  }
+}

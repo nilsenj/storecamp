@@ -9,4 +9,20 @@
   background-color: transparent !important;
 }
 
+.category li {
+  list-style-type: none;
+}
+
+.category li a {
+  padding: 3px;
+  margin: 0;
+  width: auto !important;
+  height: auto !important;
+}
+
+.category li a i {
+  padding-right: 5px;
+  display: inline-block !important;
+}
+
 /*# sourceMappingURL=app.css.map */

@@ -18,7 +18,12 @@ class CreateCategoriesTable extends Migration
             $table->integer('parent_id')->unsigned()->nullable();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->string('image')->nullable();
             $table->string('slug')->nullable();
+            $table->boolean('status')->default(true);
+            $table->tinyInteger('top')->default(0);
+            $table->tinyInteger('column')->default(0);
+            $table->tinyInteger('sort_order')->default(0);
             $table->timestamps();
         });
     }

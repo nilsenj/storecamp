@@ -110,45 +110,45 @@
         }
     </style>
     @section('scripts-add')
-        <script>
-            // render the image in our view
-            function renderImage(file) {
+        {{--<script>--}}
+            {{--// render the image in our view--}}
+            {{--function renderImage(file) {--}}
 
-                // generate a new FileReader object
-                var reader = new FileReader();
-                var image = new Image();
+                {{--// generate a new FileReader object--}}
+                {{--var reader = new FileReader();--}}
+                {{--var image = new Image();--}}
 
-                reader.onload = function (_file) {
-                    image.src = _file.target.result;              // url.createObjectURL(file);
-                    image.onload = function () {
-                        var w = this.width,
-                                h = this.height,
-                                t = file.type,                           // ext only: // file.type.split('/')[1],
-                                n = file.name,
-                                s = ~~(file.size / 1024)/1024;
-                        console.log(s);
-                        $('.p').append("<div class='col-sm-6 col-md-4'><div class='thumbnail'><img src='" + image.src + "' /><div class='caption'> <h4>"+ s.toFixed(2) +" Mb </h4></div></div> </div>");
-                    };
-                    image.onerror = function () {
-                        alert('Invalid file type: ' + file.type);
-                    };
-                };
-                reader.readAsDataURL(file);
+                {{--reader.onload = function (_file) {--}}
+                    {{--image.src = _file.target.result;              // url.createObjectURL(file);--}}
+                    {{--image.onload = function () {--}}
+                        {{--var w = this.width,--}}
+                                {{--h = this.height,--}}
+                                {{--t = file.type,                           // ext only: // file.type.split('/')[1],--}}
+                                {{--n = file.name,--}}
+                                {{--s = ~~(file.size / 1024)/1024;--}}
+                        {{--console.log(s);--}}
+                        {{--$('.p').append("<div class='col-sm-6 col-md-4'><div class='thumbnail'><img src='" + image.src + "' /><div class='caption'> <h4>"+ s.toFixed(2) +" Mb </h4></div></div> </div>");--}}
+                    {{--};--}}
+                    {{--image.onerror = function () {--}}
+                        {{--alert('Invalid file type: ' + file.type);--}}
+                    {{--};--}}
+                {{--};--}}
+                {{--reader.readAsDataURL(file);--}}
 
-            };
-                // when the file is read it triggers the onload event above.
+            {{--};--}}
+                {{--// when the file is read it triggers the onload event above.--}}
 
-            // handle input changes
-            $("#fileupload").change(function(e) {
+            {{--// handle input changes--}}
+            {{--$("#fileupload").change(function(e) {--}}
 
-                console.log(this.files)
+                {{--console.log(this.files)--}}
 
-                $('.p').html('');
-                if(this.disabled) return alert('File upload not supported!');
-                var F = this.files;
-                if(F && F[0]) for(var i=0; i<F.length; i++) renderImage( F[i] );
+                {{--$('.p').html('');--}}
+                {{--if(this.disabled) return alert('File upload not supported!');--}}
+                {{--var F = this.files;--}}
+                {{--if(F && F[0]) for(var i=0; i<F.length; i++) renderImage( F[i] );--}}
 
-            });
+            {{--});--}}
 
-</script>
+{{--</script>--}}
         @endsection

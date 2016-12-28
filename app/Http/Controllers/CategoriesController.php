@@ -48,11 +48,14 @@ class CategoriesController extends Controller
     /**
      * Show the form for creating a new category
      *
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.categories.create');
+        $categories = $this->repository->all();
+
+        return view('admin.categories.create', compact('categories'));
     }
 
     /**

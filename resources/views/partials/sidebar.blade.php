@@ -84,8 +84,6 @@
                     <!--    <li><a href="#">Link in level 2</a></li> -->
                 </ul>
             </li>
-
-
             {{--<li class="nav-item" role="presentation">--}}
             {{--<a role="menuitem" tabindex="-1" class="" href="{!! route('web::admin::dblogs::allUsersAdmin') !!}">--}}
             {{--<i class='text-info fa fa-th'></i>--}}

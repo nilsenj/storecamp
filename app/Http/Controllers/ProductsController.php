@@ -13,8 +13,8 @@ use Illuminate\Support\Str;
 use Laracasts\Flash\Flash;
 use App\Core\Uploader\ImageUploader;
 use App\Core\Repositories\ProductsRepository;
-use App\Core\Validators\Product\GoodsFormRequest as Create;
-use App\Core\Validators\Product\GoodsUpdateFormRequest as Update;
+use App\Core\Validators\Product\ProductsFormRequest as Create;
+use App\Core\Validators\Product\ProductsUpdateFormRequest as Update;
 
 class ProductsController extends Controller
 {
@@ -74,11 +74,9 @@ class ProductsController extends Controller
      * @param Create $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-
     public function store(Create $request)
     {
         $data = $request->all();
-
         unset($data['image']);
 
         $data['user_id'] = \Auth::id();

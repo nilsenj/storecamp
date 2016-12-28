@@ -10,7 +10,7 @@ namespace App\Core\Validators\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GoodsUpdateFormRequest extends FormRequest{
+class ProductsUpdateFormRequest extends FormRequest{
 
 
 
@@ -33,7 +33,7 @@ class GoodsUpdateFormRequest extends FormRequest{
     {
         return [
             'title' => 'required',
-            'slug' => 'required|unique:products,slug,' . Request::segment(4),
+            'slug' => 'required|unique:products,slug,' . $this->id,
             'body' => 'required',
             'price' => 'required',
         ];

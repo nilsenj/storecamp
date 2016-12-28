@@ -10,7 +10,7 @@ namespace App\Core\Validators\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GoodsFormRequest extends FormRequest{
+class ProductsFormRequest extends FormRequest{
 
     protected $rules = [
         'title' => 'required|min:2',

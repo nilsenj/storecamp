@@ -19,7 +19,15 @@ class Category extends Model implements Transformable
     /**
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'description'];
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+        'status',
+        'top',
+        'column',
+        'sort_order'
+    ];
 
     /**
      * Return the sluggable configuration array for this model.

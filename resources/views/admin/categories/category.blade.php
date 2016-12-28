@@ -1,5 +1,6 @@
 <tr>
-    <td>{{ $no }}</td>
+
+    <td>{{ $no-1}}</td>
     <td>{{ $category->name }}</td>
     <td>{{ $category->slug }}</td>
     <td>
@@ -17,8 +18,4 @@
         <a class="delete text-warning" href="{!! route('admin::categories::get::delete', $category->id) !!}"
            title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
     </td>
-
-    @foreach ($category->children as $child)
-        @include('admin.categories.category', ['category' => $child])
-    @endforeach
 </tr>
