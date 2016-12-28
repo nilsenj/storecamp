@@ -1,4 +1,4 @@
-<div class="category">
+<div class="category nav nav-pills nav-stacked">
     @foreach($categories as $category)
         @if(!$category->parent_id && ($chosenCategory->id !== $category->id))
             <?php $children = $category->children; ?>
@@ -9,10 +9,10 @@
                 <span>{{$category->name}}</span>
             </a>
             @if(count($children))
-            <ul class="treeview-menu" style="display:none">
+            <ul class="treeview-menu nav nav-pills nav-stacked" style="display:none">
                 @foreach ($children as $child)
                     <li>
-                        <a href="#category-{{$child->id}}">
+                        <a class="btn btn-app" href="#category-{{$child->id}}">
                             <i class="fa fa-link"></i> {{$child->name}}
                         </a>
                     </li>

@@ -14,15 +14,24 @@
 }
 
 .category li a {
-  padding: 3px;
+  padding: 4px 15px 4px 4px;
   margin: 0;
   width: auto !important;
   height: auto !important;
+  text-align: left !important;
 }
 
 .category li a i {
   padding-right: 5px;
   display: inline-block !important;
+}
+
+.category li ul {
+  padding-left: 10px;
+}
+
+.category li ul li a {
+  color: #455c66 !important;
 }
 
 /*# sourceMappingURL=app.css.map */
