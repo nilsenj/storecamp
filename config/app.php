@@ -192,7 +192,6 @@ return [
         Laracasts\Generators\GeneratorsServiceProvider::class,
         Webpatser\Countries\CountriesServiceProvider::class,
         Camroncade\Timezone\TimezoneServiceProvider::class,
-        Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         A6digital\Image\DefaultProfileImageServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
@@ -204,7 +203,7 @@ return [
         App\Providers\TransformersServiceProvider::class,
         \App\Providers\ModelServiceProvider::class,
         \Robbo\Presenter\PresenterServiceProvider::class,
-
+        Plank\Mediable\MediableServiceProvider::class,
     ],
 
     /*
@@ -262,6 +261,7 @@ return [
         'Socialite' => 'Laravel\Socialite\Facades\Socialite',
         'Access' => \App\Core\Access\AccessFacade::class,
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        'MediaUploader' => Plank\Mediable\MediaUploaderFacade::class,
 
     ],
 

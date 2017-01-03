@@ -36,6 +36,8 @@
             <li><a href="{{ route('admin::dashboard') }}"><i class='fa fa-th'></i> <span>Widgets</span></a></li>
             <li><a href="{{ route('admin::categories::index') }}"><i class='fa fa-archive'></i> <span>Categories</span></a>
             </li>
+            <li><a href="{{ route('admin::media::index') }}"><i class='fa fa-th'></i> <span>Media Storage</span></a></li>
+
             <li><a href="{{ route('admin::users::index') }}"><i class='fa fa-users'></i> <span>Users</span></a></li>
             <li class="treeview">
                 <a href="{{ route('admin::products::index') }}"><i class='fa fa-link'></i> <span>Products</span> <i

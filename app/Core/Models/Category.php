@@ -6,7 +6,6 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class Category extends Model implements Transformable
 {
@@ -14,7 +13,6 @@ class Category extends Model implements Transformable
 
     use \Cviebrock\EloquentSluggable\Sluggable;
     use SluggableScopeHelpers;
-    use HasMediaTrait;
 
     /**
      * @var array

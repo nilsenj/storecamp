@@ -24,12 +24,12 @@
         "webpatser/laravel-countries": "^1.4",
         "guzzlehttp/guzzle": "^6.2",
         "camroncade/timezone": "^0.1.0",
-        "spatie/laravel-medialibrary": "^4.10",
         "a6digital/laravel-default-profile-image": "^1.0",
         "arcanedev/log-viewer": "^4.2",
         "cviebrock/image-validator": "^2.1",
         "juggl/unique-hashids": "^1.1",
-        "darrylkuhn/dialect": "^1.0"
+        "darrylkuhn/dialect": "^1.0",
+        "plank/laravel-mediable": "^2.4"
 
     },
     "require-dev": {

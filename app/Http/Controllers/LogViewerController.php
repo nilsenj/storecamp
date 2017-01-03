@@ -91,6 +91,8 @@ class LogViewerController extends LogBaseController
      */
     public function showByLevel($date, $level)
     {
+        $stats   = $this->logViewer->statsTable();
+
         $log = $this->getLogOrFail($date);
 
         if ($level === 'all')
@@ -101,7 +103,7 @@ class LogViewerController extends LogBaseController
             ->entries($date, $level)
             ->paginate($this->perPage);
 
-        return $this->view('show', compact('log', 'levels', 'entries'));
+        return $this->view('show', compact('log', 'levels', 'entries', 'stats'));
     }
 
     /**

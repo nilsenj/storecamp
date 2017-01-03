@@ -85,6 +85,48 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
         ]);
 
     });
+    Route::group(['prefix' => 'media', 'as' => 'media::'], function () {
+
+        Route::get('/', [
+            'uses' => 'MediaManagement@index',
+            'as' => 'index'
+
+        ]);
+        Route::get('create', [
+            'uses' => 'MediaManagement@create',
+            'as' => 'create'
+
+        ]);
+        Route::get('edit/{slug}', [
+            'uses' => 'MediaManagement@edit',
+            'as' => 'edit'
+        ]);
+
+        Route::get('getDirectories', [
+            'uses' => 'MediaManagement@getMediaFolders',
+            'as' => 'directories'
+        ]);
+
+        Route::put('update/{slug}', [
+            'uses' => 'MediaManagement@update',
+            'middleware' => 'shouldBeUnique',
+            'as' => 'update'
+        ]);
+        Route::delete('{id}', [
+            'uses' => 'MediaManagement@destroy',
+            'as' => 'delete'
+        ]);
+
+        Route::post('store', [
+            'uses' => 'MediaManagement@store',
+            'as' => 'store'
+        ]);
+        Route::post('upload', [
+            'uses' => 'MediaManagement@upload',
+            'as' => 'upload'
+        ]);
+
+    });
 
     Route::group(['prefix' => 'roles', 'as' => 'roles::'], function () {
 

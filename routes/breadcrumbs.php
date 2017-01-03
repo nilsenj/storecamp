@@ -27,6 +27,12 @@ Breadcrumbs::register('categories', function($breadcrumbs)
     $breadcrumbs->push('Categories', route('admin::categories::index'));
 });
 
+// / > [Media]
+Breadcrumbs::register('media', function($breadcrumbs)
+{
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push('Media', route('admin::media::index'));
+});
 // / > [Logs]
 Breadcrumbs::register('LogViewer', function($breadcrumbs)
 {
