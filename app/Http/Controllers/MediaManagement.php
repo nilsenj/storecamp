@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Transformers\FileTransformer;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Plank\Mediable\Exceptions\MediaUploadException;
 use Plank\Mediable\HandlesMediaUploadExceptions;
 use Plank\Mediable\Media;
 use Plank\Mediable\MediaUploaderFacade; //use the facade
-
 class MediaManagement extends Controller
 {
     use HandlesMediaUploadExceptions;
@@ -34,20 +34,37 @@ class MediaManagement extends Controller
      */
     public function index($path = '')
     {
-
+        $path = explode("_", $path);
+        $path = implode('/', $path);
        $fileTransformer = new FileTransformer();
 
        $files = $fileTransformer->transform(new Media(), $path);
        $media = $files['media'];
        $directories = $files['directories'];
-
-        return $this->view('index', compact('media', 'directories', 'path'));
+       $count = $files['count'];
+       return $this->view('index', compact('media', 'directories', 'path', 'count'));
     }
 
 
     public function edit(Request $request, $id) {
 
     }
+
+    /**
+     * get media description for json
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
+    public function getDescription($id) {
+        try {
+            $file = Media::find($id);
+            return response()->view('admin.media.description', compact('file'));
+        } catch (ModelNotFoundException $e) {
+            return response()->json($e->getMessage(), $e->getCode());
+        }
+    }
+
     public function upload(Request $request)
     {
         try {
@@ -66,6 +83,7 @@ class MediaManagement extends Controller
     }
 
     public function makeFolder(Request $request) {
+
         $new_path = ruTolat(trim($request->new_path));
         $path = ruTolat(trim($request->path));
         $newFolder = public_path('uploads').'/'.$path.'/'.$new_path;

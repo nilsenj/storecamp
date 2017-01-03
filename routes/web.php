@@ -128,6 +128,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'uses' => 'MediaManagement@upload',
             'as' => 'upload'
         ]);
+        Route::get('description/{id}', [
+            'uses' => 'MediaManagement@getDescription',
+            'as' => 'description'
+        ]);
+
 
     });
 

@@ -20,19 +20,22 @@ class FileTransformer
      * @param string $path
      * @return array
      */
-    public function transform(Media $model, $path = "")
+    public function transform(Media $model, $path = null)
     {
+//        $path = implode('/', $path);
         $pathToFolder = public_path('uploads') . '/' . $path;
         if (\File::exists($pathToFolder)) {
             $directories = \File::directories($pathToFolder);
         } else {
             $directories = [];
         }
+        $count = $model->inDirectory('local', $path)->count();
         $media = $this->filesPreRender($model, $path);
 
         return [
             'directories' => $directories,
             'media' => $media,
+            'count' => $count,
             'path' => $path
         ];
     }

@@ -7,13 +7,12 @@
     @endsection
     @section('contentheader_title')
         Amount of Media Files
-        &middot;
+        &middot; {{$count}}
     @endsection
     @section('contentheader_description')
         @if($path) <p>Folder <b style="font-size: 20px; text-decoration: underline;" class="text-success">{!! $path !!} </b></p> @endif
     @endsection
 </h1>
-
 @section('main-content')
 
     <div class="row">
@@ -22,22 +21,22 @@
                 <div class="box-header">
                     <h3 class="box-title">List of Media Files
                         @if(!$path)
-                            <a class="btn btn-xs btn-default" href="{{url()->previous()}}" style="margin-left: 10px">
-                                forward
+                            <a class="btn btn-md btn-default" href="{{route('admin::media::index')}}" style="margin-left: 10px">
+                                back
                             </a>
                         @else
-                            <a class="btn btn-xs btn-default" href="{{url()->previous()}}" style="margin-left: 10px">
+                            <a class="btn btn-md btn-default" href="{{url()->previous()}}" style="margin-left: 10px">
                                 back
                             </a>
                         @endif
                         <a data-toggle="modal"
                            href="#upload-modal"
-                           class="btn btn-xs btn-default" style="margin-left: 10px">
+                           class="btn btn-md btn-default" style="margin-left: 10px">
                             upload
                         </a>
                         <a data-toggle="modal"
                            href="#newdir-modal"
-                           class="btn btn-xs btn-default" style="margin-left: 10px">
+                           class="btn btn-md btn-default" style="margin-left: 10px">
                             create directory
                         </a>
                     </h3>
@@ -70,13 +69,11 @@
                             <!-- /.box-header -->
                             <div class="box-body" style="display: block;">
                                 @foreach($directories as $directory)
-                                    <div class="col-xs-6 col-md-2">
-                                        <a href="{{ route('admin::media::index', [pathinfo($directory)['filename']]) }}"
+                                    <div class="col-xs-6 col-md-6">
+                                        <a href="{{ route('admin::media::index', [$path ? $path.'_'.pathinfo($directory)['filename'] : pathinfo($directory)['filename']]) }}"
                                            class="btn btn-app"><i class='fa fa-file'></i>
                                             <span>{{pathinfo($directory)['filename']}}</span></a>
                                     </div>
-                                    <div class="clearfix"></div>
-
                                 @endforeach
                                 @if(empty($directories))
                                     <h3 class="text-warning">No folders found</h3>
@@ -98,7 +95,7 @@
         Dropzone.options.myAwesomeDropzone = {
             paramName: "file", // The name that will be used to transfer the file
             maxFilesize: 1024, // MB
-            acceptedFiles: ".mp4,.mkv,.avi, image/*,application/pdf,.psd,.docx,.doc",
+            acceptedFiles: ".mp4,.mkv,.avi, image/*,application/pdf,.psd,.docx,.doc,.aac,.ogg,.oga,.mp3,.wav, .zip",
             accept: function (file, done) {
                 if (file.name == "justinbieber.jpg") {
                     done("Naha, Are you kidding(");
