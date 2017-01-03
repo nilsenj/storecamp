@@ -48,6 +48,7 @@
             "database",
             "App/Core/Models",
             "App/Core/Presenters",
+            "App/Core/Transformers",
             "App/Core/Repositories"
         ],
         "psr-4": {

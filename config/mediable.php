@@ -129,7 +129,8 @@ return [
                 'm4v',
                 'mov',
                 'ogv',
-                'webm'
+                'webm',
+                'avi'
             ]
         ],
         Plank\Mediable\Media::TYPE_ARCHIVE => [

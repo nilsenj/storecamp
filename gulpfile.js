@@ -28,6 +28,7 @@ elixir((mix) => {
     mix.sass('../sass/app.scss', 'public/css/main/app.css');
     mix.copy('bower_components/summernote/dist/', 'public/plugins/summernote/');
     mix.copy('bower_components/dropzone/dist/', 'public/plugins/dropzone/');
+    mix.copy('bower_components/plyr/dist/', 'public/plugins/plyr/');
     mix.browserSync({
         proxy: 'www.storecamp.io'
     });

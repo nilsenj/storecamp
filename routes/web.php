@@ -87,17 +87,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
     });
     Route::group(['prefix' => 'media', 'as' => 'media::'], function () {
 
-        Route::get('/', [
+        Route::get('/{path?}', [
             'uses' => 'MediaManagement@index',
             'as' => 'index'
 
         ]);
-        Route::get('create', [
-            'uses' => 'MediaManagement@create',
-            'as' => 'create'
 
-        ]);
-        Route::get('edit/{slug}', [
+        Route::get('edit/{id}', [
             'uses' => 'MediaManagement@edit',
             'as' => 'edit'
         ]);
@@ -107,11 +103,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'as' => 'directories'
         ]);
 
-        Route::put('update/{slug}', [
+        Route::post('/makeDirectory', [
+            'uses' => 'MediaManagement@makeFolder',
+            'as' => 'make.directory'
+        ]);
+
+        Route::put('update/{id}', [
             'uses' => 'MediaManagement@update',
             'middleware' => 'shouldBeUnique',
             'as' => 'update'
         ]);
+
         Route::delete('{id}', [
             'uses' => 'MediaManagement@destroy',
             'as' => 'delete'
@@ -121,6 +123,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'uses' => 'MediaManagement@store',
             'as' => 'store'
         ]);
+
         Route::post('upload', [
             'uses' => 'MediaManagement@upload',
             'as' => 'upload'

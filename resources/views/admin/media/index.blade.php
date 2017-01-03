@@ -6,12 +6,11 @@
         {!! Breadcrumbs::render('media', 'media') !!}
     @endsection
     @section('contentheader_title')
-
         Amount of Media Files
         &middot;
     @endsection
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::media::create', 'Add New Media File') !!}</b>
+        @if($path) <p>Folder <b style="font-size: 20px; text-decoration: underline;" class="text-success">{!! $path !!} </b></p> @endif
     @endsection
 </h1>
 
@@ -22,10 +21,24 @@
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">List of Media Files
-                        <a data-desc-url="{{route('admin::media::directories')}}" data-toggle="modal"
+                        @if(!$path)
+                            <a class="btn btn-xs btn-default" href="{{url()->previous()}}" style="margin-left: 10px">
+                                forward
+                            </a>
+                        @else
+                            <a class="btn btn-xs btn-default" href="{{url()->previous()}}" style="margin-left: 10px">
+                                back
+                            </a>
+                        @endif
+                        <a data-toggle="modal"
                            href="#upload-modal"
                            class="btn btn-xs btn-default" style="margin-left: 10px">
                             upload
+                        </a>
+                        <a data-toggle="modal"
+                           href="#newdir-modal"
+                           class="btn btn-xs btn-default" style="margin-left: 10px">
+                            create directory
                         </a>
                     </h3>
 
@@ -39,12 +52,39 @@
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                    <div class="col-xs-9 col-md-9">
-                        @foreach ($media as $file)
-                            <div class="col-xs-6 col-md-2">
-                                <img class="img-responsive" src="{{$file->getUrl()}}" alt="{{$file->filename}}" width="304" height="236">
+
+                    {!! $media !!}
+
+                    <div class="col-xs-3">
+                        <div class="box box-default">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Folders</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                                class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                                <!-- /.box-tools -->
                             </div>
-                        @endforeach
+                            <!-- /.box-header -->
+                            <div class="box-body" style="display: block;">
+                                @foreach($directories as $directory)
+                                    <div class="col-xs-6 col-md-2">
+                                        <a href="{{ route('admin::media::index', [pathinfo($directory)['filename']]) }}"
+                                           class="btn btn-app"><i class='fa fa-file'></i>
+                                            <span>{{pathinfo($directory)['filename']}}</span></a>
+                                    </div>
+                                    <div class="clearfix"></div>
+
+                                @endforeach
+                                @if(empty($directories))
+                                    <h3 class="text-warning">No folders found</h3>
+                                @endif
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+
                     </div>
                 </div>
             </div><!-- /.box-body -->
@@ -59,13 +99,16 @@
             paramName: "file", // The name that will be used to transfer the file
             maxFilesize: 1024, // MB
             acceptedFiles: ".mp4,.mkv,.avi, image/*,application/pdf,.psd,.docx,.doc",
-            accept: function(file, done) {
+            accept: function (file, done) {
                 if (file.name == "justinbieber.jpg") {
                     done("Naha, Are you kidding(");
                 }
-                else { done(); }
+                else {
+                    done();
+                }
             }
         };
     </script>
 @endsection
 @include('admin.media.upload-modal')
+@include('admin.media.newdir-modal')

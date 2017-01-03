@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Transformers\FileTransformer;
 use Illuminate\Http\Request;
 use Plank\Mediable\Exceptions\MediaUploadException;
 use Plank\Mediable\HandlesMediaUploadExceptions;
@@ -14,25 +15,35 @@ class MediaManagement extends Controller
 
     public function __constructor()
     {
-
     }
 
-    public function view($view, $data = [], $mergeData = [])
+    /**
+     * @param $view
+     * @param array $data
+     * @param array $mergeData
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    protected function view($view, $data = [], $mergeData = [])
     {
         return view('admin.media.' . $view, $data, $mergeData);
     }
 
-    public function index()
+    /**
+     * @param string $path
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index($path = '')
     {
-        $media = Media::all();
-        return $this->view('index', compact('media'));
+
+       $fileTransformer = new FileTransformer();
+
+       $files = $fileTransformer->transform(new Media(), $path);
+       $media = $files['media'];
+       $directories = $files['directories'];
+
+        return $this->view('index', compact('media', 'directories', 'path'));
     }
 
-    public function create()
-    {
-        $media = Media::all();
-        return $this->view('create', compact('media'));
-    }
 
     public function edit(Request $request, $id) {
 
@@ -40,13 +51,9 @@ class MediaManagement extends Controller
     public function upload(Request $request)
     {
         try {
-
-            $path = 'assets';
-//            dd($request->file('file'));
-
+            $path = isset($request->path) && $request->path != "" ? ruTolat($request->path) : '';
             MediaUploaderFacade::
-                fromSource($request->file('file'))->upload();
-            return null;
+                fromSource($request->file('file'))->toDirectory($path)->upload();
         } catch (MediaUploadException $e) {
             throw $this->transformMediaUploadException($e);
         }
@@ -56,6 +63,16 @@ class MediaManagement extends Controller
 
         $media = Media::select('directory')->get();
         return response()->json($media, 200);
+    }
+
+    public function makeFolder(Request $request) {
+        $new_path = ruTolat(trim($request->new_path));
+        $path = ruTolat(trim($request->path));
+        $newFolder = public_path('uploads').'/'.$path.'/'.$new_path;
+        $result = \File::makeDirectory($newFolder, 0775, true);
+        $reirectPath = $path != "" ? $path.'/'.$new_path : $new_path;
+
+        return redirect()->route('admin::media::index', $reirectPath);
 
     }
 

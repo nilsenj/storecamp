@@ -4,10 +4,10 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"></h4>
+                <h4 class="modal-title">Please Create Directory</h4>
             </div>
             <div class="modal-body" style="word-wrap: break-word;">
-                @include('admin.media.upload-form')
+                @include('admin.media.newdir-form')
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

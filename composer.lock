@@ -946,16 +946,16 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "30e07cf03edc3cd3ef579d0dd4dd8c58250799a5"
+                "reference": "bd4461328621bde0ae6b1b2675fbc6aca4ceb558"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/30e07cf03edc3cd3ef579d0dd4dd8c58250799a5",
-                "reference": "30e07cf03edc3cd3ef579d0dd4dd8c58250799a5",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/bd4461328621bde0ae6b1b2675fbc6aca4ceb558",
+                "reference": "bd4461328621bde0ae6b1b2675fbc6aca4ceb558",
                 "shasum": ""
             },
             "require": {
@@ -1010,7 +1010,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2016-10-24T11:45:47+00:00"
+            "time": "2016-12-30T15:59:45+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -1227,17 +1227,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "b551fcb26a81e230085c0dca88174573b6c36609"
+                "reference": "8f0e497312705fba80c666cfca9dac8b59d701c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/b551fcb26a81e230085c0dca88174573b6c36609",
-                "reference": "b551fcb26a81e230085c0dca88174573b6c36609",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/8f0e497312705fba80c666cfca9dac8b59d701c3",
+                "reference": "8f0e497312705fba80c666cfca9dac8b59d701c3",
                 "shasum": ""
             },
             "require": {
                 "doctrine/common": "^2.7.1",
-                "php": "^5.6 || ^7.0"
+                "php": "^7.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^5.4.6",
@@ -1291,7 +1291,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2016-12-04T05:57:28+00:00"
+            "time": "2017-01-02T18:59:54+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -1416,21 +1416,21 @@
         },
         {
             "name": "graham-campbell/manager",
-            "version": "v2.4.0",
+            "version": "v2.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/GrahamCampbell/Laravel-Manager.git",
-                "reference": "fd9052082e2c69c9a67d3e8d7dfa94cb33f8ab0b"
+                "reference": "e6ab47a8971da6fd18bc7ced546f0d24cb7ebe3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-Manager/zipball/fd9052082e2c69c9a67d3e8d7dfa94cb33f8ab0b",
-                "reference": "fd9052082e2c69c9a67d3e8d7dfa94cb33f8ab0b",
+                "url": "https://api.github.com/repos/GrahamCampbell/Laravel-Manager/zipball/e6ab47a8971da6fd18bc7ced546f0d24cb7ebe3a",
+                "reference": "e6ab47a8971da6fd18bc7ced546f0d24cb7ebe3a",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "5.1.*|5.2.*|5.3.*",
-                "illuminate/support": "5.1.*|5.2.*|5.3.*",
+                "illuminate/contracts": "5.1.*|5.2.*|5.3.*|5.4.*",
+                "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*",
                 "php": ">=5.5.9"
             },
             "require-dev": {
@@ -1441,7 +1441,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.5-dev"
                 }
             },
             "autoload": {
@@ -1471,7 +1471,7 @@
                 "laravel",
                 "manager"
             ],
-            "time": "2016-04-26T14:27:59+00:00"
+            "time": "2017-01-01T13:08:54+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -2870,16 +2870,16 @@
         },
         {
             "name": "plank/laravel-mediable",
-            "version": "2.4.0",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/plank/laravel-mediable.git",
-                "reference": "6b6a032de7350937dead4cc649567a4048c4e59b"
+                "reference": "0e01dc3083d0050e8ae3102b6f917f050b721a08"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/plank/laravel-mediable/zipball/6b6a032de7350937dead4cc649567a4048c4e59b",
-                "reference": "6b6a032de7350937dead4cc649567a4048c4e59b",
+                "url": "https://api.github.com/repos/plank/laravel-mediable/zipball/0e01dc3083d0050e8ae3102b6f917f050b721a08",
+                "reference": "0e01dc3083d0050e8ae3102b6f917f050b721a08",
                 "shasum": ""
             },
             "require": {
@@ -2920,7 +2920,7 @@
                 "media",
                 "uploader"
             ],
-            "time": "2016-12-10T18:20:05+00:00"
+            "time": "2016-12-30T17:33:04+00:00"
         },
         {
             "name": "predis/predis",
