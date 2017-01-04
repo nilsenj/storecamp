@@ -1,10 +1,12 @@
 <div class="col-xs-9 col-md-9">
+    <?php $tag = isset($tag) ? $tag : null; ?>
     @foreach(array_chunk($media->all(), 4) as $row)
         <div class="row">
             @foreach($row as $file)
                 {{--{!! dd($file) !!}--}}
                 @if($file->extension == "mp4" || $file->extension == "avi" || $file->extension == "mov" || $file->extension == "ogv" || $file->extension == "webm")
-                        <div class="col-xs-3 col-md-3" style="margin-bottom: 10px">
+                        <div class="col-xs-3 col-md-3 file-item" style="margin-bottom: 10px">
+                            {{--<a class="tag-file text-info btn btn-success btn-xs" role="button" href="{{url($path ? 'admin/media/'.$path."/video" : 'admin/media/#/video')}}"><i class="fa fa-file-video-o" aria-hidden="true"></i></a>--}}
                             <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button" href="{{route("admin::media::get.delete", $file->id)}}"><i class="fa fa-times" aria-hidden="true"></i></a>
                             <div class="title" style="overflow: hidden">{{$file->filename}}</div>
                             <video controls>
@@ -15,7 +17,7 @@
                             </video>
                         </div>
                 @elseif($file->extension == "jpg" || $file->extension =="jpeg" || $file->extension == "png" || $file->extension == "gif")
-                    <div class="col-xs-3 col-md-3" style="margin-bottom: 10px">
+                    <div class="col-xs-3 col-md-3 file-item" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button" href="{{route("admin::media::get.delete", $file->id)}}"><i class="fa fa-times" aria-hidden="true"></i></a>
                         <div class="title" style="overflow: hidden">{{$file->filename}}</div>
                         <img class="" src="{{$file->getUrl()}}" alt="{{$file->filename}}"
@@ -27,7 +29,7 @@
                         $file->extension == 'oga' ||
                         $file->extension == 'mp3' ||
                         $file->extension == 'wav')
-                    <div class="col-xs-3 col-md-3" alt="{{$file->filename}}" style="margin-bottom: 10px">
+                    <div class="col-xs-3 col-md-3 file-item" alt="{{$file->filename}}" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button" href="{{route("admin::media::get.delete", $file->id)}}"><i class="fa fa-times" aria-hidden="true"></i></a>
                         <div class="title">{{$file->filename}}</div>
                         <audio controls title="{{$file->filename}}">
@@ -64,10 +66,22 @@
 
 @push('scripts-add_on')
 <style>
-.delete-file {
+.delete-file, .tag-file {
     position: absolute;
     top: auto;
     right: 10px;
+    display: none;
+}
+.tag-file {
+    left: 15px;
+    right: auto;
+    display: none;
+    padding: 5px;
+    top: 30px;
+    z-index: 9999;
+}
+.file-item:hover .delete-file, .file-item:hover .tag-file {
+    display: block;
 }
 </style>
 <link rel="stylesheet" href="{{asset('plugins/plyr/plyr.css')}}">

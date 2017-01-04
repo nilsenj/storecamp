@@ -138,6 +138,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'as' => 'get.delete'
         ]);
 
+        Route::get('bytag/{path?}/{tag}', [
+            'uses' => 'MediaManagement@getByTag',
+            'as' => 'get.tag'
+        ]);
+
         Route::delete('{id}', [
             'uses' => 'MediaManagement@destroy',
             'as' => 'delete'

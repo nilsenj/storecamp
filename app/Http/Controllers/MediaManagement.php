@@ -27,6 +27,16 @@ class MediaManagement extends Controller
     {
         return view('admin.media.' . $view, $data, $mergeData);
     }
+    /**
+     * Redirect not found.
+     *
+     * @return Response
+     */
+    protected function redirectNotFound()
+    {
+        return redirect('admin/media')
+            ->with(\Flash::error('Item Not Found!'));
+    }
 
     /**
      * @param string $path
@@ -34,15 +44,16 @@ class MediaManagement extends Controller
      */
     public function index($path = '')
     {
+        $tag = '';
         $path = explode("_", $path);
         $path = implode('/', $path);
         $fileTransformer = new FileTransformer();
 
-        $files = $fileTransformer->transform(new Media(), $path);
+        $files = $fileTransformer->transform(new Media(), $path, $tag);
         $media = $files['media'];
         $directories = $files['directories'];
         $count = $files['count'];
-        return $this->view('index', compact('media', 'directories', 'path', 'count'));
+        return $this->view('index', compact('media', 'directories', 'path', 'count', 'tag'));
     }
 
 
@@ -85,6 +96,19 @@ class MediaManagement extends Controller
         return response()->json($media, 200);
     }
 
+    public function getByTag($path = "", $tag) {
+        $path = explode("_", $path);
+        $path = implode('/', $path);
+        $fileTransformer = new FileTransformer();
+
+        $files = $fileTransformer->transform(new Media(), $path);
+        $media = $files['media'];
+        $directories = $files['directories'];
+        $count = $files['count'];
+
+        return $this->view('index', compact('media', 'directories', 'path', 'count', 'tag'));
+    }
+
     public function makeFolder(Request $request)
     {
 
@@ -118,8 +142,9 @@ class MediaManagement extends Controller
     {
         try {
             $media = Media::find($id);
+            $mediaPath = $media->directory;
             $media->delete();
-            return redirect()->back();
+            return redirect()->to('admin/media/'.$mediaPath);
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }

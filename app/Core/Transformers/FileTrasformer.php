@@ -20,7 +20,7 @@ class FileTransformer
      * @param string $path
      * @return array
      */
-    public function transform(Media $model, $path = null)
+    public function transform(Media $model, $path = null, $tag = null)
     {
 //        $path = implode('/', $path);
         $pathToFolder = public_path('uploads') . '/' . $path;
@@ -30,7 +30,7 @@ class FileTransformer
             $directories = [];
         }
         $count = $model->inDirectory('local', $path)->count();
-        $media = $this->filesPreRender($model, $path);
+        $media = $this->filesPreRender($model, $path, $tag);
 
         return [
             'directories' => $directories,
@@ -47,20 +47,29 @@ class FileTransformer
      * @param string $path
      * @return mixed
      */
-    protected function filesPreRender($model, $path = "")
+    protected function filesPreRender($model, $path = "", $tag = "")
     {
         if ($path) {
-            $media = $model->inDirectory('local', $path)->get();
+            if ($tag) {
+                $media = $model->inDirectory('local', $path)->where('aggregate_type', $tag)->get();
+
+            } else {
+                $media = $model->inDirectory('local', $path)->get();
+            }
         } else {
-            $media = $model->all();
+            if($tag) {
+                $media = $model->where('aggregate_type', $tag)->get();
+            } else {
+                $media = $model->all();
+            }
         }
-        $media = $this->filesRender($media);
+        $media = $this->filesRender($media, $path, $tag);
         return $media;
     }
 
-    protected function filesRender($media) {
+    protected function filesRender($media, $path, $tag) {
 
-        return view('admin.media.files-builder', compact('media'));
+        return view('admin.media.files-builder', compact('media', 'path', 'tag'));
     }
 
 }
