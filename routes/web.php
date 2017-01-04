@@ -133,6 +133,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'as' => 'description'
         ]);
 
+        Route::get('delete/{id}', [
+            'uses' => 'MediaManagement@destroy',
+            'as' => 'get.delete'
+        ]);
+
+        Route::delete('{id}', [
+            'uses' => 'MediaManagement@destroy',
+            'as' => 'delete'
+        ]);
 
     });
 

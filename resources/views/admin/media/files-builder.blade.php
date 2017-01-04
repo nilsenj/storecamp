@@ -5,18 +5,18 @@
                 {{--{!! dd($file) !!}--}}
                 @if($file->extension == "mp4" || $file->extension == "avi" || $file->extension == "mov" || $file->extension == "ogv" || $file->extension == "webm")
                         <div class="col-xs-3 col-md-3" style="margin-bottom: 10px">
+                            <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button" href="{{route("admin::media::get.delete", $file->id)}}"><i class="fa fa-times" aria-hidden="true"></i></a>
                             <div class="title" style="overflow: hidden">{{$file->filename}}</div>
-
                             <video controls>
                                 <source src="{{$file->getUrl()}}" type="video/mp4">
                                 <source src="{{$file->getUrl()}}" type="video/webm">
                                 <!-- Captions are optional -->
                                 {{--<track kind="captions" label="{{$file->filename}}" src="/path/to/captions.vtt" srclang="en" default>--}}
                             </video>
-
                         </div>
                 @elseif($file->extension == "jpg" || $file->extension =="jpeg" || $file->extension == "png" || $file->extension == "gif")
                     <div class="col-xs-3 col-md-3" style="margin-bottom: 10px">
+                        <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button" href="{{route("admin::media::get.delete", $file->id)}}"><i class="fa fa-times" aria-hidden="true"></i></a>
                         <div class="title" style="overflow: hidden">{{$file->filename}}</div>
                         <img class="" src="{{$file->getUrl()}}" alt="{{$file->filename}}"
                              width="266" height="150">
@@ -28,6 +28,7 @@
                         $file->extension == 'mp3' ||
                         $file->extension == 'wav')
                     <div class="col-xs-3 col-md-3" alt="{{$file->filename}}" style="margin-bottom: 10px">
+                        <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button" href="{{route("admin::media::get.delete", $file->id)}}"><i class="fa fa-times" aria-hidden="true"></i></a>
                         <div class="title">{{$file->filename}}</div>
                         <audio controls title="{{$file->filename}}">
                             <source src="{{$file->getUrl()}}" type="audio/mp3">
@@ -62,6 +63,13 @@
 </div>
 
 @push('scripts-add_on')
+<style>
+.delete-file {
+    position: absolute;
+    top: auto;
+    right: 10px;
+}
+</style>
 <link rel="stylesheet" href="{{asset('plugins/plyr/plyr.css')}}">
 <script src="{{ asset('/plugins/plyr/plyr.js') }}" type="text/javascript"></script>
 <script>plyr.setup();</script>
@@ -83,7 +91,6 @@
                 type: 'GET',
                 success: function (data) {
                     modalBody.html(data);
-                    cons
                     modalTitle.html('Media - '+descTrigger.data('desc-name'));
                 },
                 error: function (xhr, textStatus, errorThrown) {

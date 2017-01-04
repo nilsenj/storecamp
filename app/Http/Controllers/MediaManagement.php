@@ -36,17 +36,18 @@ class MediaManagement extends Controller
     {
         $path = explode("_", $path);
         $path = implode('/', $path);
-       $fileTransformer = new FileTransformer();
+        $fileTransformer = new FileTransformer();
 
-       $files = $fileTransformer->transform(new Media(), $path);
-       $media = $files['media'];
-       $directories = $files['directories'];
-       $count = $files['count'];
-       return $this->view('index', compact('media', 'directories', 'path', 'count'));
+        $files = $fileTransformer->transform(new Media(), $path);
+        $media = $files['media'];
+        $directories = $files['directories'];
+        $count = $files['count'];
+        return $this->view('index', compact('media', 'directories', 'path', 'count'));
     }
 
 
-    public function edit(Request $request, $id) {
+    public function edit(Request $request, $id)
+    {
 
     }
 
@@ -56,7 +57,8 @@ class MediaManagement extends Controller
      * @param $id
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
-    public function getDescription($id) {
+    public function getDescription($id)
+    {
         try {
             $file = Media::find($id);
             return response()->view('admin.media.description', compact('file'));
@@ -70,33 +72,56 @@ class MediaManagement extends Controller
         try {
             $path = isset($request->path) && $request->path != "" ? ruTolat($request->path) : '';
             MediaUploaderFacade::
-                fromSource($request->file('file'))->toDirectory($path)->upload();
+            fromSource($request->file('file'))->toDirectory($path)->upload();
         } catch (MediaUploadException $e) {
             throw $this->transformMediaUploadException($e);
         }
     }
 
-    public function getMediaFolders() {
+    public function getMediaFolders()
+    {
 
         $media = Media::select('directory')->get();
         return response()->json($media, 200);
     }
 
-    public function makeFolder(Request $request) {
+    public function makeFolder(Request $request)
+    {
 
         $new_path = ruTolat(trim($request->new_path));
         $path = ruTolat(trim($request->path));
-        $newFolder = public_path('uploads').'/'.$path.'/'.$new_path;
-        $result = \File::makeDirectory($newFolder, 0775, true);
-        $reirectPath = $path != "" ? $path.'/'.$new_path : $new_path;
+        $newFolder = public_path('uploads') . '/' . $path . '/' . $new_path;
+        if (!\File::extension($newFolder)) {
+            $result = \File::makeDirectory($newFolder, 0775, true);
+        }
+        $reirectPath = $path != "" ? $path . '/' . $new_path : $new_path;
 
-        return redirect()->route('admin::media::index', $reirectPath);
+        return redirect()->route('admin::$this->media->index', $reirectPath);
 
     }
 
-    public function update(Request $request) {
+    /**
+     * @param Request $request
+     */
+    public function update(Request $request)
+    {
 
         $media = MediaUploaderFacade::getMedia();
         MediaUploaderFacade::update($media);
+    }
+
+    /**
+     * Remove the specified media from storage.
+     *
+     **/
+    public function destroy($id)
+    {
+        try {
+            $media = Media::find($id);
+            $media->delete();
+            return redirect()->back();
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound();
+        }
     }
 }
