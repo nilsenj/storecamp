@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Transformers\FileTransformer;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,7 +26,11 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment() == 'local') {
             $this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
         }
-        $this->app->instance('FileTransformer', new FileTransformer());
+
+//        $this->app->bind(
+//            'App\Core\Repositories\MediaRepository',
+//            'App\Core\Repositories\MediaRepositoryEloquent'
+//        );
         $this->app->bind(
             'App\Core\Repositories\CategoryRepository',
             'App\Core\Repositories\CategoryRepositoryEloquent'

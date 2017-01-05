@@ -6,7 +6,7 @@
  * Time: 22:49
  */
 
-namespace App\Transformers;
+namespace App\Core\Transformers;
 
 
 use Plank\Mediable\Media;
@@ -16,11 +16,11 @@ class FileTransformer
     /**
      * transform files and directories
      *
-     * @param Media $model
+     * @param Media $repository
      * @param string $path
      * @return array
      */
-    public function transform(Media $model, $path = null, $tag = null)
+    public function transform($repository, $path = null, $tag = null)
     {
 //        $path = implode('/', $path);
         $pathToFolder = public_path('uploads') . '/' . $path;
@@ -29,8 +29,10 @@ class FileTransformer
         } else {
             $directories = [];
         }
-        $count = $model->inDirectory('local', $path)->count();
-        $media = $this->filesPreRender($model, $path, $tag);
+        $searchpath = implode("_", explode("/", $path));
+
+        $count = $repository->inDirectory('local', $searchpath)->count();
+        $media = $this->filesPreRender($repository, $searchpath, $tag);
 
         return [
             'directories' => $directories,
@@ -43,31 +45,26 @@ class FileTransformer
     /**
      * preRender files
      *
-     * @param $model
+     * @param $$repository
      * @param string $path
      * @return mixed
      */
-    protected function filesPreRender($model, $path = "", $tag = "")
+    protected function filesPreRender($repository, $path = "", $tag = "")
     {
-        if ($path) {
             if ($tag) {
-                $media = $model->inDirectory('local', $path)->where('aggregate_type', $tag)->get();
+                $media = $repository->inDirectory('local', $path)->where('aggregate_type', $tag)->get();
 
             } else {
-                $media = $model->inDirectory('local', $path)->get();
+                $media = $repository->inDirectory('local', $path)->get();
             }
-        } else {
-            if($tag) {
-                $media = $model->where('aggregate_type', $tag)->get();
-            } else {
-                $media = $model->all();
-            }
-        }
+
         $media = $this->filesRender($media, $path, $tag);
         return $media;
     }
 
     protected function filesRender($media, $path, $tag) {
+
+        $path = implode("/", explode("_", $path));
 
         return view('admin.media.files-builder', compact('media', 'path', 'tag'));
     }

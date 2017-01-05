@@ -88,63 +88,78 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
     Route::group(['prefix' => 'media', 'as' => 'media::'], function () {
 
         Route::get('/{path?}', [
-            'uses' => 'MediaManagement@index',
+            'uses' => 'MediaController@index',
             'as' => 'index'
 
         ]);
 
         Route::get('edit/{id}', [
-            'uses' => 'MediaManagement@edit',
+            'uses' => 'MediaController@edit',
             'as' => 'edit'
         ]);
 
         Route::get('getDirectories', [
-            'uses' => 'MediaManagement@getMediaFolders',
+            'uses' => 'MediaController@getMediaFolders',
             'as' => 'directories'
         ]);
 
+        Route::get('download/{id}', [
+            'uses' => 'MediaController@download',
+            'as' => 'download'
+        ]);
+
         Route::post('/makeDirectory', [
-            'uses' => 'MediaManagement@makeFolder',
+            'uses' => 'MediaController@makeFolder',
             'as' => 'make.directory'
         ]);
 
+        Route::post('/renameDirectory', [
+            'uses' => 'MediaController@renameFolder',
+            'as' => 'rename.directory'
+        ]);
+
         Route::put('update/{id}', [
-            'uses' => 'MediaManagement@update',
+            'uses' => 'MediaController@update',
             'middleware' => 'shouldBeUnique',
             'as' => 'update'
         ]);
 
         Route::delete('{id}', [
-            'uses' => 'MediaManagement@destroy',
+            'uses' => 'MediaController@destroy',
             'as' => 'delete'
         ]);
 
         Route::post('store', [
-            'uses' => 'MediaManagement@store',
+            'uses' => 'MediaController@store',
             'as' => 'store'
         ]);
 
         Route::post('upload', [
-            'uses' => 'MediaManagement@upload',
+            'uses' => 'MediaController@upload',
             'as' => 'upload'
         ]);
         Route::get('description/{id}', [
-            'uses' => 'MediaManagement@getDescription',
+            'uses' => 'MediaController@getDescription',
             'as' => 'description'
         ]);
 
         Route::get('delete/{id}', [
-            'uses' => 'MediaManagement@destroy',
+            'uses' => 'MediaController@destroy',
             'as' => 'get.delete'
         ]);
 
+        Route::get('delete/folder/{folder}', [
+            'uses' => 'MediaController@folderDestroy',
+            'as' => 'get.folder.delete'
+        ]);
+
         Route::get('bytag/{path?}/{tag}', [
-            'uses' => 'MediaManagement@getByTag',
+            'uses' => 'MediaController@getByTag',
             'as' => 'get.tag'
         ]);
 
         Route::delete('{id}', [
-            'uses' => 'MediaManagement@destroy',
+            'uses' => 'MediaController@destroy',
             'as' => 'delete'
         ]);
 

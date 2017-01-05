@@ -36,7 +36,6 @@
             <li><a href="{{ route('admin::dashboard') }}"><i class='fa fa-th'></i> <span>Widgets</span></a></li>
             <li><a href="{{ route('admin::categories::index') }}"><i class='fa fa-archive'></i> <span>Categories</span></a>
             </li>
-            <li><a href="{{ route('admin::media::index') }}"><i class='fa fa-file'></i> <span>Media Storage</span></a></li>
 
             <li><a href="{{ route('admin::users::index') }}"><i class='fa fa-users'></i> <span>Users</span></a></li>
             <li class="treeview">
@@ -49,6 +48,8 @@
                 </ul>
             </li>
             <li class="header">Administration</li>
+            <li><a href="{{ route('admin::media::index') }}"><i class='fa fa-files-o'></i> <span>Media Storage</span></a></li>
+
             <li class="treeview {{ Route::is('admin::roles::create') ? 'active' : '' }}">
                 <a href="{{ route('admin::roles::index') }}">
                     <i class="fa  fa-street-view"></i>

@@ -30,12 +30,13 @@ class RepositoriesServiceProvider extends ServiceProvider
     {
         $models = [
             'Basket',
-            'Item'
+            'Item',
+            'Media'
         ];
         foreach ($models as $repo) {
             $this->app->bind(
-                "FBA\\Repositories\\{$repo}Repository",
-                "FBA\\Repositories\\{$repo}RepositoryEloquent"
+                "App\\Core\\Repositories\\{$repo}Repository",
+                "App\\Core\\Repositories\\{$repo}RepositoryEloquent"
             );
         }
     }

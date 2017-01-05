@@ -5,7 +5,7 @@
 
     <div class="input-group margin">
         <div class="input-group-btn">
-            <button type="button" class="btn btn-info disabled">{!! $path ? '../'.$path : '../' !!}</button>
+            <button type="button" class="btn btn-info disabled">{!! $path ? '../'.implode("/", explode("_",$path)): '../' !!}</button>
         </div>
         <!-- /btn-group -->
         {!! Form::text('new_path', null, ['class' => 'form-control']) !!}

@@ -109,9 +109,9 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
      */
     public function delete($id)
     {
-        $good = $this->findById($id);
-        if (!is_null($good)) {
-            $good->delete();
+        $category = $this->findById($id);
+        if (!is_null($category)) {
+            $category->delete();
             return true;
         }
         return false;
@@ -131,7 +131,7 @@ class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepos
      */
     public function getCategories(){
 
-        $categories = $this->getModel()->where('parent_id',0)->get();//united
+        $categories = $this->getModel()->where('parent_id', null)->get();//united
 
         $categories = $this->addRelation($categories);
 

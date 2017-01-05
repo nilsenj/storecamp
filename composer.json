@@ -46,17 +46,13 @@
     "autoload": {
         "classmap": [
             "database",
-            "App/Core/Models",
-            "App/Core/Presenters",
-            "App/Core/Transformers",
-            "App/Core/Repositories",
             "App/Helpers/helpers.php"
         ],
         "psr-4": {
             "App\\": "app/",
             "Core\\": "app/Core/",
             "RepositoryLab\\Repository\\": "App/Core/RepositoryLab/",
-            "App\\Core\\Repositories\\": "App/Core/Repositories/",
+            "App\\Core\\Repositories\\": "App/Core/repositories/",
             "App\\Core\\Models\\": "app/Core/models/",
             "App\\Core\\Presenters\\": "app/Core/Presenters/",
             "App\\Core\\Transformers\\": "app/Core/Transformers/",

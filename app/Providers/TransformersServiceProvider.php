@@ -25,10 +25,11 @@ class TransformersServiceProvider extends ServiceProvider
     {
         $models = [
             'Basket',
-            'Item'
+            'Item',
+            'File'
         ];
         foreach ($models as $model) {
-            $this->app->bind("FBA\\Transformers\\{$model}Transformer");
+            $this->app->bind("App\\Core\\Transformers\\{$model}Transformer");
         }
     }
 }

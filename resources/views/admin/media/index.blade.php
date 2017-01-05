@@ -14,7 +14,7 @@
                         .../
                     </a>
                     <a class="" href="{{route('admin::media::index', $path)}}" style="margin-left: 10px">
-                        {!! $path !!}
+                        {!! implode("/", explode("_",$path)) !!}
                     </a> </b></p> @endif
     @endsection
 </h1>
@@ -25,35 +25,63 @@
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">List of Media Files
-                        @if(!$path)
-                            <a class="btn btn-md btn-default" href="{{route('admin::media::index')}}" style="margin-left: 10px">
-                                back
-                            </a>
-                        @else
-                            <a class="btn btn-md btn-default" href="{{url()->previous()}}" style="margin-left: 10px">
-                                back
-                            </a>
-                        @endif
-                        <a data-toggle="modal"
-                           href="#upload-modal"
-                           class="btn btn-md btn-default" style="margin-left: 10px">
-                            upload
-                        </a>
-                        <a data-toggle="modal"
-                           href="#newdir-modal"
-                           class="btn btn-md btn-default" style="margin-left: 10px">
-                            create directory
-                        </a>
+
                     </h3>
 
                     <div class="box-tools">
-                        <form action="#" method="get" class="input-group" style="width: 150px;">
-                            <input type="text" name="q" class="form-control input-sm pull-right" placeholder="Search">
-                            <div class="input-group-btn">
-                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+
+                            <div class="form-group">
+                                @if(!$path)
+                                    <a class="btn btn-md btn-default" href="{{route('admin::media::index')}}" style="margin-left: 10px">
+                                        back
+                                    </a>
+                                @else
+                                    <a class="btn btn-md btn-default" href="{{url()->previous()}}" style="margin-left: 10px">
+                                        back
+                                    </a>
+                                @endif
+                                <a data-toggle="modal"
+                                   href="#upload-modal"
+                                   class="btn btn-md btn-default" style="margin-left: 10px">
+                                    upload
+                                </a>
+                                <a data-toggle="modal"
+                                   href="#newdir-modal"
+                                   class="btn btn-md btn-default" style="margin-left: 10px">
+                                    create directory
+                                </a>
+
+                            <form action="#" method="get" class="input-group pull-right" style="width: 200px; margin-left: 10px">
+                            <input type="text" name="q" class="form-control pull-right" placeholder="Search">
+                            <div class="input-group-btn" >
+                                <button type="button" class="btn btn-info" style="padding: 9px;"><i class="fa fa-search"></i></button>
                             </div>
                         </form>
+                            </div>
                     </div>
+                    <div class="clearifx"></div>
+                    <span class="text-muted">only: </span>
+                    <a href="{{url('admin/media/'.$path)}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                        - all
+                    </a>
+                    <a href="{{url('admin/media/'.$path."?tag=video")}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                        <i class="fa fa-video-camera"></i> - video
+                    </a>
+                    <a href="{{url('admin/media/'.$path."?tag=audio")}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                        <i class="fa fa-music"></i> - audio
+                    </a>
+                    <a href="{{url('admin/media/'.$path."?tag=image")}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                        <i class="fa fa-image"></i> - image
+                    </a>
+                    <a href="{{url('admin/media/'.$path."?tag=pdf")}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                        <i class="fa fa-file-pdf-o"></i> - pdf
+                    </a>
+                    <a href="{{url('admin/media/'.$path."?tag=archive")}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                        <i class="fa fa-file-archive-o"></i> - archive
+                    </a>
+                    <a href="{{url('admin/media/'.$path."?tag=document")}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                        <i class="fa fa-file-archive-o"></i> - document
+                    </a>
                 </div><!-- /.box-header -->
                 <div class="box-body">
 
@@ -74,8 +102,13 @@
                             <!-- /.box-header -->
                             <div class="box-body" style="display: block;">
                                 @foreach($directories as $directory)
-                                    <div class="col-xs-6 col-md-6">
-                                        <a href="{{ route('admin::media::index', [$path ? $path.'_'.pathinfo($directory)['filename'] : pathinfo($directory)['filename']]) }}"
+                                    <?php $directoryPath = $path ? $path.'_'.pathinfo($directory)['filename'] : pathinfo($directory)['filename']; ?>
+                                {{--{!! dd($path) !!}--}}
+                                    <div class="col-xs-6 col-md-6 directory-item">
+                                        <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button" href="{{route("admin::media::get.folder.delete", [$directoryPath])}}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                        <a class="rename-file text-danger btn btn-default btn-xs" data-toggle="modal"
+                                           href="#renameDir-modal" data-rename-path="{{pathinfo($directory)['filename']}}" type="rename" role="button"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                        <a href="{{ route('admin::media::index', [$directoryPath]) }}"
                                            class="btn btn-app"><i class='fa fa-file'></i>
                                             <span>{{pathinfo($directory)['filename']}}</span></a>
                                     </div>
@@ -114,3 +147,4 @@
 @endsection
 @include('admin.media.upload-modal')
 @include('admin.media.newdir-modal')
+@include('admin.media.rename-dir-modal')
