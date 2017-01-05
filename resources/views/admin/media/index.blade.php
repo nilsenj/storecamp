@@ -104,7 +104,7 @@
                                 @foreach($directories as $directory)
                                     <?php $directoryPath = $path ? $path.'_'.pathinfo($directory)['filename'] : pathinfo($directory)['filename']; ?>
                                 {{--{!! dd($path) !!}--}}
-                                    <div class="col-xs-6 col-md-6 directory-item">
+                                    <div class="col-xs-12 col-md-6 directory-item">
                                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button" href="{{route("admin::media::get.folder.delete", [$directoryPath])}}"><i class="fa fa-times" aria-hidden="true"></i></a>
                                         <a class="rename-file text-danger btn btn-default btn-xs" data-toggle="modal"
                                            href="#renameDir-modal" data-rename-path="{{pathinfo($directory)['filename']}}" type="rename" role="button"><i class="fa fa-edit" aria-hidden="true"></i></a>
@@ -148,3 +148,4 @@
 @include('admin.media.upload-modal')
 @include('admin.media.newdir-modal')
 @include('admin.media.rename-dir-modal')
+@include('admin.media.rename-file-modal')

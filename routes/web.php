@@ -118,6 +118,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'as' => 'rename.directory'
         ]);
 
+        Route::post('/renameFile', [
+            'uses' => 'MediaController@renameFile',
+            'as' => 'rename.file'
+        ]);
+
         Route::put('update/{id}', [
             'uses' => 'MediaController@update',
             'middleware' => 'shouldBeUnique',

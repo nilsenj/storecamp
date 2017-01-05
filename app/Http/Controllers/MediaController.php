@@ -95,9 +95,12 @@ class MediaController extends Controller
     {
         try {
             $path = isset($request->path) && $request->path != "" ? ruTolat($request->path) : '';
-//            $path = implode("/", explode("_", $path));
-            MediaUploaderFacade::
+            $path = implode("/", explode("_", $path));
+            $media = MediaUploaderFacade::
             fromSource($request->file('file'))->toDirectory($path)->upload();
+            $media->directory = $path = implode("_", explode("/", $path));
+            $media->save();
+
         } catch (MediaUploadException $e) {
             throw $this->transformMediaUploadException($e);
         }
@@ -145,17 +148,19 @@ class MediaController extends Controller
         $new_path = ruTolat(trim($request->new_path));
         $selected_path = ruTolat(trim($request->selected_path));
         $path = ruTolat(trim($request->path));
-        $renamedPath = $path. '_' . $selected_path;
+        $renamedPath = $path ? $path. '_' . $selected_path : $selected_path;
         $old_path = $path;
         $path = implode("/", explode("_", $path));
         $newFolder = public_path('uploads') . '/' . $path . '/' . $new_path;
         $selectedFolder = public_path('uploads') . '/' . $path . '/' . $selected_path;
-        if (\File::isDirectory($selectedFolder)) {
-            $renamed = \File::move($selectedFolder, $newFolder);
 
+        if (\File::isDirectory($selectedFolder)) {
             $medias = Media::inDirectory('local', $renamedPath)->get();
+            $media = Media::where("directory", 'like', $renamedPath)->get();
+            dd($media);
+            $renamed = \File::move($selectedFolder, $newFolder);
             foreach ($medias as $media) {
-                $media->directory = $old_path . '_' . $new_path;
+                $media->directory = $old_path ? $old_path . '_' . $new_path : $new_path;
                 $media->save();
             }
         }
@@ -163,6 +168,22 @@ class MediaController extends Controller
 
         return redirect()->route('admin::media::index', $reirectPath);
 
+    }
+
+    public function renameFile(Request $request) {
+
+        $new_name = ruTolat(trim($request->new_name));
+        $selected_name = ruTolat(trim($request->selected_name));
+        $selected_id = intval(trim($request->selected_id));
+
+        $mediaItem = $this->repository->find($selected_id);
+        $mediaDirectory = implode("/", explode("_",$mediaItem->directory));
+        $directory = public_path('uploads') . '/'.$mediaDirectory;
+        if (\File::isDirectory($directory)) {
+            \File::move($directory.'/'.$mediaItem->filename.'.'.$mediaItem->extension, $directory.'/'.$new_name.'.'.$mediaItem->extension);
+        }
+        dd($mediaDirectory);
+        return redirect()->to('admin/media/'.implode("_", explode("/", $mediaDirectory)));
     }
 
     /**

@@ -5,7 +5,7 @@
             @foreach($row as $file)
                 {{--{!! dd($file) !!}--}}
                 @if($file->aggregate_type == "video")
-                    <li class="col-xs-3 col-md-3 file-item" style="margin-bottom: 10px">
+                    <li class="col-xs-6 col-md-3 file-item" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
                            href="{{route("admin::media::get.delete", $file->id)}}">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -31,7 +31,7 @@
                         </div>
                     </li>
                 @elseif($file->aggregate_type == "image")
-                    <li class="col-xs-3 col-md-3 file-item" style="margin-bottom: 10px">
+                    <li class="col-xs-6 col-md-3 file-item" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
                            href="{{route("admin::media::get.delete", $file->id)}}"><i class="fa fa-times"
                                                                                       aria-hidden="true"></i></a>
@@ -44,6 +44,10 @@
                             </a>
                             <span class="mailbox-attachment-size">
                           {!! formatBytes($file->size)!!}
+                                <a class="pull-right btn btn-default btn-xs" data-rename-file="{!! $file->filename !!}" data-rename-path="{!! $file->id !!}" data-toggle="modal" type="rename" role="button"
+                                   href="#renameFile-modal">
+                                    <i class="fa fa-edit" aria-hidden="true"></i>
+                                </a>
                                 <a class="pull-right btn btn-info btn-xs" type="download" role="button"
                                    href="{{route("admin::media::download", $file->id)}}"><i class="fa fa-cloud-download"
                                                                                             aria-hidden="true"></i></a>
@@ -52,7 +56,7 @@
                     </li>
 
                 @elseif($file->aggregate_type == 'audio')
-                    <li class="col-xs-3 col-md-3 file-item" style="margin-bottom: 10px">
+                    <li class="col-xs-6 col-md-3 file-item" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
                            href="{{route("admin::media::get.delete", $file->id)}}"><i class="fa fa-times"
                                                                                       aria-hidden="true"></i></a>
@@ -76,7 +80,7 @@
                         </div>
                     </li>
                 @elseif($file->aggregate_type == 'archive')
-                    <li class="col-xs-3 col-md-3 file-item" style="margin-bottom: 10px">
+                    <li class="col-xs-6 col-md-3 file-item" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
                            href="{{route("admin::media::get.delete", $file->id)}}"><i class="fa fa-times"
                                                                                       aria-hidden="true"></i></a>
@@ -97,7 +101,7 @@
 
                 @elseif($file->aggregate_type == 'document')
 
-                    <li class="col-xs-3 col-md-3 file-item" style="margin-bottom: 10px">
+                    <li class="col-xs-6 col-md-3 file-item" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
                            href="{{route("admin::media::get.delete", $file->id)}}">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -116,7 +120,7 @@
                     </li>
                 @elseif($file->aggregate_type == 'pdf')
 
-                    <li class="col-xs-3 col-md-3 file-item" style="margin-bottom: 10px">
+                    <li class="col-xs-6 col-md-3 file-item" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
                            href="{{route("admin::media::get.delete", $file->id)}}">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -170,7 +174,7 @@
     .delete-file, .rename-file, .download-file, .tag-file {
         position: absolute;
         top: auto;
-        right: 10px;
+        right: 0px;
         display: none;
         padding: 3px;
     }
@@ -233,4 +237,5 @@
     });
 
 </script>
+
 @endpush
