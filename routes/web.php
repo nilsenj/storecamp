@@ -90,7 +90,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
         Route::get('/{path?}', [
             'uses' => 'MediaController@index',
             'as' => 'index'
-
         ]);
 
         Route::get('/getIndex/{path?}', [
@@ -98,9 +97,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'as' => 'get.index'
         ]);
 
-        Route::get('edit/{id}', [
-            'uses' => 'MediaController@edit',
-            'as' => 'edit'
+        Route::get('/getIndexFolders/{folder?}', [
+            'uses' => 'MediaController@getIndexFolders',
+            'as' => 'get.index.folders'
         ]);
 
         Route::get('getDirectories', [

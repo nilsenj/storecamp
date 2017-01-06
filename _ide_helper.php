@@ -14562,6 +14562,72 @@ namespace {
     }
 
 
+    class Transliteration extends \That0n3guy\Transliteration\Facades\Transliteration{
+        
+        /**
+         * Transliterates and sanitizes a file name.
+         * 
+         * The resulting file name has white space replaced with underscores, consists
+         * of only US-ASCII characters, and is converted to lowercase (if configured).
+         * If multiple files have been submitted as an array, the names will be
+         * processed recursively.
+         *
+         * @param $filename A file name, or an array of file names.
+         * @param $source_langcode Optional ISO 639 language code that denotes the language of the input and
+         *   is used to apply language-specific variations. If the source language is
+         *   not known at the time of transliteration, it is recommended to set this
+         *   argument to the site default language to produce consistent results.
+         *   Otherwise the current display language will be used.
+         * @return \That0n3guy\Transliteration\Sanitized file name, or array of sanitized file names.
+         * @see language_default()
+         * @static 
+         */
+        public static function clean_filename($filename, $source_langcode = null){
+            return \That0n3guy\Transliteration\Transliteration::clean_filename($filename, $source_langcode);
+        }
+        
+        /**
+         * Transliterates UTF-8 encoded text to US-ASCII.
+         * 
+         * Based on Mediawiki's UtfNormal::quickIsNFCVerify().
+         *      Swiped from drupal's transliteration module: https://drupal.org/project/transliteration
+         *
+         * @param $string UTF-8 encoded text input.
+         * @param $unknown Replacement string for characters that do not have a suitable ASCII
+         *   equivalent.
+         * @param $source_langcode Optional ISO 639 language code that denotes the language of the input and
+         *   is used to apply language-specific variations. If the source language is
+         *   not known at the time of transliteration, it is recommended to set this
+         *   argument to the site default language to produce consistent results.
+         *   Otherwise the current display language will be used.
+         * @return \That0n3guy\Transliteration\Transliterated text.
+         * @static 
+         */
+        public static function transliteration_process($string, $unknown = '?', $source_langcode = null){
+            return \That0n3guy\Transliteration\Transliteration::transliteration_process($string, $unknown, $source_langcode);
+        }
+        
+        /**
+         * Replaces a Unicode character using the transliteration database.
+         * 
+         * Swiped from drupal's transliteration module: https://drupal.org/project/transliteration
+         *
+         * @param $ord An ordinal Unicode character code.
+         * @param $unknown Replacement string for characters that do not have a suitable ASCII
+         *   equivalent.
+         * @param $langcode Optional ISO 639 language code that denotes the language of the input and
+         *   is used to apply language-specific variations.  Defaults to the current
+         *   display language.
+         * @return \That0n3guy\Transliteration\ASCII replacement character.
+         * @static 
+         */
+        public static function transliteration_replace($ord, $unknown = '?', $langcode = 'eng'){
+            return \That0n3guy\Transliteration\Transliteration::transliteration_replace($ord, $unknown, $langcode);
+        }
+        
+    }
+
+
     class Timezone extends \Camroncade\Timezone\Facades\Timezone{
         
         /**

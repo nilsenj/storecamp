@@ -124,11 +124,6 @@ class MediaController extends Controller
         }
     }
 
-    public function edit(Request $request, $id)
-    {
-
-    }
-
     /**
      * get media description for json
      *
@@ -156,7 +151,7 @@ class MediaController extends Controller
             $folderPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folder->name : $folder->name;
             $folderFullPath = public_path('uploads') . '/' . $folderPath;
             $file = $request->file('file');
-            if (class_exists( 'That0n3guy\Transliteration\Transliteration' )) {
+            if (class_exists('That0n3guy\Transliteration\Transliteration')) {
                 $filename = Transliteration::clean_filename($file->getClientOriginalName());  // You can see I am cleaning the filename
             }
             $media = MediaUploaderFacade::fromSource($file)->toDirectory($folderPath)->useFilename($filename)->upload();
@@ -173,11 +168,15 @@ class MediaController extends Controller
         }
     }
 
-    public function getMediaFolders()
+    public function getIndexFolders(Request $request, $folder = null)
     {
+        $folder = $folder ? $this->folder->find(intval($folder)) : $this->folder->find(1);
+        $path = $this->folder->getParentFoldersPath($folder);
+        $folderName = $folder->name ? $folder->name : '';
+        $path = $path ? $path . "/" . $folderName : $folderName;
+        $directoryTransformed = $this->repository->transformFolders($request, $folder, $path);
+        return $directoryTransformed;
 
-        $media = Media::select('directory')->get();
-        return response()->json($media, 200);
     }
 
     /** make folder && store the folder in table
@@ -185,11 +184,12 @@ class MediaController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function makeFolder(Request $request)
+    public
+    function makeFolder(Request $request)
     {
 
         try {
-            if (class_exists( 'That0n3guy\Transliteration\Transliteration' )) {
+            if (class_exists('That0n3guy\Transliteration\Transliteration')) {
                 $new_path = Transliteration::clean_filename(trim($request->new_path));  // You can see I am cleaning the filename
             }
             $parentFolderId = $request->folder ? $request->folder : 1;
@@ -224,10 +224,11 @@ class MediaController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function renameFolder(Request $request)
+    public
+    function renameFolder(Request $request)
     {
         try {
-            if (class_exists( 'That0n3guy\Transliteration\Transliteration' )) {
+            if (class_exists('That0n3guy\Transliteration\Transliteration')) {
                 $new_name = Transliteration::clean_filename(trim($request->new_name));  // You can see I am cleaning the filename
             }
             $renameFolder = $this->folder->find(intval($request->folder));
@@ -259,10 +260,11 @@ class MediaController extends Controller
         }
     }
 
-    public function renameFile(Request $request)
+    public
+    function renameFile(Request $request)
     {
         try {
-            if (class_exists( 'That0n3guy\Transliteration\Transliteration' )) {
+            if (class_exists('That0n3guy\Transliteration\Transliteration')) {
                 $new_name = Transliteration::clean_filename(trim($request->new_name));  // You can see I am cleaning the filename
             }
             $selected_id = intval(trim($request->selected_id));
@@ -297,7 +299,8 @@ class MediaController extends Controller
      * @param $folder
      * @return Response|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function download($id, $folder)
+    public
+    function download($id, $folder)
     {
         try {
 
@@ -317,7 +320,8 @@ class MediaController extends Controller
     /**
      * @param Request $request
      */
-    public function update(Request $request)
+    public
+    function update(Request $request)
     {
 
     }
@@ -328,7 +332,8 @@ class MediaController extends Controller
      * @param $id
      * @return Response|\Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         try {
             $media = Media::find($id);
@@ -347,7 +352,8 @@ class MediaController extends Controller
      * @param $folder
      * @return Response|\Illuminate\Http\RedirectResponse
      */
-    public function folderDestroy($folder)
+    public
+    function folderDestroy($folder)
     {
         try {
             if (intval($folder) == 1) {

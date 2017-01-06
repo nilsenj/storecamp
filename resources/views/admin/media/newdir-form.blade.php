@@ -1,4 +1,4 @@
-{!! Form::open(['files' => false, 'route' => 'admin::media::make.directory']) !!}
+{!! Form::open(['files' => false, 'id' => 'newDirForm','route' => 'admin::media::make.directory']) !!}
 
 <div class="form-group">
     {!! Form::label('path', 'Path:') !!}
@@ -8,9 +8,9 @@
             <button type="button" class="btn btn-info disabled">{!! $folder->name ? $folder->name : '../'!!}</button>
         </div>
         <!-- /btn-group -->
-        {!! Form::text('new_path', null, ['class' => 'form-control']) !!}
+        {!! Form::text('new_path', null, ['class' => 'form-control folder-new-path']) !!}
         {!! $errors->first('new_path', '<div class="text-danger">:message</div>') !!}
-        {!! Form::text('folder', $folder->id, ['class' => 'form-control hidden']) !!}    </div>
+        {!! Form::text('folder', $folder->id, ['class' => 'form-control folder-id hidden']) !!}    </div>
 </div>
 {!! Form::submit('confirm folder creation', ['class' => "btn btn-default"]) !!}
 

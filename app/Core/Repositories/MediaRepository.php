@@ -13,4 +13,5 @@ interface MediaRepository extends RepositoryInterface
     public function getModel();
     public function allOrSearch($searchQuery = null);
     public function transform($request, $path = null, $tag = null);
+    public function transformFolders($request, $folder = null, $path);
 }

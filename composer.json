@@ -42,7 +42,8 @@
         "laracasts/generators": "dev-master",
         "doctrine/dbal": "^2.6@dev",
         "laracasts/flash": "dev-master",
-        "Landish/Pagination": "dev-master"
+        "Landish/Pagination": "dev-master",
+        "squizlabs/php_codesniffer": "^2.7"
     },
     "autoload": {
         "classmap": [

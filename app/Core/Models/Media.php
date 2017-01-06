@@ -13,5 +13,8 @@ class Media extends \Plank\Mediable\Media implements Transformable
     protected $fillable = ['directory_id'];
     protected $guarded = ['id', 'disk', 'directory', 'directory_id', 'filename', 'extension', 'size', 'mime_type', 'aggregate_type'];
 
+    public function getItems($items = []) {
+        return null;
+    }
 
 }

@@ -101,7 +101,7 @@
                 </div><!-- /.box-header -->
                 {!! Form::open(['files' => true, 'route' => 'admin::media::upload',  'id' => 'my-awesome-dropzone-body', 'class' => 'dropzone box-body folder-body']) !!}
                 <input type="hidden" name="folder" value="{{$folder->id}}">
-                @include('admin.media.index-body_part')
+                                    @include('admin.media.index-body_part')
                 {!! Form::close() !!}
             </div><!-- /.box -->
         </div>
