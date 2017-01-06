@@ -6,6 +6,9 @@
 Homestead.json
 Homestead.yaml
 .env
+/public/uploads/**
+/public/uploads/**/*
+/public/uploads/**/*.mp4
 /public/uploads/**/*.mp4
 /public/uploads/**/*.avi
 /public/uploads/**/*.mp3
