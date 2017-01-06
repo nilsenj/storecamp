@@ -103,7 +103,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'as' => 'directories'
         ]);
 
-        Route::get('download/{id}', [
+        Route::get('download/{id}/{folder}', [
             'uses' => 'MediaController@download',
             'as' => 'download'
         ]);

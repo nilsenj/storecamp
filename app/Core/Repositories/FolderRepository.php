@@ -10,5 +10,7 @@ use RepositoryLab\Repository\Contracts\RepositoryInterface;
  */
 interface FolderRepository extends RepositoryInterface
 {
-    //
+    public function getFolders($folder);
+    public function getParentFolders($folder);
+    public function getParentFoldersPath($folder);
 }

@@ -10,6 +10,8 @@ class Media extends \Plank\Mediable\Media implements Transformable
 {
     use TransformableTrait;
 
-//    protected $fillable = [];
+    protected $fillable = ['directory_id'];
+    protected $guarded = ['id', 'disk', 'directory', 'directory_id', 'filename', 'extension', 'size', 'mime_type', 'aggregate_type'];
+
 
 }

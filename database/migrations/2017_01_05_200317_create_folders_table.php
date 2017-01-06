@@ -15,8 +15,8 @@ class CreateFoldersTable extends Migration
     {
         Schema::create('folders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('parent_id')->unsigned()->nullable();
-            $table->string('name');
+            $table->integer('parent_id')->nullable()->default(1);
+            $table->string('name')->nullable();
             $table->string('slug')->nullable();
             $table->tinyInteger('order')->default(0);
             $table->timestamps();
@@ -30,6 +30,6 @@ class CreateFoldersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('categories');
+        Schema::drop('folders');
     }
 }

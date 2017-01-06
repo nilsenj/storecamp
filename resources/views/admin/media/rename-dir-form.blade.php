@@ -5,13 +5,12 @@
 
     <div class="input-group margin">
         <div class="input-group-btn">
-            <button type="button" class="btn btn-info disabled">{!! $path ? '../'.implode("/", explode("_",$path)): '../' !!}</button>
+            <button type="button" class="btn btn-info disabled">{!! $path ? $path : "../" !!}</button>
         </div>
         <!-- /btn-group -->
-        {!! Form::text('new_path', null, ['class' => 'form-control rename-dir']) !!}
-        {!! $errors->first('new_path', '<div class="text-danger">:message</div>') !!}
-        {!! Form::text('path', $path, ['class' => 'form-control hidden']) !!}
-        {!! Form::text('selected_path', null, ['class' => 'selected-dir form-control hidden']) !!}
+        {!! Form::text('new_name', null, ['class' => 'form-control new_name']) !!}
+        {!! $errors->first('new_name', '<div class="text-danger">:message</div>') !!}
+        {!! Form::text('folder', null, ['class' => 'form-control rename-id hidden']) !!}
     </div>
 </div>
 {!! Form::submit('confirm folder rename', ['class' => "btn btn-default"]) !!}

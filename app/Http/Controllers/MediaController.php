@@ -2,27 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\Models\Folder;
+use App\Core\Repositories\FolderRepository;
 use App\Core\Repositories\MediaRepository;
+use Arcanedev\LogViewer\Exceptions\FilesystemException;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Plank\Mediable\Exceptions\MediaUploadException;
 use Plank\Mediable\HandlesMediaUploadExceptions;
 use Plank\Mediable\Media;
-use Plank\Mediable\MediaUploaderFacade; //use the facade
+use Plank\Mediable\MediaUploaderFacade;
+use Symfony\Component\HttpFoundation\File\Exception\FileException; //use the facade
 
 class MediaController extends Controller
 {
     use HandlesMediaUploadExceptions;
 
     public $repository;
+    public $folder;
 
     /**
      * MediaController constructor.
-     * @param $repository
+     * @param MediaRepository $repository
+     * @param FolderRepository $folder
      */
-    public function __construct(MediaRepository $repository)
+    public function __construct(MediaRepository $repository, FolderRepository $folder)
     {
         $this->repository = $repository;
+        $this->folder = $folder;
     }
 
 
@@ -49,24 +56,28 @@ class MediaController extends Controller
     }
 
     /**
-     * @param string $path
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param Request $request
+     * @param null $folder
+     * @return View|Response|Redirect
      */
-    public function index(Request $request, $path = '')
+    public function index(Request $request, $folder = null)
     {
-//        dd($this->repository);
-        $tag = '';
-        $path = explode("_", $path);
-        $path = implode('/', $path);
-//        $fileTransformer = new FileTransformer();
-//        $media = $this->repository->allOrSearch($request->get('q'));
-//        dd($media);
-        $files = $this->repository->transform($request, $path, $tag);
-        $media = $files['media'];
-        $directories = $files['directories'];
-        $count = $files['count'];
-        $path = implode("_", explode("/", $path));
-        return $this->view('index', compact('media', 'directories', 'path', 'count', 'tag'));
+        try {
+            $folder = $folder ? $this->folder->find(intval($folder)) : $this->folder->find(1);
+            $files = $this->repository->transform($request, $folder, null);
+            $media = $files['media'];
+            $directories = $files['directories'];
+            $count = $files['count'];
+
+            $path = $this->folder->getParentFoldersPath($folder);
+            $folderName = $folder->name ? $folder->name : '';
+            $path = $path ? $path . "/" . $folderName : $folderName;
+            return $this->view('index', compact('media', 'directories', 'path', 'folder', 'count', 'tag'));
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound();
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors($exception);
+        }
     }
 
 
@@ -88,21 +99,32 @@ class MediaController extends Controller
             return response()->view('admin.media.description', compact('file'));
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), $exception->getCode());
         }
     }
 
     public function upload(Request $request)
     {
         try {
-            $path = isset($request->path) && $request->path != "" ? ruTolat($request->path) : '';
-            $path = implode("/", explode("_", $path));
-            $media = MediaUploaderFacade::
-            fromSource($request->file('file'))->toDirectory($path)->upload();
-            $media->directory = $path = implode("_", explode("/", $path));
+
+            $folder = $request->folder ? $this->folder->find($request->folder) : $this->folder->find(1);
+
+            $parentFoldersPath = $this->folder->getParentFoldersPath($folder);
+            $folderPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folder->name : $folder->name;
+            $folderFullPath = public_path('uploads') . '/' . $folderPath;
+
+            $media = MediaUploaderFacade::fromSource($request->file('file'))->toDirectory($folderPath)->upload();
+            $media->directory = $folderPath;
+            $media->directory_id = $folder->id;
             $media->save();
 
         } catch (MediaUploadException $e) {
             throw $this->transformMediaUploadException($e);
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors($exception);
+        } catch (FilesystemException $exception) {
+            return response()->json($exception->getMessage(), $exception->getCode());
         }
     }
 
@@ -113,91 +135,132 @@ class MediaController extends Controller
         return response()->json($media, 200);
     }
 
-    public function getByTag($path = "", $tag)
-    {
-        $path = explode("_", $path);
-        $path = implode('/', $path);
-        $fileTransformer = new FileTransformer();
-
-        $files = $fileTransformer->transform(new Media(), $path);
-        $media = $files['media'];
-        $directories = $files['directories'];
-        $count = $files['count'];
-
-        return $this->view('index', compact('media', 'directories', 'path', 'count', 'tag'));
-    }
-
+    /** make folder && store the folder in table
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
     public function makeFolder(Request $request)
     {
 
-        $new_path = ruTolat(trim($request->new_path));
-        $path = ruTolat(trim($request->path));
-        $path = implode("/", explode("-", $path));
-        $newFolder = public_path('uploads') . '/' . $path . '/' . $new_path;
-        if (!\File::isDirectory($newFolder)) {
-            $result = \File::makeDirectory($newFolder, 0775, true);
+        try {
+            $new_path = ruTolat(trim($request->new_path));
+            $parentFolderId = $request->folder ? $request->folder : 1;
+            $parentFolder = $this->folder->find($parentFolderId);
+            $parentFoldersPath = $this->folder->getParentFoldersPath($parentFolder);
+            $parentPath = $parentFoldersPath ? $parentFoldersPath . '/' . $parentFolder->name : $parentFolder->name;
+            $newFolder = $parentPath ? public_path('uploads') . '/' . $parentPath . '/' . $new_path : public_path('uploads') . '/' . $new_path;
+            if (!\File::isDirectory($newFolder)) {
+
+                \File::makeDirectory($newFolder, 0775, true);
+                $folder = Folder::create([
+                    'name' => $new_path,
+                    'parent_id' => $parentFolderId
+                ]);
+                return redirect()->route('admin::media::index', $folder->id);
+            } else {
+                return redirect()->route('admin::media::index');
+            }
+        } catch (ModelNotFoundException $e) {
+            return response()->json($e->getMessage(), $e->getCode());
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), $exception->getCode());
+        } catch (FilesystemException $exception) {
+            return response()->json($exception->getMessage(), $exception->getCode());
         }
-        $reirectPath = $path != "" ? implode("_", explode("/", $path)) . '_' . $new_path : $new_path;
-
-        return redirect()->route('admin::media::index', $reirectPath);
-
     }
 
+
+    /**
+     * rename folder and sync media files
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function renameFolder(Request $request)
     {
-        $new_path = ruTolat(trim($request->new_path));
-        $selected_path = ruTolat(trim($request->selected_path));
-        $path = ruTolat(trim($request->path));
-        $renamedPath = $path ? $path. '_' . $selected_path : $selected_path;
-        $old_path = $path;
-        $path = implode("/", explode("_", $path));
-        $newFolder = public_path('uploads') . '/' . $path . '/' . $new_path;
-        $selectedFolder = public_path('uploads') . '/' . $path . '/' . $selected_path;
+        try {
+            $new_name = ruTolat(trim($request->new_name));
+            $renameFolder = $this->folder->find(intval($request->folder));
+            $parentFoldersPath = $this->folder->getParentFoldersPath($renameFolder);
+            $renamedPath = $parentFoldersPath ? $parentFoldersPath . '/' . $renameFolder->name : $renameFolder->name;
+            $beRenamedToPath = $parentFoldersPath ? $parentFoldersPath . '/' . $new_name : $new_name;
+            $selectedFolder = public_path('uploads') . '/' . $renamedPath;
+            $newFolder = public_path('uploads') . '/' . $beRenamedToPath;
 
-        if (\File::isDirectory($selectedFolder)) {
-            $medias = Media::inDirectory('local', $renamedPath)->get();
-            $media = Media::where("directory", 'like', $renamedPath)->get();
-            dd($media);
-            $renamed = \File::move($selectedFolder, $newFolder);
-            foreach ($medias as $media) {
-                $media->directory = $old_path ? $old_path . '_' . $new_path : $new_path;
-                $media->save();
+            if (\File::isDirectory($selectedFolder)) {
+                $medias = Media::inDirectory('local', $renamedPath)->get();
+                $renamed = \File::move($selectedFolder, $newFolder);
+                foreach ($medias as $media) {
+                    $media->directory = $beRenamedToPath;
+                    $media->save();
+                }
+                $renameFolder->name = $new_name;
+                $renameFolder->save();
             }
+
+            return redirect()->route('admin::media::index', intval($request->folder));
+        } catch
+        (ModelNotFoundException $e) {
+            return response()->json($e->getMessage(), $e->getCode());
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), $exception->getCode());
+        } catch (FilesystemException $exception) {
+            return response()->json($exception->getMessage(), $exception->getCode());
         }
-        $reirectPath = $path != "" ? implode("_", explode("/", $path)) . '_' . $new_path : $new_path;
-
-        return redirect()->route('admin::media::index', $reirectPath);
-
     }
 
-    public function renameFile(Request $request) {
+    public function renameFile(Request $request)
+    {
+        try {
+            $new_name = ruTolat(trim($request->new_name));
+            $selected_id = intval(trim($request->selected_id));
+            $file = $this->repository->find($selected_id);
 
-        $new_name = ruTolat(trim($request->new_name));
-        $selected_name = ruTolat(trim($request->selected_name));
-        $selected_id = intval(trim($request->selected_id));
+            $folderFile = $this->folder->find($file->directory_id);
+            $parentFoldersPath = $this->folder->getParentFoldersPath($folderFile);
 
-        $mediaItem = $this->repository->find($selected_id);
-        $mediaDirectory = implode("/", explode("_",$mediaItem->directory));
-        $directory = public_path('uploads') . '/'.$mediaDirectory;
-        if (\File::isDirectory($directory)) {
-            \File::move($directory.'/'.$mediaItem->filename.'.'.$mediaItem->extension, $directory.'/'.$new_name.'.'.$mediaItem->extension);
+            $renamedPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folderFile->name : $folderFile->name;
+            $selectedFolder = public_path('uploads') . '/' . $renamedPath;
+
+            if (\File::isDirectory($selectedFolder)) {
+                \File::move($selectedFolder . '/' . $file->filename . '.' . $file->extension, $selectedFolder . '/' . $new_name . '.' . $file->extension);
+
+                $file->filename = $new_name;
+                $file->save();
+            }
+            return redirect()->to('admin/media/'.$folderFile->id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json($e->getMessage(), $e->getCode());
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), $exception->getCode());
+        } catch (FilesystemException $exception) {
+            return response()->json($exception->getMessage(), $exception->getCode());
         }
-        dd($mediaDirectory);
-        return redirect()->to('admin/media/'.implode("_", explode("/", $mediaDirectory)));
     }
 
     /**
      * download file
      *
      * @param $id
-     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     * @param $folder
+     * @return Response|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function download($id)
+    public function download($id, $folder)
     {
+        try {
 
-        $file = Media::find($id);
-        $directory = implode("/", explode("_", $file->directory));
-        return response()->download(public_path('uploads/' . $directory . '/' . $file->filename . '.' . $file->extension));
+            $file = $this->repository->find($id);
+            $folder = $folder ? $this->folder->find($folder) : $this->folder->find(1);
+            $parentFoldersPath = $this->folder->getParentFoldersPath($folder);
+            $folderPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folder->name : $folder->name;
+            $folderFullPath = public_path('uploads') . '/' . $folderPath;
+            return response()->download($folderFullPath . '/' . $file->filename . '.' . $file->extension);
+
+        } catch (ModelNotFoundException $e) {
+
+            return $this->redirectNotFound();
+        }
     }
 
     /**
@@ -206,44 +269,53 @@ class MediaController extends Controller
     public function update(Request $request)
     {
 
-        $media = MediaUploaderFacade::getMedia();
-        MediaUploaderFacade::update($media);
     }
 
     /**
      * Remove the specified media from storage.
      *
-     **/
+     * @param $id
+     * @return Response|\Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
         try {
             $media = Media::find($id);
-            $mediaPath = $media->directory;
+            $mediaFolder = $media->directory_id;
+
             $media->delete();
-            return redirect()->to('admin/media/' . $mediaPath);
+            return redirect()->to('admin/media/' . $mediaFolder);
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }
     }
 
     /**
-     * Remove the specified media from storage.
+     * remove folder
      *
-     **/
+     * @param $folder
+     * @return Response|\Illuminate\Http\RedirectResponse
+     */
     public function folderDestroy($folder)
     {
         try {
-//            dd($folder);
-            $search = implode("/", explode("_", $folder));
-            $newFolder = public_path('uploads') . '/' . $search;
+            if (intval($folder) == 1) {
+                return redirect()->back();
+            }
 
-            if (\File::isDirectory($newFolder)) {
-                $result = \File::deleteDirectory($newFolder);
+            $folder = $this->folder->find(intval($folder));
+            $parentFoldersPath = $this->folder->getParentFoldersPath($folder);
+            $folderPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folder->name : $folder->name;
+            $folderFullPath = public_path('uploads') . '/' . $folderPath;
+            if (\File::isDirectory($folderFullPath)) {
+                $medias = Media::inDirectory('local', $folderPath)->get();
+                foreach ($medias as $media) {
+                    $media->delete();
+                }
+                $result = \File::deleteDirectory($folderFullPath);
+                $this->folder->delete($folder->id);
             }
-            $medias = Media::inDirectory('local', $folder)->get();
-            foreach ($medias as $media) {
-                $media->delete();
-            }
+
             return redirect()->back();
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();

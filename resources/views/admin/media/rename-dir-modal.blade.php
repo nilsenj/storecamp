@@ -34,9 +34,10 @@
 
         renameDirModal.on('shown.bs.modal', function (event) {
             var renameDirTrigger = $(event.relatedTarget); // Button that triggered the modal
-            var newPath = renameDirTrigger.data('rename-path');
-            renameDirModal.find('.rename-dir').val(newPath);
-            renameDirModal.find('.selected-dir').val(newPath);
+            var newPath = renameDirTrigger.data('new_name');
+            var renameId = renameDirTrigger.data('rename-id');
+            renameDirModal.find('.new_name').val(newPath);
+            renameDirModal.find('.rename-id').val(renameId);
             $(this).modal('show');
 
 //            modalBody.html(null);

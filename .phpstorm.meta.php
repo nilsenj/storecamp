@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-01-05.
+    * Generated on 2017-01-06.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -88,6 +88,7 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\BasketRepository' instanceof \App\Core\Repositories\BasketRepositoryEloquent,
             'App\Core\Repositories\ItemRepository' instanceof \App\Core\Repositories\ItemRepositoryEloquent,
             'App\Core\Repositories\MediaRepository' instanceof \App\Core\Repositories\MediaRepositoryEloquent,
+            'App\Core\Repositories\FolderRepository' instanceof \App\Core\Repositories\FolderRepositoryEloquent,
             'App\Core\Transformers\ItemTransformer' instanceof \App\Core\Transformers\ItemTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
             'mediable.source.factory' instanceof \Plank\Mediable\SourceAdapters\SourceAdapterFactory,
@@ -274,6 +275,7 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\BasketRepository' instanceof \App\Core\Repositories\BasketRepositoryEloquent,
             'App\Core\Repositories\ItemRepository' instanceof \App\Core\Repositories\ItemRepositoryEloquent,
             'App\Core\Repositories\MediaRepository' instanceof \App\Core\Repositories\MediaRepositoryEloquent,
+            'App\Core\Repositories\FolderRepository' instanceof \App\Core\Repositories\FolderRepositoryEloquent,
             'App\Core\Transformers\ItemTransformer' instanceof \App\Core\Transformers\ItemTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
             'mediable.source.factory' instanceof \Plank\Mediable\SourceAdapters\SourceAdapterFactory,
@@ -460,6 +462,7 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\BasketRepository' instanceof \App\Core\Repositories\BasketRepositoryEloquent,
             'App\Core\Repositories\ItemRepository' instanceof \App\Core\Repositories\ItemRepositoryEloquent,
             'App\Core\Repositories\MediaRepository' instanceof \App\Core\Repositories\MediaRepositoryEloquent,
+            'App\Core\Repositories\FolderRepository' instanceof \App\Core\Repositories\FolderRepositoryEloquent,
             'App\Core\Transformers\ItemTransformer' instanceof \App\Core\Transformers\ItemTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
             'mediable.source.factory' instanceof \Plank\Mediable\SourceAdapters\SourceAdapterFactory,
@@ -646,6 +649,7 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\BasketRepository' instanceof \App\Core\Repositories\BasketRepositoryEloquent,
             'App\Core\Repositories\ItemRepository' instanceof \App\Core\Repositories\ItemRepositoryEloquent,
             'App\Core\Repositories\MediaRepository' instanceof \App\Core\Repositories\MediaRepositoryEloquent,
+            'App\Core\Repositories\FolderRepository' instanceof \App\Core\Repositories\FolderRepositoryEloquent,
             'App\Core\Transformers\ItemTransformer' instanceof \App\Core\Transformers\ItemTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
             'mediable.source.factory' instanceof \Plank\Mediable\SourceAdapters\SourceAdapterFactory,

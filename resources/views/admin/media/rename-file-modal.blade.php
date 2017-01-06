@@ -13,13 +13,12 @@
 
                     <div class="input-group margin">
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-info disabled">{!! $path ? '../'.implode("/", explode("_",$path)): '../' !!}</button>
+                            <button type="button" class="btn btn-info disabled">{!! $folder->name !!}</button>
                         </div>
                         <!-- /btn-group -->
                         {!! Form::text('new_name', null, ['class' => 'form-control rename-file-field']) !!}
                         {!! $errors->first('new_name', '<div class="text-danger">:message</div>') !!}
-                        {!! Form::text('selected_id', null, ['class' => 'form-control hidden']) !!}
-                        {!! Form::text('selected_name', null, ['class' => 'selected-name form-control hidden']) !!}
+                        {!! Form::text('selected_id', null, ['class' => 'form-control selected_id hidden']) !!}
                     </div>
                 </div>
                 {!! Form::submit('confirm file rename', ['class' => "btn btn-default"]) !!}
@@ -54,7 +53,6 @@
             var renameFileId = renameFileTrigger.data('rename-path');
             var renameFileName = renameFileTrigger.data('rename-file');
             renameFileModal.find('.rename-file-field').val(renameFileName);
-            renameFileModal.find('.selected-name').val(renameFileName);
             renameFileModal.find('.selected_id').val(renameFileId);
             $(this).modal('show');
 

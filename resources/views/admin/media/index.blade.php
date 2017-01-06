@@ -10,12 +10,18 @@
         &middot; {{$count}}
     @endsection
     @section('contentheader_description')
-             @if($path) <p>Folder <b style="font-size: 20px; text-decoration: underline;" class="text-info"><a class="" href="{{route('admin::media::index')}}" style="margin-left: 10px">
-                        .../
+        @if($folder)
+            <p>Folder
+                <b style="font-size: 20px; text-decoration: underline;" class="text-info">
+                    <a class="" href="{{route('admin::media::index')}}" style="margin-left: 10px">
+                        {!! "../" !!}
                     </a>
-                    <a class="" href="{{route('admin::media::index', $path)}}" style="margin-left: 10px">
-                        {!! implode("/", explode("_",$path)) !!}
-                    </a> </b></p> @endif
+                    <a class="" href="{{route('admin::media::index', $folder->id)}}" style="margin-left: 10px">
+                        {!! $path !!}
+                    </a>
+                </b>
+            </p>
+        @endif
     @endsection
 </h1>
 @section('main-content')
@@ -30,68 +36,75 @@
 
                     <div class="box-tools">
 
-                            <div class="form-group">
-                                @if(!$path)
-                                    <a class="btn btn-md btn-default" href="{{route('admin::media::index')}}" style="margin-left: 10px">
-                                        back
-                                    </a>
-                                @else
-                                    <a class="btn btn-md btn-default" href="{{url()->previous()}}" style="margin-left: 10px">
-                                        back
-                                    </a>
-                                @endif
-                                <a data-toggle="modal"
-                                   href="#upload-modal"
-                                   class="btn btn-md btn-default" style="margin-left: 10px">
-                                    upload
+                        <div class="form-group">
+                            @if(!$folder)
+                                <a class="btn btn-md btn-default" href="{{route('admin::media::index')}}"
+                                   style="margin-left: 10px">
+                                    back
                                 </a>
-                                <a data-toggle="modal"
-                                   href="#newdir-modal"
-                                   class="btn btn-md btn-default" style="margin-left: 10px">
-                                    create directory
+                            @else
+                                <a class="btn btn-md btn-default" href="{{url()->previous()}}"
+                                   style="margin-left: 10px">
+                                    back
                                 </a>
+                            @endif
+                            <a data-toggle="modal"
+                               href="#upload-modal"
+                               class="btn btn-md btn-default" style="margin-left: 10px">
+                                upload
+                            </a>
+                            <a data-toggle="modal"
+                               href="#newdir-modal"
+                               class="btn btn-md btn-default" style="margin-left: 10px">
+                                create directory
+                            </a>
 
-                            <form action="#" method="get" class="input-group pull-right" style="width: 200px; margin-left: 10px">
-                            <input type="text" name="q" class="form-control pull-right" placeholder="Search">
-                            <div class="input-group-btn" >
-                                <button type="button" class="btn btn-info" style="padding: 9px;"><i class="fa fa-search"></i></button>
-                            </div>
-                        </form>
-                            </div>
+                            <form action="#" method="get" class="input-group pull-right"
+                                  style="width: 200px; margin-left: 10px">
+                                <input type="text" name="q" class="form-control pull-right" placeholder="Search">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-info" style="padding: 9px;"><i
+                                                class="fa fa-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <div class="clearifx"></div>
                     <span class="text-muted">only: </span>
-                    <a href="{{url('admin/media/'.$path)}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                    <a href="{{url('admin/media/'.$folder->id)}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
                         - all
                     </a>
-                    <a href="{{url('admin/media/'.$path."?tag=video")}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                    <a href="{{url('admin/media/'.$folder->id."?tag=video")}}" class="btn btn-xs btn-icon"
+                       style="margin-left: 10px">
                         <i class="fa fa-video-camera"></i> - video
                     </a>
-                    <a href="{{url('admin/media/'.$path."?tag=audio")}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                    <a href="{{url('admin/media/'.$folder->id."?tag=audio")}}" class="btn btn-xs btn-icon"
+                       style="margin-left: 10px">
                         <i class="fa fa-music"></i> - audio
                     </a>
-                    <a href="{{url('admin/media/'.$path."?tag=image")}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                    <a href="{{url('admin/media/'.$folder->id."?tag=image")}}" class="btn btn-xs btn-icon"
+                       style="margin-left: 10px">
                         <i class="fa fa-image"></i> - image
                     </a>
-                    <a href="{{url('admin/media/'.$path."?tag=pdf")}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                    <a href="{{url('admin/media/'.$folder->id."?tag=pdf")}}" class="btn btn-xs btn-icon"
+                       style="margin-left: 10px">
                         <i class="fa fa-file-pdf-o"></i> - pdf
                     </a>
-                    <a href="{{url('admin/media/'.$path."?tag=archive")}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                    <a href="{{url('admin/media/'.$folder->id."?tag=archive")}}" class="btn btn-xs btn-icon"
+                       style="margin-left: 10px">
                         <i class="fa fa-file-archive-o"></i> - archive
                     </a>
-                    <a href="{{url('admin/media/'.$path."?tag=document")}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                    <a href="{{url('admin/media/'.$folder->id."?tag=document")}}" class="btn btn-xs btn-icon"
+                       style="margin-left: 10px">
                         <i class="fa fa-file-archive-o"></i> - document
                     </a>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-
                     {!! $media !!}
-
                     <div class="col-xs-3">
                         <div class="box box-default">
                             <div class="box-header with-border">
                                 <h3 class="box-title">Folders</h3>
-
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
                                                 class="fa fa-plus"></i>
@@ -101,16 +114,20 @@
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body" style="display: block;">
+
                                 @foreach($directories as $directory)
-                                    <?php $directoryPath = $path ? $path.'_'.pathinfo($directory)['filename'] : pathinfo($directory)['filename']; ?>
-                                {{--{!! dd($path) !!}--}}
                                     <div class="col-xs-12 col-md-6 directory-item">
-                                        <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button" href="{{route("admin::media::get.folder.delete", [$directoryPath])}}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                        <a class="delete-file text-danger btn btn-default btn-xs" type="delete"
+                                           role="button"
+                                           href="{{route("admin::media::get.folder.delete", [$directory->id])}}"><i
+                                                    class="fa fa-times" aria-hidden="true"></i></a>
                                         <a class="rename-file text-danger btn btn-default btn-xs" data-toggle="modal"
-                                           href="#renameDir-modal" data-rename-path="{{pathinfo($directory)['filename']}}" type="rename" role="button"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                                        <a href="{{ route('admin::media::index', [$directoryPath]) }}"
+                                           href="#renameDir-modal" data-new_name="{{$path.$directory->name}}"
+                                           data-rename-id="{{$directory->id}}" type="rename" role="button"><i
+                                                    class="fa fa-edit" aria-hidden="true"></i></a>
+                                        <a href="{{ route('admin::media::index', [$directory->id]) }}"
                                            class="btn btn-app"><i class='fa fa-file'></i>
-                                            <span>{{pathinfo($directory)['filename']}}</span></a>
+                                            <span>{{$directory['name']}}</span></a>
                                     </div>
                                 @endforeach
                                 @if(empty($directories))

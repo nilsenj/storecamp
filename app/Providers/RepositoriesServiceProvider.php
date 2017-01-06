@@ -31,7 +31,8 @@ class RepositoriesServiceProvider extends ServiceProvider
         $models = [
             'Basket',
             'Item',
-            'Media'
+            'Media',
+            'Folder'
         ];
         foreach ($models as $repo) {
             $this->app->bind(

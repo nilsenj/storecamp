@@ -2,6 +2,8 @@
 
 namespace App\Core\Repositories;
 
+use Illuminate\Container\Container as Application;
+use Illuminate\Contracts\Bus\Dispatcher;
 use RepositoryLab\Repository\Eloquent\BaseRepository;
 use RepositoryLab\Repository\Criteria\RequestCriteria;
 use App\Core\Repositories\MediaRepository;
@@ -13,6 +15,21 @@ use App\Core\Models\Media;
  */
 class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
 {
+    public $folder;
+
+    /**
+     * MediaRepositoryEloquent constructor.
+     * @param Application $app
+     * @param Dispatcher $dispatcher
+     * @param FolderRepository $folder
+     */
+    public function __construct(Application $app, Dispatcher $dispatcher, FolderRepository $folder)
+    {
+        parent::__construct($app, $dispatcher);
+        $this->folder = $folder;
+    }
+
+
     /**
      * Specify Model class name
      *
@@ -93,29 +110,24 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
     /**
      * transform files and directories
      *
-     * @param Media $repository
-     * @param string $path
+     * @param $request
+     * @param null $folder
+     * @param null $tag
      * @return array
      */
-    public function transform($request, $path = null, $tag = null)
+    public function transform($request, $folder = null, $tag = null)
     {
         $model = $this->getModel();
-        $pathToFolder = public_path('uploads') . '/' . $path;
-        if (\File::exists($pathToFolder)) {
-            $directories = \File::directories($pathToFolder);
-        } else {
-            $directories = [];
-        }
-        $searchpath = implode("_", explode("/", $path));
-
-        $count = $model->inDirectory('local', $searchpath)->count();
-        $media = $this->filesPreRender($model, $searchpath, $tag, $request);
-
+        $parentsPath = $this->folder->getParentFoldersPath($folder);
+        $folderPath = $parentsPath ? $parentsPath . '/' . $folder->name : $folder->name;
+        $count = $model->inDirectory('local', $folderPath)->count();
+        $media = $this->filesPreRender($model, $folderPath, $tag, $request, $folder);
+        $directories = $folder->children;
         return [
             'directories' => $directories,
             'media' => $media,
             'count' => $count,
-            'path' => $path
+            'path' => $folder->name
         ];
     }
 
@@ -128,7 +140,7 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
      * @param $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    private function filesPreRender($model, $path = "", $tag = "", $request)
+    private function filesPreRender($model, $path = "", $tag = "", $request, $folder)
     {
         if ($tag) {
             $media = $this->specificSearch($model->inDirectory('local', $path), $request);
@@ -137,7 +149,7 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
             $media = $this->specificSearch($model->inDirectory('local', $path), $request);
         }
 
-        $media = $this->filesRender($media, $path, $tag);
+        $media = $this->filesRender($media, $path, $tag, $folder);
         return $media;
     }
 
@@ -147,11 +159,8 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
      * @param $tag
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    private function filesRender($media, $path, $tag)
+    private function filesRender($media, $path, $tag, $folder)
     {
-
-        $path = implode("/", explode("_", $path));
-
-        return view('admin.media.files-builder', compact('media', 'path', 'tag'));
+        return view('admin.media.files-builder', compact('media', 'path', 'tag', 'folder'));
     }
 }
