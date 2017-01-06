@@ -6,8 +6,10 @@
 Homestead.json
 Homestead.yaml
 .env
-.mp4
-.avi
-.mp3
-.doc
-.docx
+/public/uploads/**/*.mp4
+/public/uploads/**/*.avi
+/public/uploads/**/*.mp3
+/public/uploads/**/*.doc
+/public/uploads/**/*.docx
+/public/uploads/**/*.pdf
+/public/uploads/**/*.zip

@@ -12,7 +12,8 @@ use Plank\Mediable\Exceptions\MediaUploadException;
 use Plank\Mediable\HandlesMediaUploadExceptions;
 use Plank\Mediable\Media;
 use Plank\Mediable\MediaUploaderFacade;
-use Symfony\Component\HttpFoundation\File\Exception\FileException; //use the facade
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use That0n3guy\Transliteration\Facades\Transliteration; //use the facade
 
 class MediaController extends Controller
 {
@@ -56,6 +57,25 @@ class MediaController extends Controller
     }
 
     /**
+     * @param $request
+     * @param null $folder
+     * @return array
+     */
+    private function preDefineIndexPart($request, $folder = null)
+    {
+        $folder = $folder ? $this->folder->find(intval($folder)) : $this->folder->find(1);
+        $files = $this->repository->transform($request, $folder, null);
+        $media = $files['media'];
+        $directories = $files['directories'];
+        $count = $files['count'];
+
+        $path = $this->folder->getParentFoldersPath($folder);
+        $folderName = $folder->name ? $folder->name : '';
+        $path = $path ? $path . "/" . $folderName : $folderName;
+        return ['media' => $media, 'directories' => $directories, 'path' => $path, 'folder' => $folder, 'count' => $count];
+    }
+
+    /**
      * @param Request $request
      * @param null $folder
      * @return View|Response|Redirect
@@ -63,16 +83,14 @@ class MediaController extends Controller
     public function index(Request $request, $folder = null)
     {
         try {
-            $folder = $folder ? $this->folder->find(intval($folder)) : $this->folder->find(1);
-            $files = $this->repository->transform($request, $folder, null);
-            $media = $files['media'];
-            $directories = $files['directories'];
-            $count = $files['count'];
+            $predefined = $this->preDefineIndexPart($request, $folder);
+            $media = $predefined['media'];
+            $directories = $predefined['directories'];
+            $path = $predefined['path'];
+            $folder = $predefined['folder'];
+            $count = $predefined['count'];
 
-            $path = $this->folder->getParentFoldersPath($folder);
-            $folderName = $folder->name ? $folder->name : '';
-            $path = $path ? $path . "/" . $folderName : $folderName;
-            return $this->view('index', compact('media', 'directories', 'path', 'folder', 'count', 'tag'));
+            return $this->view('index', compact('media', 'directories', 'path', 'folder', 'count'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         } catch (\Exception $exception) {
@@ -80,6 +98,31 @@ class MediaController extends Controller
         }
     }
 
+
+    /**
+     * get folder structure and response for json requests
+     *
+     * @param Request $request
+     * @param null $folder
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     */
+    public function getIndex(Request $request, $folder = null)
+    {
+        try {
+            $predefined = $this->preDefineIndexPart($request, $folder);
+            $media = $predefined['media'];
+            $directories = $predefined['directories'];
+            $path = $predefined['path'];
+            $folder = $predefined['folder'];
+            $count = $predefined['count'];
+            return $this->view('getIndex', compact('media', 'directories', 'path', 'folder', 'count'));
+        } catch
+        (ModelNotFoundException $e) {
+            return response()->json($e->getMessage(), $e->getCode());
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), $exception->getCode());
+        }
+    }
 
     public function edit(Request $request, $id)
     {
@@ -107,14 +150,16 @@ class MediaController extends Controller
     public function upload(Request $request)
     {
         try {
-
             $folder = $request->folder ? $this->folder->find($request->folder) : $this->folder->find(1);
 
             $parentFoldersPath = $this->folder->getParentFoldersPath($folder);
             $folderPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folder->name : $folder->name;
             $folderFullPath = public_path('uploads') . '/' . $folderPath;
-
-            $media = MediaUploaderFacade::fromSource($request->file('file'))->toDirectory($folderPath)->upload();
+            $file = $request->file('file');
+            if (class_exists( 'That0n3guy\Transliteration\Transliteration' )) {
+                $filename = Transliteration::clean_filename($file->getClientOriginalName());  // You can see I am cleaning the filename
+            }
+            $media = MediaUploaderFacade::fromSource($file)->toDirectory($folderPath)->useFilename($filename)->upload();
             $media->directory = $folderPath;
             $media->directory_id = $folder->id;
             $media->save();
@@ -144,7 +189,9 @@ class MediaController extends Controller
     {
 
         try {
-            $new_path = ruTolat(trim($request->new_path));
+            if (class_exists( 'That0n3guy\Transliteration\Transliteration' )) {
+                $new_path = Transliteration::clean_filename(trim($request->new_path));  // You can see I am cleaning the filename
+            }
             $parentFolderId = $request->folder ? $request->folder : 1;
             $parentFolder = $this->folder->find($parentFolderId);
             $parentFoldersPath = $this->folder->getParentFoldersPath($parentFolder);
@@ -180,7 +227,9 @@ class MediaController extends Controller
     public function renameFolder(Request $request)
     {
         try {
-            $new_name = ruTolat(trim($request->new_name));
+            if (class_exists( 'That0n3guy\Transliteration\Transliteration' )) {
+                $new_name = Transliteration::clean_filename(trim($request->new_name));  // You can see I am cleaning the filename
+            }
             $renameFolder = $this->folder->find(intval($request->folder));
             $parentFoldersPath = $this->folder->getParentFoldersPath($renameFolder);
             $renamedPath = $parentFoldersPath ? $parentFoldersPath . '/' . $renameFolder->name : $renameFolder->name;
@@ -213,7 +262,9 @@ class MediaController extends Controller
     public function renameFile(Request $request)
     {
         try {
-            $new_name = ruTolat(trim($request->new_name));
+            if (class_exists( 'That0n3guy\Transliteration\Transliteration' )) {
+                $new_name = Transliteration::clean_filename(trim($request->new_name));  // You can see I am cleaning the filename
+            }
             $selected_id = intval(trim($request->selected_id));
             $file = $this->repository->find($selected_id);
 
@@ -229,7 +280,7 @@ class MediaController extends Controller
                 $file->filename = $new_name;
                 $file->save();
             }
-            return redirect()->to('admin/media/'.$folderFile->id);
+            return redirect()->to('admin/media/' . $folderFile->id);
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         } catch (\Exception $exception) {

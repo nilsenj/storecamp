@@ -93,6 +93,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
 
         ]);
 
+        Route::get('/getIndex/{path?}', [
+            'uses' => 'MediaController@getIndex',
+            'as' => 'get.index'
+        ]);
+
         Route::get('edit/{id}', [
             'uses' => 'MediaController@edit',
             'as' => 'edit'

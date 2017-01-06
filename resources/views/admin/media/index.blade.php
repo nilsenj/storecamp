@@ -63,7 +63,7 @@
                                   style="width: 200px; margin-left: 10px">
                                 <input type="text" name="q" class="form-control pull-right" placeholder="Search">
                                 <div class="input-group-btn">
-                                    <button type="button" class="btn btn-info" style="padding: 9px;"><i
+                                    <button class="btn btn-info" style="padding: 9px;"><i
                                                 class="fa fa-search"></i></button>
                                 </div>
                             </form>
@@ -99,48 +99,12 @@
                         <i class="fa fa-file-archive-o"></i> - document
                     </a>
                 </div><!-- /.box-header -->
-                <div class="box-body">
-                    {!! $media !!}
-                    <div class="col-xs-3">
-                        <div class="box box-default">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">Folders</h3>
-                                <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                                class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                                <!-- /.box-tools -->
-                            </div>
-                            <!-- /.box-header -->
-                            <div class="box-body" style="display: block;">
-
-                                @foreach($directories as $directory)
-                                    <div class="col-xs-12 col-md-6 directory-item">
-                                        <a class="delete-file text-danger btn btn-default btn-xs" type="delete"
-                                           role="button"
-                                           href="{{route("admin::media::get.folder.delete", [$directory->id])}}"><i
-                                                    class="fa fa-times" aria-hidden="true"></i></a>
-                                        <a class="rename-file text-danger btn btn-default btn-xs" data-toggle="modal"
-                                           href="#renameDir-modal" data-new_name="{{$path.$directory->name}}"
-                                           data-rename-id="{{$directory->id}}" type="rename" role="button"><i
-                                                    class="fa fa-edit" aria-hidden="true"></i></a>
-                                        <a href="{{ route('admin::media::index', [$directory->id]) }}"
-                                           class="btn btn-app"><i class='fa fa-file'></i>
-                                            <span>{{$directory['name']}}</span></a>
-                                    </div>
-                                @endforeach
-                                @if(empty($directories))
-                                    <h3 class="text-warning">No folders found</h3>
-                                @endif
-                            </div>
-                            <!-- /.box-body -->
-                        </div>
-
-                    </div>
-                </div>
-            </div><!-- /.box-body -->
-        </div><!-- /.box -->
+                {!! Form::open(['files' => true, 'route' => 'admin::media::upload',  'id' => 'my-awesome-dropzone-body', 'class' => 'dropzone box-body folder-body']) !!}
+                <input type="hidden" name="folder" value="{{$folder->id}}">
+                @include('admin.media.index-body_part')
+                {!! Form::close() !!}
+            </div><!-- /.box -->
+        </div>
     </div>
 @endsection
 @section('scripts_add')
@@ -158,8 +122,60 @@
                 else {
                     done();
                 }
+            },
+            init: function () {
+                this.on("success", function (file, messageOrDataFromServer, myEvent) {
+                    var folderBody = $("#folder-body");
+                    $.ajax({
+                        url: "{{route('admin::media::get.index', [$folder->id])}}",
+                        type: 'GET',
+                        success: function (data) {
+                            folderBody.html(data);
+                            plyr.setup();
+
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            folderBody.html("<b class='text-warning'>" + xhr.responseJSON + "</b>" + "<br><code class='text-warning'>" + 'code - ' + xhr.status + ' statusText - ' + xhr.statusText + "</code>");
+                            console.error(xhr);
+                        }
+                    });
+                    return false;
+                });
             }
         };
+        Dropzone.options.myAwesomeDropzoneBody = {
+            paramName: "file", // The name that will be used to transfer the file
+            maxFilesize: 1024, // MB
+            acceptedFiles: ".mp4,.mkv,.avi, image/*,application/pdf,.psd,.docx,.doc,.aac,.ogg,.oga,.mp3,.wav, .zip",
+            accept: function (file, done) {
+                if (file.name == "justinbieber.jpg") {
+                    done("Naha, Are you kidding(");
+                }
+                else {
+                    done();
+                }
+            },
+            init: function () {
+                this.on("success", function (file, messageOrDataFromServer, myEvent) {
+                    var folderBody = $("#folder-body");
+                    $.ajax({
+                        url: "{{route('admin::media::get.index', [$folder->id])}}",
+                        type: 'GET',
+                        success: function (data) {
+                            folderBody.html(data);
+                            plyr.setup();
+
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            folderBody.html("<b class='text-warning'>" + xhr.responseJSON + "</b>" + "<br><code class='text-warning'>" + 'code - ' + xhr.status + ' statusText - ' + xhr.statusText + "</code>");
+                            console.error(xhr);
+                        }
+                    });
+                    return false;
+                });
+            }
+        };
+        //                Dropzone.myAwesomeDropzone.autoDiscover = false;
     </script>
 @endsection
 @include('admin.media.upload-modal')

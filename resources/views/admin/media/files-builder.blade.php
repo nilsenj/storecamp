@@ -12,24 +12,27 @@
                         </a>
                         <span class="mailbox-attachment-icon has-img">
                             <video controls>
-                                <source src="{{url('uploads/'.$path."/".$file->filename . "." .$file->extension)}}"
+                                <source src="{{$file->getUrl()}}"
                                         type="video/mp4">
-                                <source src="{{url('uploads/'.$path."/".$file->filename . "." .$file->extension)}}"
+                                <source src="{{$file->getUrl()}}"
                                         type="video/webm">
                             </video>
                         </span>
                         <div class="mailbox-attachment-info">
-                            <a href="#" class="mailbox-attachment-name"><i class="fa  fa-video-camera"></i> {{$file->filename}}
+                            <a href="#" class="mailbox-attachment-name"><i
+                                        class="fa  fa-video-camera"></i> {{$file->filename}}
                             </a>
                             <span class="mailbox-attachment-size">
                             {!! formatBytes($file->size)!!}
-                                <a class="pull-right btn btn-default btn-xs" data-rename-file="{!! $file->filename !!}" data-rename-path="{!! $file->id !!}" data-toggle="modal" type="rename" role="button"
+                                <a class="pull-right btn btn-default btn-xs" data-rename-file="{!! $file->filename !!}"
+                                   data-rename-path="{!! $file->id !!}" data-toggle="modal" type="rename" role="button"
                                    href="#renameFile-modal">
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
                                 <a class="pull-right btn btn-info btn-xs" type="download" role="button"
-                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i class="fa fa-cloud-download"
-                                                                                                           aria-hidden="true"></i></a>
+                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i
+                                            class="fa fa-cloud-download"
+                                            aria-hidden="true"></i></a>
                             </span>
                         </div>
                     </li>
@@ -39,7 +42,7 @@
                            href="{{route("admin::media::get.delete", $file->id)}}"><i class="fa fa-times"
                                                                                       aria-hidden="true"></i></a>
                         <span class="mailbox-attachment-icon has-img">
-                            <img src="{{url('uploads/'.$path."/".$file->filename . "." .$file->extension)}}" width="266"
+                            <img src="{{$file->getUrl()}}" width="266"
                                  height="150" alt="{{$file->filename}}">
                         </span>
                         <div class="mailbox-attachment-info">
@@ -47,13 +50,15 @@
                             </a>
                             <span class="mailbox-attachment-size">
                           {!! formatBytes($file->size)!!}
-                                <a class="pull-right btn btn-default btn-xs" data-rename-file="{!! $file->filename !!}" data-rename-path="{!! $file->id !!}" data-toggle="modal" type="rename" role="button"
+                                <a class="pull-right btn btn-default btn-xs" data-rename-file="{!! $file->filename !!}"
+                                   data-rename-path="{!! $file->id !!}" data-toggle="modal" type="rename" role="button"
                                    href="#renameFile-modal">
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
                                 <a class="pull-right btn btn-info btn-xs" type="download" role="button"
-                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i class="fa fa-cloud-download"
-                                                                                            aria-hidden="true"></i></a>
+                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i
+                                            class="fa fa-cloud-download"
+                                            aria-hidden="true"></i></a>
                         </span>
                         </div>
                     </li>
@@ -65,9 +70,9 @@
                                                                                       aria-hidden="true"></i></a>
                         <span class="mailbox-attachment-icon has-img">
                            <audio controls title="{{$file->filename}}">
-                            <source src="{{url('uploads/'.$path."/".$file->filename . "." .$file->extension)}}"
+                            <source src="{{$file->getUrl()}}"
                                     type="audio/mp3">
-                            <source src="{{url('uploads/'.$path."/".$file->filename . "." .$file->extension)}}"
+                            <source src="{{$file->getUrl()}}"
                                     type="audio/ogg">
                            </audio>
                         </span>
@@ -76,13 +81,15 @@
                             </a>
                             <span class="mailbox-attachment-size">
                           {!! formatBytes($file->size)!!}
-                                <a class="pull-right btn btn-default btn-xs" data-rename-file="{!! $file->filename !!}" data-rename-path="{!! $file->id !!}" data-toggle="modal" type="rename" role="button"
+                                <a class="pull-right btn btn-default btn-xs" data-rename-file="{!! $file->filename !!}"
+                                   data-rename-path="{!! $file->id !!}" data-toggle="modal" type="rename" role="button"
                                    href="#renameFile-modal">
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
                                 <a class="pull-right btn btn-info btn-xs" type="download" role="button"
-                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i class="fa fa-cloud-download"
-                                                                                                           aria-hidden="true"></i></a>
+                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i
+                                            class="fa fa-cloud-download"
+                                            aria-hidden="true"></i></a>
 
                         </span>
                         </div>
@@ -96,17 +103,20 @@
                             <i class="item-icon fa fa-archive"></i>
                         </span>
                         <div class="mailbox-attachment-info">
-                            <a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> {{$file->filename}}
+                            <a href="#" class="mailbox-attachment-name"><i
+                                        class="fa fa-paperclip"></i> {{$file->filename}}
                             </a>
                             <span class="mailbox-attachment-size">
                           {!! formatBytes($file->size)!!}
-                                <a class="pull-right btn btn-default btn-xs" data-rename-file="{!! $file->filename !!}" data-rename-path="{!! $file->id !!}" data-toggle="modal" type="rename" role="button"
+                                <a class="pull-right btn btn-default btn-xs" data-rename-file="{!! $file->filename !!}"
+                                   data-rename-path="{!! $file->id !!}" data-toggle="modal" type="rename" role="button"
                                    href="#renameFile-modal">
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
                                 <a class="pull-right btn btn-info btn-xs" type="download" role="button"
-                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i class="fa fa-cloud-download"
-                                                                                                           aria-hidden="true"></i></a>
+                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i
+                                            class="fa fa-cloud-download"
+                                            aria-hidden="true"></i></a>
                         </span>
                         </div>
                     </li>
@@ -120,17 +130,20 @@
                         </a>
                         <span class="mailbox-attachment-icon"><i class="fa fa-file-word-o"></i></span>
                         <div class="mailbox-attachment-info">
-                            <a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> {{$file->filename}}
+                            <a href="#" class="mailbox-attachment-name"><i
+                                        class="fa fa-paperclip"></i> {{$file->filename}}
                             </a>
                             <span class="mailbox-attachment-size">
                           {!! formatBytes($file->size)!!}
-                                <a class="pull-right btn btn-default btn-xs" data-rename-file="{!! $file->filename !!}" data-rename-path="{!! $file->id !!}" data-toggle="modal" type="rename" role="button"
+                                <a class="pull-right btn btn-default btn-xs" data-rename-file="{!! $file->filename !!}"
+                                   data-rename-path="{!! $file->id !!}" data-toggle="modal" type="rename" role="button"
                                    href="#renameFile-modal">
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
                                 <a class="pull-right btn btn-info btn-xs" type="download" role="button"
-                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i class="fa fa-cloud-download"
-                                                                                                           aria-hidden="true"></i></a>
+                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i
+                                            class="fa fa-cloud-download"
+                                            aria-hidden="true"></i></a>
                         </span>
                         </div>
                     </li>
@@ -143,17 +156,20 @@
                         </a>
                         <span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
                         <div class="mailbox-attachment-info">
-                            <a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> {{$file->filename}}
+                            <a href="#" class="mailbox-attachment-name"><i
+                                        class="fa fa-paperclip"></i> {{$file->filename}}
                             </a>
                             <span class="mailbox-attachment-size">
                           {!! formatBytes($file->size)!!}
-                                <a class="pull-right btn btn-default btn-xs" data-rename-file="{!! $file->filename !!}" data-rename-path="{!! $file->id !!}" data-toggle="modal" type="rename" role="button"
+                                <a class="pull-right btn btn-default btn-xs" data-rename-file="{!! $file->filename !!}"
+                                   data-rename-path="{!! $file->id !!}" data-toggle="modal" type="rename" role="button"
                                    href="#renameFile-modal">
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
                                 <a class="pull-right btn btn-info btn-xs" type="download" role="button"
-                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i class="fa fa-cloud-download"
-                                                                                                           aria-hidden="true"></i></a>
+                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i
+                                            class="fa fa-cloud-download"
+                                            aria-hidden="true"></i></a>
                         </span>
                         </div>
                     </li>
@@ -204,11 +220,13 @@
         top: 30px;
         z-index: 9999;
     }
+
     .rename-file {
         display: none;
         top: 30px;
         z-index: 9999;
     }
+
     .file-item .item-icon {
         width: 100%;
         height: 150px;
