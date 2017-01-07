@@ -18,13 +18,6 @@
     <!-- /.modal-dialog -->
 </div>
 @push('scripts-add_on')
-<style>
-    .dropzone {
-        border: 2px dashed #0087F7;
-        border-radius: 5px;
-        background: white;
-    }
-</style>
 <script>
     $(function () {
         var renameDirModal = $('#renameDir-modal'),
@@ -39,24 +32,6 @@
             renameDirModal.find('.new_name').val(newPath);
             renameDirModal.find('.rename-id').val(renameId);
             $(this).modal('show');
-
-//            modalBody.html(null);
-//            modalTitle.html(null);
-//
-//            $.ajax({
-//                url: renameDirTrigger.data('desc-url'),
-//                type: 'GET',
-//                success: function (data) {
-//                    modalBody.html(data);
-//                    modalTitle.html('Media Files');
-//                },
-//                error: function (xhr, textStatus, errorThrown) {
-//                    modalTitle.html("<p class='text-danger'>ERROR Appeared!</p>");
-//                    modalBody.html("<b class='text-warning'>"+xhr.responseJSON+"</b>"+ "<br><code class='text-warning'>" +'code - '+ xhr.status + ' statusText - '+xhr.statusText + "</code>");
-//                    console.error(xhr);
-//                }
-//            });
-//            return false;
         });
     });
 

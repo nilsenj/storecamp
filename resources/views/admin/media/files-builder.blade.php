@@ -1,11 +1,12 @@
 <div class="col-xs-9 col-md-9 files">
+    <div class="play-status"><i class="fa fa-play"></i></div>
     <?php $tag = isset($tag) ? $tag : null; ?>
-    @foreach(array_chunk($media->all(), 4) as $row)
-        <div class="row">
+@foreach(array_chunk($media->all(), 4) as $row)
+        <div class="row file-list">
             @foreach($row as $file)
                 {{--{!! dd($file) !!}--}}
                 @if($file->aggregate_type == "video")
-                    <li class="col-xs-6 col-md-3 file-item" style="margin-bottom: 10px">
+                    <li class="col-xs-6 col-md-3 file-item media-plyr-item" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
                            href="{{route("admin::media::get.delete", $file->id)}}">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -64,7 +65,8 @@
                     </li>
 
                 @elseif($file->aggregate_type == 'audio')
-                    <li class="col-xs-6 col-md-3 file-item" style="margin-bottom: 10px">
+
+                    <li class="col-xs-6 col-md-3 file-item media-plyr-item" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
                            href="{{route("admin::media::get.delete", $file->id)}}"><i class="fa fa-times"
                                                                                       aria-hidden="true"></i></a>
@@ -174,7 +176,6 @@
                         </div>
                     </li>
                 @endif
-
             @endforeach
         </div>
         @if($media->count() == 0)
@@ -202,48 +203,60 @@
 </div>
 
 @push('scripts-add_on')
-<style>
-    .files li {
-        list-style-type: none;
-    }
-
-    .delete-file, .rename-file, .download-file, .tag-file {
-        position: absolute;
-        top: auto;
-        right: 0px;
-        display: none;
-        padding: 3px;
-    }
-
-    .download-file {
-        display: none;
-        top: 30px;
-        z-index: 9999;
-    }
-
-    .rename-file {
-        display: none;
-        top: 30px;
-        z-index: 9999;
-    }
-
-    .file-item .item-icon {
-        width: 100%;
-        height: 150px;
-        display: block;
-        font-size: 120px;
-        text-align: center;
-        list-style-type: none !important;
-    }
-
-    .file-item:hover .delete-file, .file-item:hover .download-file, .directory-item:hover .delete-file, .directory-item:hover .rename-file {
-        display: block;
-        z-index: 9999;
-    }
-</style>
 <link rel="stylesheet" href="{{asset('plugins/plyr/plyr.css')}}">
 <script src="{{ asset('/plugins/plyr/plyr.js') }}" type="text/javascript"></script>
-<script>plyr.setup();</script>
+<script>
+    var players = plyr.setup();
+    var playerStatus = $(".play-status");
+    var counter = 0;
+    players.forEach(function(player, i, arr){
+        player.on('ready timeupdate pause ended playing', function(event) {
+            counter++;
+            switch(event.type) {
+                case 'ready':
+                    console.log(event.detail.plyr.getDuration());
+                    break;
+                case 'playing':
+                    break;
+                case 'timeupdate':
+                    console.log(event.detail.plyr.getCurrentTime());
+                    break;
+                case 'ended':
+                    if(arr.length - 1 > i) {
+                        players[i+1].play();
+                        playerStatus.toggle(2000);
+                        playerStatus.html('<i class="fa  fa-step-forward"></i>')
+                    } else {
+                        players[0].play();
+                        playerStatus.toggle(2000);
+                        playerStatus.html('<i class="fa  fa-step-forward"></i>')
+                    }
+                    break;
+                case 'pause':
+                    console.log('fuck off');
+                    playerStatus.toggle(2000);
+                    playerStatus.html('<i class="fa fa-pause"></i>');
+                    break;
+            }
+        });
+
+    });
+
+    var mediaItems = $(".media-plyr-item");
+
+    [].forEach.call(mediaItems , function(item, i, arr) {
+        $(item).attr('data-media-number', i);
+    });
+
+    mediaItems.find('.plyr__controls button[data-plyr="play"]').on("click", function(event){
+        var audioItem = $(event.target).closest(".media-plyr-item").data('media-number');
+        players.forEach(function(player, i, arr){
+            player.stop();
+            players[audioItem].play();
+        });
+
+    });
+</script>
 <script>
     $(function () {
         var descModal = $('#file-modal'),
@@ -256,7 +269,6 @@
             $(this).modal('show');
             modalBody.html(null);
             modalTitle.html(null);
-
             $.ajax({
                 url: descTrigger.data('desc-url'),
                 type: 'GET',

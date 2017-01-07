@@ -54,8 +54,9 @@ class CategoriesController extends Controller
     public function create(Request $request)
     {
         $categories = $this->repository->all();
+        $parent = null;
 
-        return view('admin.categories.create', compact('categories'));
+        return view('admin.categories.create', compact('categories','parent'));
     }
 
     /**
@@ -65,7 +66,7 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-
+        $data['top'] = $request->top ? $request->top == "on" ? true : false : false ;
         $category = $this->repository->create($data);
 
         return redirect('admin/categories');
@@ -109,9 +110,9 @@ class CategoriesController extends Controller
     {
         try {
             $category = $this->repository->findByField('id', $id)->first();
-            $categories = $this->repository->all();
-
-            return view('admin.categories.edit', compact('category', 'categories'));
+            $parent = $category->parent;
+            $categories = $this->repository->with('parent')->all();
+            return view('admin.categories.edit', compact('category', 'parent', 'categories'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }
@@ -126,6 +127,7 @@ class CategoriesController extends Controller
     {
         try {
             $data = $request->all();
+            $data['top'] = $request->top ? $request->top == "on" ? true : false : false ;
             $category = $this->repository->findByField('id', $id)->first();
             $category->update($data);
             return redirect('admin/categories');

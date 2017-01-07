@@ -127,29 +127,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'as' => 'rename.file'
         ]);
 
-        Route::put('update/{id}', [
-            'uses' => 'MediaController@update',
-            'middleware' => 'shouldBeUnique',
-            'as' => 'update'
-        ]);
-
         Route::delete('{id}', [
             'uses' => 'MediaController@destroy',
             'as' => 'delete'
         ]);
 
-        Route::post('store', [
-            'uses' => 'MediaController@store',
-            'as' => 'store'
-        ]);
-
         Route::post('upload', [
             'uses' => 'MediaController@upload',
             'as' => 'upload'
-        ]);
-        Route::get('description/{id}', [
-            'uses' => 'MediaController@getDescription',
-            'as' => 'description'
         ]);
 
         Route::get('delete/{id}', [

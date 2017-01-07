@@ -1,7 +1,7 @@
 @extends('admin/app')
 
 <h1>
-@section('contentheader_title')
+    @section('contentheader_title')
         Create new Category
         &middot;
     @endsection
@@ -15,12 +15,17 @@
 @section('main-content')
 
     <div>
-        @if(isset($category))
-            {!! Form::model($category, ['method' => 'PUT', 'files' => true, 'route' => ['admin::categories::update', $category->id]]) !!}
-        @else
-            {!! Form::open(['files' => true, 'route' => 'admin::categories::store']) !!}
-        @endif
-        @include('admin.categories.form')
-            {!! Form::close() !!}
+        {!! Form::open(['files' => true, 'route' => 'admin::categories::store']) !!}
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#general" data-toggle="tab">General</a></li>
+                <li><a href="#extra" data-toggle="tab">Extra</a></li>
+            </ul>
+            <div class="tab-content">
+                @include('admin.categories.form', [$category=null])
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        {!! Form::close() !!}
     </div>
 @endsection

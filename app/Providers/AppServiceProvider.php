@@ -27,29 +27,5 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register('Laracasts\Generators\GeneratorsServiceProvider');
         }
 
-//        $this->app->bind(
-//            'App\Core\Repositories\MediaRepository',
-//            'App\Core\Repositories\MediaRepositoryEloquent'
-//        );
-        $this->app->bind(
-            'App\Core\Repositories\CategoryRepository',
-            'App\Core\Repositories\CategoryRepositoryEloquent'
-        );
-        $this->app->bind(
-            'App\Core\Repositories\UserRepository',
-            'App\Core\Repositories\UserRepositoryEloquent'
-        );
-        $this->app->bind(
-            'App\Core\Repositories\RolesRepository',
-            'App\Core\Repositories\RolesRepositoryEloquent'
-        );
-        $this->app->bind(
-            'App\Core\Repositories\ProductsRepository',
-            'App\Core\Repositories\ProductsRepositoryEloquent'
-        );
-        $this->app->bind(
-            'App\Core\Repositories\PermissionRepository',
-            'App\Core\Repositories\PermissionRepositoryEloquent'
-        );
     }
 }

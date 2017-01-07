@@ -8,51 +8,17 @@
     @endsection
 </h1>
 @section('main-content')
-    {{--@if(isset($category))--}}
-
-    {{--{!! Form::model($category, ['method' => 'PUT','files' => true, 'action' => ['CategoriesController@update', $category->slug]]) !!}--}}
-    {{--@else--}}
-    {{--{!! Form::open(['files' => true, 'route' => 'admin::categories::store']) !!}--}}
-    {{--@endif--}}
 
     {!! Form::model($category, ['route' => ['admin::categories::update', $category->id], 'method' => 'PUT', 'class' => '']) !!}
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                &times;
-            </button>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#general" data-toggle="tab">General</a></li>
+            <li><a href="#extra" data-toggle="tab">Extra</a></li>
+        </ul>
+        <div class="tab-content">
+            @include('admin.categories.form', [$category, $parent])
         </div>
-    @endif
-    @if (session('message'))
-        <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                &times;
-            </button>
-            {{ session('message') }}
-        </div>
-    @endif
-    <div class="form-group">
-        {!! Form::label('name', 'Name', ['class' => 'col-sm-2 control-label']) !!}
-        {!! Form::text('name', null, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group">
-        {!! Form::label('parent_id', 'Parent', ['class' => 'col-sm-2 control-label']) !!}
-        {!! Form::text('parent_id', null, ['class' => '', 'type' => 'hidden', 'hidden', 'placeholder' => 'please choose parent category']) !!}
-        <div class="clearfix"></div>
-        @include('admin.components.modal-category_chooser', $category)
-    </div>
-    <div class="form-group">
-        {!! Form::label('slug', 'Slug', ['class' => 'col-sm-2 control-label']) !!}
-        {!! Form::text('slug', null, ['class' => 'form-control', 'placeholder' => 'eg category-name']) !!}
-    </div>
-    @include('admin.components.description-form', [$property_name='description'])
-    <div class="form-group">
-        {!! Form::submit('Update', ['class' => 'btn btn-lg btn-primary']) !!}
+        <!-- /.tab-content -->
     </div>
     {!! Form::close() !!}
 @endsection

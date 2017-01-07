@@ -24,7 +24,7 @@
                                 class="fa fa-edit" aria-hidden="true"></i></a>
                     <a href="{{ route('admin::media::index', [$directory->id]) }}"
                        class="btn btn-app"><i class='fa fa-file'></i>
-                        <span>{{$directory['name']}}</span></a>
+                        <span>{{str_limit($directory['name'], 15)}}</span></a>
                 </div>
             @endforeach
             @if($directories->count() == 0)

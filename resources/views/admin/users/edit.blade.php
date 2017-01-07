@@ -14,7 +14,16 @@
 </h1>
 @section('main-content')
     <div>
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#general" data-toggle="tab">General</a></li>
+                {{--<li><a href="#extra" data-toggle="tab">Extra</a></li>--}}
+            </ul>
+            <div class="tab-content">
         @include('admin.users.form', array('model' => $user) + compact('role'))
         {{--@include('admin.users.form')--}}
+            </div>
+            <!-- /.tab-content -->
+        </div>
     </div>
 @endsection

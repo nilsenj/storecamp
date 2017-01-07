@@ -68,7 +68,6 @@
             "App\\Core\\Interfaces\\": "app/Core/interfaces/",
             "App\\Core\\Policies\\": "app/Core/policies/",
             "App\\Core\\Traits\\": "app/Core/traits/"
-
         }
     },
     "autoload-dev": {

@@ -12,6 +12,7 @@
 <script src="{{ asset('/plugins/fastclick/fastclick.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('/plugins/slimScroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('/js/app.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/plugins/iCheck/icheck.min.js')}}"></script>
 
 <script>
     $(document).ready(function () {
@@ -21,7 +22,22 @@
             }
         });
     });
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+        checkboxClass: 'icheckbox_minimal-blue',
+        radioClass: 'iradio_minimal-blue'
+    });
+    var url = document.location.toString();
+    if (url.match('#')) {
+        $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
+    }
+
+    // Change hash for page-reload
+    $('.nav-tabs a').on('shown.bs.tab', function (e) {
+        window.location.hash = e.target.hash;
+    })
 </script>
+
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
       Both of these plugins are recommended to enhance the
       user experience. Slimscroll is required when using the

@@ -201,7 +201,6 @@ return [
         App\Providers\PresentersServiceProvider::class,
         App\Providers\RepositoriesServiceProvider::class,
         App\Providers\TransformersServiceProvider::class,
-        \App\Providers\ModelServiceProvider::class,
         \Robbo\Presenter\PresenterServiceProvider::class,
         Plank\Mediable\MediableServiceProvider::class,
         That0n3guy\Transliteration\TransliterationServiceProvider::class,

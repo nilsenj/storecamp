@@ -30,7 +30,7 @@ elixir((mix) => {
     mix.copy('bower_components/dropzone/dist/', 'public/plugins/dropzone/');
     mix.copy('bower_components/plyr/dist/', 'public/plugins/plyr/');
     mix.browserSync({
-        proxy: 'www.storecamp.io'
+        proxy: 'storecamp.io'
     });
 });
 // create a task to serve the app

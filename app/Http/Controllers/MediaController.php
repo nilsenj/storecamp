@@ -142,6 +142,12 @@ class MediaController extends Controller
         }
     }
 
+    /**
+     * upload files
+     *
+     * @param Request $request
+     * @return $this|\Illuminate\Http\JsonResponse
+     */
     public function upload(Request $request)
     {
         try {
@@ -162,12 +168,21 @@ class MediaController extends Controller
         } catch (MediaUploadException $e) {
             throw $this->transformMediaUploadException($e);
         } catch (\Exception $exception) {
-            return redirect()->back()->withErrors($exception);
+            return respone()->json($exception->getMessage(), $exception->getCode());
         } catch (FilesystemException $exception) {
             return response()->json($exception->getMessage(), $exception->getCode());
         }
     }
 
+    /**
+     * get folders and response
+     * for json requests
+     * to reload
+     *
+     * @param Request $request
+     * @param null $folder
+     * @return mixed
+     */
     public function getIndexFolders(Request $request, $folder = null)
     {
         $folder = $folder ? $this->folder->find(intval($folder)) : $this->folder->find(1);
@@ -179,13 +194,13 @@ class MediaController extends Controller
 
     }
 
-    /** make folder && store the folder in table
+    /** make folder && store the
+     * folder in table
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public
-    function makeFolder(Request $request)
+    public function makeFolder(Request $request)
     {
 
         try {
@@ -219,7 +234,8 @@ class MediaController extends Controller
 
 
     /**
-     * rename folder and sync media files
+     * rename folder and sync
+     * media files
      *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
@@ -260,8 +276,12 @@ class MediaController extends Controller
         }
     }
 
-    public
-    function renameFile(Request $request)
+    /** rename file
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function renameFile(Request $request)
     {
         try {
             if (class_exists('That0n3guy\Transliteration\Transliteration')) {
@@ -293,14 +313,13 @@ class MediaController extends Controller
     }
 
     /**
-     * download file
+     * download file link
      *
      * @param $id
      * @param $folder
      * @return Response|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public
-    function download($id, $folder)
+    public function download($id, $folder)
     {
         try {
 
@@ -318,22 +337,13 @@ class MediaController extends Controller
     }
 
     /**
-     * @param Request $request
-     */
-    public
-    function update(Request $request)
-    {
-
-    }
-
-    /**
-     * Remove the specified media from storage.
+     * Remove the specified media
+     * from storage.
      *
      * @param $id
      * @return Response|\Illuminate\Http\RedirectResponse
      */
-    public
-    function destroy($id)
+    public function destroy($id)
     {
         try {
             $media = Media::find($id);
@@ -352,8 +362,7 @@ class MediaController extends Controller
      * @param $folder
      * @return Response|\Illuminate\Http\RedirectResponse
      */
-    public
-    function folderDestroy($folder)
+    public function folderDestroy($folder)
     {
         try {
             if (intval($folder) == 1) {

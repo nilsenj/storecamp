@@ -34,4 +34,93 @@
   color: #455c66 !important;
 }
 
+.delete-file, .rename-file, .download-file, .tag-file {
+  position: absolute;
+  top: auto;
+  right: 0;
+  display: none;
+  padding: 3px;
+}
+
+.rename-file {
+  display: none;
+  top: 30px;
+  z-index: 9999;
+}
+
+.download-file {
+  display: none;
+  top: 30px;
+  z-index: 9999;
+}
+
+.file-item .item-icon {
+  width: 100%;
+  height: 150px;
+  display: block;
+  font-size: 120px;
+  text-align: center;
+  list-style-type: none !important;
+}
+
+.file-item:hover .delete-file {
+  display: block;
+  z-index: 9999;
+}
+
+.file-item:hover .download-file {
+  display: block;
+  z-index: 9999;
+}
+
+#my-awesome-dropzone-body {
+  border: 2px dashed aliceblue;
+  border-radius: 5px;
+  background: white;
+}
+
+#my-awesome-dropzone-body .dz-message {
+  text-decoration: dashed;
+  font-weight: 700;
+}
+
+#my-awesome-dropzone-body > .dz-preview {
+  display: none;
+}
+
+.files li {
+  list-style-type: none;
+}
+
+.directory-item:hover .delete-file {
+  display: block;
+  z-index: 9999;
+}
+
+.directory-item:hover .rename-file {
+  display: block;
+  z-index: 9999;
+}
+
+.dropzone {
+  border: 2px dashed #0087F7;
+  border-radius: 5px;
+  background: white;
+}
+
+.play-status {
+  position: fixed;
+  top: 0px;
+  background: #0d0d0d;
+  border-radius: 5px;
+  z-index: 1;
+  left: 25px;
+  display: none;
+}
+
+.play-status i {
+  color: lightyellow;
+  padding: 10px;
+}
+
 /*# sourceMappingURL=app.css.map */

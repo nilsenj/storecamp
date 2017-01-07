@@ -155,7 +155,6 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
         } else {
             $media = $this->specificSearch($model->inDirectory('local', $path), $request);
         }
-
         $media = $this->filesRender($media, $path, $tag, $folder);
         return $media;
     }
@@ -168,6 +167,6 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
      */
     private function filesRender($media, $path, $tag, $folder)
     {
-        return view('admin.media.files-builder', compact('media', 'path', 'tag', 'folder'));
+        return view('admin.media.files-builder', compact('media', 'path', 'tag', 'folder', 'specificMediaFilesCount', 'audioFilesCount', 'videoFilesFilesCount'));
     }
 }

@@ -18,13 +18,6 @@
     <!-- /.modal-dialog -->
 </div>
 @push('scripts-add_on')
-<style>
-    .dropzone {
-        border: 2px dashed #0087F7;
-        border-radius: 5px;
-        background: white;
-    }
-</style>
 <script>
     $(function () {
         var newdirModal = $('#newdir-modal'),
@@ -35,24 +28,6 @@
         newdirModal.on('shown.bs.modal', function (event) {
             var newdirTrigger = $(event.relatedTarget); // Button that triggered the modal
             $(this).modal('show');
-
-//            modalBody.html(null);
-//            modalTitle.html(null);
-//
-//            $.ajax({
-//                url: newdirTrigger.data('desc-url'),
-//                type: 'GET',
-//                success: function (data) {
-//                    modalBody.html(data);
-//                    modalTitle.html('Media Files');
-//                },
-//                error: function (xhr, textStatus, errorThrown) {
-//                    modalTitle.html("<p class='text-danger'>ERROR Appeared!</p>");
-//                    modalBody.html("<b class='text-warning'>"+xhr.responseJSON+"</b>"+ "<br><code class='text-warning'>" +'code - '+ xhr.status + ' statusText - '+xhr.statusText + "</code>");
-//                    console.error(xhr);
-//                }
-//            });
-//            return false;
         });
         var newDirForm = $("#newDirForm");
         $("#newDirForm").submit(function(event){

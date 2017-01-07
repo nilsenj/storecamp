@@ -11,27 +11,20 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Str;
 use Laracasts\Flash\Flash;
-use App\Core\Uploader\ImageUploader;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Validators\Product\ProductsFormRequest as Create;
 use App\Core\Validators\Product\ProductsUpdateFormRequest as Update;
 
 class ProductsController extends Controller
 {
-    protected $articles;
-    /**
-     * @var ImageUploader
-     */
-    protected $uploader;
-
     protected $repository;
+
     /**
-     * @param ImageUploader $uploader
+     * ProductsController constructor.
      * @param ProductsRepository $repository
      */
-    public function __construct(ImageUploader $uploader, ProductsRepository $repository)
+    public function __construct(ProductsRepository $repository)
     {
-        $this->uploader = $uploader;
         $this->repository = $repository;
     }
 

@@ -21,10 +21,14 @@ class Category extends Model implements Transformable
         'name',
         'slug',
         'description',
+        'image_link',
+        'parent_id',
         'status',
         'top',
-        'column',
-        'sort_order'
+        'sort_order',
+        'meta_tag_title',
+        'meta_tag_description',
+        'meta_tag_keywords'
     ];
 
     /**

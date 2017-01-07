@@ -1,3 +1,4 @@
+<div class="tab-pane active" id="general">
 @if(isset($model))
     {!! Form::model($model, ['method' => 'PATCH', 'files' => true, 'route' => ['admin::users::update', $model->slug]]) !!}
 @else
@@ -27,3 +28,4 @@
     {!! Form::submit(isset($model) ? 'Update' : 'Save', ['class' => 'btn btn-primary']) !!}
 </div>
 {!! Form::close() !!}
+</div>

@@ -32,8 +32,14 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Basket',
             'Item',
             'Media',
-            'Folder'
+            'Folder',
+            'Category',
+            'User',
+            'Roles',
+            'Products',
+            'Permission'
         ];
+
         foreach ($models as $repo) {
             $this->app->bind(
                 "App\\Core\\Repositories\\{$repo}Repository",
