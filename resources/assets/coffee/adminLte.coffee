@@ -1,20 +1,14 @@
-###! AdminLTE app.js
+###! StoreCamp app.js
 # ================
-# Main JS application file for AdminLTE v2. This file
+# Main JS application file for StoreCamp v0. This file
 # should be included in all pages. It controls some layout
-# options and implements exclusive AdminLTE plugins.
-#
-# @Author  Almsaeed Studio
-# @Support <http://www.almsaeedstudio.com>
-# @Email   <support@almsaeedstudio.com>
-# @version 2.1.0
-# @license MIT <http://opensource.org/licenses/MIT>
+# options and implements exclusive StoreCamp plugins.
 ###
 
 ### ----------------------------------
-# - Initialize the AdminLTE Object -
+# - Initialize the StoreCamp Object -
 # ----------------------------------
-# All AdminLTE functions are implemented below.
+# All StoreCamp functions are implemented below.
 ###
 
 _init = ->
@@ -24,12 +18,12 @@ _init = ->
   # Fixes the layout height in case min-height fails.
   #
   # @type Object
-  # @usage $.AdminLTE.layout.activate()
-  #        $.AdminLTE.layout.fix()
-  #        $.AdminLTE.layout.fixSidebar()
+  # @usage $.StoreCamp.layout.activate()
+  #        $.StoreCamp.layout.fix()
+  #        $.StoreCamp.layout.fixSidebar()
   ###
 
-  $.AdminLTE.layout =
+  $.StoreCamp.layout =
     activate: ->
       _this = this
       _this.fix()
@@ -57,7 +51,7 @@ _init = ->
           $('.content-wrapper, .right-side').css 'min-height', sidebar_height
           postSetWidth = sidebar_height
         #Fix for the control sidebar height
-        controlSidebar = $($.AdminLTE.options.controlSidebarOptions.selector)
+        controlSidebar = $($.StoreCamp.options.controlSidebarOptions.selector)
         if typeof controlSidebar != 'undefined'
           if controlSidebar.height() > postSetWidth
             $('.content-wrapper, .right-side').css 'min-height', controlSidebar.height()
@@ -71,7 +65,7 @@ _init = ->
       else if typeof $.fn.slimScroll == 'undefined' and console
         console.error 'Error: the fixed layout requires the slimscroll plugin!'
       #Enable slimscroll for fixed layout
-      if $.AdminLTE.options.sidebarSlimScroll
+      if $.StoreCamp.options.sidebarSlimScroll
         if typeof $.fn.slimScroll != 'undefined'
 #Destroy if it exists
           $('.sidebar').slimScroll(destroy: true).height 'auto'
@@ -87,13 +81,13 @@ _init = ->
   # Adds the push menu functionality to the sidebar.
   #
   # @type Function
-  # @usage: $.AdminLTE.pushMenu("[data-toggle='offcanvas']")
+  # @usage: $.StoreCamp.pushMenu("[data-toggle='offcanvas']")
   ###
 
-  $.AdminLTE.pushMenu =
+  $.StoreCamp.pushMenu =
     activate: (toggleBtn) ->
 #Get the screen sizes
-      screenSizes = $.AdminLTE.options.screenSizes
+      screenSizes = $.StoreCamp.options.screenSizes
       #Enable sidebar toggle
       $(toggleBtn).on 'click', (e) ->
         e.preventDefault()
@@ -113,12 +107,12 @@ _init = ->
           $('body').removeClass 'sidebar-open'
         return
       #Enable expand on hover for sidebar mini
-      if $.AdminLTE.options.sidebarExpandOnHover or $('body').hasClass('fixed') and $('body').hasClass('sidebar-mini')
+      if $.StoreCamp.options.sidebarExpandOnHover or $('body').hasClass('fixed') and $('body').hasClass('sidebar-mini')
         @expandOnHover()
       return
     expandOnHover: ->
       _this = this
-      screenWidth = $.AdminLTE.options.screenSizes.sm - 1
+      screenWidth = $.StoreCamp.options.screenSizes.sm - 1
       #Expand sidebar on hover
       $('.main-sidebar').hover (->
         if $('body').hasClass('sidebar-mini') and $('body').hasClass('sidebar-collapse') and $(window).width() > screenWidth
@@ -143,10 +137,10 @@ _init = ->
   # tree view menu.
   #
   # @type Function
-  # @Usage: $.AdminLTE.tree('.sidebar')
+  # @Usage: $.StoreCamp.tree('.sidebar')
   ###
 
-  $.AdminLTE.tree = (menu) ->
+  $.StoreCamp.tree = (menu) ->
     _this = this
     $('li a', $(menu)).on 'click', (e) ->
 #Get the clicked link and the next element
@@ -190,15 +184,15 @@ _init = ->
   # Adds functionality to the right sidebar
   #
   # @type Object
-  # @usage $.AdminLTE.controlSidebar.activate(options)
+  # @usage $.StoreCamp.controlSidebar.activate(options)
   ###
 
-  $.AdminLTE.controlSidebar =
+  $.StoreCamp.controlSidebar =
     activate: ->
 #Get the object
       _this = this
       #Update options
-      o = $.AdminLTE.options.controlSidebarOptions
+      o = $.StoreCamp.options.controlSidebarOptions
       #Get the sidebar
       sidebar = $(o.selector)
       #The toggle button
@@ -270,13 +264,13 @@ _init = ->
   # removing boxes from the screen.
   #
   # @type Object
-  # @usage $.AdminLTE.boxWidget.activate()
-  #        Set all your options in the main $.AdminLTE.options object
+  # @usage $.StoreCamp.boxWidget.activate()
+  #        Set all your options in the main $.StoreCamp.options object
   ###
 
-  $.AdminLTE.boxWidget =
-    selectors: $.AdminLTE.options.boxWidgetOptions.boxWidgetSelectors
-    icons: $.AdminLTE.options.boxWidgetOptions.boxWidgetIcons
+  $.StoreCamp.boxWidget =
+    selectors: $.StoreCamp.options.boxWidgetOptions.boxWidgetSelectors
+    icons: $.StoreCamp.options.boxWidgetOptions.boxWidgetIcons
     activate: ->
       _this = this
       #Listen for collapse event triggers
@@ -321,27 +315,27 @@ _init = ->
 'use strict'
 #Make sure jQuery has been loaded before app.js
 if typeof jQuery == 'undefined'
-  throw new Error('AdminLTE requires jQuery')
+  throw new Error('StoreCamp requires jQuery')
 
-### AdminLTE
+### StoreCamp
 #
 # @type Object
-# @description $.AdminLTE is the main object for the template's app.
+# @description $.StoreCamp is the main object for the template's app.
 #              It's used for implementing functions and options related
 #              to the template. Keeping everything wrapped in an object
 #              prevents conflict with other plugins and is a better
 #              way to organize our code.
 ###
 
-$.AdminLTE = {}
+$.StoreCamp = {}
 
 ### --------------------
-# - AdminLTE Options -
+# - StoreCamp Options -
 # --------------------
 # Modify these options to suit your implementation
 ###
 
-$.AdminLTE.options =
+$.StoreCamp.options =
   navbarMenuSlimscroll: true
   navbarMenuSlimscrollWidth: '3px'
   navbarMenuHeight: '200px'
@@ -396,27 +390,27 @@ $.AdminLTE.options =
 ### ------------------
 # - Implementation -
 # ------------------
-# The next block of code implements AdminLTE's
+# The next block of code implements StoreCamp's
 # functions and plugins as specified by the
 # options above.
 ###
 
 $ ->
 #Extend options if external options exist
-  if typeof AdminLTEOptions != 'undefined'
-    $.extend true, $.AdminLTE.options, AdminLTEOptions
+  if typeof StoreCampOptions != 'undefined'
+    $.extend true, $.StoreCamp.options, StoreCampOptions
   #Easy access to options
-  o = $.AdminLTE.options
+  o = $.StoreCamp.options
   #Set up the object
   _init()
   #Activate the layout maker
-  $.AdminLTE.layout.activate()
+  $.StoreCamp.layout.activate()
   #Enable sidebar tree view controls
-  $.AdminLTE.tree '.sidebar'
-  $.AdminLTE.tree '.category'
+  $.StoreCamp.tree '.sidebar'
+  $.StoreCamp.tree '.category'
   #Enable control sidebar
   if o.enableControlSidebar
-    $.AdminLTE.controlSidebar.activate()
+    $.StoreCamp.controlSidebar.activate()
   #Add slimscroll to navbar dropdown
   if o.navbarMenuSlimscroll and typeof $.fn.slimscroll != 'undefined'
     $('.navbar .menu').slimscroll(
@@ -425,18 +419,18 @@ $ ->
       size: o.navbarMenuSlimscrollWidth).css 'width', '100%'
   #Activate sidebar push menu
   if o.sidebarPushMenu
-    $.AdminLTE.pushMenu.activate o.sidebarToggleSelector
+    $.StoreCamp.pushMenu.activate o.sidebarToggleSelector
   #Activate Bootstrap tooltip
   if o.enableBSToppltip
     $('body').tooltip selector: o.BSTooltipSelector
   #Activate box widget
   if o.enableBoxWidget
-    $.AdminLTE.boxWidget.activate()
+    $.StoreCamp.boxWidget.activate()
   #Activate fast click
   if o.enableFastclick and typeof FastClick != 'undefined'
     FastClick.attach document.body
   #Activate direct chat widget
-  $.AdminLTE.imageLoad.activate()
+  $.StoreCamp.imageLoad.activate()
   if o.directChat.enable
     $(o.directChat.contactToggleSelector).on 'click', ->
       box = $(this).parents('.direct-chat').first()
@@ -458,7 +452,7 @@ $ ->
     return
   return
 # generate images live rendering
-$.AdminLTE.imageLoad =
+$.StoreCamp.imageLoad =
   files: {}
 
   activate: ->

@@ -1,7 +1,7 @@
 <div class="col-xs-9 col-md-9 files">
     <div class="play-status"><i class="fa fa-play"></i></div>
     <?php $tag = isset($tag) ? $tag : null; ?>
-@foreach(array_chunk($media->all(), 4) as $row)
+    @foreach(array_chunk($media->all(), 4) as $row)
         <div class="row file-list">
             @foreach($row as $file)
                 {{--{!! dd($file) !!}--}}
@@ -201,91 +201,3 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
-@push('scripts-add_on')
-<link rel="stylesheet" href="{{asset('plugins/plyr/plyr.css')}}">
-<script src="{{ asset('/plugins/plyr/plyr.js') }}" type="text/javascript"></script>
-<script>
-    var players = plyr.setup();
-    var playerStatus = $(".play-status");
-    var counter = 0;
-    players.forEach(function(player, i, arr){
-        player.on('ready timeupdate pause ended playing', function(event) {
-            counter++;
-            switch(event.type) {
-                case 'ready':
-                    console.log(event.detail.plyr.getDuration());
-                    break;
-                case 'playing':
-                    break;
-                case 'timeupdate':
-                    console.log(event.detail.plyr.getCurrentTime());
-                    break;
-                case 'ended':
-                    if(arr.length - 1 > i) {
-                        players[i+1].play();
-                        playerStatus.toggle(2000);
-                        playerStatus.html('<i class="fa  fa-step-forward"></i>')
-                    } else {
-                        players[0].play();
-                        playerStatus.toggle(2000);
-                        playerStatus.html('<i class="fa  fa-step-forward"></i>')
-                    }
-                    break;
-                case 'pause':
-                    console.log('fuck off');
-                    playerStatus.toggle(2000);
-                    playerStatus.html('<i class="fa fa-pause"></i>');
-                    break;
-            }
-        });
-
-    });
-
-    var mediaItems = $(".media-plyr-item");
-
-    [].forEach.call(mediaItems , function(item, i, arr) {
-        $(item).attr('data-media-number', i);
-    });
-
-    mediaItems.find('.plyr__controls button[data-plyr="play"]').on("click", function(event){
-        var audioItem = $(event.target).closest(".media-plyr-item").data('media-number');
-        players.forEach(function(player, i, arr){
-            player.stop();
-            players[audioItem].play();
-        });
-
-    });
-</script>
-<script>
-    $(function () {
-        var descModal = $('#file-modal'),
-            submitBtn = descModal.find('button[type=submit]'),
-            modalTitle = descModal.find('.modal-title'),
-            modalBody = descModal.find('.modal-body');
-
-        descModal.on('shown.bs.modal', function (event) {
-            var descTrigger = $(event.relatedTarget); // Button that triggered the modal
-            $(this).modal('show');
-            modalBody.html(null);
-            modalTitle.html(null);
-            $.ajax({
-                url: descTrigger.data('desc-url'),
-                type: 'GET',
-                success: function (data) {
-                    modalBody.html(data);
-                    modalTitle.html('Media - ' + descTrigger.data('desc-name'));
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    modalTitle.html("<p class='text-danger'>ERROR Appeared!</p>");
-                    modalBody.html("<b class='text-warning'>" + xhr.responseJSON + "</b>" + "<br><code class='text-warning'>" + 'code - ' + xhr.status + ' statusText - ' + xhr.statusText + "</code>");
-                    console.error(xhr);
-                }
-            });
-            return false;
-        });
-    });
-
-</script>
-
-@endpush

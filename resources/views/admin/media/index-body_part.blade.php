@@ -1,4 +1,4 @@
-<div id="folder-body" class="box-body folder-body">
+<div id="folder-body" data-folder-url="{{route('admin::media::get.index', [$folder->id])}}" class="box-body folder-body">
     {!! $media !!}
     <span id="folders-side">
     @include('admin.media.folders_part')

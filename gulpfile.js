@@ -25,6 +25,7 @@ elixir((mix) => {
     mix.coffee('../coffee/adminLte.coffee', 'public/js/admin.js');
     mix.uglify('admin.js', 'public/js', 'resources/assets/js/admin.js');
     mix.coffee('../coffee/main.coffee', 'public/js/app.js');
+    mix.coffee('../coffee/modules/*.coffee', 'public/js/modules.js');
     mix.sass('../sass/app.scss', 'public/css/main/app.css');
     mix.copy('bower_components/summernote/dist/', 'public/plugins/summernote/');
     mix.copy('bower_components/dropzone/dist/', 'public/plugins/dropzone/');

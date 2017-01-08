@@ -13,7 +13,10 @@
 <script src="{{ asset('/plugins/slimScroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('/js/app.js') }}" type="text/javascript"></script>
 <script src="{{ asset('/plugins/iCheck/icheck.min.js')}}"></script>
-
+<link rel="stylesheet" href="{{asset('plugins/plyr/plyr.css')}}">
+<script src="{{ asset('/plugins/plyr/plyr.js') }}" type="text/javascript"></script>
+<link rel="stylesheet" href="{{asset('plugins/dropzone/dropzone.css')}}">
+<script src="{{ asset('/plugins/dropzone/dropzone.js') }}" type="text/javascript"></script>
 <script>
     $(document).ready(function () {
         $.ajaxSetup({
@@ -42,5 +45,5 @@
       Both of these plugins are recommended to enhance the
       user experience. Slimscroll is required when using the
       fixed layout. -->
-
+<script src="{{asset("js/modules.js")}}"></script>
 @yield('scripts_add')

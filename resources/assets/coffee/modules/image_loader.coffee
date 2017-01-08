@@ -1,5 +1,5 @@
 # generate images live rendering
-$.ItwayIO.imageLoad =
+$.StoreCamp.imageLoad =
   activate: ->
     _this = this
     _this.initiateInstanceImage()
@@ -199,3 +199,4 @@ $.ItwayIO.imageLoad =
           i++
       return
     return
+$.StoreCamp.imageLoad.activate()
