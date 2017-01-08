@@ -6,8 +6,9 @@ $.StoreCamp.media =
   }
   activate: ->
     _this = this
-    _this.mediaEvents()
-    _this.reindex(_this.options.mediaItems, _this.options.players)
+    if(_this.options.mediaItems.length > 0)
+      _this.mediaEvents()
+      _this.reindex(_this.options.mediaItems, _this.options.players)
     return
 
   mediaEvents: ->

@@ -103,7 +103,7 @@
 }
 
 .dropzone {
-  border: 2px dashed #0087F7;
+  border: 2px dashed aliceblue !important;
   border-radius: 5px;
   background: white;
 }
