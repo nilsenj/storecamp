@@ -16,6 +16,7 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parent_id')->unsigned()->nullable();
+
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('image_link')->nullable();
@@ -27,6 +28,8 @@ class CreateCategoriesTable extends Migration
             $table->boolean('top')->default(false);
             $table->tinyInteger('sort_order')->default(0);
             $table->timestamps();
+            $table->index('parent_id');
+
         });
     }
 
@@ -37,6 +40,8 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('categories');
+        Schema::drop('categories', function(Blueprint $t) {
+            $t->dropIndex('categories_parent_id_index');
+        });
     }
 }

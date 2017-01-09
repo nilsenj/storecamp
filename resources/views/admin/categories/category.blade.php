@@ -13,10 +13,15 @@
         </a>
     </td>
     @if($category->status)
-        <td><div class="label bg-green">active</div></td>
+        <td>
+            <div class="label bg-green">active</div>
+        </td>
     @else
-        <td><div class="label bg-warning">not active</div></td>
+        <td>
+            <div class="label bg-warning">not active</div>
+        </td>
     @endif
+    <td>{!! $category->sort_order !!}</td>
     <td>{{ $category->created_at }}</td>
     <td><a class="edit" href="{!! route('admin::categories::edit', $category->id) !!}" title="Edit">
             <i class="fa fa-pencil-square-o"></i></a>

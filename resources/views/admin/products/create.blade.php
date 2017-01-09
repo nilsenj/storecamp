@@ -10,6 +10,6 @@
 </h1>
 @section('main-content')
     <div>
-        @include('admin.products.form')
+        @include('admin.products.form', [$categories, $chosenCategory])
     </div>
 @endsection

@@ -54,11 +54,13 @@ class Product extends Model implements Transformable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
+
+    public function categories() {
+
+        return $this->belongsToMany(Category::class, 'products_categories');
+
     }
 
     /**
@@ -70,30 +72,30 @@ class Product extends Model implements Transformable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function picture()
-    {
-
-        return $this->belongsToMany(Picture::class);
-
-    }
-
-    /**
      * @param $date
      */
     public function setPublishedAtAttribute ($date) {
         $this->attributes['date_available'] = Carbon::createFromFormat('Y-m-d', $date);
     }
 
+    /**
+     * @param $query
+     */
     public function scopeUnpublished($query) {
         $query->where('date_available', '>', Carbon::now());
     }
 
+    /**
+     * @param $query
+     */
     public function scopePublished($query) {
         $query->where('date_available', '<=', Carbon::now());
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     */
     public function scopeNewest($query)
     {
         return $query->orderBy('created_at', 'desc');
@@ -108,6 +110,7 @@ class Product extends Model implements Transformable
     {
         return $query->where('published_at', '!=' , null);
     }
+
     /**
      * @param $query
      * @param $id
@@ -118,26 +121,21 @@ class Product extends Model implements Transformable
         return $query->where($id)->orWhere('slug', '=', $id);
     }
 
-
     /**
-     * @param $file
-     * @return bool
+     * @param $query
+     * @param Category|null $category
+     * @return mixed
      */
-    public static function deleteImage($file)
-    {
-        $filepath = self::image_path($file);
+    public function scopeCategorized($query, Category $category=null) {
+        if ( is_null($category) ) return $query->with('categories');
 
-        if (file_exists($filepath)) {
+        $categoryIds = $category->children()->pluck('id');
+        array_unshift($categoryIds, $category->id);
 
-            \File::delete($filepath);
-            return true;
-        }
-        return false;
+        return $query->with('categories')
+            ->join('products_categories', 'products_categories.product_id', '=', 'products.id')
+            ->whereIn('products_categories.category_id', $categoryIds);
     }
 
-    public static function image_path($file)
-    {
-        return public_path("images/products/{$file}");
-    }
 
 }

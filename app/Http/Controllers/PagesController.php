@@ -20,11 +20,6 @@ class PagesController extends Controller
      */
     public function index()
     {
-//        $arrReps = [];
-//        foreach (\File::allFiles(app_path() . '/Core/Repositories') as $partial) {
-//            $arrReps[] = pathinfo($partial->getPathname(), PATHINFO_FILENAME);
-//        }
-//        dd($arrReps);
         return view('home');
     }
 

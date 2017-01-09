@@ -1,6 +1,6 @@
 <div class="tab-pane active" id="general">
 @if(isset($model))
-    {!! Form::model($model, ['method' => 'PATCH', 'files' => true, 'route' => ['admin::users::update', $model->slug]]) !!}
+    {!! Form::model($model, ['method' => 'PUT', 'files' => true, 'route' => ['admin::users::update', $model->id]]) !!}
 @else
     {!! Form::open(['files' => true, 'route' => 'admin::users::store']) !!}
 @endif

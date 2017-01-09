@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/storecamp":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/storecamp","hostpath":"C:/Users/nilse/OneDrive/CoderStyle/Code/storecamp","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Users/nilse/OneDrive/CoderStyle/Code/storecamp","disabled":false,"__vagrantfile":true}}}

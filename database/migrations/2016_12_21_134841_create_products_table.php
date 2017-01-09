@@ -34,7 +34,6 @@ class CreateProductsTable extends Migration
             $table->decimal('height', 15, 8)->default(0.00000000);
             $table->timestamp('date_available');
             $table->boolean('availability')->default(true);
-            $table->integer('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -46,8 +45,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('products', function(Blueprint $table) {
-            $table->dropForeign('products_category_id_foreign');
-        });
+        Schema::drop('products');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Core\Models\Category;
+use App\Core\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -18,14 +19,17 @@ use App\Core\Validators\Product\ProductsUpdateFormRequest as Update;
 class ProductsController extends Controller
 {
     protected $repository;
+    protected $categoryRepository;
 
     /**
      * ProductsController constructor.
      * @param ProductsRepository $repository
+     * @param CategoryRepository $categoryRepository
      */
-    public function __construct(ProductsRepository $repository)
+    public function __construct(ProductsRepository $repository, CategoryRepository $categoryRepository)
     {
         $this->repository = $repository;
+        $this->categoryRepository = $categoryRepository;
     }
 
 
@@ -59,8 +63,9 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        $categories = Category::all()->pluck("slug", 'id');
-        return view('admin.products.create', compact('categories'));
+        $categories = Category::all();
+        $chosenCategory = null;
+        return view('admin.products.create', compact('categories', 'chosenCategory'));
     }
 
     /**
@@ -129,18 +134,9 @@ class ProductsController extends Controller
 
             $pictures = array();
 
-            if ($product->picture()) {
+            $chosenCategory = $product->categories()->first();
 
-
-                foreach ($product->picture()->get() as $key => $picture) {
-
-                    $pictures[$key] = $picture;
-
-                }
-
-            }
-
-            return view('admin.products.edit', compact('product', 'categories', 'pictures'));
+            return view('admin.products.edit', compact('product', 'categories', 'pictures', 'chosenCategory'));
 
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();

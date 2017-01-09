@@ -66,13 +66,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'as' => 'create'
 
         ]);
-        Route::get('edit/{slug}', [
+        Route::get('edit/{id}', [
             'uses' => 'UsersController@edit',
             'as' => 'edit'
         ]);
-        Route::put('update/{slug}', [
+        Route::put('update/{id}', [
             'uses' => 'UsersController@update',
-            'middleware' => 'shouldBeUnique',
             'as' => 'update'
         ]);
         Route::delete('{id}', [

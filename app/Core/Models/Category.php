@@ -44,9 +44,12 @@ class Category extends Model implements Transformable
             ]
         ];
     }
-    public function product()
-    {
-        return $this->hasMany(Product::class);
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function products() {
+        return $this->belongsToMany('Product', 'products_categories');
     }
     /**
      * @param $query

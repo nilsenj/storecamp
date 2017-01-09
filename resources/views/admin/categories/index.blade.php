@@ -36,6 +36,7 @@
                         <th>Display Name</th>
                         <th>Description</th>
                         <th>Status</th>
+                        <th>Sort Order</th>
                         <th>Created</th>
                         <th class="text-center">Actions</th>
                         </thead>

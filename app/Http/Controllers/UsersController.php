@@ -92,7 +92,7 @@ class UsersController extends Controller
     {
         try {
             $user = $this->repository->find($id);
-            $role = $this->repository->getRole($user);
+            $role = $user->getRole();
             return view('admin.users.show', compact('user', 'role'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
@@ -109,8 +109,9 @@ class UsersController extends Controller
             $user = $this->repository->find($id);
 
             $roles = $this->rolesRepository->all()->pluck('name', 'id');
-
-            $role = $this->repository->getRole($user);
+            $roleEntity = $user->getRole();
+            $role['name'] = $roleEntity->name;
+            $role['id'] = $roleEntity->id;
 
             return view('admin.users.edit', compact('user', 'roles', 'role'));
         } catch (ModelNotFoundException $e) {
@@ -132,7 +133,7 @@ class UsersController extends Controller
 
             $user->update($data);
 
-            $user->roles()->sync((array) \Input::get('role'));
+            $user->roles()->sync((array) $request->role);
             return redirect('admin/users');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();

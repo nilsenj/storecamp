@@ -3,7 +3,7 @@
 namespace App\Core\Validation\User;
 
 use Illuminate\Foundation\Http\FormRequest as Request;
-use App\Core\Entities\User;
+use App\Core\Models\User;
 use Exception;
 
 class UsersUpdateFormRequest extends Request
@@ -25,8 +25,7 @@ class UsersUpdateFormRequest extends Request
      */
     public function rules()
     {
-        $slug = $this->slug;
-        $id = User::findBySlug($slug)->id;
+        $id = $this->id;
 
         $rules = [
             'name' => 'required',
