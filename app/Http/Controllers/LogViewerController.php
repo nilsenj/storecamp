@@ -11,17 +11,27 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Arcanedev\LogViewer\Tables\StatsTable;
 
+/**
+ * Class LogViewerController
+ * @package App\Http\Controllers
+ */
 class LogViewerController extends LogBaseController
 {
     /* ------------------------------------------------------------------------------------------------
      |  Properties
      | ------------------------------------------------------------------------------------------------
      */
+    /**
+     * @var int|mixed
+     */
     protected $perPage = 30;
 
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
      | ------------------------------------------------------------------------------------------------
+     */
+    /**
+     * LogViewerController constructor.
      */
     public function __construct()
     {
@@ -30,6 +40,12 @@ class LogViewerController extends LogBaseController
         $this->perPage = config('log-viewer.per-page', $this->perPage);
     }
 
+    /**
+     * @param string $view
+     * @param array $data
+     * @param array $mergeData
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function view($view, $data = [], $mergeData = [])
     {
         return view('admin.logs.' . $view, $data, $mergeData);

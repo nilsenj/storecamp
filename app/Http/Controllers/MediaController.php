@@ -15,11 +15,28 @@ use Plank\Mediable\MediaUploaderFacade;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use That0n3guy\Transliteration\Facades\Transliteration; //use the facade
 
-class MediaController extends Controller
+/**
+ * Class MediaController
+ * @package App\Http\Controllers
+ */
+class MediaController extends BaseController
 {
     use HandlesMediaUploadExceptions;
-
+    /**
+     * @var string
+     */
+    public $viewPathBase = "admin.media.";
+    /**
+     * @var string
+     */
+    public $errorRedirectPath = "admin/media";
+    /**
+     * @var MediaRepository
+     */
     public $repository;
+    /**
+     * @var FolderRepository
+     */
     public $folder;
 
     /**
@@ -31,29 +48,6 @@ class MediaController extends Controller
     {
         $this->repository = $repository;
         $this->folder = $folder;
-    }
-
-
-    /**
-     * @param $view
-     * @param array $data
-     * @param array $mergeData
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    protected function view($view, $data = [], $mergeData = [])
-    {
-        return view('admin.media.' . $view, $data, $mergeData);
-    }
-
-    /**
-     * Redirect not found.
-     *
-     * @return Response
-     */
-    protected function redirectNotFound()
-    {
-        return redirect('admin/media')
-            ->with(\Flash::error('Item Not Found!'));
     }
 
     /**

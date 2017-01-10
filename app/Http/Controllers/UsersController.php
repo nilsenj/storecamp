@@ -15,18 +15,34 @@ use App\Core\Validation\User\UsersFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 
-class UsersController extends Controller
+/**
+ * Class UsersController
+ * @package App\Http\Controllers
+ */
+class UsersController extends BaseController
 {
+    /**
+     * @var string
+     */
+    public $viewPathBase = "admin.users.";
+    /**
+     * @var string
+     */
+    public $errorRedirectPath = "admin/users";
     /**
      * @var \User
      */
     protected $users;
+
 
     /**
      * @var UserRepository
      */
     protected $repository;
 
+    /**
+     * @var RolesRepository
+     */
     protected $rolesRepository;
 
     /**
@@ -40,19 +56,9 @@ class UsersController extends Controller
         $this->rolesRepository = $rolesRepository;
         $this->middleware('role:Admin');
     }
+
     /**
-     * Redirect not found.
-     *
-     * @return Response
-     */
-    private function redirectNotFound()
-    {
-        return redirect('admin.users.index');
-    }
-    /**
-     * Display a listing of users
-     *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
@@ -60,7 +66,7 @@ class UsersController extends Controller
 
         $no = $users->firstItem();
 
-        return view('admin.users.index', compact('users', 'no'));
+        return $this->view('index', compact('users', 'no'));
     }
 
     /**
@@ -69,7 +75,7 @@ class UsersController extends Controller
     public function create()
     {
         $roles = $this->rolesRepository->all()->pluck('name', 'id');
-        return view('admin.users.create', compact('roles'));
+        return $this->view('create', compact('roles'));
     }
 
     /**
@@ -93,7 +99,7 @@ class UsersController extends Controller
         try {
             $user = $this->repository->find($id);
             $role = $user->getRole();
-            return view('admin.users.show', compact('user', 'role'));
+            return $this->view('show', compact('user', 'role'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }
@@ -113,7 +119,7 @@ class UsersController extends Controller
             $role['name'] = $roleEntity->name;
             $role['id'] = $roleEntity->id;
 
-            return view('admin.users.edit', compact('user', 'roles', 'role'));
+            return $this->view('edit', compact('user', 'roles', 'role'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }

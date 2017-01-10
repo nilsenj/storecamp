@@ -17,6 +17,7 @@ var elixir = require('laravel-elixir'),
     gulp = require('gulp'),
     php = require('gulp-connect-php');
 require('laravel-elixir-js-uglify');
+elixir.config.notifications = false;
 
 elixir((mix) => {
     mix.less('app.less');

@@ -12,9 +12,30 @@ use App\Core\Validators\Category\CategoriesFormRequest;
 use App\Core\Validators\Category\CategoriesUpdateFormRequest;
 use Illuminate\Support\Facades\Redirect;
 
-class CategoriesController extends Controller
+/**
+ * Class CategoriesController
+ * @package App\Http\Controllers
+ */
+class CategoriesController extends BaseController
 {
+    /**
+     * @var string
+     */
+    public $viewPathBase = "admin.categories.";
+    /**
+     * @var string
+     */
+    public $errorRedirectPath = "admin/categories";
+
+    /**
+     * @var CategoryRepository
+     */
     protected $repository;
+
+    /**
+     * CategoriesController constructor.
+     * @param CategoryRepository $repository
+     */
     public function __construct(CategoryRepository $repository)
     {
         $this->repository = $repository;
@@ -42,7 +63,7 @@ class CategoriesController extends Controller
 
         $no = $categories->firstItem();
 
-        return view('admin.categories.index', compact('categories', 'no'));
+        return $this->view('index', compact('categories', 'no'));
     }
 
     /**
@@ -56,7 +77,7 @@ class CategoriesController extends Controller
         $categories = $this->repository->all();
         $parent = null;
 
-        return view('admin.categories.create', compact('categories','parent'));
+        return $this->view('create', compact('categories','parent'));
     }
 
     /**
@@ -81,7 +102,7 @@ class CategoriesController extends Controller
         try {
             $category = $this->repository->findByField('id', $id)->first();
             $categories = Category::all();
-            return view('admin.categories.show', compact('category', 'categories'));
+            return $this->view('show', compact('category', 'categories'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }
@@ -112,7 +133,7 @@ class CategoriesController extends Controller
             $category = $this->repository->findByField('id', $id)->first();
             $parent = $category->parent;
             $categories = $this->repository->with('parent')->all();
-            return view('admin.categories.edit', compact('category', 'parent', 'categories'));
+            return $this->view('edit', compact('category', 'parent', 'categories'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }
@@ -128,6 +149,7 @@ class CategoriesController extends Controller
         try {
             $data = $request->all();
             $data['top'] = $request->top ? $request->top == "on" ? true : false : false ;
+            $data["parent_id"] = empty($data["parent_id"]) ? null : $data["parent_id"];
             $category = $this->repository->findByField('id', $id)->first();
             $category->update($data);
             return redirect('admin/categories');

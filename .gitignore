@@ -6,7 +6,6 @@
 /.idea
 /.vscode
 /.vagrant
-/.vagrant_h
 Homestead.json
 Homestead.yaml
 .env

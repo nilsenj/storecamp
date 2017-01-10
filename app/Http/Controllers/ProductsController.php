@@ -16,10 +16,28 @@ use App\Core\Repositories\ProductsRepository;
 use App\Core\Validators\Product\ProductsFormRequest as Create;
 use App\Core\Validators\Product\ProductsUpdateFormRequest as Update;
 
-class ProductsController extends Controller
+/**
+ * Class ProductsController
+ * @package App\Http\Controllers
+ */
+class ProductsController extends BaseController
 {
+    /**
+     * @var ProductsRepository
+     */
     protected $repository;
+    /**
+     * @var CategoryRepository
+     */
     protected $categoryRepository;
+    /**
+     * @var string
+     */
+    public $viewPathBase = "admin.products.";
+    /**
+     * @var string
+     */
+    public $errorRedirectPath = "admin/products";
 
     /**
      * ProductsController constructor.
@@ -32,18 +50,6 @@ class ProductsController extends Controller
         $this->categoryRepository = $categoryRepository;
     }
 
-
-    /**
-     * Redirect not found.
-     *
-     * @return Response
-     */
-    protected function redirectNotFound()
-    {
-        return redirect('admin/products')
-            ->with(\Flash::error('Товар не найден!'));
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -53,19 +59,17 @@ class ProductsController extends Controller
     {
         $products = $this->repository->allOrSearch(Input::get('q'));
         $no = $products->firstItem();
-        return view('admin.products.index', compact('products', 'no'));
+        return $this->view('index', compact('products', 'no'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
         $categories = Category::all();
         $chosenCategory = null;
-        return view('admin.products.create', compact('categories', 'chosenCategory'));
+        return $this->view('create', compact('categories', 'chosenCategory'));
     }
 
     /**
@@ -91,7 +95,7 @@ class ProductsController extends Controller
             // upload image
             $images = Input::file('image');
 
-            foreach($images as $image){
+            foreach ($images as $image) {
 
                 $this->uploader->upload($image)->save('images/products');
 
@@ -115,7 +119,7 @@ class ProductsController extends Controller
     {
         try {
             $product = $this->repository->getmodel()->find($id);;
-            return view('admin.products.show', compact('product'));
+            return $this->view('show', compact('product'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }
@@ -136,7 +140,7 @@ class ProductsController extends Controller
 
             $chosenCategory = $product->categories()->first();
 
-            return view('admin.products.edit', compact('product', 'categories', 'pictures', 'chosenCategory'));
+            return $this->view('edit', compact('product', 'categories', 'pictures', 'chosenCategory'));
 
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
@@ -181,7 +185,7 @@ class ProductsController extends Controller
 
                 $product->update($data);
 
-                foreach($images as $key => $image){
+                foreach ($images as $key => $image) {
 
                     $this->uploader->upload($image)->save('images/products');
 
@@ -204,6 +208,7 @@ class ProductsController extends Controller
             return $this->redirectNotFound();
         }
     }
+
     /**
      * Remove the specified article from storage.
      *
