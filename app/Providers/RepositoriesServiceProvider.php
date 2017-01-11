@@ -3,6 +3,8 @@
 
 namespace App\Providers;
 
+use App\Core\Models\AttributeGroup;
+use App\Core\Models\AttributeGroupDescription;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -37,7 +39,9 @@ class RepositoriesServiceProvider extends ServiceProvider
             'User',
             'Roles',
             'Products',
-            'Permission'
+            'Permission',
+            'AttributeGroup',
+            'AttributeGroupDescription'
         ];
 
         foreach ($models as $repo) {

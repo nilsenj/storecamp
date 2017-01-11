@@ -33,6 +33,20 @@ Breadcrumbs::register('media', function($breadcrumbs)
     $breadcrumbs->parent('admin');
     $breadcrumbs->push('Media', route('admin::media::index'));
 });
+
+// / > [Attribute]
+Breadcrumbs::register('attributes', function($breadcrumbs)
+{
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push('Attributes', route('admin::attributes::index'));
+});
+
+// / > [Attribute Groups]
+Breadcrumbs::register('attribute groups', function($breadcrumbs)
+{
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push('Attribute Groups', route('admin::attribute_groups::index'));
+});
 // / > [Logs]
 Breadcrumbs::register('LogViewer', function($breadcrumbs)
 {

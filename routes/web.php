@@ -254,6 +254,92 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'as' => 'description'
         ]);
     });
+    Route::group(['prefix' => 'attribute_groups', 'as' => 'attribute_groups::'], function () {
+
+        Route::get('/', [
+            'uses' => 'AttributeGroupsController@index',
+            'as' => 'index'
+
+        ]);
+        Route::get('create', [
+            'uses' => 'AttributeGroupsController@create',
+            'as' => 'create'
+
+        ]);
+        Route::get('edit/{id}', [
+            'uses' => 'AttributeGroupsController@edit',
+            'as' => 'edit'
+        ]);
+        Route::put('update/{id}', [
+            'uses' => 'AttributeGroupsController@update',
+            'as' => 'update'
+        ]);
+        Route::delete('{id}', [
+            'uses' => 'AttributeGroupsController@destroy',
+            'as' => 'delete'
+        ]);
+        Route::post('store', [
+            'uses' => 'AttributeGroupsController@store',
+            'as' => 'store'
+        ]);
+
+        Route::get('/delete/{id}', [
+            'uses' => 'AttributeGroupsController@destroy',
+            'as' => 'get::delete'
+        ]);
+
+        Route::get('/groups/json', [
+
+            'uses' => 'AttributeGroupsController@getJson',
+            'as' => 'get::json'
+        ]);
+
+
+
+    });
+
+    Route::group(['prefix' => 'attributes', 'as' => 'attributes::'], function () {
+
+        Route::get('/', [
+            'uses' => 'AttributesController@index',
+            'as' => 'index'
+
+        ]);
+        Route::get('create', [
+            'uses' => 'AttributesController@create',
+            'as' => 'create'
+
+        ]);
+        Route::get('edit/{id}', [
+            'uses' => 'AttributesController@edit',
+            'as' => 'edit'
+        ]);
+        Route::put('update/{id}', [
+            'uses' => 'AttributesController@update',
+            'as' => 'update'
+        ]);
+        Route::delete('{id}', [
+            'uses' => 'AttributesController@destroy',
+            'as' => 'delete'
+        ]);
+        Route::post('store', [
+            'uses' => 'AttributesController@store',
+            'as' => 'store'
+        ]);
+        Route::get('/delete/{id}', [
+            'uses' => 'AttributesController@destroy',
+            'as' => 'get::delete'
+        ]);
+
+        Route::get('/attrs/json', [
+
+            'uses' => 'AttributesController@getJson',
+            'as' => 'get::json'
+        ]);
+    });
+
+
+
 
 
 });

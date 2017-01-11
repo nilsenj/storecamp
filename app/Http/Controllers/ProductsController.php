@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\Models\AttributeGroupDescription;
 use App\Core\Models\Category;
 use App\Core\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
@@ -76,14 +77,18 @@ class ProductsController extends BaseController
      * @param Create $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(Create $request)
+//    public function store(Create $request)
+    public function store(Request $request)
     {
         $data = $request->all();
-
         $product = $this->repository->create($data);
         $categoryId = $request->category_id ? $request->category_id : null;
         $product->categories()->attach($categoryId);
-
+        $attributes = [];
+        foreach ($data['product_attribute'] as $key => $attr) {
+            $attribute = $product->attributeGroupDescription()->save(AttributeGroupDescription::find(intval($attr["attr_description_id"])), ["value" => $data['product_attribute'][$key]["value"]]);
+            $attributes[] = $attribute;
+        }
         return redirect('admin/products');
     }
 

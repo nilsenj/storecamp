@@ -26,7 +26,9 @@ class TransformersServiceProvider extends ServiceProvider
         $models = [
             'Basket',
             'Item',
-            'File'
+            'File',
+            'AttributeGroup',
+            'AttributeGroupDescription'
         ];
         foreach ($models as $model) {
             $this->app->bind("App\\Core\\Transformers\\{$model}Transformer");

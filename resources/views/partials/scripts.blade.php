@@ -41,9 +41,12 @@
 <!-- AdminLTE App -->
 <!-- Page script -->
 <script>
+    APP_URL = {!! json_encode(url('/')) !!};
+</script>
+<script>
     $(function () {
         //Initialize Select2 Elements
-        $(".select2").select2();
+//        $(".select2").select2();
 
         //Datemask dd/mm/yyyy
         $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});

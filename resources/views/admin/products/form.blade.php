@@ -1,17 +1,19 @@
+@if(isset($product))
+    {!! Form::model($product, ['method' => 'PUT', 'files' => false, 'route' => ['admin::products::update', $product->id]]) !!}
+@else
+    {!! Form::open(['files' => false, 'route' => 'admin::products::store']) !!}
+@endif
 <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#general" data-toggle="tab">General</a></li>
+        <li><a href="#attributes" data-toggle="tab">Attributes</a></li>
         <li><a href="#extra" data-toggle="tab">Extra</a></li>
         <li><a href="#image" data-toggle="tab">Image</a></li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="general">
 
-            @if(isset($product))
-                {!! Form::model($product, ['method' => 'PUT', 'files' => false, 'route' => ['admin::products::update', $product->id]]) !!}
-            @else
-                {!! Form::model(new \App\Core\Models\Product(), ['files' => false, 'route' => 'admin::products::store']) !!}
-            @endif
+
             <div class="form-group">
                 {!! Form::label('title', 'Title:') !!}
                 {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Title']) !!}
@@ -32,6 +34,31 @@
                 {!! $errors->first('availability', '<div class="text-danger">:message</div>') !!}
             </div>
 
+        </div>
+        <div class="tab-pane" id="attributes">
+            <div class="table-responsive">
+                <table id="attribute" class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <td class="text-left">Attribute</td>
+                        <td class="text-left">Text</td>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td class="text-left">
+                            <a role="button" onclick="addAttribute();" data-toggle="tooltip" title=""
+                                    class="btn btn-primary" data-original-title="Add Attribute"><i
+                                        class="fa fa-plus-circle"></i></a>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
         <div class="tab-pane" id="extra">
             <div class="form-group required">
@@ -91,8 +118,9 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label" for="input-stock-status"><span data-toggle="tooltip" title=""
-                                                                            data-original-title="Status shown when a product is out of stock">Out Of Stock Status</span></label>
+                <label class="control-label" for="input-stock-status">
+                    <span data-toggle="tooltip" title=""
+                          data-original-title="Status shown when a product is out of stock">Out Of Stock Status</span></label>
                 {!! Form::select('stock_status', config('stock-statuses'), null, ["id" => "input-stock-status", "class" => "form-control"]) !!}
                 {!! $errors->first('quantity', '<div class="text-danger">:message</div>') !!}
             </div>
@@ -142,8 +170,53 @@
         <div class="form-group">
             {!! Form::submit(isset($product) ? 'Edit' : 'Save', ['class' => 'btn btn-primary']) !!}
         </div>
-        {!! Form::close() !!}
+
     </div>
 </div>
+{!! Form::close() !!}
 @section('scripts-add')
+    <script>
+        var attribute_row = 0;
+
+        function addAttribute() {
+            html  = '<tr id="attribute-row' + attribute_row + '">';
+            html += '  <td class="text-left" style="width: 20%;"><select type="text" name="product_attribute[' + attribute_row + '][attr_description_id]" value="" placeholder="Attribute" class="form-control selector"></select></td>';
+            html += '  <td class="text-left">';
+            html += '<div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span><textarea name="product_attribute[' + attribute_row + '][value]" rows="2" placeholder="Text" class="form-control"></textarea></div>';
+            html += '  </td>';
+            html += '  <td class="text-left"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" data-toggle="tooltip" title="Remove" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+            html += '</tr>';
+
+            $('#attribute tbody').append(html);
+
+            attributeautocomplete(attribute_row);
+
+            attribute_row++;
+        }
+
+        function attributeautocomplete(attribute_row) {
+            $('.selector').select2({
+                ajax: {
+                    url: APP_URL + '/admin/attributes/attrs/json ',
+                    delay: 250,
+                    data: function (params) {
+                        var query = {
+                            search: params.term, // search term
+                            page: params.page
+                        };
+                        return query;
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            });
+        }
+
+        $('#attribute tbody tr').each(function (index, element) {
+            attributeautocomplete(index);
+        });
+    </script>
 @endsection

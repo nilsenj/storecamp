@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
-use TagsCloud\Tagging\Taggable;
 
 class Product extends Model implements Transformable
 {
@@ -24,7 +23,6 @@ class Product extends Model implements Transformable
         'body',
         'price',
         'availability',
-        'date_available',
         'model',
         'quantity',
         'viewed',
@@ -34,15 +32,18 @@ class Product extends Model implements Transformable
         'jan',
         'isbn',
         'mpn',
-        'length',
-        'width',
-        'height',
+//        'length',
+//        'width',
+//        'height',
+//        'weight',
         'meta_tag_title',
         'meta_tag_description',
         'meta_tag_keywords',
-        'sort_order',
+//        'sort_order',
         'stock_status',
-        'weight'
+        'attr_description_id',
+        'product_id',
+        'value'
     ];
 
     protected $dates = ['date_available'];
@@ -62,13 +63,6 @@ class Product extends Model implements Transformable
     }
 
     /**
-     * @return string
-     */
-    public function getTaggedRelation(){
-
-        return 'TagsCloud\Tagging\Model\ProductTagged';
-    }
-    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
@@ -86,6 +80,11 @@ class Product extends Model implements Transformable
 
     }
 
+    public function attributeGroupDescription()
+    {
+        return $this->belongsToMany(AttributeGroupDescription::class, "product_attribute", "product_id", "attr_description_id")->withPivot("value");
+    }
+
     public function getFirstCategory() {
         return $this->categories()->first();
     }
@@ -101,8 +100,8 @@ class Product extends Model implements Transformable
     /**
      * @param $date
      */
-    public function setPublishedAtAttribute ($date) {
-        $this->attributes['date_available'] = Carbon::createFromFormat('Y-m-d', $date);
+    public function setDateAvailable($date) {
+        $this->attributes['date_available'] = Carbon::now();
     }
 
     /**

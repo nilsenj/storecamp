@@ -31,4 +31,26 @@ abstract class BaseController extends Controller
             ->with(\Flash::error('Item Not Found!'));
     }
 
+    /**
+     * @param $search
+     * @return null
+     */
+    protected function parserSearchValue($search)
+    {
+
+        if (stripos($search, ';') || stripos($search, ':')) {
+            $values = explode(';', $search);
+            foreach ($values as $value) {
+                $s = explode(':', $value);
+                if (count($s) == 1) {
+                    return $s[0];
+                }
+            }
+
+            return null;
+        }
+
+        return '%'.trim($search).'%';
+    }
+
 }

@@ -29,7 +29,9 @@ class PresentersServiceProvider extends ServiceProvider
     {
         $models = [
             'Basket',
-            'Item'
+            'Item',
+            'AttributeGroup',
+            'AttributeGroupDescription'
         ];
         foreach($models as $model) {
             $this->app->bind("FBA\\Presenters\\{$model}Presenter");
