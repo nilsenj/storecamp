@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->text('body');
             $table->char('model')->nullable();
             $table->string('slug')->nullable();
-            $table->integer('count')->default(0);
+            $table->string('stock_status')->nullable();
             $table->integer('viewed')->default(0);
             $table->integer('quantity')->default(0);
             $table->char('sku', 64)->nullable();
@@ -28,10 +28,11 @@ class CreateProductsTable extends Migration
             $table->char('jan', 13)->nullable();
             $table->char('isbn', 17)->nullable();
             $table->char('mpn', 64)->nullable();
-            $table->decimal('price', 15, 4)->default(null);
+            $table->decimal('price', 20, 2)->default(null);
             $table->decimal('length', 15, 8)->default(0.00000000);
             $table->decimal('width', 15, 8)->default(0.00000000);
             $table->decimal('height', 15, 8)->default(0.00000000);
+            $table->decimal('weight', 15, 4)->default(0.0000);
             $table->timestamp('date_available');
             $table->boolean('availability')->default(true);
             $table->string('meta_tag_title')->nullable();

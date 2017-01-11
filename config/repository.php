@@ -255,7 +255,7 @@ return [
     |
     */
     'generator'=>[
-        'basePath'=> app_path().'\Core',
+        'basePath'=> app_path().'/Core',
         'rootNamespace'=>'App\\Core\\',
         'paths'=>[
             'models'=>'Models',

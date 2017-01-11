@@ -30,25 +30,34 @@ desired effect
 @yield('styles-add')
 <body class="fixed sidebar-mini skin-blue">
 <div class="wrapper">
+
     @include('partials.mainheader')
+
     @include('partials.sidebar')
+
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         @include('partials.contentheader')
+
         <!-- Main content -->
         <section class="content">
             @if (Session::has('flash_notification.message'))
                 <div class="alert alert-{{ Session::get('flash_notification.level') }}">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
                     {{ Session::get('flash_notification.message') }}
                 </div>
                 @endif
             <!-- Your Page Content Here -->
             @yield('main-content')
+
         </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
+
     @include('partials.controlsidebar')
+
 </div><!-- ./wrapper -->
+
 @include('partials.scripts')
 @yield("scripts-add")
 @stack('scripts-add_on')

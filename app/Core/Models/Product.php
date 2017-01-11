@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
+use TagsCloud\Tagging\Taggable;
 
 class Product extends Model implements Transformable
 {
@@ -17,17 +18,31 @@ class Product extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
-        'type',
-        'user_id',
+        'slug',
+        'model',
         'title',
         'body',
         'price',
         'availability',
         'date_available',
-        'slug',
-        'count',
-        'category_id'
-
+        'model',
+        'quantity',
+        'viewed',
+        'sku',
+        'upc',
+        'ean',
+        'jan',
+        'isbn',
+        'mpn',
+        'length',
+        'width',
+        'height',
+        'meta_tag_title',
+        'meta_tag_description',
+        'meta_tag_keywords',
+        'sort_order',
+        'stock_status',
+        'weight'
     ];
 
     protected $dates = ['date_available'];
@@ -45,6 +60,14 @@ class Product extends Model implements Transformable
             ]
         ];
     }
+
+    /**
+     * @return string
+     */
+    public function getTaggedRelation(){
+
+        return 'TagsCloud\Tagging\Model\ProductTagged';
+    }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -61,6 +84,10 @@ class Product extends Model implements Transformable
 
         return $this->belongsToMany(Category::class, 'products_categories');
 
+    }
+
+    public function getFirstCategory() {
+        return $this->categories()->first();
     }
 
     /**

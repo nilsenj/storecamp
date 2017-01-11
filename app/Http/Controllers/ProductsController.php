@@ -79,34 +79,10 @@ class ProductsController extends BaseController
     public function store(Create $request)
     {
         $data = $request->all();
-        unset($data['image']);
-
-        $data['user_id'] = \Auth::id();
-
-        $data['slug'] = Str::slug($data['title']);
-
-        $category = $request->get('category_id');
-
-        $data['category_id'] = $category;
 
         $product = $this->repository->create($data);
-
-        if (Input::hasFile('image')) {
-            // upload image
-            $images = Input::file('image');
-
-            foreach ($images as $image) {
-
-                $this->uploader->upload($image)->save('images/products');
-
-
-                $picture = Picture::create(['path' => $this->uploader->getFilename()]);
-
-                $product->picture()->attach($picture);
-
-            }
-
-        }
+        $categoryId = $request->category_id ? $request->category_id : null;
+        $product->categories()->attach($categoryId);
 
         return redirect('admin/products');
     }
@@ -134,7 +110,7 @@ class ProductsController extends BaseController
         try {
             $product = $this->repository->getmodel()->find($id);
 
-            $categories = Category::all()->lists("slug", 'id');
+            $categories = $this->categoryRepository->all();
 
             $pictures = array();
 
@@ -161,46 +137,12 @@ class ProductsController extends BaseController
             $product = $this->repository->getmodel()->find($id);
 
             $data = $request->all();
-
-            unset($data['image']);
-
-            unset($data['type']);
-
-            $data['user_id'] = \Auth::id();
-
-            $data['slug'] = Str::slug($data['title']);
-
-            if (Input::hasFile('image')) {
-                // upload image
-                $images = Input::file('image');
-
-                $paths = array();
-
-                foreach ($product->picture()->get() as $pictures) {
-
-                    $this->repository->getmodel()->deleteImage($pictures->path);
-
-                }
-                $product->picture()->detach();
-
-                $product->update($data);
-
-                foreach ($images as $key => $image) {
-
-                    $this->uploader->upload($image)->save('images/products');
-
-                    $product = $this->repository->getmodel()->indBySlug($data['slug']);
-
-                    $picture = Picture::create(['path' => $this->uploader->getFilename()]);
-
-                    $product->picture()->attach($picture);
-
-                }
-
-
-            }
             $product->update($data);
-
+            $categoryId = $request->category_id ? $request->category_id : null;
+            if($categoryId) {
+                $product->categories()->detach();
+                $product->categories()->attach($categoryId);
+            }
 
             return redirect('admin/products');
 

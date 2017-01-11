@@ -29,7 +29,14 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
         $this->folder = $folder;
     }
 
-
+    /**
+     * @var array
+     */
+    protected $fieldSearchable = [
+        'filename' => 'like',
+        'extension' => 'like',
+        'aggregate_type' => 'like'
+    ];
     /**
      * Specify Model class name
      *

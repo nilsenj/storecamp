@@ -26,6 +26,18 @@
     <link href="{{ asset('/plugins/iCheck/square/blue.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/css/main/app.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('/plugins/iCheck/all.css')}}">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="{{ asset('/plugins/daterangepicker/daterangepicker.css') }}">
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="{{ asset('/plugins/datepicker/datepicker3.css') }}">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="{{ asset('/plugins/colorpicker/bootstrap-colorpicker.min.css') }}">
+    <!-- Bootstrap time Picker -->
+    <link rel="stylesheet" href="{{ asset('/plugins/timepicker/bootstrap-timepicker.min.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('/plugins/select2/select2.min.css') }}">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

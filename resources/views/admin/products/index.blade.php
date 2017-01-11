@@ -30,40 +30,51 @@
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
-        <thead>
-        <th>No</th>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Category</th>
-        <th>Price</th>
-        <th>Created At</th>
-        <th class="text-center">Action</th>
-        </thead>
-        <tbody>
-        @foreach ($products as $product)
-            <tr>
-                <td>{!! $no !!}</td>
-                <td>{!! $product->title !!}</td>
-                <td>{!! $product->user->name !!}</td>
-                <td>
-                    @foreach ($product->category()->get() as $category)
-                        {{ $category->name }}
-                    @endforeach
-                    {{--{!!$product->category()->get('name')!!}--}}
-                </td>
-                <td>{!! $product->price ? $product->price : null !!}</td>
-                <td>{!! $product->created_at !!}</td>
-                <td class="text-center">
-                        <a href="{!! route('admin::products::edit', $product->id) !!}">Edit</a>
-                        &middot;
-                        {{--@include('admin::partials.modal', ['data' => $product, 'name' => 'products'])--}}
+                        <thead>
+                        <th>No</th>
+                        <th>Product Title</th>
+                        <th>Model</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Availability</th>
+                        <th>Stock Status</th>
+                        <th>Created At</th>
+                        <th class="text-center">Actions</th>
+                        </thead>
+                        <tbody>
+                        @foreach ($products as $product)
+                            <tr>
+                                <td>{!! $no !!}</td>
+                                <td>{!! $product->title !!}</td>
+                                <td>{!! $product->model !!}</td>
+                                <td>
+                                    {{ $product->getFirstCategory() ? $product->getFirstCategory()->name : "no category  provided"}}
+                                </td>
+                                <td>{!! $product->price ? $product->price : null !!}</td>
+                                <td><div class="label bg-blue">{!! $product->quantity !!}</div></td>
+                                @if($product->availability)
+                                    <td>
+                                        <div class="label bg-green">enabled</div>
+                                    </td>
+                                @else
+                                    <td>
+                                        <div class="label bg-warning">disabled</div>
+                                    </td>
+                                @endif
+                                <td>{!! $product->stock_status !!}</td>
+                                <td>{!! $product->created_at !!}</td>
+                                <td class="text-center">
+                                    <a href="{!! route('admin::products::edit', $product->id) !!}">Edit</a>
+                                    &middot;
+                                    {{--@include('admin::partials.modal', ['data' => $product, 'name' => 'products'])--}}
 
-                </td>
-            </tr>
-            <?php $no++ ;?>
-            @endforeach
-        </tbody>
-    </table>
+                                </td>
+                            </tr>
+                            <?php $no++;?>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div>
