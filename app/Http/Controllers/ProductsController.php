@@ -113,15 +113,16 @@ class ProductsController extends BaseController
     public function edit($id)
     {
         try {
-            $product = $this->repository->getmodel()->find($id);
+            $product = $this->repository->with('attributeGroupDescription')->find($id);
 
             $categories = $this->categoryRepository->all();
 
             $pictures = array();
 
             $chosenCategory = $product->categories()->first();
+            $attributesList  = $product->attributeGroupDescription->pluck("name","id");
 
-            return $this->view('edit', compact('product', 'categories', 'pictures', 'chosenCategory'));
+            return $this->view('edit', compact('product', 'categories', 'pictures', 'chosenCategory','attributesList'));
 
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
@@ -148,7 +149,14 @@ class ProductsController extends BaseController
                 $product->categories()->detach();
                 $product->categories()->attach($categoryId);
             }
-
+            $attributes = [];
+            foreach ($data['product_attribute'] as $key => $attr) {
+                $attrInstance = $product->attributeGroupDescription()->find(intval($attr["attr_description_id"]));
+                $attrInstance["value"] = $data['product_attribute'][$key]["value"];
+                $attrInstance->pivot->value = $attrInstance["value"];
+                $attrInstance->pivot->save();
+                $attributes[] = $attrInstance;
+            }
             return redirect('admin/products');
 
         } catch (ModelNotFoundException $e) {

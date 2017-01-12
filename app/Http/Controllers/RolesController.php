@@ -13,35 +13,26 @@ use App\Core\Models\User;
 use App\Core\Validation\Role\RolesFormRequest;
 use App\Core\Validation\Role\RolesUpdateFormRequest;
 
-/**
- * Class RolesController
- * @package App\Http\Controllers
- */
-class RolesController extends BaseController
+class RolesController extends Controller
 {
-    /**
-     * @var RolesRepository
-     */
     protected $repository;
-
-    /**
-     * @var string
-     */
-    public $viewPathBase = "admin.roles.";
-    /**
-     * @var string
-     */
-    public $errorRedirectPath = "admin/roles";
 
     /**
      * @param RolesRepository $repository
      */
-    public function __construct(RolesRepository $repository)
-    {
+    public function __construct(RolesRepository $repository){
 
         $this->repository = $repository;
         $this->middleware('isAdmin');
 
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    protected function redirectNotFound()
+    {
+        return redirect('admin.roles.index');
     }
 
     /**
@@ -53,7 +44,7 @@ class RolesController extends BaseController
         $roles = $this->repository->allOrSearch($request->get('q'));
         $no = $roles->firstItem();
 
-        return $this->view('index', compact('roles', 'no'));
+        return view('admin.roles.index', compact('roles', 'no'));
     }
 
     /**
@@ -62,7 +53,7 @@ class RolesController extends BaseController
     public function create()
     {
         $permissions = Permission::all()->pluck('name', 'id');
-        return $this->view('create', compact('permissions'));
+        return view('admin.roles.create', compact('permissions'));
     }
 
     /**
@@ -95,7 +86,7 @@ class RolesController extends BaseController
         try {
             $role = Role::find($id);
             $permissions = Permission::all()->pluck('name');
-            return $this->view('edit', compact('role', 'permissions'));
+            return view('admin.roles.edit', compact('role', 'permissions'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }

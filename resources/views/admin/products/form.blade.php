@@ -46,13 +46,35 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <?php $key = -1; ?>
+                    @foreach($product->attributeGroupDescription as $attribute)
+                        <?php $key++; ?>
+                        <tr id="attribute-row{{$key}}">
+                            <td class="text-left" style="width: 20%;">
+                                {!! Form::select('product_attribute['.$key.'][attr_description_id]', $attributesList, $attribute ? [$attribute->id, $attribute->name] : null, [ 'class' => 'form-control selector']) !!}
+                                {!! $errors->first('availability', '<div class="text-danger">:message</div>') !!}
+                            </td>
+                            <td class="text-left">
+                                <div class="input-group"><span class="input-group-addon"><i
+                                                class="fa fa-link"></i></span>
+                                    <textarea
+                                            name="product_attribute[{{$key}}][value]" rows="2" placeholder="Text"
+                                            class="form-control">{!! $attribute->pivot->value !!}</textarea></div>
+                            </td>
+                            <td class="text-left">
+                                <button type="button" onclick="$('#attribute-row{{$key}}').remove();" data-toggle="tooltip"
+                                        title="Remove" class="btn btn-danger"><i class="fa fa-minus-circle"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                     <tfoot>
                     <tr>
                         <td colspan="2"></td>
                         <td class="text-left">
                             <a role="button" onclick="addAttribute();" data-toggle="tooltip" title=""
-                                    class="btn btn-primary" data-original-title="Add Attribute"><i
+                               class="btn btn-primary" data-original-title="Add Attribute"><i
                                         class="fa fa-plus-circle"></i></a>
                         </td>
                     </tr>
@@ -176,10 +198,10 @@
 {!! Form::close() !!}
 @section('scripts-add')
     <script>
-        var attribute_row = 0;
+        var attribute_row = {!! $key+1 !!};
 
         function addAttribute() {
-            html  = '<tr id="attribute-row' + attribute_row + '">';
+            html = '<tr id="attribute-row' + attribute_row + '">';
             html += '  <td class="text-left" style="width: 20%;"><select type="text" name="product_attribute[' + attribute_row + '][attr_description_id]" value="" placeholder="Attribute" class="form-control selector"></select></td>';
             html += '  <td class="text-left">';
             html += '<div class="input-group"><span class="input-group-addon"><i class="fa fa-link"></i></span><textarea name="product_attribute[' + attribute_row + '][value]" rows="2" placeholder="Text" class="form-control"></textarea></div>';
