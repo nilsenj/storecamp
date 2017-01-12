@@ -19,13 +19,7 @@
                 <div class="box-header">
                     <h3 class="box-title">List of categories</h3>
                     <div class="box-tools">
-                        <form action="#" method="get" class="input-group" style="width: 150px;">
-                            <input type="text" name="q" class="form-control input-sm pull-right" placeholder="Search">
-                            <div class="input-group-btn">
-                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                            </div>
-                        </form>
-
+                        @include('admin.partial._box_search')
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">

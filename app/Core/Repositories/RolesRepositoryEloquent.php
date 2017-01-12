@@ -10,6 +10,15 @@ use RepositoryLab\Repository\Criteria\RequestCriteria;
 
 class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
 {
+
+    /**
+     * @var array
+     */
+    protected $fieldSearchable = [
+        'name' => 'like',
+        'display_name' => 'like',
+    ];
+
     /**
      * Specify Model class name
      *
@@ -29,14 +38,6 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
     }
 
     /**
-     * @return int
-     */
-    public function perPage()
-    {
-        return 10;
-    }
-
-    /**
      * @return mixed
      */
     public function getModel()
@@ -44,74 +45,6 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
         $model = Role::class;
 
         return new $model;
-    }
-
-    /**
-     * @param null $searchQuery
-     * @return mixed
-     */
-    public function allOrSearch($searchQuery = null)
-    {
-        if (is_null($searchQuery)) {
-            return $this->getAll();
-        }
-        return $this->search($searchQuery);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAll()
-    {
-        return $this->getModel()->latest()->paginate($this->perPage());
-    }
-
-    /**
-     * @param $searchQuery
-     * @return mixed
-     */
-    public function search($searchQuery)
-    {
-        $search = "%{$searchQuery}%";
-
-        return $this->getModel()->where('name', 'like', $search)
-            ->orWhere('slug', 'like', $search)
-            ->paginate($this->perPage())
-            ;
-    }
-
-    /**
-     * @param $id
-     * @return mixed
-     */
-    public function findById($id)
-    {
-        return $this->getModel()->find($id);
-    }
-
-    /**
-     * @param $key
-     * @param $value
-     * @param string $operator
-     * @return mixed
-     */
-    public function findBy($key, $value, $operator = '=')
-    {
-        return $this->getModel()->where($key, $operator, $value)->paginate($this->perPage());
-    }
-
-    /**
-     * @param $id
-     * @return bool
-     */
-    public function delete($id)
-    {
-        $role = $this->findById($id);
-        if (!is_null($role)) {
-            $role->delete();
-            return true;
-        }
-        return false;
     }
 
     /**

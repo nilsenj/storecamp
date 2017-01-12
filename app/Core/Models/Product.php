@@ -23,6 +23,7 @@ class Product extends Model implements Transformable
         'body',
         'price',
         'availability',
+        'date_available',
         'model',
         'quantity',
         'viewed',
@@ -73,7 +74,6 @@ class Product extends Model implements Transformable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-
     public function categories() {
 
         return $this->belongsToMany(Category::class, 'products_categories');
@@ -85,6 +85,9 @@ class Product extends Model implements Transformable
         return $this->belongsToMany(AttributeGroupDescription::class, "product_attribute", "product_id", "attr_description_id")->withPivot("value");
     }
 
+    /**
+     * @return mixed
+     */
     public function getFirstCategory() {
         return $this->categories()->first();
     }
@@ -101,7 +104,12 @@ class Product extends Model implements Transformable
      * @param $date
      */
     public function setDateAvailable($date) {
-        $this->attributes['date_available'] = Carbon::now();
+        if(!$date) {
+            dd("hello kitty");
+            $this->attributes['date_available'] = Carbon::now();
+        } else {
+            $this->attributes['date_available'] = Carbon::createFromFormat("yyyy-mm-dd h:m", $date);
+        }
     }
 
     /**

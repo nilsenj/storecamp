@@ -132,6 +132,10 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         return null;
     }
 
+    public function perPage() {
+        return config('repository.pagination.limit', 10);
+    }
+
     /**
      * Specify Validator class name of RepositoryLab\Validator\Contracts\ValidatorInterface
      *
@@ -278,7 +282,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      */
     public function lists($column, $key = null)
     {
-        return $this->makeModel()->lists($column, $key);
+        return $this->makeModel()->pluck($column, $key);
     }
 
     /**
@@ -348,7 +352,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     {
         $this->applyCriteria();
         $this->applyScope();
-        $limit = request()->get('perPage', is_null($limit) ? config('repository.pagination.limit', 15) : $limit);
+        $limit = request()->get('perPage', is_null($limit) ? config('repository.pagination.limit', 10) : $limit);
         $results = $this->model->{$method}($limit, $columns);
         $results->appends(request()->query());
         $this->resetModel();
@@ -835,5 +839,18 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         return $result;
     }
 
+    public function findBy($key, $value, $operator = '=')
+    {
+        $this->applyCriteria();
+        $this->applyScope();
+
+        $this->model->where($key, $operator, $value);
+
+
+        $model = $this->model->get($columns = ['*']);
+        $this->resetModel();
+
+        return $this->parserResult($model);
+    }
 
 }

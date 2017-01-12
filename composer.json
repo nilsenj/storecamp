@@ -30,7 +30,8 @@
         "juggl/unique-hashids": "^1.1",
         "darrylkuhn/dialect": "^1.0",
         "plank/laravel-mediable": "^2.4",
-        "that0n3guy/transliteration": "^2.0"
+        "that0n3guy/transliteration": "^2.0",
+        "maatwebsite/excel": "^2.1"
 
     },
     "require-dev": {
@@ -63,12 +64,18 @@
             "App\\Core\\APIs\\Youtube\\": "app/Core/APIs/Youtube/",
             "App\\Core\\Access\\": "App/Core/Access/",
             "App\\Core\\Access\\Commands\\": "App/Core/Access/commands/",
-            "Core\\Components\\": "app/Core/components/",
-            "App\\Core\\Abstracts\\": "app/Core/abstracts/",
+            "App\\Core\\Components\\": "app/Core/components/",
+            "App\\Core\\Base\\": "app/Core/Base/",
             "App\\Core\\Drivers\\": "app/Core/drivers/",
             "App\\Core\\Interfaces\\": "app/Core/interfaces/",
             "App\\Core\\Policies\\": "app/Core/policies/",
-            "App\\Core\\Traits\\": "app/Core/traits/"
+            "App\\Core\\Traits\\": "app/Core/traits/",
+            "App\\Core\\Components\\Sidebar\\": "App/Core/Components/Sidebar/",
+            "App\\Core\\Components\\Timezone\\":"App/Core/Components/Timezone/",
+            "App\\Core\\Components\\Country\\":"App/Core/Components/Country/",
+            "App\\Core\\Components\\Select\\SelectBuilder\\":"App/Core/Components/Select/",
+            "App\\Core\\components\\ActiveItem\\":"App/Core/Components/ActiveItem/",
+            "App\\Core\\Components\\Flash\\":"App/Core/Components/Flash/"
         }
     },
     "autoload-dev": {

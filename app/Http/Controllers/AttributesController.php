@@ -89,9 +89,10 @@ class AttributesController extends BaseController
     {
         try {
             $groupDescription = $this->groupDescriptionRepository->with("attributesGroup")->find($id);
+            $attributesList = $groupDescription->attributesGroup->pluck("name", "id");
+            $selector = buildSelect(route('admin::attribute_groups::get::json'), 'attributes_group_id', false, $attributesList->toArray(), $attributesList->toArray());
 
-
-            return $this->view('edit', compact('groupDescription'));
+            return $this->view('edit', compact('groupDescription', 'selector'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }

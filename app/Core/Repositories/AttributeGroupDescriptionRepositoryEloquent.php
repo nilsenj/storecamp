@@ -14,6 +14,13 @@ use App\Core\Models\AttributeGroupDescription;
 class AttributeGroupDescriptionRepositoryEloquent extends BaseRepository implements AttributeGroupDescriptionRepository
 {
     /**
+     * @var array
+     */
+    protected $fieldSearchable = [
+        'name' => 'like'
+    ];
+
+    /**
      * Specify Model class name
      *
      * @return string

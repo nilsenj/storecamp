@@ -101,15 +101,15 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
 
     public function specificSearch($model, $request)
     {
-        $search = "%{$request->get('q')}%";
+        $searchMask = $request->get('q') ? $request->get('q') : $request->get('search');
+        $search = "%{$searchMask}%";
         $tagSearch = $request->get('tag');
         if ($tagSearch) {
             $specificTag = "%{$tagSearch}%";
             return $model->where('aggregate_type', 'like', $specificTag)
-                ->get();
+                ->paginate();
         } else {
-            return $model->where('filename', 'like', $search)
-                ->get();
+            return $model->paginate();
         }
 
     }

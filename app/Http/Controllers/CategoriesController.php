@@ -59,7 +59,7 @@ class CategoriesController extends BaseController
      */
     public function index(Request $request)
     {
-        $categories = $this->repository->allOrSearch($request->get('q'));
+        $categories = $this->repository->paginate();
 
         $no = $categories->firstItem();
 

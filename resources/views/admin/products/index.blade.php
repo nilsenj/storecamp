@@ -19,13 +19,7 @@
                 <div class="box-header">
                     <h3 class="box-title">List of products</h3>
                     <div class="box-tools">
-                        <form action="#" method="get" class="input-group" style="width: 150px;">
-                            <input type="text" name="q" class="form-control input-sm pull-right" placeholder="Search">
-                            <div class="input-group-btn">
-                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                            </div>
-                        </form>
-
+                        @include('admin.partial._box_search')
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
@@ -65,9 +59,10 @@
                                 <td>{!! $product->stock_status !!}</td>
                                 <td>{!! $product->created_at !!}</td>
                                 <td class="text-center">
-                                    <a href="{!! route('admin::products::edit', $product->id) !!}">Edit</a>
-                                    &middot;
-                                    {{--@include('admin::partials.modal', ['data' => $product, 'name' => 'products'])--}}
+                                    <a class="edit" href="{!! route('admin::products::edit', $product->id) !!}" title="Edit">
+                                        <i class="fa fa-pencil-square-o"></i></a>
+                                    <a class="delete text-warning" href="{!! route('admin::products::get::delete', $product->id) !!}"
+                                       title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
 
                                 </td>
                             </tr>

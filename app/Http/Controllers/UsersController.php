@@ -62,7 +62,7 @@ class UsersController extends BaseController
      */
     public function index()
     {
-        $users = $this->repository->allOrSearch(Input::get('q'));
+        $users = $this->repository->paginate();
 
         $no = $users->firstItem();
 

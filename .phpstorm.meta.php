@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-01-09.
+    * Generated on 2017-01-12.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -89,7 +89,11 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\RolesRepository' instanceof \App\Core\Repositories\RolesRepositoryEloquent,
             'App\Core\Repositories\ProductsRepository' instanceof \App\Core\Repositories\ProductsRepositoryEloquent,
             'App\Core\Repositories\PermissionRepository' instanceof \App\Core\Repositories\PermissionRepositoryEloquent,
+            'App\Core\Repositories\AttributeGroupRepository' instanceof \App\Core\Repositories\AttributeGroupRepositoryEloquent,
+            'App\Core\Repositories\AttributeGroupDescriptionRepository' instanceof \App\Core\Repositories\AttributeGroupDescriptionRepositoryEloquent,
             'App\Core\Transformers\ItemTransformer' instanceof \App\Core\Transformers\ItemTransformer,
+            'App\Core\Transformers\AttributeGroupTransformer' instanceof \App\Core\Transformers\AttributeGroupTransformer,
+            'App\Core\Transformers\AttributeGroupDescriptionTransformer' instanceof \App\Core\Transformers\AttributeGroupDescriptionTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
             'mediable.source.factory' instanceof \Plank\Mediable\SourceAdapters\SourceAdapterFactory,
             'mediable.uploader' instanceof \Plank\Mediable\MediaUploader,
@@ -277,7 +281,11 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\RolesRepository' instanceof \App\Core\Repositories\RolesRepositoryEloquent,
             'App\Core\Repositories\ProductsRepository' instanceof \App\Core\Repositories\ProductsRepositoryEloquent,
             'App\Core\Repositories\PermissionRepository' instanceof \App\Core\Repositories\PermissionRepositoryEloquent,
+            'App\Core\Repositories\AttributeGroupRepository' instanceof \App\Core\Repositories\AttributeGroupRepositoryEloquent,
+            'App\Core\Repositories\AttributeGroupDescriptionRepository' instanceof \App\Core\Repositories\AttributeGroupDescriptionRepositoryEloquent,
             'App\Core\Transformers\ItemTransformer' instanceof \App\Core\Transformers\ItemTransformer,
+            'App\Core\Transformers\AttributeGroupTransformer' instanceof \App\Core\Transformers\AttributeGroupTransformer,
+            'App\Core\Transformers\AttributeGroupDescriptionTransformer' instanceof \App\Core\Transformers\AttributeGroupDescriptionTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
             'mediable.source.factory' instanceof \Plank\Mediable\SourceAdapters\SourceAdapterFactory,
             'mediable.uploader' instanceof \Plank\Mediable\MediaUploader,
@@ -465,7 +473,11 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\RolesRepository' instanceof \App\Core\Repositories\RolesRepositoryEloquent,
             'App\Core\Repositories\ProductsRepository' instanceof \App\Core\Repositories\ProductsRepositoryEloquent,
             'App\Core\Repositories\PermissionRepository' instanceof \App\Core\Repositories\PermissionRepositoryEloquent,
+            'App\Core\Repositories\AttributeGroupRepository' instanceof \App\Core\Repositories\AttributeGroupRepositoryEloquent,
+            'App\Core\Repositories\AttributeGroupDescriptionRepository' instanceof \App\Core\Repositories\AttributeGroupDescriptionRepositoryEloquent,
             'App\Core\Transformers\ItemTransformer' instanceof \App\Core\Transformers\ItemTransformer,
+            'App\Core\Transformers\AttributeGroupTransformer' instanceof \App\Core\Transformers\AttributeGroupTransformer,
+            'App\Core\Transformers\AttributeGroupDescriptionTransformer' instanceof \App\Core\Transformers\AttributeGroupDescriptionTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
             'mediable.source.factory' instanceof \Plank\Mediable\SourceAdapters\SourceAdapterFactory,
             'mediable.uploader' instanceof \Plank\Mediable\MediaUploader,
@@ -653,7 +665,11 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\RolesRepository' instanceof \App\Core\Repositories\RolesRepositoryEloquent,
             'App\Core\Repositories\ProductsRepository' instanceof \App\Core\Repositories\ProductsRepositoryEloquent,
             'App\Core\Repositories\PermissionRepository' instanceof \App\Core\Repositories\PermissionRepositoryEloquent,
+            'App\Core\Repositories\AttributeGroupRepository' instanceof \App\Core\Repositories\AttributeGroupRepositoryEloquent,
+            'App\Core\Repositories\AttributeGroupDescriptionRepository' instanceof \App\Core\Repositories\AttributeGroupDescriptionRepositoryEloquent,
             'App\Core\Transformers\ItemTransformer' instanceof \App\Core\Transformers\ItemTransformer,
+            'App\Core\Transformers\AttributeGroupTransformer' instanceof \App\Core\Transformers\AttributeGroupTransformer,
+            'App\Core\Transformers\AttributeGroupDescriptionTransformer' instanceof \App\Core\Transformers\AttributeGroupDescriptionTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
             'mediable.source.factory' instanceof \Plank\Mediable\SourceAdapters\SourceAdapterFactory,
             'mediable.uploader' instanceof \Plank\Mediable\MediaUploader,

@@ -58,7 +58,7 @@ class ProductsController extends BaseController
      */
     public function index()
     {
-        $products = $this->repository->allOrSearch(Input::get('q'));
+        $products = $this->repository->paginate();
         $no = $products->firstItem();
         return $this->view('index', compact('products', 'no'));
     }
@@ -68,7 +68,7 @@ class ProductsController extends BaseController
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = $this->categoryRepository->all();
         $chosenCategory = null;
         return $this->view('create', compact('categories', 'chosenCategory'));
     }
@@ -77,8 +77,7 @@ class ProductsController extends BaseController
      * @param Create $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-//    public function store(Create $request)
-    public function store(Request $request)
+    public function store(Create $request)
     {
         $data = $request->all();
         $product = $this->repository->create($data);
@@ -99,7 +98,7 @@ class ProductsController extends BaseController
     public function show($id)
     {
         try {
-            $product = $this->repository->getmodel()->find($id);;
+            $product = $this->repository->find($id);;
             return $this->view('show', compact('product'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
@@ -114,15 +113,11 @@ class ProductsController extends BaseController
     {
         try {
             $product = $this->repository->with('attributeGroupDescription')->find($id);
-
             $categories = $this->categoryRepository->all();
-
             $pictures = array();
-
             $chosenCategory = $product->categories()->first();
-            $attributesList  = $product->attributeGroupDescription->pluck("name","id");
-
-            return $this->view('edit', compact('product', 'categories', 'pictures', 'chosenCategory','attributesList'));
+            $attributesList = $product->attributeGroupDescription->pluck("name", "id");
+            return $this->view('edit', compact('product', 'categories', 'pictures', 'chosenCategory', 'attributesList'));
 
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
@@ -139,24 +134,26 @@ class ProductsController extends BaseController
     public function update(Update $request, $id)
     {
         try {
-
-            $product = $this->repository->getmodel()->find($id);
-
+            $product = $this->repository->find($id);
             $data = $request->all();
+            dd($data);
             $product->update($data);
             $categoryId = $request->category_id ? $request->category_id : null;
-            if($categoryId) {
+            if ($categoryId) {
                 $product->categories()->detach();
                 $product->categories()->attach($categoryId);
             }
+
             $attributes = [];
-            foreach ($data['product_attribute'] as $key => $attr) {
-                $attrInstance = $product->attributeGroupDescription()->find(intval($attr["attr_description_id"]));
-                $attrInstance["value"] = $data['product_attribute'][$key]["value"];
-                $attrInstance->pivot->value = $attrInstance["value"];
-                $attrInstance->pivot->save();
-                $attributes[] = $attrInstance;
+            $productAttributes = $product->attributeGroupDescription();
+            if ($productAttributes->count() > 0) {
+                $product->attributeGroupDescription()->sync([]);
             }
+            foreach ($data['product_attribute'] as $key => $attr) {
+                    $attribute = $product->attributeGroupDescription()->save(AttributeGroupDescription::find(intval($attr["attr_description_id"])), ["value" => $data['product_attribute'][$key]["value"]]);
+                    $attributes[] = $attribute;
+            }
+
             return redirect('admin/products');
 
         } catch (ModelNotFoundException $e) {

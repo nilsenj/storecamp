@@ -13,6 +13,16 @@ use App\Core\Models\Product;
  */
 class ProductsRepositoryEloquent extends BaseRepository implements ProductsRepository
 {
+    /**
+     * @var array
+     */
+    protected $fieldSearchable = [
+        'title' => 'like',
+        'model' => 'like',
+        'price' => 'like',
+        'quantity' => '=',
+        'stock_status' => '='
+    ];
 
     /**
      * Specify Model class name
@@ -32,7 +42,6 @@ class ProductsRepositoryEloquent extends BaseRepository implements ProductsRepos
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-
     /**
      * @return mixed
      */
@@ -41,75 +50,6 @@ class ProductsRepositoryEloquent extends BaseRepository implements ProductsRepos
         $model = $this->model();
 
         return new $model;
-    }
-
-    /**
-     * @param null $searchQuery
-     * @return mixed
-     */
-    public function allOrSearch($searchQuery = null)
-    {
-        if (is_null($searchQuery)) {
-            return $this->getAll();
-        }
-        return $this->search($searchQuery);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAll()
-    {
-        return $this->getModel()->latest()->paginate();
-    }
-
-    /**
-     * @param $searchQuery
-     * @return mixed
-     */
-    public function search($searchQuery)
-    {
-        $search = "%{$searchQuery}%";
-
-        return $this->getModel()->where('title', 'like', $search)
-            ->orWhere('body', 'like', $search)
-            ->orWhere('id', '=', $searchQuery)
-            ->paginate($this->perPage())
-            ;
-    }
-
-    /**
-     * @param $key
-     * @param $value
-     * @param string $operator
-     * @return mixed
-     */
-    public function findBy($key, $value, $operator = '=')
-    {
-        return $this->getModel()->where($key, $operator, $value)->paginate($this->perPage());
-    }
-
-    /**
-     * @param $id
-     * @return bool
-     */
-    public function delete($id)
-    {
-        $good = $this->find($id);
-        if (!is_null($good)) {
-            $good->delete();
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @param array $data
-     * @return mixed
-     */
-    public function create(array $data)
-    {
-        return $this->getModel()->create($data);
     }
 
 }

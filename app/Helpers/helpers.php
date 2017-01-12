@@ -2,6 +2,10 @@
 
 
 if (!function_exists('resolveModelName')) {
+    /**
+     * @param $model
+     * @return string
+     */
     function resolveModelName($model)
     {
         $reflection = new ReflectionClass($model);
@@ -10,6 +14,10 @@ if (!function_exists('resolveModelName')) {
     }
 }
 
+/**
+ * @param $migrationClass
+ * @return mixed
+ */
 function determineActiveDBandResolveUp($migrationClass)
 {
 
@@ -26,6 +34,10 @@ function determineActiveDBandResolveUp($migrationClass)
 }
 
 
+/**
+ * @param $migrationClass
+ * @return mixed
+ */
 function determineActiveDBandResolveDown($migrationClass)
 {
 
@@ -41,6 +53,10 @@ function determineActiveDBandResolveDown($migrationClass)
 
 if (!function_exists('ruTolat')) {
 
+    /**
+     * @param $str
+     * @return string
+     */
     function ruTolat($str)
     {
         $tr = array(
@@ -67,6 +83,11 @@ if (!function_exists('ruTolat')) {
 
 if (!function_exists('formatBytes')) {
 
+    /**
+     * @param $bytes
+     * @param int $precision
+     * @return string
+     */
     function formatBytes($bytes, $precision = 2)
     {
         $units = array('B', 'KB', 'MB', 'GB', 'TB');
@@ -80,6 +101,26 @@ if (!function_exists('formatBytes')) {
 //         $bytes /= (1 << (10 * $pow));
 
         return round($bytes, $precision) . ' ' . $units[$pow];
+    }
+}
+
+if (!function_exists('buildSelect')) {
+
+    /**
+     * @param $actionUrl
+     * @param $attrName
+     * @param $multiple
+     * @param array $data
+     * @param array $selected
+     * @param null $class
+     * @param null $placeholder
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    function buildSelect($actionUrl, $attrName, bool $multiple, $data = [], $selected = [], $class = null, $placeholder = null)
+    {
+        $selector = new \App\Core\Components\Select\SelectBuilder();
+
+        return $selector->render($actionUrl, $attrName, $multiple, $data, $selected, $class, $placeholder);
     }
 }
 

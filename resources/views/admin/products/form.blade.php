@@ -29,6 +29,16 @@
             @include('admin.products.category_chooser_modal', [$categories, $chosenCategory])
             @include('admin.components.description-form', [$property_name='body'])
             <div class="form-group">
+                <label class="control-label" for="input-date-available">Date Available</label>
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    {!! Form::text('date_available', null, ["id" => "input-date_available", "placeholder" => "Date Available", "data-date-format" => "yyyy-mm-dd", "class" => "form-control simple_date"]) !!}
+                    {!! $errors->first('date_available', '<div class="text-danger">:message</div>') !!}
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="control-label" for="input-status">Availability</label>
                 {!! Form::select('availability', [1 => "Enabled", 0 => "Disabled"], null, ["id" => "input-availability", 'class' => 'form-control']) !!}
                 {!! $errors->first('availability', '<div class="text-danger">:message</div>') !!}
@@ -46,28 +56,31 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php $key = -1; ?>
-                    @foreach($product->attributeGroupDescription as $attribute)
-                        <?php $key++; ?>
-                        <tr id="attribute-row{{$key}}">
-                            <td class="text-left" style="width: 20%;">
-                                {!! Form::select('product_attribute['.$key.'][attr_description_id]', $attributesList, $attribute ? [$attribute->id, $attribute->name] : null, [ 'class' => 'form-control selector']) !!}
-                                {!! $errors->first('availability', '<div class="text-danger">:message</div>') !!}
-                            </td>
-                            <td class="text-left">
-                                <div class="input-group"><span class="input-group-addon"><i
-                                                class="fa fa-link"></i></span>
-                                    <textarea
-                                            name="product_attribute[{{$key}}][value]" rows="2" placeholder="Text"
-                                            class="form-control">{!! $attribute->pivot->value !!}</textarea></div>
-                            </td>
-                            <td class="text-left">
-                                <button type="button" onclick="$('#attribute-row{{$key}}').remove();" data-toggle="tooltip"
-                                        title="Remove" class="btn btn-danger"><i class="fa fa-minus-circle"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    @endforeach
+                    @if(isset($product))
+                        <?php $key = -1; ?>
+                        @foreach($product->attributeGroupDescription as $attribute)
+                            <?php $key++; ?>
+                            <tr id="attribute-row{{$key}}">
+                                <td class="text-left" style="width: 20%;">
+                                    {!! buildSelect(route('admin::attributes::get::json'), 'product_attribute['.$key.'][attr_description_id]', false , $attributesList, [$attribute->pivot->attr_description_id => $attribute->name], "selector") !!}
+                                    {!! $errors->first('availability', '<div class="text-danger">:message</div>') !!}
+                                </td>
+                                <td class="text-left">
+                                    <div class="input-group"><span class="input-group-addon"><i
+                                                    class="fa fa-link"></i></span>
+                                        <textarea
+                                                name="product_attribute[{{$key}}][value]" rows="2" placeholder="Text"
+                                                class="form-control">{!! $attribute->pivot->value !!}</textarea></div>
+                                </td>
+                                <td class="text-left">
+                                    <button type="button" onclick="$('#attribute-row{{$key}}').remove();"
+                                            data-toggle="tooltip"
+                                            title="Remove" class="btn btn-danger"><i class="fa fa-minus-circle"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                     </tbody>
                     <tfoot>
                     <tr>
@@ -146,17 +159,6 @@
                 {!! Form::select('stock_status', config('stock-statuses'), null, ["id" => "input-stock-status", "class" => "form-control"]) !!}
                 {!! $errors->first('quantity', '<div class="text-danger">:message</div>') !!}
             </div>
-
-            <div class="form-group">
-                <label class="control-label" for="input-date-available">Date Available</label>
-                <div class="input-group date">
-                    <div class="input-group-addon">
-                        <i class="fa fa-calendar"></i>
-                    </div>
-                    {!! Form::text('date_available', null, ["id" => "input-date_available", "placeholder" => "Date Available", "data-date-format" => "yyyy-mm-dd", "class" => "form-control simple_date"]) !!}
-                    {!! $errors->first('date_available', '<div class="text-danger">:message</div>') !!}
-                </div>
-            </div>
             <div class="form-group">
                 <label class="control-label" for="input-length">Dimensions (L x W x H) <b>cm</b></label>
                 <div class="row">
@@ -198,7 +200,7 @@
 {!! Form::close() !!}
 @section('scripts-add')
     <script>
-        var attribute_row = {!! $key+1 !!};
+        var attribute_row = {!! isset($key) ? $key+1 : 0 !!};
 
         function addAttribute() {
             html = '<tr id="attribute-row' + attribute_row + '">';

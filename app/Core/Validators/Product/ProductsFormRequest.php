@@ -18,7 +18,7 @@ class ProductsFormRequest extends FormRequest{
         'price' => 'required|numeric',
         'availability' => 'required|integer',
         'category_id' => 'required|integer',
-        'date_available' => 'date',
+        'date_available' => 'required|date',
         'model' => 'string|min:2',
         'quantity' => 'numeric',
         'sku' => 'string',

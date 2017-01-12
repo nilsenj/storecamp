@@ -23,21 +23,14 @@
                 <div class="box-header">
                     <h3 class="box-title">List of Group Attributes</h3>
                     <div class="box-tools">
-                        <form action="#" method="get" class="input-group" style="width: 150px;">
-                            <input type="text" name="q" class="form-control input-sm pull-right" placeholder="Search">
-                            <div class="input-group-btn">
-                                <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                            </div>
-                        </form>
-
+                        @include('admin.partial._box_search')
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
         <thead>
         <th>#</th>
-        <th>Attribute Id</th>
-        <th>Attribute Group</th>
+        <th>Attribute Group name</th>
         <th>Sort Order</th>
         <th>Created</th>
         <th class="text-center">Actions</th>
@@ -46,7 +39,6 @@
         @foreach ($groupAttributes as $groupAttribute)
             <tr>
                 <td>{!! $no !!}</td>
-                <td>{!! $groupAttribute->id !!}</td>
                 <td>{!! $groupAttribute->name !!}</td>
                 <td>{!! $groupAttribute->sort_order !!}</td>
                 <td>{!! $groupAttribute->created_at !!}</td>

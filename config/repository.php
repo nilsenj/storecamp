@@ -144,13 +144,13 @@ return [
 //    ],
     'cache'=>[
         //Enable or disable cache repositories
-        'enabled'   => false,
+        'enabled'   => true,
 
         //Lifetime of cache
         'minutes'   => 30,
 
         //Repository Cache, implementation Illuminate\Contracts\Cache\Repository
-        'repository'=> 'cache',
+        'repository'=> Illuminate\Contracts\Cache\Repository::class,
 
         //Sets clearing the cache
         'clean'     => [
@@ -240,7 +240,7 @@ return [
         |
         */
         'params'=>[
-            'search'        =>'q',
+            'search'        =>'search',
             'searchFields'  =>'searchFields',
             'filter'        =>'filter',
             'orderBy'       =>'orderBy',

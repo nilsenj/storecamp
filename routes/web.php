@@ -186,6 +186,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'uses' => 'RolesController@store',
             'as' => 'store'
         ]);
+        Route::get('perms/json', [
+            'uses' => 'RolesController@getPermsJson',
+            'as' => 'permissions::json'
+        ]);
 
     });
     Route::group(['prefix' => 'products', 'as' => 'products::'], function () {
@@ -215,6 +219,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
         Route::post('store', [
             'uses' => 'ProductsController@store',
             'as' => 'store'
+        ]);
+
+        Route::get('/delete/{id}', [
+            'uses' => 'ProductsController@destroy',
+            'as' => 'get::delete'
         ]);
 
     });

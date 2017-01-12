@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Core\Models\Permission;
 use App\Core\Models\Role;
+use App\Core\Repositories\PermissionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Input;
@@ -13,26 +14,44 @@ use App\Core\Models\User;
 use App\Core\Validation\Role\RolesFormRequest;
 use App\Core\Validation\Role\RolesUpdateFormRequest;
 
-class RolesController extends Controller
+/**
+ * Class RolesController
+ * @package App\Http\Controllers
+ */
+class RolesController extends BaseController
 {
-    protected $repository;
+    /**
+     * @var string
+     */
+    public $viewPathBase = "admin.roles.";
 
     /**
-     * @param RolesRepository $repository
+     * @var string
      */
-    public function __construct(RolesRepository $repository){
+    public $errorRedirectPath = "admin/roles";
+
+    /**
+     * @var RolesRepository
+     */
+    protected $repository;
+    /**
+     * @var PermissionRepository
+     */
+    protected $permissionRepository;
+
+
+    /**
+     * RolesController constructor.
+     * @param RolesRepository $repository
+     * @param PermissionRepository $permissionRepository
+     */
+    public function __construct(RolesRepository $repository, PermissionRepository $permissionRepository)
+    {
 
         $this->repository = $repository;
+        $this->permissionRepository = $permissionRepository;
         $this->middleware('isAdmin');
 
-    }
-
-    /**
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    protected function redirectNotFound()
-    {
-        return redirect('admin.roles.index');
     }
 
     /**
@@ -41,10 +60,10 @@ class RolesController extends Controller
      */
     public function index(Request $request)
     {
-        $roles = $this->repository->allOrSearch($request->get('q'));
+        $roles = $this->repository->paginate();
         $no = $roles->firstItem();
 
-        return view('admin.roles.index', compact('roles', 'no'));
+        return $this->view('index', compact('roles', 'no'));
     }
 
     /**
@@ -53,7 +72,7 @@ class RolesController extends Controller
     public function create()
     {
         $permissions = Permission::all()->pluck('name', 'id');
-        return view('admin.roles.create', compact('permissions'));
+        return $this->view('create', compact('permissions'));
     }
 
     /**
@@ -79,14 +98,15 @@ class RolesController extends Controller
 
     /**
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit($id)
     {
         try {
-            $role = Role::find($id);
-            $permissions = Permission::all()->pluck('name');
-            return view('admin.roles.edit', compact('role', 'permissions'));
+            $role = $this->repository->find($id);
+            $permissions = Permission::all()->pluck('name', 'id');
+            $selectedPerms = $role->perms()->orderBy("id")->pluck("name", "id");
+            return $this->view('edit', compact('role', 'permissions', 'selectedPerms'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }
@@ -95,7 +115,7 @@ class RolesController extends Controller
     /**
      * @param RolesUpdateFormRequest $request
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return Response|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(RolesUpdateFormRequest $request, $id)
     {
@@ -103,8 +123,8 @@ class RolesController extends Controller
             $data = $request->except('permissions');
 
             $dataPerm = $request->only('permissions');
+            $role = $this->repository->find($id);
 
-            $role = Role::find($id);
             $this->repository->renew($data, $dataPerm, $role);
 
             return redirect('admin/roles');
@@ -114,6 +134,24 @@ class RolesController extends Controller
         }
     }
 
+    /**
+     * get permissions name in json format
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function getPermsJson(Request $request)
+    {
+        $query = $this->parserSearchValue($request->get('search'));
+        $permGroup = $this->permissionRepository->getModel()->where("name", "like", $query)->select('name', 'id')->get();
+        $permGroupArr = [];
+        foreach ($permGroup as $key => $attrGroupItem) {
+            $permGroupArr[$key]['text'] = $attrGroupItem['name'];
+            $permGroupArr[$key]['id'] = $attrGroupItem['id'];
+        }
+        return \Response::json($permGroupArr);
+    }
 
     /**
      * @param $id

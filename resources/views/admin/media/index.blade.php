@@ -59,55 +59,67 @@
                                 create directory
                             </a>
 
-                            <form action="#" method="get" class="input-group pull-right"
-                                  style="width: 200px; margin-left: 10px">
-                                <input type="text" name="q" class="form-control pull-right" placeholder="Search">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-info" style="padding: 9px;"><i
-                                                class="fa fa-search"></i></button>
-                                </div>
-                            </form>
+                            @include('admin.partial._box_search')
                         </div>
                     </div>
                     <div class="clearifx"></div>
-                    <span class="text-muted">only: </span>
+                    <span class="media_tags">
+                           <span class="text-muted">only: </span>
+                        <li>
                     <a href="{{url('admin/media/'.$folder->id)}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
                         - all
                     </a>
-                    <a href="{{url('admin/media/'.$folder->id."?tag=video")}}" class="btn btn-xs btn-icon"
-                       style="margin-left: 10px">
+                        </li>
+                        <li>
+                            <a href="{{url('admin/media/'.$folder->id."?tag=video")}}" class="btn btn-xs btn-icon"
+                               style="margin-left: 10px">
                         <i class="fa fa-video-camera"></i> - video
                     </a>
-                    <a href="{{url('admin/media/'.$folder->id."?tag=audio")}}" class="btn btn-xs btn-icon"
-                       style="margin-left: 10px">
+                        </li>
+
+                        <li>
+                             <a href="{{url('admin/media/'.$folder->id."?tag=audio")}}" class="btn btn-xs btn-icon"
+                                style="margin-left: 10px">
                         <i class="fa fa-music"></i> - audio
                     </a>
-                    <a href="{{url('admin/media/'.$folder->id."?tag=image")}}" class="btn btn-xs btn-icon"
-                       style="margin-left: 10px">
+                        </li>
+                        <li>
+                              <a href="{{url('admin/media/'.$folder->id."?tag=image")}}" class="btn btn-xs btn-icon"
+                                 style="margin-left: 10px">
                         <i class="fa fa-image"></i> - image
                     </a>
-                    <a href="{{url('admin/media/'.$folder->id."?tag=pdf")}}" class="btn btn-xs btn-icon"
-                       style="margin-left: 10px">
+                        </li>
+                        <li>
+                            <a href="{{url('admin/media/'.$folder->id."?tag=pdf")}}" class="btn btn-xs btn-icon"
+                               style="margin-left: 10px">
                         <i class="fa fa-file-pdf-o"></i> - pdf
                     </a>
-                    <a href="{{url('admin/media/'.$folder->id."?tag=archive")}}" class="btn btn-xs btn-icon"
-                       style="margin-left: 10px">
+                        </li>
+                        <li>
+                             <a href="{{url('admin/media/'.$folder->id."?tag=archive")}}" class="btn btn-xs btn-icon"
+                                style="margin-left: 10px">
                         <i class="fa fa-file-archive-o"></i> - archive
                     </a>
-                    <a href="{{url('admin/media/'.$folder->id."?tag=document")}}" class="btn btn-xs btn-icon"
-                       style="margin-left: 10px">
+                        </li>
+                        <li>
+                            <a href="{{url('admin/media/'.$folder->id."?tag=document")}}" class="btn btn-xs btn-icon"
+                               style="margin-left: 10px">
                         <i class="fa fa-file-archive-o"></i> - document
                     </a>
+                        </li>
+
+                    </span>
                 </div><!-- /.box-header -->
                 {!! Form::open(['files' => true, 'route' => 'admin::media::upload',  'id' => 'my-awesome-dropzone-body', 'class' => 'dropzone box-body folder-body']) !!}
                 <input type="hidden" name="folder" value="{{$folder->id}}">
-                                    @include('admin.media.index-body_part')
+                @include('admin.media.index-body_part')
                 {!! Form::close() !!}
             </div><!-- /.box -->
         </div>
     </div>
 @endsection
 @section('scripts_add')
+
 @endsection
 @include('admin.media.upload-modal')
 @include('admin.media.newdir-modal')

@@ -26,8 +26,9 @@ class PermissionRepositoryEloquent extends BaseRepository implements PermissionR
 
     public function perPage()
     {
-        return 20;
+        return 10;
     }
+
     public function getModel()
     {
         $model = $this->model();
@@ -58,10 +59,7 @@ class PermissionRepositoryEloquent extends BaseRepository implements PermissionR
     {
         return $this->getModel()->find($id);
     }
-    public function findBy($key, $value, $operator = '=')
-    {
-        return $this->getModel()->where($key, $operator, $value)->paginate($this->perPage());
-    }
+
     public function delete($id)
     {
         $article = $this->findById($id);

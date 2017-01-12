@@ -207,4 +207,11 @@ interface RepositoryInterface
      */
     public function resetScope();
 
+    /**
+     * @param $key
+     * @param $value
+     * @param string $operator
+     * @return mixed
+     */
+    public function findBy($key, $value, $operator = '=');
 }

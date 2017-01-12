@@ -31,7 +31,7 @@ class ProductsUpdateFormRequest extends FormRequest{
      */
     public function rules()
     {
-        return [
+        $rules = [
             'title' => 'required|min:2',
             'body' => 'required|min:20',
             'price' => 'required|numeric',
@@ -53,8 +53,11 @@ class ProductsUpdateFormRequest extends FormRequest{
             'meta_tag_description' => 'string|min:5',
             'meta_tag_keywords' => 'string|min:2',
             'sort_order' => 'numeric|max:1',
-            'weight' => 'string|min:1'
+            'weight' => 'string|min:1',
+            'product_attribute.*.attr_description_id' => ""
         ];
+
+        return $rules;
 
     }
 

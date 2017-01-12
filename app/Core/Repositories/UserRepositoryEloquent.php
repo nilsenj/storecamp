@@ -14,6 +14,14 @@ use App\Core\Models\User;
 class UserRepositoryEloquent extends BaseRepository implements UserRepository
 {
     /**
+     * @var array
+     */
+    protected $fieldSearchable = [
+        'name' => 'like',
+        'email' => 'like'
+    ];
+
+    /**
      * Specify Model class name
      *
      * @return string
@@ -31,14 +39,6 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
     }
 
     /**
-     * @return int
-     */
-    public function perPage()
-    {
-        return 10;
-    }
-
-    /**
      * @return mixed
      */
     public function getModel()
@@ -46,84 +46,6 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         $model = User::class;
 
         return new $model;
-    }
-
-    /**
-     * @param null $searchQuery
-     * @return mixed
-     */
-    public function allOrSearch($searchQuery = null)
-    {
-        if (is_null($searchQuery)) {
-
-            return $this->getAll();
-        }
-        return $this->search($searchQuery);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAll()
-    {
-        return $this->getModel()->latest()->paginate($this->perPage());
-    }
-
-    /**
-     * @param $searchQuery
-     * @return mixed
-     */
-    public function search($searchQuery)
-    {
-        $search = "%{$searchQuery}%";
-
-        return $this->getModel()->where('name', 'like', $search)
-            ->orWhere('email', 'like', $search)
-            ->paginate($this->perPage())
-            ;
-    }
-
-    /**
-     * @param $id
-     * @return mixed
-     */
-    public function findById($id)
-    {
-        return $this->getModel()->find($id);
-    }
-
-    /**
-     * @param $key
-     * @param $value
-     * @param string $operator
-     * @return mixed
-     */
-    public function findBy($key, $value, $operator = '=')
-    {
-        return $this->getModel()->where($key, $operator, $value)->paginate($this->perPage());
-    }
-
-    /**
-     * @param $id
-     * @return bool
-     */
-    public function delete($id)
-    {
-        $user = $this->findById($id);
-        if (!is_null($user)) {
-            $user->delete();
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @param array $data
-     * @return mixed
-     */
-    public function create(array $data)
-    {
-        return $this->getModel()->create($data);
     }
 
     /**

@@ -204,6 +204,11 @@ return [
         \Robbo\Presenter\PresenterServiceProvider::class,
         Plank\Mediable\MediableServiceProvider::class,
         That0n3guy\Transliteration\TransliterationServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        App\Core\Components\ActiveItem\ActiveServiceProvider::class,
+        \App\Core\Components\Flash\FlashServiceProvider::class,
+        \Webpatser\Countries\CountriesServiceProvider::class,
+
     ],
 
     /*
@@ -257,12 +262,14 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Image' => 'Intervention\Image\Facades\Image',
-        'Flash' => 'Laracasts\Flash\Flash',
         'Socialite' => 'Laravel\Socialite\Facades\Socialite',
         'Access' => \App\Core\Access\AccessFacade::class,
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
         'MediaUploader' => Plank\Mediable\MediaUploaderFacade::class,
-
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Countries' => Webpatser\Countries\CountriesFacade::class,
+        'Active' => App\Core\components\ActiveItem\Facades\Active::class,
+        'Flash' => App\Core\Components\Flash\Flash::class
     ],
 
 ];
