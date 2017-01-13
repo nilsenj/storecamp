@@ -7,7 +7,7 @@
 
 <!-- Bootstrap 3.3.2 JS -->
 <script src="{{ asset('/js/bootstrap.min.js') }}" type="text/javascript"></script>
-<!-- AdminLTE App -->
+<!-- StoreCamp App -->
 <script src="{{ asset('/js/admin.js') }}" type="text/javascript"></script>
 <script src="{{ asset('/plugins/fastclick/fastclick.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('/plugins/slimScroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
@@ -38,7 +38,16 @@
 <script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
 <!-- FastClick -->
 <script src="{{ asset('plugins/fastclick/fastclick.js') }}"></script>
-<!-- AdminLTE App -->
+<!-- Sparkline -->
+<script src="{{ asset('plugins/sparkline/jquery.sparkline.min.js') }}"></script>
+<!-- jvectormap -->
+<script src="{{ asset('plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
+<script src="{{ asset('plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+<!-- SlimScroll 1.3.0 -->
+<script src="{{ asset('plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
+<!-- ChartJS 1.0.1 -->
+<script src="{{ asset('plugins/chartjs/Chart.min.js') }}"></script>
+
 <!-- Page script -->
 <script>
     APP_URL = {!! json_encode(url('/')) !!};

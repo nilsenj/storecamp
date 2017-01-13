@@ -17,11 +17,13 @@
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
-    <link href="{{ asset('/css/skins/skin-black.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('/css/skins/skin-blue.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('/css/skins/skin-blue-light.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('/css/skins/skin-green.css') }}" rel="stylesheet" type="text/css" />
+    {{--<link href="{{ asset('/css/skins/skin-black.css') }}" rel="stylesheet" type="text/css" />--}}
     {{--<link href="{{ asset('/css/skins/skin-blue.css') }}" rel="stylesheet" type="text/css" />--}}
+    {{--<link href="{{ asset('/css/skins/skin-blue-light.css') }}" rel="stylesheet" type="text/css" />--}}
+    {{--<link href="{{ asset('/css/skins/skin-green.css') }}" rel="stylesheet" type="text/css" />--}}
+{{--<link href="{{ asset('/css/skins/skin-blue.css') }}" rel="stylesheet" type="text/css" />--}}
+    <link rel="stylesheet" href="{{ asset('/css/skins/_all-skins.min.css') }}">
+
     <!-- iCheck -->
     <link href="{{ asset('/plugins/iCheck/square/blue.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/css/main/app.css') }}" rel="stylesheet" type="text/css" />
@@ -38,10 +40,13 @@
     <!-- Select2 -->
     <link rel="stylesheet" href="{{ asset('/plugins/select2/select2.min.css') }}">
 
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="{{ asset('plugins/jvectormap/jquery-jvectormap-1.2.2.css') }}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>

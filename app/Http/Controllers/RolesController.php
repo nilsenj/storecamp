@@ -72,7 +72,9 @@ class RolesController extends BaseController
     public function create()
     {
         $permissions = Permission::all()->pluck('name', 'id');
-        return $this->view('create', compact('permissions'));
+        $selectedPerms = [];
+
+        return $this->view('create', compact('permissions', 'selectedPerms'));
     }
 
     /**
