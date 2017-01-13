@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "dropzone": "^4.3.0",
-    "summernote": "^0.8.2"
+    "summernote": "^0.8.2",
+    "toastr": "^2.1.3"
   }
 }

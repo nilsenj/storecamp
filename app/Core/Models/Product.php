@@ -105,7 +105,6 @@ class Product extends Model implements Transformable
      */
     public function setDateAvailable($date) {
         if(!$date) {
-            dd("hello kitty");
             $this->attributes['date_available'] = Carbon::now();
         } else {
             $this->attributes['date_available'] = Carbon::createFromFormat("yyyy-mm-dd h:m", $date);

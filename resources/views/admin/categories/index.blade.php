@@ -1,13 +1,9 @@
 @extends('admin/app')
 <h1>
     @section('breadcrumb')
-        {{--{!! Breadcrumbs::render('admin') !!}--}}
         {!! Breadcrumbs::render('categories', 'Categories') !!}
     @endsection
-    @section('contentheader_title')
-        All Categories({!! \App\Core\Models\Category::all()->count() !!})
-        &middot;
-    @endsection
+    @include('admin.partial._contentheader_title', [$model = $categories, $message = "All Categories"])
     @section('contentheader_description')
         <b>{!! link_to_route('admin::categories::create', 'Add New Category') !!}</b>
     @endsection
@@ -49,9 +45,7 @@
     </div>
     <div class="text-center">
         {!! $categories->links() !!}
-        {{--{!! pagination_links($categories) !!}--}}
     </div>
-
 @endsection
 
 @include('admin.components.modal-description')

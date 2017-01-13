@@ -1,13 +1,9 @@
 @extends('admin/app')
 <h1>
     @section('breadcrumb')
-        {{--{!! Breadcrumbs::render('admin') !!}--}}
         {!! Breadcrumbs::render('products', 'Products') !!}
     @endsection
-    @section('contentheader_title')
-        All products ({!! \App\Core\Models\Product::all()->count() !!})
-        &middot;
-    @endsection
+    @include('admin.partial._contentheader_title', [$model = $products, $message = "All Products"])
     @section('contentheader_description')
         <b>{!! link_to_route('admin::products::create', 'Add new product') !!}</b>
     @endsection
@@ -43,10 +39,12 @@
                                 <td>{!! $product->title !!}</td>
                                 <td>{!! $product->model !!}</td>
                                 <td>
-                                    {{ $product->getFirstCategory() ? $product->getFirstCategory()->name : "no category  provided"}}
+                                    {{ $product->categories ? $product->categories->first()->name : "no category  provided"}}
                                 </td>
                                 <td>{!! $product->price ? $product->price : null !!}</td>
-                                <td><div class="label bg-blue">{!! $product->quantity !!}</div></td>
+                                <td>
+                                    <div class="label bg-blue">{!! $product->quantity !!}</div>
+                                </td>
                                 @if($product->availability)
                                     <td>
                                         <div class="label bg-green">enabled</div>
@@ -59,9 +57,11 @@
                                 <td>{!! $product->stock_status !!}</td>
                                 <td>{!! $product->created_at !!}</td>
                                 <td class="text-center">
-                                    <a class="edit" href="{!! route('admin::products::edit', $product->id) !!}" title="Edit">
+                                    <a class="edit" href="{!! route('admin::products::edit', $product->id) !!}"
+                                       title="Edit">
                                         <i class="fa fa-pencil-square-o"></i></a>
-                                    <a class="delete text-warning" href="{!! route('admin::products::get::delete', $product->id) !!}"
+                                    <a class="delete text-warning"
+                                       href="{!! route('admin::products::get::delete', $product->id) !!}"
                                        title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
 
                                 </td>

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.29 on 2017-01-12.
+ * Generated for Laravel 5.3.29 on 2017-01-13.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -7980,7 +7980,7 @@ namespace {
          * @param array $cookies The COOKIE parameters
          * @param array $files The FILES parameters
          * @param array $server The SERVER parameters
-         * @return \Request The duplicated request
+         * @return static 
          * @static 
          */
         public static function duplicate($query = null, $request = null, $attributes = null, $cookies = null, $files = null, $server = null){
@@ -8150,7 +8150,7 @@ namespace {
         /**
          * Creates a new request with values from PHP's super globals.
          *
-         * @return \Request A new request
+         * @return static 
          * @static 
          */
         public static function createFromGlobals(){
@@ -8171,7 +8171,7 @@ namespace {
          * @param array $files The request files ($_FILES)
          * @param array $server The server parameters ($_SERVER)
          * @param string $content The raw body data
-         * @return \Request A Request instance
+         * @return static 
          * @static 
          */
         public static function create($uri, $method = 'GET', $parameters = array(), $cookies = array(), $files = array(), $server = array(), $content = null){
@@ -13578,90 +13578,6 @@ namespace {
     }
 
 
-    class Flash extends \Laracasts\Flash\Flash{
-        
-        /**
-         * Flash an information message.
-         *
-         * @param string $message
-         * @return $this 
-         * @static 
-         */
-        public static function info($message){
-            return \Laracasts\Flash\FlashNotifier::info($message);
-        }
-        
-        /**
-         * Flash a success message.
-         *
-         * @param string $message
-         * @return $this 
-         * @static 
-         */
-        public static function success($message){
-            return \Laracasts\Flash\FlashNotifier::success($message);
-        }
-        
-        /**
-         * Flash an error message.
-         *
-         * @param string $message
-         * @return $this 
-         * @static 
-         */
-        public static function error($message){
-            return \Laracasts\Flash\FlashNotifier::error($message);
-        }
-        
-        /**
-         * Flash a warning message.
-         *
-         * @param string $message
-         * @return $this 
-         * @static 
-         */
-        public static function warning($message){
-            return \Laracasts\Flash\FlashNotifier::warning($message);
-        }
-        
-        /**
-         * Flash an overlay modal.
-         *
-         * @param string $message
-         * @param string $title
-         * @param string $level
-         * @return $this 
-         * @static 
-         */
-        public static function overlay($message, $title = 'Notice', $level = 'info'){
-            return \Laracasts\Flash\FlashNotifier::overlay($message, $title, $level);
-        }
-        
-        /**
-         * Flash a general message.
-         *
-         * @param string $message
-         * @param string $level
-         * @return $this 
-         * @static 
-         */
-        public static function message($message, $level = 'info'){
-            return \Laracasts\Flash\FlashNotifier::message($message, $level);
-        }
-        
-        /**
-         * Add an "important" flash to the session.
-         *
-         * @return $this 
-         * @static 
-         */
-        public static function important(){
-            return \Laracasts\Flash\FlashNotifier::important();
-        }
-        
-    }
-
-
     class Socialite extends \Laravel\Socialite\Facades\Socialite{
         
         /**
@@ -14306,6 +14222,2781 @@ namespace {
          */
         public static function update($media){
             return \Plank\Mediable\MediaUploader::update($media);
+        }
+        
+    }
+
+
+    class Excel extends \Maatwebsite\Excel\Facades\Excel{
+        
+        /**
+         * Create a new file
+         *
+         * @param $filename
+         * @param callable|null $callback
+         * @return \Maatwebsite\Excel\LaravelExcelWriter 
+         * @static 
+         */
+        public static function create($filename, $callback = null){
+            return \Maatwebsite\Excel\Excel::create($filename, $callback);
+        }
+        
+        /**
+         * Load an existing file
+         *
+         * @param string $file The file we want to load
+         * @param callback|null $callback
+         * @param string|null $encoding
+         * @param bool $noBasePath
+         * @return \Maatwebsite\Excel\LaravelExcelReader 
+         * @static 
+         */
+        public static function load($file, $callback = null, $encoding = null, $noBasePath = false, $callbackConfigReader = null){
+            return \Maatwebsite\Excel\Excel::load($file, $callback, $encoding, $noBasePath, $callbackConfigReader);
+        }
+        
+        /**
+         * Set select sheets
+         *
+         * @param $sheets
+         * @return \Maatwebsite\Excel\LaravelExcelReader 
+         * @static 
+         */
+        public static function selectSheets($sheets = array()){
+            return \Maatwebsite\Excel\Excel::selectSheets($sheets);
+        }
+        
+        /**
+         * Select sheets by index
+         *
+         * @param array $sheets
+         * @return $this 
+         * @static 
+         */
+        public static function selectSheetsByIndex($sheets = array()){
+            return \Maatwebsite\Excel\Excel::selectSheetsByIndex($sheets);
+        }
+        
+        /**
+         * Batch import
+         *
+         * @param $files
+         * @param callback $callback
+         * @return \PHPExcel 
+         * @static 
+         */
+        public static function batch($files, $callback){
+            return \Maatwebsite\Excel\Excel::batch($files, $callback);
+        }
+        
+        /**
+         * Create a new file and share a view
+         *
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @return \Maatwebsite\Excel\LaravelExcelWriter 
+         * @static 
+         */
+        public static function shareView($view, $data = array(), $mergeData = array()){
+            return \Maatwebsite\Excel\Excel::shareView($view, $data, $mergeData);
+        }
+        
+        /**
+         * Create a new file and load a view
+         *
+         * @param string $view
+         * @param array $data
+         * @param array $mergeData
+         * @return \Maatwebsite\Excel\LaravelExcelWriter 
+         * @static 
+         */
+        public static function loadView($view, $data = array(), $mergeData = array()){
+            return \Maatwebsite\Excel\Excel::loadView($view, $data, $mergeData);
+        }
+        
+        /**
+         * Set filters
+         *
+         * @param array $filters
+         * @return \Excel 
+         * @static 
+         */
+        public static function registerFilters($filters = array()){
+            return \Maatwebsite\Excel\Excel::registerFilters($filters);
+        }
+        
+        /**
+         * Enable certain filters
+         *
+         * @param string|array $filter
+         * @param bool|false|string $class
+         * @return \Excel 
+         * @static 
+         */
+        public static function filter($filter, $class = false){
+            return \Maatwebsite\Excel\Excel::filter($filter, $class);
+        }
+        
+        /**
+         * Get register, enabled (or both) filters
+         *
+         * @param string|boolean $key [description]
+         * @return array 
+         * @static 
+         */
+        public static function getFilters($key = false){
+            return \Maatwebsite\Excel\Excel::getFilters($key);
+        }
+        
+    }
+
+
+    class Countries extends \Webpatser\Countries\CountriesFacade{
+        
+        /**
+         * Returns one country
+         *
+         * @param string $id The country id
+         * @return array 
+         * @static 
+         */
+        public static function getOne($id){
+            return \Webpatser\Countries\Countries::getOne($id);
+        }
+        
+        /**
+         * Returns a list of countries
+         *
+         * @param string  sort
+         * @return array 
+         * @static 
+         */
+        public static function getList($sort = null){
+            return \Webpatser\Countries\Countries::getList($sort);
+        }
+        
+        /**
+         * Clear the list of booted models so they will be re-booted.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function clearBootedModels(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::clearBootedModels();
+        }
+        
+        /**
+         * Register a new global scope on the model.
+         *
+         * @param \Illuminate\Database\Eloquent\Scope|\Closure|string $scope
+         * @param \Closure|null $implementation
+         * @return mixed 
+         * @throws \InvalidArgumentException
+         * @static 
+         */
+        public static function addGlobalScope($scope, $implementation = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::addGlobalScope($scope, $implementation);
+        }
+        
+        /**
+         * Determine if a model has a global scope.
+         *
+         * @param \Illuminate\Database\Eloquent\Scope|string $scope
+         * @return bool 
+         * @static 
+         */
+        public static function hasGlobalScope($scope){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::hasGlobalScope($scope);
+        }
+        
+        /**
+         * Get a global scope registered with the model.
+         *
+         * @param \Illuminate\Database\Eloquent\Scope|string $scope
+         * @return \Illuminate\Database\Eloquent\Scope|\Closure|null 
+         * @static 
+         */
+        public static function getGlobalScope($scope){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getGlobalScope($scope);
+        }
+        
+        /**
+         * Get the global scopes for this class instance.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getGlobalScopes(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getGlobalScopes();
+        }
+        
+        /**
+         * Register an observer with the Model.
+         *
+         * @param object|string $class
+         * @param int $priority
+         * @return void 
+         * @static 
+         */
+        public static function observe($class, $priority = 0){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::observe($class, $priority);
+        }
+        
+        /**
+         * Fill the model with an array of attributes.
+         *
+         * @param array $attributes
+         * @return $this 
+         * @throws \Illuminate\Database\Eloquent\MassAssignmentException
+         * @static 
+         */
+        public static function fill($attributes){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::fill($attributes);
+        }
+        
+        /**
+         * Fill the model with an array of attributes. Force mass assignment.
+         *
+         * @param array $attributes
+         * @return $this 
+         * @static 
+         */
+        public static function forceFill($attributes){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::forceFill($attributes);
+        }
+        
+        /**
+         * Create a new instance of the given model.
+         *
+         * @param array $attributes
+         * @param bool $exists
+         * @return static 
+         * @static 
+         */
+        public static function newInstance($attributes = array(), $exists = false){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::newInstance($attributes, $exists);
+        }
+        
+        /**
+         * Create a new model instance that is existing.
+         *
+         * @param array $attributes
+         * @param string|null $connection
+         * @return static 
+         * @static 
+         */
+        public static function newFromBuilder($attributes = array(), $connection = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::newFromBuilder($attributes, $connection);
+        }
+        
+        /**
+         * Create a collection of models from plain arrays.
+         *
+         * @param array $items
+         * @param string|null $connection
+         * @return \Illuminate\Database\Eloquent\Collection 
+         * @static 
+         */
+        public static function hydrate($items, $connection = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::hydrate($items, $connection);
+        }
+        
+        /**
+         * Create a collection of models from a raw query.
+         *
+         * @param string $query
+         * @param array $bindings
+         * @param string|null $connection
+         * @return \Illuminate\Database\Eloquent\Collection 
+         * @static 
+         */
+        public static function hydrateRaw($query, $bindings = array(), $connection = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::hydrateRaw($query, $bindings, $connection);
+        }
+        
+        /**
+         * Save a new model and return the instance.
+         *
+         * @param array $attributes
+         * @return static 
+         * @static 
+         */
+        public static function create($attributes = array()){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::create($attributes);
+        }
+        
+        /**
+         * Save a new model and return the instance. Allow mass-assignment.
+         *
+         * @param array $attributes
+         * @return static 
+         * @static 
+         */
+        public static function forceCreate($attributes){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::forceCreate($attributes);
+        }
+        
+        /**
+         * Begin querying the model.
+         *
+         * @return \Illuminate\Database\Eloquent\Builder 
+         * @static 
+         */
+        public static function query(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::query();
+        }
+        
+        /**
+         * Begin querying the model on a given connection.
+         *
+         * @param string|null $connection
+         * @return \Illuminate\Database\Eloquent\Builder 
+         * @static 
+         */
+        public static function on($connection = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::on($connection);
+        }
+        
+        /**
+         * Begin querying the model on the write connection.
+         *
+         * @return \Illuminate\Database\Query\Builder 
+         * @static 
+         */
+        public static function onWriteConnection(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::onWriteConnection();
+        }
+        
+        /**
+         * Get all of the models from the database.
+         *
+         * @param array|mixed $columns
+         * @return \Illuminate\Database\Eloquent\Collection|static[] 
+         * @static 
+         */
+        public static function all($columns = array()){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::all($columns);
+        }
+        
+        /**
+         * Reload a fresh model instance from the database.
+         *
+         * @param array|string $with
+         * @return static|null 
+         * @static 
+         */
+        public static function fresh($with = array()){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::fresh($with);
+        }
+        
+        /**
+         * Eager load relations on the model.
+         *
+         * @param array|string $relations
+         * @return $this 
+         * @static 
+         */
+        public static function load($relations){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::load($relations);
+        }
+        
+        /**
+         * Begin querying a model with eager loading.
+         *
+         * @param array|string $relations
+         * @return \Illuminate\Database\Eloquent\Builder|static 
+         * @static 
+         */
+        public static function with($relations){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::with($relations);
+        }
+        
+        /**
+         * Append attributes to query when building a query.
+         *
+         * @param array|string $attributes
+         * @return $this 
+         * @static 
+         */
+        public static function append($attributes){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::append($attributes);
+        }
+        
+        /**
+         * Define a one-to-one relationship.
+         *
+         * @param string $related
+         * @param string $foreignKey
+         * @param string $localKey
+         * @return \Illuminate\Database\Eloquent\Relations\HasOne 
+         * @static 
+         */
+        public static function hasOne($related, $foreignKey = null, $localKey = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::hasOne($related, $foreignKey, $localKey);
+        }
+        
+        /**
+         * Define a polymorphic one-to-one relationship.
+         *
+         * @param string $related
+         * @param string $name
+         * @param string $type
+         * @param string $id
+         * @param string $localKey
+         * @return \Illuminate\Database\Eloquent\Relations\MorphOne 
+         * @static 
+         */
+        public static function morphOne($related, $name, $type = null, $id = null, $localKey = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::morphOne($related, $name, $type, $id, $localKey);
+        }
+        
+        /**
+         * Define an inverse one-to-one or many relationship.
+         *
+         * @param string $related
+         * @param string $foreignKey
+         * @param string $otherKey
+         * @param string $relation
+         * @return \Illuminate\Database\Eloquent\Relations\BelongsTo 
+         * @static 
+         */
+        public static function belongsTo($related, $foreignKey = null, $otherKey = null, $relation = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::belongsTo($related, $foreignKey, $otherKey, $relation);
+        }
+        
+        /**
+         * Define a polymorphic, inverse one-to-one or many relationship.
+         *
+         * @param string $name
+         * @param string $type
+         * @param string $id
+         * @return \Illuminate\Database\Eloquent\Relations\MorphTo 
+         * @static 
+         */
+        public static function morphTo($name = null, $type = null, $id = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::morphTo($name, $type, $id);
+        }
+        
+        /**
+         * Retrieve the fully qualified class name from a slug.
+         *
+         * @param string $class
+         * @return string 
+         * @static 
+         */
+        public static function getActualClassNameForMorph($class){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getActualClassNameForMorph($class);
+        }
+        
+        /**
+         * Define a one-to-many relationship.
+         *
+         * @param string $related
+         * @param string $foreignKey
+         * @param string $localKey
+         * @return \Illuminate\Database\Eloquent\Relations\HasMany 
+         * @static 
+         */
+        public static function hasMany($related, $foreignKey = null, $localKey = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::hasMany($related, $foreignKey, $localKey);
+        }
+        
+        /**
+         * Define a has-many-through relationship.
+         *
+         * @param string $related
+         * @param string $through
+         * @param string|null $firstKey
+         * @param string|null $secondKey
+         * @param string|null $localKey
+         * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough 
+         * @static 
+         */
+        public static function hasManyThrough($related, $through, $firstKey = null, $secondKey = null, $localKey = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::hasManyThrough($related, $through, $firstKey, $secondKey, $localKey);
+        }
+        
+        /**
+         * Define a polymorphic one-to-many relationship.
+         *
+         * @param string $related
+         * @param string $name
+         * @param string $type
+         * @param string $id
+         * @param string $localKey
+         * @return \Illuminate\Database\Eloquent\Relations\MorphMany 
+         * @static 
+         */
+        public static function morphMany($related, $name, $type = null, $id = null, $localKey = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::morphMany($related, $name, $type, $id, $localKey);
+        }
+        
+        /**
+         * Define a many-to-many relationship.
+         *
+         * @param string $related
+         * @param string $table
+         * @param string $foreignKey
+         * @param string $otherKey
+         * @param string $relation
+         * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany 
+         * @static 
+         */
+        public static function belongsToMany($related, $table = null, $foreignKey = null, $otherKey = null, $relation = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::belongsToMany($related, $table, $foreignKey, $otherKey, $relation);
+        }
+        
+        /**
+         * Define a polymorphic many-to-many relationship.
+         *
+         * @param string $related
+         * @param string $name
+         * @param string $table
+         * @param string $foreignKey
+         * @param string $otherKey
+         * @param bool $inverse
+         * @return \Illuminate\Database\Eloquent\Relations\MorphToMany 
+         * @static 
+         */
+        public static function morphToMany($related, $name, $table = null, $foreignKey = null, $otherKey = null, $inverse = false){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::morphToMany($related, $name, $table, $foreignKey, $otherKey, $inverse);
+        }
+        
+        /**
+         * Define a polymorphic, inverse many-to-many relationship.
+         *
+         * @param string $related
+         * @param string $name
+         * @param string $table
+         * @param string $foreignKey
+         * @param string $otherKey
+         * @return \Illuminate\Database\Eloquent\Relations\MorphToMany 
+         * @static 
+         */
+        public static function morphedByMany($related, $name, $table = null, $foreignKey = null, $otherKey = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::morphedByMany($related, $name, $table, $foreignKey, $otherKey);
+        }
+        
+        /**
+         * Get the joining table name for a many-to-many relation.
+         *
+         * @param string $related
+         * @return string 
+         * @static 
+         */
+        public static function joiningTable($related){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::joiningTable($related);
+        }
+        
+        /**
+         * Destroy the models for the given IDs.
+         *
+         * @param array|int $ids
+         * @return int 
+         * @static 
+         */
+        public static function destroy($ids){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::destroy($ids);
+        }
+        
+        /**
+         * Delete the model from the database.
+         *
+         * @return bool|null 
+         * @throws \Exception
+         * @static 
+         */
+        public static function delete(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::delete();
+        }
+        
+        /**
+         * Force a hard delete on a soft deleted model.
+         * 
+         * This method protects developers from running forceDelete when trait is missing.
+         *
+         * @return bool|null 
+         * @static 
+         */
+        public static function forceDelete(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::forceDelete();
+        }
+        
+        /**
+         * Register a saving model event with the dispatcher.
+         *
+         * @param \Closure|string $callback
+         * @param int $priority
+         * @return void 
+         * @static 
+         */
+        public static function saving($callback, $priority = 0){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::saving($callback, $priority);
+        }
+        
+        /**
+         * Register a saved model event with the dispatcher.
+         *
+         * @param \Closure|string $callback
+         * @param int $priority
+         * @return void 
+         * @static 
+         */
+        public static function saved($callback, $priority = 0){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::saved($callback, $priority);
+        }
+        
+        /**
+         * Register an updating model event with the dispatcher.
+         *
+         * @param \Closure|string $callback
+         * @param int $priority
+         * @return void 
+         * @static 
+         */
+        public static function updating($callback, $priority = 0){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::updating($callback, $priority);
+        }
+        
+        /**
+         * Register an updated model event with the dispatcher.
+         *
+         * @param \Closure|string $callback
+         * @param int $priority
+         * @return void 
+         * @static 
+         */
+        public static function updated($callback, $priority = 0){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::updated($callback, $priority);
+        }
+        
+        /**
+         * Register a creating model event with the dispatcher.
+         *
+         * @param \Closure|string $callback
+         * @param int $priority
+         * @return void 
+         * @static 
+         */
+        public static function creating($callback, $priority = 0){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::creating($callback, $priority);
+        }
+        
+        /**
+         * Register a created model event with the dispatcher.
+         *
+         * @param \Closure|string $callback
+         * @param int $priority
+         * @return void 
+         * @static 
+         */
+        public static function created($callback, $priority = 0){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::created($callback, $priority);
+        }
+        
+        /**
+         * Register a deleting model event with the dispatcher.
+         *
+         * @param \Closure|string $callback
+         * @param int $priority
+         * @return void 
+         * @static 
+         */
+        public static function deleting($callback, $priority = 0){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::deleting($callback, $priority);
+        }
+        
+        /**
+         * Register a deleted model event with the dispatcher.
+         *
+         * @param \Closure|string $callback
+         * @param int $priority
+         * @return void 
+         * @static 
+         */
+        public static function deleted($callback, $priority = 0){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::deleted($callback, $priority);
+        }
+        
+        /**
+         * Remove all of the event listeners for the model.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function flushEventListeners(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::flushEventListeners();
+        }
+        
+        /**
+         * Get the observable event names.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getObservableEvents(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getObservableEvents();
+        }
+        
+        /**
+         * Set the observable event names.
+         *
+         * @param array $observables
+         * @return $this 
+         * @static 
+         */
+        public static function setObservableEvents($observables){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setObservableEvents($observables);
+        }
+        
+        /**
+         * Add an observable event name.
+         *
+         * @param array|mixed $observables
+         * @return void 
+         * @static 
+         */
+        public static function addObservableEvents($observables){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::addObservableEvents($observables);
+        }
+        
+        /**
+         * Remove an observable event name.
+         *
+         * @param array|mixed $observables
+         * @return void 
+         * @static 
+         */
+        public static function removeObservableEvents($observables){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::removeObservableEvents($observables);
+        }
+        
+        /**
+         * Update the model in the database.
+         *
+         * @param array $attributes
+         * @param array $options
+         * @return bool 
+         * @static 
+         */
+        public static function update($attributes = array(), $options = array()){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::update($attributes, $options);
+        }
+        
+        /**
+         * Save the model and all of its relationships.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function push(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::push();
+        }
+        
+        /**
+         * Save the model to the database.
+         *
+         * @param array $options
+         * @return bool 
+         * @static 
+         */
+        public static function save($options = array()){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::save($options);
+        }
+        
+        /**
+         * Save the model to the database using transaction.
+         *
+         * @param array $options
+         * @return bool 
+         * @throws \Throwable
+         * @static 
+         */
+        public static function saveOrFail($options = array()){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::saveOrFail($options);
+        }
+        
+        /**
+         * Touch the owning relations of the model.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function touchOwners(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::touchOwners();
+        }
+        
+        /**
+         * Determine if the model touches a given relation.
+         *
+         * @param string $relation
+         * @return bool 
+         * @static 
+         */
+        public static function touches($relation){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::touches($relation);
+        }
+        
+        /**
+         * Update the model's update timestamp.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function touch(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::touch();
+        }
+        
+        /**
+         * Set the value of the "created at" attribute.
+         *
+         * @param mixed $value
+         * @return $this 
+         * @static 
+         */
+        public static function setCreatedAt($value){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setCreatedAt($value);
+        }
+        
+        /**
+         * Set the value of the "updated at" attribute.
+         *
+         * @param mixed $value
+         * @return $this 
+         * @static 
+         */
+        public static function setUpdatedAt($value){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setUpdatedAt($value);
+        }
+        
+        /**
+         * Get the name of the "created at" column.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getCreatedAtColumn(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getCreatedAtColumn();
+        }
+        
+        /**
+         * Get the name of the "updated at" column.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getUpdatedAtColumn(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getUpdatedAtColumn();
+        }
+        
+        /**
+         * Get a fresh timestamp for the model.
+         *
+         * @return \Carbon\Carbon 
+         * @static 
+         */
+        public static function freshTimestamp(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::freshTimestamp();
+        }
+        
+        /**
+         * Get a fresh timestamp for the model.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function freshTimestampString(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::freshTimestampString();
+        }
+        
+        /**
+         * Get a new query builder for the model's table.
+         *
+         * @return \Illuminate\Database\Eloquent\Builder 
+         * @static 
+         */
+        public static function newQuery(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::newQuery();
+        }
+        
+        /**
+         * Get a new query instance without a given scope.
+         *
+         * @param \Illuminate\Database\Eloquent\Scope|string $scope
+         * @return \Illuminate\Database\Eloquent\Builder 
+         * @static 
+         */
+        public static function newQueryWithoutScope($scope){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::newQueryWithoutScope($scope);
+        }
+        
+        /**
+         * Get a new query builder that doesn't have any global scopes.
+         *
+         * @return \Illuminate\Database\Eloquent\Builder|static 
+         * @static 
+         */
+        public static function newQueryWithoutScopes(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::newQueryWithoutScopes();
+        }
+        
+        /**
+         * Create a new Eloquent query builder for the model.
+         *
+         * @param \Illuminate\Database\Query\Builder $query
+         * @return \Illuminate\Database\Eloquent\Builder|static 
+         * @static 
+         */
+        public static function newEloquentBuilder($query){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::newEloquentBuilder($query);
+        }
+        
+        /**
+         * Create a new Eloquent Collection instance.
+         *
+         * @param array $models
+         * @return \Illuminate\Database\Eloquent\Collection 
+         * @static 
+         */
+        public static function newCollection($models = array()){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::newCollection($models);
+        }
+        
+        /**
+         * Create a new pivot model instance.
+         *
+         * @param \Illuminate\Database\Eloquent\Model $parent
+         * @param array $attributes
+         * @param string $table
+         * @param bool $exists
+         * @return \Illuminate\Database\Eloquent\Relations\Pivot 
+         * @static 
+         */
+        public static function newPivot($parent, $attributes, $table, $exists){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::newPivot($parent, $attributes, $table, $exists);
+        }
+        
+        /**
+         * Get the table associated with the model.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getTable(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getTable();
+        }
+        
+        /**
+         * Set the table associated with the model.
+         *
+         * @param string $table
+         * @return $this 
+         * @static 
+         */
+        public static function setTable($table){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setTable($table);
+        }
+        
+        /**
+         * Get the value of the model's primary key.
+         *
+         * @return mixed 
+         * @static 
+         */
+        public static function getKey(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getKey();
+        }
+        
+        /**
+         * Get the queueable identity for the entity.
+         *
+         * @return mixed 
+         * @static 
+         */
+        public static function getQueueableId(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getQueueableId();
+        }
+        
+        /**
+         * Get the primary key for the model.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getKeyName(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getKeyName();
+        }
+        
+        /**
+         * Set the primary key for the model.
+         *
+         * @param string $key
+         * @return $this 
+         * @static 
+         */
+        public static function setKeyName($key){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setKeyName($key);
+        }
+        
+        /**
+         * Get the table qualified key name.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getQualifiedKeyName(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getQualifiedKeyName();
+        }
+        
+        /**
+         * Get the auto incrementing key type.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getKeyType(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getKeyType();
+        }
+        
+        /**
+         * Get the value of the model's route key.
+         *
+         * @return mixed 
+         * @static 
+         */
+        public static function getRouteKey(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getRouteKey();
+        }
+        
+        /**
+         * Get the route key for the model.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getRouteKeyName(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getRouteKeyName();
+        }
+        
+        /**
+         * Determine if the model uses timestamps.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function usesTimestamps(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::usesTimestamps();
+        }
+        
+        /**
+         * Get the class name for polymorphic relations.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getMorphClass(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getMorphClass();
+        }
+        
+        /**
+         * Get the number of models to return per page.
+         *
+         * @return int 
+         * @static 
+         */
+        public static function getPerPage(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getPerPage();
+        }
+        
+        /**
+         * Set the number of models to return per page.
+         *
+         * @param int $perPage
+         * @return $this 
+         * @static 
+         */
+        public static function setPerPage($perPage){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setPerPage($perPage);
+        }
+        
+        /**
+         * Get the default foreign key name for the model.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getForeignKey(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getForeignKey();
+        }
+        
+        /**
+         * Get the hidden attributes for the model.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getHidden(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getHidden();
+        }
+        
+        /**
+         * Set the hidden attributes for the model.
+         *
+         * @param array $hidden
+         * @return $this 
+         * @static 
+         */
+        public static function setHidden($hidden){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setHidden($hidden);
+        }
+        
+        /**
+         * Add hidden attributes for the model.
+         *
+         * @param array|string|null $attributes
+         * @return void 
+         * @static 
+         */
+        public static function addHidden($attributes = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::addHidden($attributes);
+        }
+        
+        /**
+         * Make the given, typically hidden, attributes visible.
+         *
+         * @param array|string $attributes
+         * @return $this 
+         * @static 
+         */
+        public static function makeVisible($attributes){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::makeVisible($attributes);
+        }
+        
+        /**
+         * Make the given, typically visible, attributes hidden.
+         *
+         * @param array|string $attributes
+         * @return $this 
+         * @static 
+         */
+        public static function makeHidden($attributes){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::makeHidden($attributes);
+        }
+        
+        /**
+         * Get the visible attributes for the model.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getVisible(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getVisible();
+        }
+        
+        /**
+         * Set the visible attributes for the model.
+         *
+         * @param array $visible
+         * @return $this 
+         * @static 
+         */
+        public static function setVisible($visible){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setVisible($visible);
+        }
+        
+        /**
+         * Add visible attributes for the model.
+         *
+         * @param array|string|null $attributes
+         * @return void 
+         * @static 
+         */
+        public static function addVisible($attributes = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::addVisible($attributes);
+        }
+        
+        /**
+         * Set the accessors to append to model arrays.
+         *
+         * @param array $appends
+         * @return $this 
+         * @static 
+         */
+        public static function setAppends($appends){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setAppends($appends);
+        }
+        
+        /**
+         * Get the fillable attributes for the model.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getFillable(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getFillable();
+        }
+        
+        /**
+         * Set the fillable attributes for the model.
+         *
+         * @param array $fillable
+         * @return $this 
+         * @static 
+         */
+        public static function fillable($fillable){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::fillable($fillable);
+        }
+        
+        /**
+         * Get the guarded attributes for the model.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getGuarded(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getGuarded();
+        }
+        
+        /**
+         * Set the guarded attributes for the model.
+         *
+         * @param array $guarded
+         * @return $this 
+         * @static 
+         */
+        public static function guard($guarded){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::guard($guarded);
+        }
+        
+        /**
+         * Disable all mass assignable restrictions.
+         *
+         * @param bool $state
+         * @return void 
+         * @static 
+         */
+        public static function unguard($state = true){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::unguard($state);
+        }
+        
+        /**
+         * Enable the mass assignment restrictions.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function reguard(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::reguard();
+        }
+        
+        /**
+         * Determine if current state is "unguarded".
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function isUnguarded(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::isUnguarded();
+        }
+        
+        /**
+         * Run the given callable while being unguarded.
+         *
+         * @param callable $callback
+         * @return mixed 
+         * @static 
+         */
+        public static function unguarded($callback){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::unguarded($callback);
+        }
+        
+        /**
+         * Determine if the given attribute may be mass assigned.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */
+        public static function isFillable($key){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::isFillable($key);
+        }
+        
+        /**
+         * Determine if the given key is guarded.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */
+        public static function isGuarded($key){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::isGuarded($key);
+        }
+        
+        /**
+         * Determine if the model is totally guarded.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function totallyGuarded(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::totallyGuarded();
+        }
+        
+        /**
+         * Get the relationships that are touched on save.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getTouchedRelations(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getTouchedRelations();
+        }
+        
+        /**
+         * Set the relationships that are touched on save.
+         *
+         * @param array $touches
+         * @return $this 
+         * @static 
+         */
+        public static function setTouchedRelations($touches){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setTouchedRelations($touches);
+        }
+        
+        /**
+         * Get the value indicating whether the IDs are incrementing.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function getIncrementing(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getIncrementing();
+        }
+        
+        /**
+         * Set whether IDs are incrementing.
+         *
+         * @param bool $value
+         * @return $this 
+         * @static 
+         */
+        public static function setIncrementing($value){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setIncrementing($value);
+        }
+        
+        /**
+         * Convert the model instance to JSON.
+         *
+         * @param int $options
+         * @return string 
+         * @static 
+         */
+        public static function toJson($options = 0){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::toJson($options);
+        }
+        
+        /**
+         * Convert the object into something JSON serializable.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function jsonSerialize(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::jsonSerialize();
+        }
+        
+        /**
+         * Convert the model instance to an array.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function toArray(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::toArray();
+        }
+        
+        /**
+         * Convert the model's attributes to an array.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function attributesToArray(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::attributesToArray();
+        }
+        
+        /**
+         * Get the model's relationships in array form.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function relationsToArray(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::relationsToArray();
+        }
+        
+        /**
+         * Get an attribute from the model.
+         *
+         * @param string $key
+         * @return mixed 
+         * @static 
+         */
+        public static function getAttribute($key){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getAttribute($key);
+        }
+        
+        /**
+         * Get a plain attribute (not a relationship).
+         *
+         * @param string $key
+         * @return mixed 
+         * @static 
+         */
+        public static function getAttributeValue($key){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getAttributeValue($key);
+        }
+        
+        /**
+         * Get a relationship.
+         *
+         * @param string $key
+         * @return mixed 
+         * @static 
+         */
+        public static function getRelationValue($key){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getRelationValue($key);
+        }
+        
+        /**
+         * Determine if a get mutator exists for an attribute.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */
+        public static function hasGetMutator($key){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::hasGetMutator($key);
+        }
+        
+        /**
+         * Determine whether an attribute should be cast to a native type.
+         *
+         * @param string $key
+         * @param array|string|null $types
+         * @return bool 
+         * @static 
+         */
+        public static function hasCast($key, $types = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::hasCast($key, $types);
+        }
+        
+        /**
+         * Get the casts array.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getCasts(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getCasts();
+        }
+        
+        /**
+         * Set a given attribute on the model.
+         *
+         * @param string $key
+         * @param mixed $value
+         * @return $this 
+         * @static 
+         */
+        public static function setAttribute($key, $value){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setAttribute($key, $value);
+        }
+        
+        /**
+         * Set a given JSON attribute on the model.
+         *
+         * @param string $key
+         * @param mixed $value
+         * @return $this 
+         * @static 
+         */
+        public static function fillJsonAttribute($key, $value){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::fillJsonAttribute($key, $value);
+        }
+        
+        /**
+         * Determine if a set mutator exists for an attribute.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */
+        public static function hasSetMutator($key){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::hasSetMutator($key);
+        }
+        
+        /**
+         * Get the attributes that should be converted to dates.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getDates(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getDates();
+        }
+        
+        /**
+         * Convert a DateTime to a storable string.
+         *
+         * @param \DateTime|int $value
+         * @return string 
+         * @static 
+         */
+        public static function fromDateTime($value){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::fromDateTime($value);
+        }
+        
+        /**
+         * Set the date format used by the model.
+         *
+         * @param string $format
+         * @return $this 
+         * @static 
+         */
+        public static function setDateFormat($format){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setDateFormat($format);
+        }
+        
+        /**
+         * Decode the given JSON back into an array or object.
+         *
+         * @param string $value
+         * @param bool $asObject
+         * @return mixed 
+         * @static 
+         */
+        public static function fromJson($value, $asObject = false){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::fromJson($value, $asObject);
+        }
+        
+        /**
+         * Clone the model into a new, non-existing instance.
+         *
+         * @param array|null $except
+         * @return \Illuminate\Database\Eloquent\Model 
+         * @static 
+         */
+        public static function replicate($except = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::replicate($except);
+        }
+        
+        /**
+         * Determine if two models have the same ID and belong to the same table.
+         *
+         * @param \Illuminate\Database\Eloquent\Model $model
+         * @return bool 
+         * @static 
+         */
+        public static function is($model){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::is($model);
+        }
+        
+        /**
+         * Get all of the current attributes on the model.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getAttributes(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getAttributes();
+        }
+        
+        /**
+         * Set the array of model attributes. No checking is done.
+         *
+         * @param array $attributes
+         * @param bool $sync
+         * @return $this 
+         * @static 
+         */
+        public static function setRawAttributes($attributes, $sync = false){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setRawAttributes($attributes, $sync);
+        }
+        
+        /**
+         * Get the model's original attribute values.
+         *
+         * @param string|null $key
+         * @param mixed $default
+         * @return mixed|array 
+         * @static 
+         */
+        public static function getOriginal($key = null, $default = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getOriginal($key, $default);
+        }
+        
+        /**
+         * Sync the original attributes with the current.
+         *
+         * @return $this 
+         * @static 
+         */
+        public static function syncOriginal(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::syncOriginal();
+        }
+        
+        /**
+         * Sync a single original attribute with its current value.
+         *
+         * @param string $attribute
+         * @return $this 
+         * @static 
+         */
+        public static function syncOriginalAttribute($attribute){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::syncOriginalAttribute($attribute);
+        }
+        
+        /**
+         * Determine if the model or given attribute(s) have been modified.
+         *
+         * @param array|string|null $attributes
+         * @return bool 
+         * @static 
+         */
+        public static function isDirty($attributes = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::isDirty($attributes);
+        }
+        
+        /**
+         * Determine if the model or given attribute(s) have remained the same.
+         *
+         * @param array|string|null $attributes
+         * @return bool 
+         * @static 
+         */
+        public static function isClean($attributes = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::isClean($attributes);
+        }
+        
+        /**
+         * Get the attributes that have been changed since last sync.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getDirty(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getDirty();
+        }
+        
+        /**
+         * Get all the loaded relations for the instance.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getRelations(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getRelations();
+        }
+        
+        /**
+         * Get a specified relationship.
+         *
+         * @param string $relation
+         * @return mixed 
+         * @static 
+         */
+        public static function getRelation($relation){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getRelation($relation);
+        }
+        
+        /**
+         * Determine if the given relation is loaded.
+         *
+         * @param string $key
+         * @return bool 
+         * @static 
+         */
+        public static function relationLoaded($key){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::relationLoaded($key);
+        }
+        
+        /**
+         * Set the specific relationship in the model.
+         *
+         * @param string $relation
+         * @param mixed $value
+         * @return $this 
+         * @static 
+         */
+        public static function setRelation($relation, $value){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setRelation($relation, $value);
+        }
+        
+        /**
+         * Set the entire relations array on the model.
+         *
+         * @param array $relations
+         * @return $this 
+         * @static 
+         */
+        public static function setRelations($relations){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setRelations($relations);
+        }
+        
+        /**
+         * Get the database connection for the model.
+         *
+         * @return \Illuminate\Database\Connection 
+         * @static 
+         */
+        public static function getConnection(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getConnection();
+        }
+        
+        /**
+         * Get the current connection name for the model.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getConnectionName(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getConnectionName();
+        }
+        
+        /**
+         * Set the connection associated with the model.
+         *
+         * @param string $name
+         * @return $this 
+         * @static 
+         */
+        public static function setConnection($name){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::setConnection($name);
+        }
+        
+        /**
+         * Resolve a connection instance.
+         *
+         * @param string|null $connection
+         * @return \Illuminate\Database\Connection 
+         * @static 
+         */
+        public static function resolveConnection($connection = null){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::resolveConnection($connection);
+        }
+        
+        /**
+         * Get the connection resolver instance.
+         *
+         * @return \Illuminate\Database\ConnectionResolverInterface 
+         * @static 
+         */
+        public static function getConnectionResolver(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getConnectionResolver();
+        }
+        
+        /**
+         * Set the connection resolver instance.
+         *
+         * @param \Illuminate\Database\ConnectionResolverInterface $resolver
+         * @return void 
+         * @static 
+         */
+        public static function setConnectionResolver($resolver){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::setConnectionResolver($resolver);
+        }
+        
+        /**
+         * Unset the connection resolver for models.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function unsetConnectionResolver(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::unsetConnectionResolver();
+        }
+        
+        /**
+         * Get the event dispatcher instance.
+         *
+         * @return \Illuminate\Contracts\Events\Dispatcher 
+         * @static 
+         */
+        public static function getEventDispatcher(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getEventDispatcher();
+        }
+        
+        /**
+         * Set the event dispatcher instance.
+         *
+         * @param \Illuminate\Contracts\Events\Dispatcher $dispatcher
+         * @return void 
+         * @static 
+         */
+        public static function setEventDispatcher($dispatcher){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::setEventDispatcher($dispatcher);
+        }
+        
+        /**
+         * Unset the event dispatcher for models.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function unsetEventDispatcher(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::unsetEventDispatcher();
+        }
+        
+        /**
+         * Get the mutated attributes for a given instance.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getMutatedAttributes(){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::getMutatedAttributes();
+        }
+        
+        /**
+         * Extract and cache all the mutated attributes of a class.
+         *
+         * @param string $class
+         * @return void 
+         * @static 
+         */
+        public static function cacheMutatedAttributes($class){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::cacheMutatedAttributes($class);
+        }
+        
+        /**
+         * Determine if the given attribute exists.
+         *
+         * @param mixed $offset
+         * @return bool 
+         * @static 
+         */
+        public static function offsetExists($offset){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::offsetExists($offset);
+        }
+        
+        /**
+         * Get the value for a given offset.
+         *
+         * @param mixed $offset
+         * @return mixed 
+         * @static 
+         */
+        public static function offsetGet($offset){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            return \Webpatser\Countries\Countries::offsetGet($offset);
+        }
+        
+        /**
+         * Set the value for a given offset.
+         *
+         * @param mixed $offset
+         * @param mixed $value
+         * @return void 
+         * @static 
+         */
+        public static function offsetSet($offset, $value){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::offsetSet($offset, $value);
+        }
+        
+        /**
+         * Unset the value for a given offset.
+         *
+         * @param mixed $offset
+         * @return void 
+         * @static 
+         */
+        public static function offsetUnset($offset){
+            //Method inherited from \Illuminate\Database\Eloquent\Model            
+            \Webpatser\Countries\Countries::offsetUnset($offset);
+        }
+        
+    }
+
+
+    class Active extends \App\Core\components\ActiveItem\Facades\Active{
+        
+        /**
+         * Return 'active' class if current requested URI is matched
+         *
+         * @param string $uri
+         * @param string $activeClass
+         * @param string $inactiveClass
+         * @return string 
+         * @static 
+         */
+        public static function uri($uri, $activeClass = 'active', $inactiveClass = ''){
+            return \App\Core\components\ActiveItem\Active::uri($uri, $activeClass, $inactiveClass);
+        }
+        
+        /**
+         * Return 'active' class if current requested query string has key that matches value
+         *
+         * @param string $key the query key
+         * @param string $value the value of the query parameter
+         * @param string $activeClass the returned class
+         * @param string $inactiveClass
+         * @return string the returned class if the parameter <code>$key</code> has
+         * the value equal to <code>$value</code> or contains the <code>$value</code>
+         * in case of an array
+         * @static 
+         */
+        public static function query($key, $value, $activeClass = 'active', $inactiveClass = ''){
+            return \App\Core\components\ActiveItem\Active::query($key, $value, $activeClass, $inactiveClass);
+        }
+        
+        /**
+         * Return 'active' class if current route match a pattern
+         *
+         * @param string|array $patterns
+         * @param string $activeClass
+         * @param string $inactiveClass
+         * @return string 
+         * @static 
+         */
+        public static function pattern($patterns, $activeClass = 'active', $inactiveClass = ''){
+            return \App\Core\components\ActiveItem\Active::pattern($patterns, $activeClass, $inactiveClass);
+        }
+        
+        /**
+         * Return 'active' class if current route name match one of provided names
+         *
+         * @param string|array $names
+         * @param string $activeClass
+         * @param string $inactiveClass
+         * @return string 
+         * @static 
+         */
+        public static function route($names, $activeClass = 'active', $inactiveClass = ''){
+            return \App\Core\components\ActiveItem\Active::route($names, $activeClass, $inactiveClass);
+        }
+        
+        /**
+         * Check the current route name with one or some patterns
+         *
+         * @param string|array $patterns
+         * @param string $activeClass
+         * @param string $inactiveClass
+         * @return string the <code>$activeClass</code> if matched
+         * @since 1.2
+         * @static 
+         */
+        public static function routePattern($patterns, $activeClass = 'active', $inactiveClass = ''){
+            return \App\Core\components\ActiveItem\Active::routePattern($patterns, $activeClass, $inactiveClass);
+        }
+        
+        /**
+         * Return 'active' class if current route action match one of provided action names
+         *
+         * @param string|array $actions
+         * @param string $activeClass
+         * @param string $inactiveClass
+         * @param bool $fullClassName if set to false, only controller class name (without namespace) is included
+         *                                    in the action string. Otherwise, namespace will be included.
+         * @return string 
+         * @static 
+         */
+        public static function action($actions, $activeClass = 'active', $fullClassName = false, $inactiveClass = ''){
+            return \App\Core\components\ActiveItem\Active::action($actions, $activeClass, $fullClassName, $inactiveClass);
+        }
+        
+        /**
+         * Return 'active' class if current controller match a controller name and
+         * current method doest not belong to excluded methods. The controller name
+         * and method name are gotten from <code>getController</code> and <code>getMethod</code>.
+         *
+         * @param string $controller
+         * @param string $activeClass
+         * @param string $inactiveClass
+         * @param array $excludedMethods
+         * @return string 
+         * @static 
+         */
+        public static function controller($controller, $activeClass = 'active', $excludedMethods = array(), $inactiveClass = ''){
+            return \App\Core\components\ActiveItem\Active::controller($controller, $activeClass, $excludedMethods, $inactiveClass);
+        }
+        
+        /**
+         * Get the current controller name with the suffix 'Controller' trimmed
+         *
+         * @return string|null 
+         * @static 
+         */
+        public static function getController(){
+            return \App\Core\components\ActiveItem\Active::getController();
+        }
+        
+        /**
+         * Get the current method name with the prefix 'get', 'post', 'put', 'delete', 'show' trimmed
+         *
+         * @return string|null 
+         * @static 
+         */
+        public static function getMethod(){
+            return \App\Core\components\ActiveItem\Active::getMethod();
+        }
+        
+        /**
+         * Return 'active' class if current controller name match one of provided
+         * controller names.
+         *
+         * @param array $controllers
+         * @param string $activeClass
+         * @param string $inactiveClass
+         * @return string 
+         * @static 
+         */
+        public static function controllers($controllers, $activeClass = 'active', $inactiveClass = ''){
+            return \App\Core\components\ActiveItem\Active::controllers($controllers, $activeClass, $inactiveClass);
+        }
+        
+        /**
+         * Return 'active' class if the current route name matches a specific value, route parameters with keys defined in
+         * the `$params` has the correct value.
+         * 
+         * The `$params` is an associative array, the key is name of the route parameter, the item is the desired value of
+         * that parameter.
+         *
+         * @param string $routeName
+         * @param array $params
+         * @param string $activeClass
+         * @param string $inactiveClass
+         * @return string 
+         * @since 2.3.0
+         * @static 
+         */
+        public static function routeParam($routeName, $params, $activeClass = 'active', $inactiveClass = ''){
+            return \App\Core\components\ActiveItem\Active::routeParam($routeName, $params, $activeClass, $inactiveClass);
+        }
+        
+    }
+
+
+    class Flash extends \App\Core\Components\Flash\Flash{
+        
+        /**
+         * Flash an information message.
+         *
+         * @param string $message
+         * @static 
+         */
+        public static function info($message){
+            return \App\Core\Components\Flash\FlashNotifier::info($message);
+        }
+        
+        /**
+         * Flash a success message.
+         *
+         * @param string $message
+         * @return $this 
+         * @static 
+         */
+        public static function success($message){
+            return \App\Core\Components\Flash\FlashNotifier::success($message);
+        }
+        
+        /**
+         * Flash an error message.
+         *
+         * @param string $message
+         * @return $this 
+         * @static 
+         */
+        public static function error($message){
+            return \App\Core\Components\Flash\FlashNotifier::error($message);
+        }
+        
+        /**
+         * Flash a warning message.
+         *
+         * @param string $message
+         * @return $this 
+         * @static 
+         */
+        public static function warning($message){
+            return \App\Core\Components\Flash\FlashNotifier::warning($message);
+        }
+        
+        /**
+         * Flash an overlay modal.
+         *
+         * @param string $message
+         * @param string $title
+         * @return $this 
+         * @static 
+         */
+        public static function overlay($message, $title = 'Notice'){
+            return \App\Core\Components\Flash\FlashNotifier::overlay($message, $title);
+        }
+        
+        /**
+         * Flash a general message.
+         *
+         * @param string $message
+         * @param string $level
+         * @return $this 
+         * @static 
+         */
+        public static function message($message, $level = 'info'){
+            return \App\Core\Components\Flash\FlashNotifier::message($message, $level);
+        }
+        
+        /**
+         * Add an "important" flash to the session.
+         *
+         * @return $this 
+         * @static 
+         */
+        public static function important(){
+            return \App\Core\Components\Flash\FlashNotifier::important();
+        }
+        
+    }
+
+
+    class Debugbar extends \Barryvdh\Debugbar\Facade{
+        
+        /**
+         * Enable the Debugbar and boot, if not already booted.
+         *
+         * @static 
+         */
+        public static function enable(){
+            return \Barryvdh\Debugbar\LaravelDebugbar::enable();
+        }
+        
+        /**
+         * Boot the debugbar (add collectors, renderer and listener)
+         *
+         * @static 
+         */
+        public static function boot(){
+            return \Barryvdh\Debugbar\LaravelDebugbar::boot();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function shouldCollect($name, $default = false){
+            return \Barryvdh\Debugbar\LaravelDebugbar::shouldCollect($name, $default);
+        }
+        
+        /**
+         * Starts a measure
+         *
+         * @param string $name Internal name, used to stop the measure
+         * @param string $label Public name
+         * @static 
+         */
+        public static function startMeasure($name, $label = null){
+            return \Barryvdh\Debugbar\LaravelDebugbar::startMeasure($name, $label);
+        }
+        
+        /**
+         * Stops a measure
+         *
+         * @param string $name
+         * @static 
+         */
+        public static function stopMeasure($name){
+            return \Barryvdh\Debugbar\LaravelDebugbar::stopMeasure($name);
+        }
+        
+        /**
+         * Adds an exception to be profiled in the debug bar
+         *
+         * @param \Exception $e
+         * @deprecated in favor of addThrowable
+         * @static 
+         */
+        public static function addException($e){
+            return \Barryvdh\Debugbar\LaravelDebugbar::addException($e);
+        }
+        
+        /**
+         * Adds an exception to be profiled in the debug bar
+         *
+         * @param \Exception $e
+         * @static 
+         */
+        public static function addThrowable($e){
+            return \Barryvdh\Debugbar\LaravelDebugbar::addThrowable($e);
+        }
+        
+        /**
+         * Returns a JavascriptRenderer for this instance
+         *
+         * @param string $baseUrl
+         * @param string $basePathng
+         * @return \Barryvdh\Debugbar\JavascriptRenderer 
+         * @static 
+         */
+        public static function getJavascriptRenderer($baseUrl = null, $basePath = null){
+            return \Barryvdh\Debugbar\LaravelDebugbar::getJavascriptRenderer($baseUrl, $basePath);
+        }
+        
+        /**
+         * Modify the response and inject the debugbar (or data in headers)
+         *
+         * @param \Symfony\Component\HttpFoundation\Request $request
+         * @param \Symfony\Component\HttpFoundation\Response $response
+         * @return \Symfony\Component\HttpFoundation\Response 
+         * @static 
+         */
+        public static function modifyResponse($request, $response){
+            return \Barryvdh\Debugbar\LaravelDebugbar::modifyResponse($request, $response);
+        }
+        
+        /**
+         * Check if the Debugbar is enabled
+         *
+         * @return boolean 
+         * @static 
+         */
+        public static function isEnabled(){
+            return \Barryvdh\Debugbar\LaravelDebugbar::isEnabled();
+        }
+        
+        /**
+         * Collects the data from the collectors
+         *
+         * @return array 
+         * @static 
+         */
+        public static function collect(){
+            return \Barryvdh\Debugbar\LaravelDebugbar::collect();
+        }
+        
+        /**
+         * Injects the web debug toolbar into the given Response.
+         *
+         * @param \Symfony\Component\HttpFoundation\Response $response A Response instance
+         * Based on https://github.com/symfony/WebProfilerBundle/blob/master/EventListener/WebDebugToolbarListener.php
+         * @static 
+         */
+        public static function injectDebugbar($response){
+            return \Barryvdh\Debugbar\LaravelDebugbar::injectDebugbar($response);
+        }
+        
+        /**
+         * Disable the Debugbar
+         *
+         * @static 
+         */
+        public static function disable(){
+            return \Barryvdh\Debugbar\LaravelDebugbar::disable();
+        }
+        
+        /**
+         * Adds a measure
+         *
+         * @param string $label
+         * @param float $start
+         * @param float $end
+         * @static 
+         */
+        public static function addMeasure($label, $start, $end){
+            return \Barryvdh\Debugbar\LaravelDebugbar::addMeasure($label, $start, $end);
+        }
+        
+        /**
+         * Utility function to measure the execution of a Closure
+         *
+         * @param string $label
+         * @param \Closure $closure
+         * @static 
+         */
+        public static function measure($label, $closure){
+            return \Barryvdh\Debugbar\LaravelDebugbar::measure($label, $closure);
+        }
+        
+        /**
+         * Collect data in a CLI request
+         *
+         * @return array 
+         * @static 
+         */
+        public static function collectConsole(){
+            return \Barryvdh\Debugbar\LaravelDebugbar::collectConsole();
+        }
+        
+        /**
+         * Adds a message to the MessagesCollector
+         * 
+         * A message can be anything from an object to a string
+         *
+         * @param mixed $message
+         * @param string $label
+         * @static 
+         */
+        public static function addMessage($message, $label = 'info'){
+            return \Barryvdh\Debugbar\LaravelDebugbar::addMessage($message, $label);
+        }
+        
+        /**
+         * Adds a data collector
+         *
+         * @param \DebugBar\DataCollectorInterface $collector
+         * @throws DebugBarException
+         * @return $this 
+         * @static 
+         */
+        public static function addCollector($collector){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::addCollector($collector);
+        }
+        
+        /**
+         * Checks if a data collector has been added
+         *
+         * @param string $name
+         * @return boolean 
+         * @static 
+         */
+        public static function hasCollector($name){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::hasCollector($name);
+        }
+        
+        /**
+         * Returns a data collector
+         *
+         * @param string $name
+         * @return \DebugBar\DataCollectorInterface 
+         * @throws DebugBarException
+         * @static 
+         */
+        public static function getCollector($name){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getCollector($name);
+        }
+        
+        /**
+         * Returns an array of all data collectors
+         *
+         * @return \DebugBar\array[DataCollectorInterface] 
+         * @static 
+         */
+        public static function getCollectors(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getCollectors();
+        }
+        
+        /**
+         * Sets the request id generator
+         *
+         * @param \DebugBar\RequestIdGeneratorInterface $generator
+         * @return $this 
+         * @static 
+         */
+        public static function setRequestIdGenerator($generator){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::setRequestIdGenerator($generator);
+        }
+        
+        /**
+         * 
+         *
+         * @return \DebugBar\RequestIdGeneratorInterface 
+         * @static 
+         */
+        public static function getRequestIdGenerator(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getRequestIdGenerator();
+        }
+        
+        /**
+         * Returns the id of the current request
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getCurrentRequestId(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getCurrentRequestId();
+        }
+        
+        /**
+         * Sets the storage backend to use to store the collected data
+         *
+         * @param \DebugBar\StorageInterface $storage
+         * @return $this 
+         * @static 
+         */
+        public static function setStorage($storage = null){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::setStorage($storage);
+        }
+        
+        /**
+         * 
+         *
+         * @return \DebugBar\StorageInterface 
+         * @static 
+         */
+        public static function getStorage(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getStorage();
+        }
+        
+        /**
+         * Checks if the data will be persisted
+         *
+         * @return boolean 
+         * @static 
+         */
+        public static function isDataPersisted(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::isDataPersisted();
+        }
+        
+        /**
+         * Sets the HTTP driver
+         *
+         * @param \DebugBar\HttpDriverInterface $driver
+         * @return $this 
+         * @static 
+         */
+        public static function setHttpDriver($driver){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::setHttpDriver($driver);
+        }
+        
+        /**
+         * Returns the HTTP driver
+         * 
+         * If no http driver where defined, a PhpHttpDriver is automatically created
+         *
+         * @return \DebugBar\HttpDriverInterface 
+         * @static 
+         */
+        public static function getHttpDriver(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getHttpDriver();
+        }
+        
+        /**
+         * Returns collected data
+         * 
+         * Will collect the data if none have been collected yet
+         *
+         * @return array 
+         * @static 
+         */
+        public static function getData(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getData();
+        }
+        
+        /**
+         * Returns an array of HTTP headers containing the data
+         *
+         * @param string $headerName
+         * @param integer $maxHeaderLength
+         * @return array 
+         * @static 
+         */
+        public static function getDataAsHeaders($headerName = 'phpdebugbar', $maxHeaderLength = 4096, $maxTotalHeaderLength = 250000){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getDataAsHeaders($headerName, $maxHeaderLength, $maxTotalHeaderLength);
+        }
+        
+        /**
+         * Sends the data through the HTTP headers
+         *
+         * @param bool $useOpenHandler
+         * @param string $headerName
+         * @param integer $maxHeaderLength
+         * @return $this 
+         * @static 
+         */
+        public static function sendDataInHeaders($useOpenHandler = null, $headerName = 'phpdebugbar', $maxHeaderLength = 4096){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::sendDataInHeaders($useOpenHandler, $headerName, $maxHeaderLength);
+        }
+        
+        /**
+         * Stacks the data in the session for later rendering
+         *
+         * @static 
+         */
+        public static function stackData(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::stackData();
+        }
+        
+        /**
+         * Checks if there is stacked data in the session
+         *
+         * @return boolean 
+         * @static 
+         */
+        public static function hasStackedData(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::hasStackedData();
+        }
+        
+        /**
+         * Returns the data stacked in the session
+         *
+         * @param boolean $delete Whether to delete the data in the session
+         * @return array 
+         * @static 
+         */
+        public static function getStackedData($delete = true){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getStackedData($delete);
+        }
+        
+        /**
+         * Sets the key to use in the $_SESSION array
+         *
+         * @param string $ns
+         * @return $this 
+         * @static 
+         */
+        public static function setStackDataSessionNamespace($ns){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::setStackDataSessionNamespace($ns);
+        }
+        
+        /**
+         * Returns the key used in the $_SESSION array
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getStackDataSessionNamespace(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::getStackDataSessionNamespace();
+        }
+        
+        /**
+         * Sets whether to only use the session to store stacked data even
+         * if a storage is enabled
+         *
+         * @param boolean $enabled
+         * @return $this 
+         * @static 
+         */
+        public static function setStackAlwaysUseSessionStorage($enabled = true){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::setStackAlwaysUseSessionStorage($enabled);
+        }
+        
+        /**
+         * Checks if the session is always used to store stacked data
+         * even if a storage is enabled
+         *
+         * @return boolean 
+         * @static 
+         */
+        public static function isStackAlwaysUseSessionStorage(){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::isStackAlwaysUseSessionStorage();
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function offsetSet($key, $value){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::offsetSet($key, $value);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function offsetGet($key){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::offsetGet($key);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function offsetExists($key){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::offsetExists($key);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function offsetUnset($key){
+            //Method inherited from \DebugBar\DebugBar            
+            return \Barryvdh\Debugbar\LaravelDebugbar::offsetUnset($key);
         }
         
     }

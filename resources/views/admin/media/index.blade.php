@@ -1,14 +1,13 @@
 ﻿@extends('admin/app')
 <h1>
     @section('breadcrumb')
-        {{--{!! Breadcrumbs::render('admin') !!}--}}
-
         {!! Breadcrumbs::render('media', 'media') !!}
     @endsection
     @section('contentheader_title')
         Amount of Media Files
         &middot; {{$count}}
     @endsection
+
     @section('contentheader_description')
         @if($folder)
             <p>Folder
@@ -38,24 +37,24 @@
 
                         <div class="form-group">
                             @if(!$folder)
-                                <a class="btn btn-md btn-default" href="{{route('admin::media::index')}}"
+                                <a class="btn btn-xs btn-default" href="{{route('admin::media::index')}}"
                                    style="margin-left: 10px">
                                     back
                                 </a>
                             @else
-                                <a class="btn btn-md btn-default" href="{{url()->previous()}}"
+                                <a class="btn btn-xs btn-default" href="{{url()->previous()}}"
                                    style="margin-left: 10px">
                                     back
                                 </a>
                             @endif
                             <a data-toggle="modal"
                                href="#upload-modal"
-                               class="btn btn-md btn-default" style="margin-left: 10px">
+                               class="btn btn-xs btn-default" style="margin-left: 10px">
                                 upload
                             </a>
                             <a data-toggle="modal"
                                href="#newdir-modal"
-                               class="btn btn-md btn-default" style="margin-left: 10px">
+                               class="btn btn-xs btn-default" style="margin-left: 10px">
                                 create directory
                             </a>
 

@@ -31,7 +31,8 @@
         "darrylkuhn/dialect": "^1.0",
         "plank/laravel-mediable": "^2.4",
         "that0n3guy/transliteration": "^2.0",
-        "maatwebsite/excel": "^2.1"
+        "maatwebsite/excel": "^2.1",
+        "barryvdh/laravel-debugbar": "^2.3"
 
     },
     "require-dev": {
@@ -75,7 +76,8 @@
             "App\\Core\\Components\\Country\\":"App/Core/Components/Country/",
             "App\\Core\\Components\\Select\\SelectBuilder\\":"App/Core/Components/Select/",
             "App\\Core\\components\\ActiveItem\\":"App/Core/Components/ActiveItem/",
-            "App\\Core\\Components\\Flash\\":"App/Core/Components/Flash/"
+            "App\\Core\\Components\\Flash\\":"App/Core/Components/Flash/",
+            "nilsenj\\Toastr\\": "packages/nilsenj/toastr-laravel/src/"
         }
     },
     "autoload-dev": {

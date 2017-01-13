@@ -31,6 +31,7 @@ elixir((mix) => {
     mix.copy('bower_components/summernote/dist/', 'public/plugins/summernote/');
     mix.copy('bower_components/dropzone/dist/', 'public/plugins/dropzone/');
     mix.copy('bower_components/plyr/dist/', 'public/plugins/plyr/');
+    mix.copy('bower_components/toastr/', 'public/plugins/toastr/');
     mix.browserSync({
         proxy: 'storecamp.app'
     });

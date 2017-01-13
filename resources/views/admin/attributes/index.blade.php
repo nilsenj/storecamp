@@ -1,15 +1,9 @@
 ﻿@extends('admin/app')
 <h1>
     @section('breadcrumb')
-        {{--{!! Breadcrumbs::render('admin') !!}--}}
-
         {!! Breadcrumbs::render('users', 'Attributes') !!}
     @endsection
-    @section('contentheader_title')
-
-        Amount of Attributes ({!! \App\Core\Models\AttributeGroupDescription::all()->count() !!})
-        &middot;
-    @endsection
+    @include('admin.partial._contentheader_title', [$model = $groupDescriptions, $message = "Amount of Attributes"])
     @section('contentheader_description')
         <b>{!! link_to_route('admin::attributes::create', 'Add New Attribute') !!}</b>
     @endsection

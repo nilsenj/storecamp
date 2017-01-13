@@ -208,7 +208,8 @@ return [
         App\Core\Components\ActiveItem\ActiveServiceProvider::class,
         \App\Core\Components\Flash\FlashServiceProvider::class,
         \Webpatser\Countries\CountriesServiceProvider::class,
-
+        Barryvdh\Debugbar\ServiceProvider::class,
+        nilsenj\Toastr\ToastrServiceProvider::class,
     ],
 
     /*
@@ -269,7 +270,9 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Countries' => Webpatser\Countries\CountriesFacade::class,
         'Active' => App\Core\components\ActiveItem\Facades\Active::class,
-        'Flash' => App\Core\Components\Flash\Flash::class
+        'Flash' => App\Core\Components\Flash\Flash::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Toastr' => nilsenj\Toastr\Facades\Toastr::class,
     ],
 
 ];

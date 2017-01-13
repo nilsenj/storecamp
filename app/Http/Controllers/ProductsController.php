@@ -58,8 +58,9 @@ class ProductsController extends BaseController
      */
     public function index()
     {
-        $products = $this->repository->paginate();
+        $products = $this->repository->with("categories")->paginate();
         $no = $products->firstItem();
+        \Toastr::info('Hello Man Me again', $title = "Fuck The system!");
         return $this->view('index', compact('products', 'no'));
     }
 

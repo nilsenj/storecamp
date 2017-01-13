@@ -59,7 +59,7 @@ class CategoriesController extends BaseController
      */
     public function index(Request $request)
     {
-        $categories = $this->repository->paginate();
+        $categories = $this->repository->with('parent', 'children')->paginate();
 
         $no = $categories->firstItem();
 
