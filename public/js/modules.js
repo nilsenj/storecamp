@@ -536,23 +536,35 @@
       var _this;
       _this = this;
       return _this.options.players.forEach(function(player, i, arr) {
-        player.on('ready timeupdate pause ended playing', function(event) {
+        player.on('ready timeupdate pause ended play playing', function(event) {
+          var playInstanse;
           switch (event.type) {
             case 'ended':
               if (arr.length - 1 > i) {
                 _this.options.players[i + 1].play();
-                _this.options.playerStatus.toggle(2000);
-                _this.options.playerStatus.html('<i class="fa  fa-step-forward"></i>');
+                _this.options.playerStatus.toggle(200);
+                _this.options.playerStatus.html('<a href="#"><i class="fa fa-step-forward"></i></a>');
+                setTimeout(function() {
+                  return _this.options.playerStatus.html('<a onclick="$.StoreCamp.media.pausePlayers()" href="#"><i class="fa fa-pause"></i></a>');
+                }, 2000);
               } else {
                 _this.options.players[0].play();
-                _this.options.playerStatus.toggle(2000);
-                _this.options.playerStatus.html('<i class="fa  fa-step-forward"></i>');
+                _this.options.playerStatus.toggle(200);
+                _this.options.playerStatus.html('<a href="#"><i class="fa  fa-step-forward"></i></a>');
+                setTimeout(function() {
+                  return _this.options.playerStatus.html('<a onclick="$.StoreCamp.media.pausePlayers()" href="#"><i class="fa fa-pause"></i></a>');
+                }, 2000);
               }
               break;
             case 'pause':
               console.log('fuck off');
-              _this.options.playerStatus.toggle(2000);
-              _this.options.playerStatus.html('<i class="fa fa-pause"></i>');
+              _this.options.playerStatus.toggle(200);
+              _this.options.playerStatus.html('<a onclick="$.StoreCamp.media.pausePlayers()" href="#"><i class="fa fa-pause"></i></a>');
+              break;
+            case 'play':
+              $('.media-plyr-item').removeClass('playing');
+              playInstanse = $(event.target);
+              playInstanse.closest('.media-plyr-item').addClass('playing');
           }
         });
       });
@@ -565,15 +577,31 @@
       });
       return _this._triggerNewFile(mediaItems, players);
     },
-    _triggerNewFile: function(mediaItems, players) {
-      var _this;
+    pausePlayers: function() {
+      var _this, players;
       _this = this;
-      return mediaItems.find('.plyr__controls button[data-plyr="play"]').on('click', function(event) {
-        var audioItem;
-        audioItem = $(event.target).closest('.media-plyr-item').data('media-number');
-        players.forEach(function(player, i, arr) {
-          player.stop();
-          players[audioItem].play();
+      players = _this.options.players;
+      return players.forEach(function(player, i, arr) {
+        player.stop();
+        players[i].pause();
+        $('.media-plyr-item').removeClass('playing');
+      });
+    },
+    _triggerNewFile: function(mediaItems, players) {
+      var _this, playButtons;
+      _this = this;
+      playButtons = [mediaItems.find('.plyr__controls button[data-plyr="play"]'), $('.plyr .plyr__play-large')];
+      playButtons.forEach(function(item, i, arr) {
+        return item.on('click', function(event) {
+          var audioItem, audioItemClass;
+          audioItemClass = $(event.target).closest('.media-plyr-item');
+          audioItem = audioItemClass.data('media-number');
+          $('.media-plyr-item').removeClass('playing');
+          players.forEach(function(player, i, arr) {
+            player.pause();
+            players[audioItem].play();
+            audioItemClass.addClass('playing');
+          });
         });
       });
     }

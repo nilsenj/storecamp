@@ -142,6 +142,8 @@
     $('.nav-tabs a').on('shown.bs.tab', function (e) {
         window.location.hash = e.target.hash;
     })
+    $('#flash-overlay-modal').modal();
+
 </script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

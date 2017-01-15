@@ -85,9 +85,11 @@ class ProductsController extends BaseController
         $categoryId = $request->category_id ? $request->category_id : null;
         $product->categories()->attach($categoryId);
         $attributes = [];
-        foreach ($data['product_attribute'] as $key => $attr) {
-            $attribute = $product->attributeGroupDescription()->save(AttributeGroupDescription::find(intval($attr["attr_description_id"])), ["value" => $data['product_attribute'][$key]["value"]]);
-            $attributes[] = $attribute;
+        if(isset($attr["attr_description_id"])) {
+            foreach ($data['product_attribute'] as $key => $attr) {
+                $attribute = $product->attributeGroupDescription()->save(AttributeGroupDescription::find(intval($attr["attr_description_id"])), ["value" => $data['product_attribute'][$key]["value"]]);
+                $attributes[] = $attribute;
+            }
         }
         return redirect('admin/products');
     }
@@ -137,22 +139,22 @@ class ProductsController extends BaseController
         try {
             $product = $this->repository->find($id);
             $data = $request->all();
-            dd($data);
             $product->update($data);
             $categoryId = $request->category_id ? $request->category_id : null;
             if ($categoryId) {
                 $product->categories()->detach();
                 $product->categories()->attach($categoryId);
             }
-
             $attributes = [];
             $productAttributes = $product->attributeGroupDescription();
             if ($productAttributes->count() > 0) {
                 $product->attributeGroupDescription()->sync([]);
             }
-            foreach ($data['product_attribute'] as $key => $attr) {
-                    $attribute = $product->attributeGroupDescription()->save(AttributeGroupDescription::find(intval($attr["attr_description_id"])), ["value" => $data['product_attribute'][$key]["value"]]);
+            if(isset($data['product_attribute'])) {
+                foreach ($data['product_attribute'] as $key => $attr) {
+                    $attribute = $product->attributeGroupDescription()->save(AttributeGroupDescription::find($attr["attr_description_id"]), ["value" => $data['product_attribute'][$key]["value"]]);
                     $attributes[] = $attribute;
+                }
             }
 
             return redirect('admin/products');

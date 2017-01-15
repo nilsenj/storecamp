@@ -14,21 +14,31 @@ $.StoreCamp.media =
   mediaEvents: ->
     _this = this
     _this.options.players.forEach (player, i, arr) ->
-      player.on 'ready timeupdate pause ended playing', (event) ->
+      player.on 'ready timeupdate pause ended play playing', (event) ->
         switch event.type
           when 'ended'
             if arr.length - 1 > i
               _this.options.players[i + 1].play()
-              _this.options.playerStatus.toggle 2000
-              _this.options.playerStatus.html '<i class="fa  fa-step-forward"></i>'
+              _this.options.playerStatus.toggle 200
+              _this.options.playerStatus.html '<a href="#"><i class="fa fa-step-forward"></i></a>'
+              setTimeout(() ->
+                _this.options.playerStatus.html '<a onclick="$.StoreCamp.media.pausePlayers()" href="#"><i class="fa fa-pause"></i></a>'
+              , 2000)
             else
               _this.options.players[0].play()
-              _this.options.playerStatus.toggle 2000
-              _this.options.playerStatus.html '<i class="fa  fa-step-forward"></i>'
+              _this.options.playerStatus.toggle 200
+              _this.options.playerStatus.html '<a href="#"><i class="fa  fa-step-forward"></i></a>'
+              setTimeout(() ->
+                _this.options.playerStatus.html '<a onclick="$.StoreCamp.media.pausePlayers()" href="#"><i class="fa fa-pause"></i></a>'
+              , 2000)
           when 'pause'
             console.log 'fuck off'
-            _this.options.playerStatus.toggle 2000
-            _this.options.playerStatus.html '<i class="fa fa-pause"></i>'
+            _this.options.playerStatus.toggle 200
+            _this.options.playerStatus.html '<a onclick="$.StoreCamp.media.pausePlayers()" href="#"><i class="fa fa-pause"></i></a>'
+          when 'play'
+            $('.media-plyr-item').removeClass('playing')
+            playInstanse = $(event.target)
+            playInstanse.closest('.media-plyr-item').addClass('playing')
         return
       return
   reindex: (mediaItems, players) ->
@@ -37,16 +47,30 @@ $.StoreCamp.media =
       $(item).attr 'data-media-number', i
       return
      _this._triggerNewFile(mediaItems, players)
+
+  pausePlayers: () ->
+    _this = this
+    players = _this.options.players
+    players.forEach (player, i, arr) ->
+      player.stop()
+      players[i].pause()
+      $('.media-plyr-item').removeClass('playing')
+      return
   _triggerNewFile: (mediaItems, players) ->
     _this = this
-    mediaItems.find('.plyr__controls button[data-plyr="play"]').on 'click', (event) ->
-      audioItem = $(event.target).closest('.media-plyr-item').data('media-number')
-      players.forEach (player, i, arr) ->
-        player.stop()
-        players[audioItem].play()
+    playButtons = [mediaItems.find('.plyr__controls button[data-plyr="play"]'), $('.plyr .plyr__play-large')]
+    playButtons.forEach (item, i, arr) ->
+      item.on 'click', (event) ->
+        audioItemClass = $(event.target).closest('.media-plyr-item')
+        audioItem = audioItemClass.data('media-number')
+        $('.media-plyr-item').removeClass('playing')
+        players.forEach (player, i, arr) ->
+          player.pause()
+          players[audioItem].play()
+          audioItemClass.addClass('playing')
+          return
         return
-      return
-
+    return
   # ---
 
 $.StoreCamp.media.activate()

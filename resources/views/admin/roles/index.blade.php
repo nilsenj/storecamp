@@ -43,9 +43,10 @@
                                 </td>
                                 <td>{!! $role->created_at !!}</td>
                                 <td class="text-center">
-                                    <a href="{!! route('admin::roles::edit', $role->id) !!}">Edit</a>
-                                    &middot;
-                                    {{--@include('admin::partials.modal', ['data' => $role, 'name' => 'roles'])--}}
+                                    <a class="edit" href="{!! route('admin::roles::edit', $role->unique_id) !!}" title="Edit">
+                                        <i class="fa fa-pencil-square-o"></i></a>
+                                    <a class="delete text-warning" href="{!! route('admin::roles::get::delete', $role->unique_id) !!}"
+                                       title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
                                 </td>
                             </tr>
                         @endforeach

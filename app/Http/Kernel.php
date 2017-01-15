@@ -62,5 +62,8 @@ class Kernel extends HttpKernel
         'permission' => AccessPermission::class,
         'user.additional' => UserAdditionalInfo::class,
         'shouldBeUnique' => \App\Http\Middleware\ElementShouldBeUnique::class,
+        'notDefaultRole' => \App\Http\Middleware\ShouldNotBeDefaultRole::class,
+        'notAdmin' => \App\Http\Middleware\ShouldNotBeAdmin::class,
+        'shouldLeftAdmin' => \App\Http\Middleware\AdminsShouldLeft::class,
     ];
 }

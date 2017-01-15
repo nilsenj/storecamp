@@ -213,5 +213,5 @@ interface RepositoryInterface
      * @param string $operator
      * @return mixed
      */
-    public function findBy($key, $value, $operator = '=');
+    public function where($key, $value, $operator = '=');
 }

@@ -15,6 +15,7 @@ class CreateCartTable extends Migration
     {
         Schema::create('cart', function (Blueprint $table) {
             $table->string('identifier');
+
             $table->string('instance');
             $table->longText('content');
             $table->nullableTimestamps();

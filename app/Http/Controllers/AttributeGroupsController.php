@@ -103,10 +103,11 @@ class AttributeGroupsController extends BaseController
     public function update(Request $request, $id)
     {
         try {
-            $data = $request->all();
+            $data = $request->except('_method', '_token');
+            $groupAttributeOnlyTrashed = $this->groupRepository->getModel()->onlyTrashed()->where("name", $data["name"]);
+            $groupAttribute = $this->groupRepository->find($id);
 
-            $groupAttribute = $this->groupRepository->getModel()->withTrashed()->where("name", $data["name"]);
-            if($groupAttribute->count() > 0) {
+            if($groupAttributeOnlyTrashed->count() > 0) {
                 $groupAttribute->restore();
                 return redirect('admin/attribute_groups');
             }

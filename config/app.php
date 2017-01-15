@@ -210,6 +210,7 @@ return [
         \Webpatser\Countries\CountriesServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         nilsenj\Toastr\ToastrServiceProvider::class,
+        Vinkla\Hashids\HashidsServiceProvider::class
     ],
 
     /*
@@ -273,6 +274,7 @@ return [
         'Flash' => App\Core\Components\Flash\Flash::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Toastr' => nilsenj\Toastr\Facades\Toastr::class,
+        'Hashids' => Vinkla\Hashids\Facades\Hashids::class
     ],
 
 ];

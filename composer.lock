@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "30fb12ac2549ca36781015c006f2883b",
+    "content-hash": "c1b6a6b05fbe4e82436a71841bd48ab3",
     "packages": [
         {
             "name": "a6digital/laravel-default-profile-image",
@@ -2905,6 +2905,60 @@
             "time": "2016-12-06T11:30:35+00:00"
         },
         {
+            "name": "nilsenj/toastr-laravel",
+            "version": "dev-1.0-stable",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nilsenj/toastr-laravel.git",
+                "reference": "f473574b0a390c10bfbd3a434b5469d1cf6f652b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nilsenj/toastr-laravel/zipball/f473574b0a390c10bfbd3a434b5469d1cf6f652b",
+                "reference": "f473574b0a390c10bfbd3a434b5469d1cf6f652b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/session": ">=5.0.0",
+                "illuminate/support": ">=5.0.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "nilsenj\\Toastr\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kamal Nasser",
+                    "email": "kamal@kamalnasser.net"
+                },
+                {
+                    "name": "Ivan Nikolenko",
+                    "email": "nikoleivan@gmail.com"
+                }
+            ],
+            "description": "toastr.js for Laravel 5.* easy notification like growl for example",
+            "homepage": "https://github.com/nilsenj/toastr-laravel",
+            "keywords": [
+                "laravel",
+                "notification",
+                "php",
+                "toastr"
+            ],
+            "time": "2017-01-15 08:05:50"
+        },
+        {
             "name": "paragonie/random_compat",
             "version": "v2.0.4",
             "source": {
@@ -4536,6 +4590,56 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2016-09-20T12:50:39+00:00"
+        },
+        {
+            "name": "torann/hashids",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Torann/laravel-hashids.git",
+                "reference": "942f6786905de97be7ccfd849f1ada16e83a8726"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Torann/laravel-hashids/zipball/942f6786905de97be7ccfd849f1ada16e83a8726",
+                "reference": "942f6786905de97be7ccfd849f1ada16e83a8726",
+                "shasum": ""
+            },
+            "require": {
+                "hashids/hashids": "1.0.6",
+                "illuminate/support": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Torann\\Hashids\\": "src/Torann/Hashids"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD 2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Stainback",
+                    "email": "daniel@lyften.com"
+                }
+            ],
+            "description": "Laravel package for Hashids",
+            "keywords": [
+                "decode",
+                "encode",
+                "hash",
+                "hashid",
+                "laravel"
+            ],
+            "time": "2016-01-28T19:51:34+00:00"
         },
         {
             "name": "tymon/jwt-auth",
@@ -6549,6 +6653,7 @@
         "davejamesmiller/laravel-breadcrumbs": 20,
         "cviebrock/eloquent-sluggable": 15,
         "laravel/socialite": 20,
+        "nilsenj/toastr-laravel": 20,
         "laracasts/generators": 20,
         "doctrine/dbal": 20,
         "laracasts/flash": 20,

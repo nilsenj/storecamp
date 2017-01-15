@@ -8,6 +8,7 @@
  * @package App\Core\Access
  */
 
+use App\Core\Access\AccessRole;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use InvalidArgumentException;
@@ -76,6 +77,43 @@ trait AccessUserTrait
                     return true;
                 }
             }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if the user has a role by its name.
+     *
+     * @param string|array $name       Role name or array of role names.
+     * @param bool         $requireAll All roles in the array are required.
+     *
+     * @return bool
+     */
+    public function getUsersByRole($name, $requireAll = false)
+    {
+        if (is_array($name)) {
+            foreach ($name as $roleName) {
+                $hasRole = $this->getUsersByRole($roleName);
+
+                if ($hasRole && !$requireAll) {
+                    return true;
+                } elseif (!$hasRole && $requireAll) {
+                    return false;
+                }
+            }
+
+            // If we've made it this far and $requireAll is FALSE, then NONE of the roles were found
+            // If we've made it this far and $requireAll is TRUE, then ALL of the roles were found.
+            // Return the value of $requireAll;
+            return $requireAll;
+        } else {
+            $roleByName = AccessRole::where("name", $name);
+            if ($roleByName->count() > 0){
+                $roleId = $roleByName->select("id")->first()["id"];
+                $role = AccessRole::find($roleId);
+                return $role->users()->get();
+             }
         }
 
         return false;

@@ -20,7 +20,7 @@ trait AccessRoleTrait
      */
     public function users()
     {
-        return $this->belongsToMany(Config::get('auth.model'), Config::get('access.role_user_table'));
+        return $this->belongsToMany(Config::get('auth.providers.users.model'), Config::get('access.role_user_table'), 'role_id', 'user_id');
     }
 
     /**

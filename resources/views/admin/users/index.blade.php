@@ -44,9 +44,12 @@
                                         {{ $role->name }}
                                     @endforeach</td>
                                 <td class="text-center">
-                                    <a href="{!! route('admin::users::edit', $user->id) !!}">Edit</a>
-                                    &middot;
-                                    {{--@include('admin::partials.modal', ['data' => $user, 'name' => 'users'])--}}
+                                    <a class="edit" href="{!! route('admin::users::edit', $user->unique_id) !!}"
+                                       title="Edit">
+                                        <i class="fa fa-pencil-square-o"></i></a>
+                                    <a class="delete text-warning"
+                                       href="{!! route('admin::users::get::delete', $user->unique_id) !!}"
+                                       title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
                                 </td>
                             </tr>
                             <?php $no++;?>

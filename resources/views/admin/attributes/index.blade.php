@@ -39,9 +39,9 @@
                 <td>{!! $groupDescription->sort_order !!}</td>
                 <td>{!! $groupDescription->created_at !!}</td>
                 <td class="text-center">
-                    <a class="edit" href="{!! route('admin::attributes::edit', $groupDescription->id) !!}" title="Edit">
+                    <a class="edit" href="{!! route('admin::attributes::edit', $groupDescription->unique_id) !!}" title="Edit">
                         <i class="fa fa-pencil-square-o"></i></a>
-                    <a class="delete text-warning" href="{!! route('admin::attributes::get::delete', $groupDescription->id) !!}"
+                    <a class="delete text-warning" href="{!! route('admin::attributes::get::delete', $groupDescription->unique_id) !!}"
                        title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
                 </td>
             </tr>

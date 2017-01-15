@@ -2,25 +2,10 @@
     @if (Session::has('flash_notification.overlay'))
         @include('flash::modal', ['modalClass' => 'flash-modal', 'title' => Session::get('flash_notification.title'), 'body' => Session::get('flash_notification.message')])
     @else
-    <div class="ui {{ Session::get('flash_notification.level') }} message">
-      <i class="close icon icon-close"></i>
-      <div class="header text-{{ Session::get('flash_notification.level') }}">
-        @if(Session::get('flash_notification.level') == "info")
-        - Consider!
-        @endif
-        @if(Session::get('flash_notification.level') == "warning")
-        - Warning!
-        @endif
-        @if(Session::get('flash_notification.level') == "success")
-        - Everything's OK.
-        @endif
-        @if(Session::get('flash_notification.level') == "error")
-        - Bad news!
-        @endif
-      </div>
-      <ul class="list">
-        <li>{!! Session::get('flash_notification.message') !!}</li>
-    </ul>
-  </div>
+        <div class="alert alert-{{ Session::get('flash_notification.level') }}">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
+            <p class='text-center'>{!!  Session::get('flash_notification.message')  !!}</p>
+        </div>
     @endif
 @endif

@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Juggl\UniqueHashids\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -22,6 +23,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     use \Cviebrock\EloquentSluggable\Sluggable;
     use \Illuminate\Auth\Authenticatable, CanResetPassword;
     use AccessUserTrait;
+    use GeneratesUnique;
 
     protected $table = 'users';
 

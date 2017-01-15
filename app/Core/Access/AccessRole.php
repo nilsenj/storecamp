@@ -35,4 +35,12 @@ class AccessRole extends Model implements AccessRoleInterface
         $this->table = Config::get('access.roles_table');
     }
 
+    /**
+     * @return bool
+     */
+    public function isAppsdefault(): bool
+    {
+        $isDefault = ($this->name === "Client") || ($this->name === "Admin") ? true : false;
+        return $isDefault;
+    }
 }

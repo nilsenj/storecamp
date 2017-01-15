@@ -4,12 +4,14 @@ namespace App\Core\Models;
 
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
+use Juggl\UniqueHashids\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
 class Category extends Model implements Transformable
 {
     use TransformableTrait;
+    use GeneratesUnique;
 
     use \Cviebrock\EloquentSluggable\Sluggable;
     use SluggableScopeHelpers;

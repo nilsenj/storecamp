@@ -1,14 +1,8 @@
-.play-status {
-  position: fixed;
-  top: 0px;
-  background: #0d0d0d;
-  border-radius: 5px;
-  z-index: 1;
-  left: 25px;
+li.play-status {
+  position: relative;
+  border-radius: 0;
   display: none;
-
   i {
     color: lightyellow;
-    padding: 10px;
   }
 }

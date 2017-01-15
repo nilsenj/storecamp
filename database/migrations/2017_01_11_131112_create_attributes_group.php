@@ -15,6 +15,8 @@ class CreateAttributesGroup extends Migration
     {
         Schema::create('attributes_group', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('unique_id')->unique();
+
             $table->string('name')->unique();
             $table->tinyInteger('sort_order')->default(0);
             $table->timestamps();

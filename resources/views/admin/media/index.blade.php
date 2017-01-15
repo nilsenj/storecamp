@@ -15,7 +15,7 @@
                     <a class="" href="{{route('admin::media::index')}}" style="margin-left: 10px">
                         {!! "../" !!}
                     </a>
-                    <a class="" href="{{route('admin::media::index', $folder->id)}}" style="margin-left: 10px">
+                    <a class="" href="{{route('admin::media::index', $folder->unique_id)}}" style="margin-left: 10px">
                         {!! $path !!}
                     </a>
                 </b>
@@ -65,43 +65,43 @@
                     <span class="media_tags">
                            <span class="text-muted">only: </span>
                         <li>
-                    <a href="{{url('admin/media/'.$folder->id)}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                    <a href="{{url('admin/media/'.$folder->unique_id)}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
                         - all
                     </a>
                         </li>
                         <li>
-                            <a href="{{url('admin/media/'.$folder->id."?tag=video")}}" class="btn btn-xs btn-icon"
+                            <a href="{{url('admin/media/'.$folder->unique_id."?tag=video")}}" class="btn btn-xs btn-icon"
                                style="margin-left: 10px">
                         <i class="fa fa-video-camera"></i> - video
                     </a>
                         </li>
 
                         <li>
-                             <a href="{{url('admin/media/'.$folder->id."?tag=audio")}}" class="btn btn-xs btn-icon"
+                             <a href="{{url('admin/media/'.$folder->unique_id."?tag=audio")}}" class="btn btn-xs btn-icon"
                                 style="margin-left: 10px">
                         <i class="fa fa-music"></i> - audio
                     </a>
                         </li>
                         <li>
-                              <a href="{{url('admin/media/'.$folder->id."?tag=image")}}" class="btn btn-xs btn-icon"
+                              <a href="{{url('admin/media/'.$folder->unique_id."?tag=image")}}" class="btn btn-xs btn-icon"
                                  style="margin-left: 10px">
                         <i class="fa fa-image"></i> - image
                     </a>
                         </li>
                         <li>
-                            <a href="{{url('admin/media/'.$folder->id."?tag=pdf")}}" class="btn btn-xs btn-icon"
+                            <a href="{{url('admin/media/'.$folder->unique_id."?tag=pdf")}}" class="btn btn-xs btn-icon"
                                style="margin-left: 10px">
                         <i class="fa fa-file-pdf-o"></i> - pdf
                     </a>
                         </li>
                         <li>
-                             <a href="{{url('admin/media/'.$folder->id."?tag=archive")}}" class="btn btn-xs btn-icon"
+                             <a href="{{url('admin/media/'.$folder->unique_id."?tag=archive")}}" class="btn btn-xs btn-icon"
                                 style="margin-left: 10px">
                         <i class="fa fa-file-archive-o"></i> - archive
                     </a>
                         </li>
                         <li>
-                            <a href="{{url('admin/media/'.$folder->id."?tag=document")}}" class="btn btn-xs btn-icon"
+                            <a href="{{url('admin/media/'.$folder->unique_id."?tag=document")}}" class="btn btn-xs btn-icon"
                                style="margin-left: 10px">
                         <i class="fa fa-file-archive-o"></i> - document
                     </a>
@@ -110,10 +110,13 @@
                     </span>
                 </div><!-- /.box-header -->
                 {!! Form::open(['files' => true, 'route' => 'admin::media::upload',  'id' => 'my-awesome-dropzone-body', 'class' => 'dropzone box-body folder-body']) !!}
-                <input type="hidden" name="folder" value="{{$folder->id}}">
+                <input type="hidden" name="folder" value="{{$folder->unique_id}}">
                 @include('admin.media.index-body_part')
                 {!! Form::close() !!}
             </div><!-- /.box -->
+            <div class="text-center">
+                {!! $media["media"]->links() !!}
+            </div>
         </div>
     </div>
 @endsection

@@ -47,7 +47,9 @@ class AttributesController extends BaseController
     public function create()
     {
         $groupDescriptions = $this->groupDescriptionRepository->all()->pluck('name', 'id');
-        return $this->view('create', compact('groupDescriptions'));
+        $selector = buildSelect(route('admin::attribute_groups::get::json'), 'attributes_group_id', false, [], []);
+
+        return $this->view('create', compact('groupDescriptions','selector'));
     }
 
     /**
@@ -112,7 +114,7 @@ class AttributesController extends BaseController
 
             $groupDescriptions->update($data);
 
-            return redirect('admin/users');
+            return redirect('admin/attributes');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }

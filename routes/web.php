@@ -61,28 +61,37 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'as' => 'index'
 
         ]);
+
         Route::get('create', [
             'uses' => 'UsersController@create',
             'as' => 'create'
 
         ]);
+
         Route::get('edit/{id}', [
             'uses' => 'UsersController@edit',
             'as' => 'edit'
         ]);
+
         Route::put('update/{id}', [
             'uses' => 'UsersController@update',
             'as' => 'update'
-        ]);
+        ])->middleware('shouldLeftAdmin');
+
         Route::delete('{id}', [
             'uses' => 'UsersController@destroy',
             'as' => 'delete'
-        ]);
+        ])->middleware('notAdmin');
+
         Route::post('store', [
             'uses' => 'UsersController@store',
             'as' => 'store'
         ]);
 
+        Route::get('/delete/{id}', [
+            'uses' => 'UsersController@destroy',
+            'as' => 'get::delete'
+        ])->middleware('notAdmin');
     });
     Route::group(['prefix' => 'media', 'as' => 'media::'], function () {
 
@@ -174,22 +183,31 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'uses' => 'RolesController@edit',
             'as' => 'edit'
         ]);
+
         Route::put('update/{id}', [
             'uses' => 'RolesController@update',
             'as' => 'update'
-        ]);
+        ])->middleware('notDefaultRole');
+
         Route::delete('{id}', [
             'uses' => 'RolesController@destroy',
             'as' => 'delete'
-        ]);
+        ])->middleware('notDefaultRole');
+
         Route::post('store', [
             'uses' => 'RolesController@store',
             'as' => 'store'
         ]);
+
         Route::get('perms/json', [
             'uses' => 'RolesController@getPermsJson',
             'as' => 'permissions::json'
         ]);
+
+        Route::get('/delete/{id}', [
+            'uses' => 'RolesController@destroy',
+            'as' => 'get::delete'
+        ])->middleware('notDefaultRole');
 
     });
     Route::group(['prefix' => 'products', 'as' => 'products::'], function () {
@@ -302,9 +320,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'uses' => 'AttributeGroupsController@getJson',
             'as' => 'get::json'
         ]);
-
-
-
     });
 
     Route::group(['prefix' => 'attributes', 'as' => 'attributes::'], function () {
@@ -339,16 +354,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'uses' => 'AttributesController@destroy',
             'as' => 'get::delete'
         ]);
-
         Route::get('/attrs/json', [
 
             'uses' => 'AttributesController@getJson',
             'as' => 'get::json'
         ]);
     });
-
-
-
 
 
 });
@@ -370,7 +381,6 @@ Route::group(
             'as' => 'log-viewer::logs.delete',
             'uses' => 'LogViewerController@delete',
         ]);
-
     });
     Route::group(['prefix' => '/{date}'], function () {
         $this->get('/', [

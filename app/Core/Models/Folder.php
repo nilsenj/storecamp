@@ -4,6 +4,7 @@ namespace App\Core\Models;
 
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
+use Juggl\UniqueHashids\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
@@ -12,6 +13,7 @@ class Folder extends Model implements Transformable
     use TransformableTrait;
     use \Cviebrock\EloquentSluggable\Sluggable;
     use SluggableScopeHelpers;
+    use GeneratesUnique;
 
     /**
      * @var array
@@ -37,15 +39,10 @@ class Folder extends Model implements Transformable
         ];
     }
 
-    /**
-     * @param $query
-     * @return mixed
-     */
-    public function scopeOptions($query)
-    {
-        return $query->pluck('name', 'id');
-    }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function parent()
     {
         return $this->belongsTo('App\Core\Models\Folder', 'parent_id');

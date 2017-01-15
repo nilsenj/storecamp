@@ -18,6 +18,8 @@
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+                <li class="play-status"><a href="#"><i class="fa fa-play"></i></a></li>
+
                 <!-- Messages: style can be found in dropdown.less-->
                 <li class="dropdown messages-menu">
                     <!-- Menu toggle button -->

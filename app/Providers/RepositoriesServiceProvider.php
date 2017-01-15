@@ -31,8 +31,6 @@ class RepositoriesServiceProvider extends ServiceProvider
     public function register()
     {
         $models = [
-            'Basket',
-            'Item',
             'Media',
             'Folder',
             'Category',

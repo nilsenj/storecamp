@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.29 on 2017-01-13.
+ * Generated for Laravel 5.3.29 on 2017-01-15.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -16997,6 +16997,211 @@ namespace {
         public static function offsetUnset($key){
             //Method inherited from \DebugBar\DebugBar            
             return \Barryvdh\Debugbar\LaravelDebugbar::offsetUnset($key);
+        }
+        
+    }
+
+
+    class Toastr extends \nilsenj\Toastr\Facades\Toastr{
+        
+        /**
+         * Render the notifications' script tag
+         *
+         * @return string 
+         * @internal param bool $flashed Whether to get the
+         * @static 
+         */
+        public static function render(){
+            return \nilsenj\Toastr\Toastr::render();
+        }
+        
+        /**
+         * Add a notification
+         *
+         * @param string $type Could be error, info, success, or warning.
+         * @param string $message The notification's message
+         * @param string $title The notification's title
+         * @return bool Returns whether the notification was successfully added or
+         * not.
+         * @static 
+         */
+        public static function add($type, $message, $title = null, $options = array()){
+            return \nilsenj\Toastr\Toastr::add($type, $message, $title, $options);
+        }
+        
+        /**
+         * Shortcut for adding an info notification
+         *
+         * @param string $message The notification's message
+         * @param string $title The notification's title
+         * @static 
+         */
+        public static function info($message, $title = null, $options = array()){
+            return \nilsenj\Toastr\Toastr::info($message, $title, $options);
+        }
+        
+        /**
+         * Shortcut for adding an error notification
+         *
+         * @param string $message The notification's message
+         * @param string $title The notification's title
+         * @static 
+         */
+        public static function error($message, $title = null, $options = array()){
+            return \nilsenj\Toastr\Toastr::error($message, $title, $options);
+        }
+        
+        /**
+         * Shortcut for adding a warning notification
+         *
+         * @param string $message The notification's message
+         * @param string $title The notification's title
+         * @static 
+         */
+        public static function warning($message, $title = null, $options = array()){
+            return \nilsenj\Toastr\Toastr::warning($message, $title, $options);
+        }
+        
+        /**
+         * Shortcut for adding a success notification
+         *
+         * @param string $message The notification's message
+         * @param string $title The notification's title
+         * @static 
+         */
+        public static function success($message, $title = null, $options = array()){
+            return \nilsenj\Toastr\Toastr::success($message, $title, $options);
+        }
+        
+        /**
+         * Clear all notifications
+         *
+         * @static 
+         */
+        public static function clear(){
+            return \nilsenj\Toastr\Toastr::clear();
+        }
+        
+    }
+
+
+    class Hashids extends \Vinkla\Hashids\Facades\Hashids{
+        
+        /**
+         * Get the factory instance.
+         *
+         * @return \Vinkla\Hashids\HashidsFactory 
+         * @static 
+         */
+        public static function getFactory(){
+            return \Vinkla\Hashids\HashidsManager::getFactory();
+        }
+        
+        /**
+         * Get a connection instance.
+         *
+         * @param string $name
+         * @return object 
+         * @static 
+         */
+        public static function connection($name = null){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            return \Vinkla\Hashids\HashidsManager::connection($name);
+        }
+        
+        /**
+         * Reconnect to the given connection.
+         *
+         * @param string $name
+         * @return object 
+         * @static 
+         */
+        public static function reconnect($name = null){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            return \Vinkla\Hashids\HashidsManager::reconnect($name);
+        }
+        
+        /**
+         * Disconnect from the given connection.
+         *
+         * @param string $name
+         * @return void 
+         * @static 
+         */
+        public static function disconnect($name = null){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            \Vinkla\Hashids\HashidsManager::disconnect($name);
+        }
+        
+        /**
+         * Get the configuration for a connection.
+         *
+         * @param string $name
+         * @throws \InvalidArgumentException
+         * @return array 
+         * @static 
+         */
+        public static function getConnectionConfig($name){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            return \Vinkla\Hashids\HashidsManager::getConnectionConfig($name);
+        }
+        
+        /**
+         * Get the default connection name.
+         *
+         * @return string 
+         * @static 
+         */
+        public static function getDefaultConnection(){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            return \Vinkla\Hashids\HashidsManager::getDefaultConnection();
+        }
+        
+        /**
+         * Set the default connection name.
+         *
+         * @param string $name
+         * @return void 
+         * @static 
+         */
+        public static function setDefaultConnection($name){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            \Vinkla\Hashids\HashidsManager::setDefaultConnection($name);
+        }
+        
+        /**
+         * Register an extension connection resolver.
+         *
+         * @param string $name
+         * @param callable $resolver
+         * @return void 
+         * @static 
+         */
+        public static function extend($name, $resolver){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            \Vinkla\Hashids\HashidsManager::extend($name, $resolver);
+        }
+        
+        /**
+         * Return all of the created connections.
+         *
+         * @return object[] 
+         * @static 
+         */
+        public static function getConnections(){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            return \Vinkla\Hashids\HashidsManager::getConnections();
+        }
+        
+        /**
+         * Get the config instance.
+         *
+         * @return \Illuminate\Contracts\Config\Repository 
+         * @static 
+         */
+        public static function getConfig(){
+            //Method inherited from \GrahamCampbell\Manager\AbstractManager            
+            return \Vinkla\Hashids\HashidsManager::getConfig();
         }
         
     }

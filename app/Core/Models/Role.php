@@ -5,6 +5,7 @@ namespace App\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Core\Access\AccessRole;
+use Juggl\UniqueHashids\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
@@ -15,7 +16,8 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
 class Role extends AccessRole implements Transformable
 {
     use TransformableTrait;
-    
+    use GeneratesUnique;
+
     protected $fillable = ['name', 'display_name', 'description'];
 
     /**

@@ -4,6 +4,7 @@ namespace App\Core\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Juggl\UniqueHashids\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
@@ -11,7 +12,7 @@ class Product extends Model implements Transformable
 {
     use TransformableTrait;
     use \Cviebrock\EloquentSluggable\Sluggable;
-
+    use GeneratesUnique;
 
     /**
      * @var array

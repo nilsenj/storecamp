@@ -25,6 +25,9 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
         return Folder::class;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Model
+     */
     public function getModel()
     {
 
@@ -39,6 +42,10 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
+    /**
+     * @param $folder
+     * @return array
+     */
     public function getFolders($folder)
     {
 
@@ -48,6 +55,10 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
 
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     protected function selectChild($id)
     {
         $folders = $this->model->where('parent_id', $id)->get();
@@ -56,6 +67,10 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
 
     }
 
+    /**
+     * @param $folders
+     * @return mixed
+     */
     protected function addRelation($folders)
     {
 
@@ -70,6 +85,11 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
         return $folders;
     }
 
+    /**
+     * @param $folder
+     * @param array $array
+     * @return array
+     */
     public function getParentFolders($folder, $array = [])
     {
         while ($folder->parent_id != null) {
@@ -80,6 +100,11 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
         return $array;
     }
 
+    /**
+     * @param $folder
+     * @param array $array
+     * @return string
+     */
     public function getParentFoldersPath($folder, $array = [])
     {
         while ($folder->parent_id != null) {

@@ -38,11 +38,11 @@
                                 <td>{!! $groupAttribute->created_at !!}</td>
                                 <td class="text-center">
                                     <a class="edit"
-                                       href="{!! route('admin::attribute_groups::edit', $groupAttribute->id) !!}"
+                                       href="{!! route('admin::attribute_groups::edit', $groupAttribute->unique_id) !!}"
                                        title="Edit">
                                         <i class="fa fa-pencil-square-o"></i></a>
                                     <a class="delete text-warning"
-                                       href="{!! route('admin::attribute_groups::get::delete', $groupAttribute->id) !!}"
+                                       href="{!! route('admin::attribute_groups::get::delete', $groupAttribute->unique_id) !!}"
                                        title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
                                 </td>
                             </tr>

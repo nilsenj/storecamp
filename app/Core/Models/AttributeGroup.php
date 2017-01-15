@@ -4,6 +4,7 @@ namespace App\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Juggl\UniqueHashids\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
@@ -15,6 +16,7 @@ class AttributeGroup extends Model implements Transformable
 {
     use TransformableTrait;
     use SoftDeletes;
+    use GeneratesUnique;
 
     /**
      * @var array

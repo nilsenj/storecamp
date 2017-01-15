@@ -5,7 +5,8 @@
  * Date: 05.08.2015
  * Time: 22:23
  */
-return ['options' => ["progressBar" => true,
+return ['options' =>
+    ["progressBar" => true,
     "positionClass" =>"toast-bottom-right",
     "preventDuplicates"=> false,
     "showDuration" => 300,
@@ -15,5 +16,6 @@ return ['options' => ["progressBar" => true,
     "showEasing" => "swing",
     "hideEasing"=> "linear",
     "showMethod" => "fadeIn",
-    "hideMethod" => "fadeOut"]
+    "hideMethod" => "fadeOut"
+    ]
     ];

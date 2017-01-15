@@ -77,7 +77,7 @@ class CategoriesController extends BaseController
         $categories = $this->repository->all();
         $parent = null;
 
-        return $this->view('create', compact('categories','parent'));
+        return $this->view('create', compact('categories', 'parent'));
     }
 
     /**
@@ -87,7 +87,7 @@ class CategoriesController extends BaseController
     public function store(Request $request)
     {
         $data = $request->all();
-        $data['top'] = $request->top ? $request->top == "on" ? true : false : false ;
+        $data['top'] = $request->top ? $request->top == "on" ? true : false : false;
         $category = $this->repository->create($data);
 
         return redirect('admin/categories');
@@ -100,7 +100,7 @@ class CategoriesController extends BaseController
     public function show($id)
     {
         try {
-            $category = $this->repository->findByField('id', $id)->first();
+            $category = $this->repository->find($id);
             $categories = Category::all();
             return $this->view('show', compact('category', 'categories'));
         } catch (ModelNotFoundException $e) {
@@ -113,7 +113,8 @@ class CategoriesController extends BaseController
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getDescription($id) {
+    public function getDescription($id)
+    {
         try {
             $category = $this->repository->find($id);
             $description = $category->description;
@@ -130,7 +131,7 @@ class CategoriesController extends BaseController
     public function edit($id)
     {
         try {
-            $category = $this->repository->findByField('id', $id)->first();
+            $category = $this->repository->find($id);
             $parent = $category->parent;
             $categories = $this->repository->with('parent')->all();
             return $this->view('edit', compact('category', 'parent', 'categories'));
@@ -148,9 +149,9 @@ class CategoriesController extends BaseController
     {
         try {
             $data = $request->all();
-            $data['top'] = $request->top ? $request->top == "on" ? true : false : false ;
+            $data['top'] = $request->top ? $request->top == "on" ? true : false : false;
             $data["parent_id"] = empty($data["parent_id"]) ? null : $data["parent_id"];
-            $category = $this->repository->findByField('id', $id)->first();
+            $category = $this->repository->find($id);
             $category->update($data);
             return redirect('admin/categories');
         } catch (ModelNotFoundException $e) {

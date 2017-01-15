@@ -32,7 +32,9 @@
         "plank/laravel-mediable": "^2.4",
         "that0n3guy/transliteration": "^2.0",
         "maatwebsite/excel": "^2.1",
-        "barryvdh/laravel-debugbar": "^2.3"
+        "barryvdh/laravel-debugbar": "^2.3",
+        "torann/hashids": "^2.0",
+        "nilsenj/toastr-laravel": "dev-1.0-stable"
 
     },
     "require-dev": {

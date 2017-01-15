@@ -16,7 +16,7 @@ use App\Core\Models\Media;
 class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
 {
     public $folder;
-
+    protected $perPage = 100;
     /**
      * MediaRepositoryEloquent constructor.
      * @param Application $app
@@ -107,9 +107,9 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
         if ($tagSearch) {
             $specificTag = "%{$tagSearch}%";
             return $model->where('aggregate_type', 'like', $specificTag)
-                ->paginate();
+                ->simplePaginate();
         } else {
-            return $model->paginate();
+            return $model->simplePaginate($this->perPage);
         }
 
     }
@@ -162,7 +162,7 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
         } else {
             $media = $this->specificSearch($model->inDirectory('local', $path), $request);
         }
-        $media = $this->filesRender($media, $path, $tag, $folder);
+        $media = ["media" => $media, "path" => $path, "tag" => $tag, "folderInstance" => $folder];
         return $media;
     }
 
@@ -174,6 +174,6 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
      */
     private function filesRender($media, $path, $tag, $folder)
     {
-        return view('admin.media.files-builder', compact('media', 'path', 'tag', 'folder', 'specificMediaFilesCount', 'audioFilesCount', 'videoFilesFilesCount'));
+        return view('admin.media.files-builder', compact('media', 'path', 'tag', 'folder'));
     }
 }

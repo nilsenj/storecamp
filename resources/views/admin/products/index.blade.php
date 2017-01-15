@@ -57,11 +57,11 @@
                                 <td>{!! $product->stock_status !!}</td>
                                 <td>{!! $product->created_at !!}</td>
                                 <td class="text-center">
-                                    <a class="edit" href="{!! route('admin::products::edit', $product->id) !!}"
+                                    <a class="edit" href="{!! route('admin::products::edit', $product->unique_id) !!}"
                                        title="Edit">
                                         <i class="fa fa-pencil-square-o"></i></a>
                                     <a class="delete text-warning"
-                                       href="{!! route('admin::products::get::delete', $product->id) !!}"
+                                       href="{!! route('admin::products::get::delete', $product->unique_id) !!}"
                                        title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
 
                                 </td>

@@ -54,8 +54,16 @@
   z-index: 9999;
 }
 
+.file-item .mailbox-attachment-icon {
+  border: 1px solid transparent;
+}
+
 .file-item .mailbox-attachment-info {
   overflow: hidden;
+}
+
+.file-item:hover .mailbox-attachment-icon {
+  border: 1px solid #3c8dbc;
 }
 
 .file-item .item-icon {
@@ -133,19 +141,18 @@
   background: white;
 }
 
-.play-status {
-  position: fixed;
-  top: 0px;
-  background: #0d0d0d;
-  border-radius: 5px;
-  z-index: 1;
-  left: 25px;
+.playing .mailbox-attachment-icon {
+  border: 1px solid #3c8dbc;
+}
+
+li.play-status {
+  position: relative;
+  border-radius: 0;
   display: none;
 }
 
-.play-status i {
+li.play-status i {
   color: lightyellow;
-  padding: 10px;
 }
 
 /*# sourceMappingURL=app.css.map */

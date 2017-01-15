@@ -16,6 +16,8 @@ class CreateAttributesGroupDescription extends Migration
         Schema::create('attributes_group_description', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
+            $table->string('unique_id')->unique();
+
             $table->integer('attributes_group_id')->unsigned();
             $table->foreign('attributes_group_id')->references('id')->on('attributes_group')
                 ->onUpdate('cascade')->onDelete('cascade');

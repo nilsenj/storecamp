@@ -1,5 +1,5 @@
 @if(isset($product))
-    {!! Form::model($product, ['method' => 'PUT', 'files' => false, 'route' => ['admin::products::update', $product->id]]) !!}
+    {!! Form::model($product, ['method' => 'PUT', 'files' => false, 'route' => ['admin::products::update', $product->unique_id]]) !!}
 @else
     {!! Form::open(['files' => false, 'route' => 'admin::products::store']) !!}
 @endif
@@ -34,7 +34,7 @@
                     <div class="input-group-addon">
                         <i class="fa fa-calendar"></i>
                     </div>
-                    {!! Form::text('date_available', null, ["id" => "input-date_available", "placeholder" => "Date Available", "data-date-format" => "yyyy-mm-dd", "class" => "form-control simple_date"]) !!}
+                    {!! Form::text('date_available', isset($product) ? null : date('Y-m-d'), ["id" => "input-date_available", "placeholder" => "Date Available", "data-date-format" => "yyyy-mm-dd", "class" => "form-control simple_date"]) !!}
                     {!! $errors->first('date_available', '<div class="text-danger">:message</div>') !!}
                 </div>
             </div>

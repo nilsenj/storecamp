@@ -24,8 +24,6 @@ class TransformersServiceProvider extends ServiceProvider
     public function register()
     {
         $models = [
-            'Basket',
-            'Item',
             'File',
             'AttributeGroup',
             'AttributeGroupDescription'

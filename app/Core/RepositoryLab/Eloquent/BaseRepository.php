@@ -4,6 +4,7 @@ namespace RepositoryLab\Repository\Eloquent;
 use Closure;
 use Exception;
 use Illuminate\Contracts\Bus\Dispatcher;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use RepositoryLab\Repository\Contracts\CriteriaInterface;
 use RepositoryLab\Repository\Contracts\Presentable;
 use RepositoryLab\Repository\Contracts\PresenterInterface;
@@ -82,6 +83,10 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
      */
     protected $scopeQuery = null;
 
+    /**
+     * @var int
+     */
+    protected $perPage = 10;
 
    /**
      * @param Application $app
@@ -133,7 +138,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     }
 
     public function perPage() {
-        return config('repository.pagination.limit', 10);
+        return config('repository.pagination.limit', $this->perPage);
     }
 
     /**
@@ -386,10 +391,25 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     {
         $this->applyCriteria();
         $this->applyScope();
-        $model = $this->model->findOrFail($id, $columns);
-        $this->resetModel();
+        if (is_numeric($id)) {
+            $model = $this->model->where("id", '=', $id)->first();
+        } else {
+            $model = $this->model->where('unique_id', '=', $id)->first();
+        }
+        if (is_array($id)) {
+            if (count($model) == count(array_unique($id))) {
+                $this->resetModel();
 
-        return $this->parserResult($model);
+                return $this->parserResult($model);
+            }
+        } elseif (! is_null($model)) {
+            $this->resetModel();
+
+            return $this->parserResult($model);
+        }
+
+        throw (new ModelNotFoundException())->setModel(get_class($this->model), $id);
+//        $model = $this->model->findOrFail($id, $columns);
     }
 
     /**
@@ -839,15 +859,13 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         return $result;
     }
 
-    public function findBy($key, $value, $operator = '=')
+    public function where($key, $value, $operator = '=')
     {
         $this->applyCriteria();
         $this->applyScope();
 
-        $this->model->where($key, $operator, $value);
+        $model = $this->model->where($key, $operator, $value)->get($columns = ['*']);
 
-
-        $model = $this->model->get($columns = ['*']);
         $this->resetModel();
 
         return $this->parserResult($model);
