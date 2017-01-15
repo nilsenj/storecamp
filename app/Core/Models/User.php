@@ -133,35 +133,6 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
         $this->attributes['password'] = \Hash::make($value);
     }
 
-
-    /**
-     * @return bool
-     */
-    public function haveGenericLogo()
-    {
-
-        return !is_null($this->logo_path);
-    }
-
-    /**
-     * @return string
-     */
-    public function getLogoImg()
-    {
-        if (!empty($this->getMedia('logo')->first())) {
-            $pictures = $this->getMedia('logo');
-            $picture = $pictures[0]->getUrl();
-
-            return url($picture);
-        } elseif (empty($this->getMedia('logo')->first()) && $this->haveGenericLogo()) {
-
-            return "data:image/jpeg;base64," . base64_encode($this->getLogoFromPath());
-        } else {
-
-            return url('images/default-user.png');
-        }
-    }
-
     /**
      * CHECK if the customer is the owner of the instance
      * @param $instance
