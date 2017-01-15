@@ -14,10 +14,12 @@ Homestead.yaml
 /public/uploads/**
 /public/uploads/**/*
 /public/uploads/**/*.mp4
-/public/uploads/**/*.mp4
 /public/uploads/**/*.avi
 /public/uploads/**/*.mp3
 /public/uploads/**/*.doc
 /public/uploads/**/*.docx
 /public/uploads/**/*.pdf
 /public/uploads/**/*.zip
+/.phpintel/
+public/images/
+resources/views/site/

@@ -6,7 +6,7 @@ if (!function_exists('resolveModelName')) {
      * @param $model
      * @return string
      */
-    function resolveModelName($model)
+    function resolveModelName($model) : string
     {
         $reflection = new ReflectionClass($model);
         return $reflection->getShortName();
@@ -14,40 +14,45 @@ if (!function_exists('resolveModelName')) {
     }
 }
 
-/**
- * @param $migrationClass
- * @return mixed
- */
-function determineActiveDBandResolveUp($migrationClass)
-{
+if (!function_exists('determineActiveDBandResolveDown')) {
 
-    if (env('database.default') == 'mysql') {
+    /**
+     * @param $migrationClass
+     * @return mixed
+     */
+    function determineActiveDBandResolveUp($migrationClass)
+    {
 
-        return $migrationClass::mySQLDB();
+        if (env('database.default') == 'mysql') {
 
-    }
+            return $migrationClass::mySQLDB();
 
-    if (config('database.default') == 'pgsql') {
+        }
 
-        return $migrationClass::postgreSQL();
+        if (config('database.default') == 'pgsql') {
+
+            return $migrationClass::postgreSQL();
+        }
     }
 }
 
+if (!function_exists('determineActiveDBandResolveDown')) {
 
-/**
- * @param $migrationClass
- * @return mixed
- */
-function determineActiveDBandResolveDown($migrationClass)
-{
+    /**
+     * @param $migrationClass
+     * @return mixed
+     */
+    function determineActiveDBandResolveDown($migrationClass)
+    {
 
-    if (config('database.default') == 'mysql') {
-        return $migrationClass::downmySQLDB();
-    }
+        if (config('database.default') == 'mysql') {
+            return $migrationClass::downmySQLDB();
+        }
 
-    if (config('database.default') == 'pgsql') {
+        if (config('database.default') == 'pgsql') {
 
-        return $migrationClass::downpostgreSQL();
+            return $migrationClass::downpostgreSQL();
+        }
     }
 }
 
@@ -57,7 +62,7 @@ if (!function_exists('ruTolat')) {
      * @param $str
      * @return string
      */
-    function ruTolat($str)
+    function ruTolat(string $str) : string
     {
         $tr = array(
             "А" => "a", "Б" => "b", "В" => "v", "Г" => "g", "Д" => "d",
@@ -88,7 +93,7 @@ if (!function_exists('formatBytes')) {
      * @param int $precision
      * @return string
      */
-    function formatBytes($bytes, $precision = 2)
+    function formatBytes($bytes, $precision = 2) : string
     {
         $units = array('B', 'KB', 'MB', 'GB', 'TB');
 
@@ -121,6 +126,24 @@ if (!function_exists('buildSelect')) {
         $selector = new \App\Core\Components\Select\SelectBuilder();
 
         return $selector->render($actionUrl, $attrName, $multiple, $data, $selected, $class, $placeholder);
+    }
+}
+if (!function_exists('checkRoute')) {
+
+    /**
+     * @param string $route
+     * @return bool
+     */
+    function checkRoute(string $route) : bool
+    {
+        $routes = \Route::getRoutes()->getRoutes();
+        foreach ($routes as $r) {
+            if ($r->getUri() == $route) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 

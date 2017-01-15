@@ -34,10 +34,6 @@
             <li class="header">Store's Menu</li>
             <!-- Optionally, you can add icons to the links -->
             <li><a href="{{ route('admin::dashboard') }}"><i class='fa fa-th'></i> <span>Widgets</span></a></li>
-            <li><a href="{{ route('admin::categories::index') }}"><i class='fa fa-archive'></i> <span>Categories</span></a>
-            </li>
-
-            <li><a href="{{ route('admin::users::index') }}"><i class='fa fa-users'></i> <span>Users</span></a></li>
             <li class="treeview">
                 <a href="{{ route('admin::products::index') }}"><i class='fa fa-cube'></i> <span>Products</span> <i
                             class="fa fa-caret-square-o-down pull-right"></i></a>
@@ -47,6 +43,35 @@
                     <!--    <li><a href="#">Link in level 2</a></li> -->
                 </ul>
             </li>
+
+            <li class="treeview">
+                <a href="/hahaha"><i class='fa fa-newspaper-o'></i> <span>Product Reviews</span> <i
+                            class="fa fa-caret-square-o-down pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('admin::products::index') }}">List of Reviews</a></li>
+                    <li><a href="{{ route('admin::products::create') }}">Create Review</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="{{ route('admin::categories::index') }}">
+                    <i class="fa fa-archive"></i>
+                    <span>Categories</span>
+                    <i class="fa fa-caret-square-o-down pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="{{ route('admin::categories::index') }}">
+                            <i class="fa fa-link"></i>All Categories
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin::categories::create') }}">
+                            <i class="fa fa-link"></i>Create Category
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             <li class="treeview">
                 <a href="{{ route('admin::attributes::index') }}"><i class='fa fa-puzzle-piece'></i> <span>Attributes</span> <i
                             class="fa fa-caret-square-o-down pull-right"></i></a>
@@ -56,6 +81,63 @@
                     <!--    <li><a href="#">Link in level 2</a></li> -->
                 </ul>
             </li>
+            <li class="treeview">
+                <a href="/hahaha">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>Sales</span>
+                    <i class="fa fa-caret-square-o-down pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="{{ route('admin::roles::index') }}">
+                            <i class="fa fa-link"></i>Orders
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin::roles::index') }}">
+                            <i class="fa fa-link"></i>Returns
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin::roles::create') }}">
+                            <i class="fa fa-link"></i>Promocodes
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="/hahaha">
+                    <i class="fa  fa-line-chart"></i>
+                    <span>Marketing</span>
+                    <i class="fa fa-caret-square-o-down pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="{{ route('admin::roles::index') }}">
+                            <i class="fa fa-link"></i>Subscribers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin::roles::index') }}">
+                            <i class="fa fa-link"></i>Mail
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="/hahaha"><i class='fa  fa-paint-brush'></i> <span>Design</span> <i
+                            class="fa fa-caret-square-o-down pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('admin::attributes::index') }}">Layouts</a></li>
+                    <li><a href="{{ route('admin::attribute_groups::index') }}">Banners</a></li>
+                    <li><a href="{{ route('admin::attribute_groups::index') }}">Static Pages</a></li>
+                </ul>
+            </li>
+
+            <li><a href="{{ route('admin::users::index') }}"><i class='fa fa-users'></i> <span>Users</span></a></li>
+
             <li class="header">Administration</li>
             <li><a href="{{ route('admin::media::index') }}"><i class='fa fa-files-o'></i> <span>Media Storage</span></a></li>
 
@@ -98,11 +180,7 @@
                     <!--    <li><a href="#">Link in level 2</a></li> -->
                 </ul>
             </li>
-            {{--<li class="nav-item" role="presentation">--}}
-            {{--<a role="menuitem" tabindex="-1" class="" href="{!! route('web::admin::dblogs::allUsersAdmin') !!}">--}}
-            {{--<i class='text-info fa fa-th'></i>--}}
-            {{--<span class="nav-text">Users - DB logs</span></a>--}}
-            {{--</li>--}}
+
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->

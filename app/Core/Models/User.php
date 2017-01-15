@@ -15,6 +15,10 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
+/**
+ * Class User
+ * @package App\Core\Models
+ */
 class User extends Authenticatable implements Transformable, AuthenticatableContract,
     CanResetPasswordContract
 {
@@ -25,6 +29,9 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     use AccessUserTrait;
     use GeneratesUnique;
 
+    /**
+     * @var string
+     */
     protected $table = 'users';
 
     /**
@@ -33,7 +40,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'logo_path'
     ];
 
     /**
@@ -44,6 +51,9 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     protected $hidden = [
         'password', 'remember_token',
     ];
+    /**
+     * @var array
+     */
     protected $dates = ['deleted_at', 'created_at'];
 
     /**
@@ -113,6 +123,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     {
         return $this->hasRole('Admin');
     }
+
     /**
      * @var array
      */
@@ -122,14 +133,6 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
         $this->attributes['password'] = \Hash::make($value);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLogoFromPath()
-    {
-
-        return \Storage::get($this->logo_path);
-    }
 
     /**
      * @return bool
@@ -170,22 +173,27 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
             return true;
         } else return false;
     }
+
     /**
      * @param $query
      * @param $name
      */
-    public function scopeByMailOrName($query, $name){
+    public function scopeByMailOrName($query, $name)
+    {
 
-        $query->where("name",$name)->orWhere('email', $name);
+        $query->where("name", $name)->orWhere('email', $name);
     }
+
     /**
      * @param $query
      * @return mixed
      */
-    public function scopeAllExcept($query){
+    public function scopeAllExcept($query)
+    {
 
         return $query->where('id', '<>', \Auth::id());
     }
+
     /**
      * @param $query
      */
@@ -194,7 +202,12 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
 
         return $query->where('user_id', '=', \Auth::id());
     }
-    public function getRole(){
+
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
 
         return $this->roles()->first();
     }
@@ -205,7 +218,8 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
      * @param $slug
      * @return mixed
      */
-    public static function findBySlug($slug) {
+    public static function findBySlug($slug)
+    {
 
         return self::where('slug', $slug)->first();
     }

@@ -177,11 +177,25 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
+
+        //Instances Providers
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        \App\Providers\AttributeGroupDescriptionServiceProvider::class,
+        \App\Providers\AttributeGroupServiceProvider::class,
+        \App\Providers\CategoryServiceProvider::class,
+        \App\Providers\FolderServiceProvider::class,
+        \App\Providers\MediaServiceProvider::class,
+        \App\Providers\PermissionServiceProvider::class,
+        \App\Providers\ProductServiceProvider::class,
+        \App\Providers\RoleServiceProvider::class,
+        \App\Providers\UserServiceProvider::class,
 
         //Apis service providers
         \App\Core\APIs\Youtube\YoutubeServiceProviderLaravel5::class,
+        //End of API service providers
+
+        //Vendor Providers
         DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
