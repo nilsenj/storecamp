@@ -4,9 +4,12 @@ namespace App\Core\Repositories;
 
 use App\Core\Models\Role;
 use App\Core\Models\Permission;
+use App\Core\Models\User;
 use Illuminate\Support\Facades\Input;
 use RepositoryLab\Repository\Eloquent\BaseRepository;
 use RepositoryLab\Repository\Criteria\RequestCriteria;
+use Illuminate\Container\Container as Application;
+use Illuminate\Contracts\Bus\Dispatcher;
 
 class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
 {
@@ -55,7 +58,7 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
     {
         $listIds = $data['permissions'];
         $roleCreate = $this->getModel()->create($data);
-        foreach($listIds as $key => $value ) {
+        foreach ($listIds as $key => $value) {
 
             $roleCreate->attachPermission($value);
         }
@@ -68,7 +71,8 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
      * @param $dataPerm
      * @param $role
      */
-    public function renew($data, $dataPerm, $role){
+    public function renew($data, $dataPerm, $role)
+    {
 
         $role->update($data);
 
@@ -77,14 +81,27 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
 
         if ($permissionsCount) {
             $role->detachAllPermissions();
-            foreach($listIds as $key => $value ) {
+            foreach ($listIds as $key => $value) {
                 $role->attachPermission(Permission::find($value));
             }
         }
         if ($permissionsCount == 0 && count(Input::get('permissions')) > 0) {
-            foreach($listIds as $key => $value ) {
+            foreach ($listIds as $key => $value) {
                 $role->attachPermission(Permission::find($value));
             }
         }
     }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function getRoleUsers(string $name)
+    {
+        $user = new User();
+        $roleUsers = $user->getUsersByRole($name);
+
+        return $roleUsers;
+    }
+
 }

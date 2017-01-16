@@ -39,7 +39,10 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Products',
             'Permission',
             'AttributeGroup',
-            'AttributeGroupDescription'
+            'AttributeGroupDescription',
+            'NewsLetterList',
+            'ProductReview',
+            'Subscribers'
         ];
 
         foreach ($models as $repo) {

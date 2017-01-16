@@ -51,5 +51,15 @@ class Role extends AccessRole implements Transformable
     {
         $this->perms()->sync([]);
     }
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function getRoleUsers(string $name)
+    {
+        $user = new User();
+        $roleUsers = $user->getUsersByRole($name);
 
+        return $roleUsers;
+    }
 }

@@ -61,6 +61,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'as' => 'index'
 
         ]);
+        Route::get('/{id}', [
+            'uses' => 'UsersController@show',
+            'as' => 'show'
+
+        ]);
+
 
         Route::get('create', [
             'uses' => 'UsersController@create',
@@ -245,6 +251,61 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
         ]);
 
     });
+    Route::group(['prefix' => 'reviews','as' => 'reviews::'], function () {
+
+        Route::get('index',
+            [
+                'uses' => 'Admin\ProductReviewController@index',
+                'as' => 'index'
+            ]);
+
+        Route::get('show/{id}',
+            [
+                'uses' => 'Admin\ProductReviewController@show',
+                'as' => 'show'
+            ]);
+
+//            Route::get('create/feedback',
+//                [
+//                    'uses' => 'Admin\ProductReviewController@create',
+//                    'as' => 'createFeedback'
+//                ]);
+//            Route::get('edit/feedback/{id}',
+//                [
+//                    'uses' => 'Admin\ProductReviewController@edit',
+//                    'as' => 'editFeedback'
+//                ]);
+//
+//            Route::patch('update/feedback/{id}',
+//                [
+//                    'uses' => 'Admin\ProductReviewController@update',
+//                    'as' => 'updateFeedback'
+//                ]);
+
+        Route::put('reply/review/{id}',
+            [
+                'uses' => 'Admin\ProductReviewController@replyFeedback',
+                'as' => 'reply'
+
+            ]);
+
+        Route::delete('delete/review/{id}',
+            [
+                'uses' => 'Admin\ProductReviewController@destroy',
+                'as' => 'destroy'
+            ]);
+
+        Route::post('store/review',
+            [
+                'uses' => 'Admin\ProductReviewController@store',
+                'as' => 'store'
+            ]);
+
+        Route::get('markasread/productReview/{feed}', [
+            'uses' => 'Admin\ProductReviewController@markAsRead',
+            'as' => 'markasread'
+        ]);
+    });
 
     Route::group(['prefix' => 'categories', 'as' => 'categories::'], function () {
         Route::get('/', [
@@ -360,7 +421,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'as' => 'get::json'
         ]);
     });
+    Route::group(['prefix' => 'newsletter', 'as' => 'newsletter::'], function () {
 
+        Route::get('/', ['uses' => 'SubscriptionController@index', 'as' => 'subscribe::index']);
+//        Route::get('/show/{type}', ['uses' => 'SubscriptionController@show', 'as' => 'subscribe::show']);
+//        Route::get('/show/{user}', ['uses' => 'SubscriptionController@showUser', 'as' => 'subscribe::showUser']);
+//
+//        Route::post('/generate/{type}/{newsList_id}',
+//            [
+//                'uses' => 'SubscriptionController@generate',
+//                'as' => 'subscribe::generate'
+//            ]);
+    });
 
 });
 

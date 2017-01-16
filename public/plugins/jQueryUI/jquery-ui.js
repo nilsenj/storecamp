@@ -1303,7 +1303,7 @@ $.fn.position = function( options ) {
 		});
 
 		if ( options.using ) {
-			// adds feedback as second argument to using callback, if present
+			// adds productReview as second argument to using callback, if present
 			using = function( props ) {
 				var left = targetOffset.left - position.left,
 					right = left + targetWidth - elemWidth,

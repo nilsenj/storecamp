@@ -151,4 +151,5 @@
       user experience. Slimscroll is required when using the
       fixed layout. -->
 <script src="{{asset("js/modules.js")}}"></script>
+<script src="{{asset("js/page-inbox-demo.js")}}"></script>
 @yield('scripts_add')

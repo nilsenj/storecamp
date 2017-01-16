@@ -34,7 +34,8 @@
         "maatwebsite/excel": "^2.1",
         "barryvdh/laravel-debugbar": "^2.3",
         "torann/hashids": "^2.0",
-        "nilsenj/toastr-laravel": "dev-1.0-stable"
+        "nilsenj/toastr-laravel": "dev-1.0-stable",
+        "league/csv": "8.0"
 
     },
     "require-dev": {
@@ -53,7 +54,13 @@
     "autoload": {
         "classmap": [
             "database",
-            "App/Helpers/helpers.php"
+            "App/Helpers/helpers.php",
+            "App/Core/Models",
+            "App/Core/Presenters",
+            "App/Core/Repositories",
+            "App/Core/Traits",
+            "App/Core/MailComposers",
+            "App/Core/Components/EmailMarketer"
         ],
         "psr-4": {
             "App\\": "app/",
@@ -79,6 +86,7 @@
             "App\\Core\\Components\\Select\\SelectBuilder\\":"App/Core/Components/Select/",
             "App\\Core\\components\\ActiveItem\\":"App/Core/Components/ActiveItem/",
             "App\\Core\\Components\\Flash\\":"App/Core/Components/Flash/",
+            "App\\Core\\Components\\Messenger\\": "app/Core/Components/Messenger/Messenger/",
             "nilsenj\\Toastr\\": "packages/nilsenj/toastr-laravel/src/"
         }
     },

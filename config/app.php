@@ -190,6 +190,10 @@ return [
         \App\Providers\ProductServiceProvider::class,
         \App\Providers\RoleServiceProvider::class,
         \App\Providers\UserServiceProvider::class,
+        \App\Providers\CustomValidatorServiceProvider::class,
+        \App\Providers\SubscriberServiceProvider::class,
+        \App\Core\Components\EmailMarketer\EmailMarketerServiceProvider::class,
+        \App\Core\Components\Messenger\MessengerServiceProvider::class,
 
         //Apis service providers
         \App\Core\APIs\Youtube\YoutubeServiceProviderLaravel5::class,

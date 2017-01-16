@@ -4,6 +4,7 @@ namespace App\Core\Models;
 
 
 use App\Core\Access\Traits\AccessUserTrait;
+use App\Core\Components\Messenger\Traits\Messagable;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -28,6 +29,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     use \Illuminate\Auth\Authenticatable, CanResetPassword;
     use AccessUserTrait;
     use GeneratesUnique;
+    use Messagable;
 
     /**
      * @var string
@@ -40,7 +42,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'logo_path'
+        'name','notify', 'email', 'password', 'logo_path'
     ];
 
     /**
@@ -69,7 +71,13 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
             ]
         ];
     }
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function productReview()
+    {
+        return $this->hasMany(ProductReview::class, 'user_id');
+    }
     /**
      * @return mixed
      */

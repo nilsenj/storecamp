@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UserTableSeeder::class);
         $this->call(CategoriesSeeder::class);
         $this->call(FolderTableSeeder::class);
+        $this->call(ProductSeeder::class);
+        $this->call(ProductReviewSeeder::class);
 
         \Illuminate\Database\Eloquent\Model::reguard();
     }

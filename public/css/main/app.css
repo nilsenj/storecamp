@@ -34,6 +34,107 @@
   color: #455c66 !important;
 }
 
+.review-wrapper {
+  position: relative;
+  display: block;
+  padding: 15px 0;
+  margin-top: -15px;
+  margin-bottom: -15px;
+}
+
+@media (min-width: 992px) {
+  .review-wrapper {
+    padding-left: 215px;
+  }
+}
+
+.review-control {
+  position: absolute;
+  left: 0;
+  width: 200px;
+  z-index: 1;
+}
+
+.review-paper {
+  position: relative;
+  min-height: 720px;
+  z-index: 2;
+  background-color: #fff;
+  box-shadow: 0 2px 5px 0 rgba(22, 24, 27, 0.26);
+  -webkit-transition: all 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+  transition: all 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.review-paper.open {
+  -webkit-transform: translate(215px, 0);
+  transform: translate(215px, 0);
+}
+
+.review-paper > .review-paper-footer, .review-paper > .review-paper-heading {
+  padding: 15px;
+}
+
+.review-paper > .review-paper-body {
+  position: relative;
+  z-index: 1;
+}
+
+.review-paper > .review-paper-footer {
+  position: relative;
+  height: 60px;
+  z-index: 2;
+}
+
+.review-paper > .review-paper-heading {
+  position: relative;
+  height: 60px;
+  z-index: 2;
+  top: 0;
+}
+
+.review-paper > .review-paper-footer {
+  bottom: 0;
+}
+
+.review-paper .panel {
+  box-shadow: none;
+}
+
+.review-paper .panel.review-list-item {
+  margin-bottom: 0;
+}
+
+.review-paper .panel.review-list-item.panel-expanded {
+  position: relative;
+}
+
+.review-paper .panel.review-list-item.panel-expanded > .panel-heading .media-left {
+  min-width: 76px;
+}
+
+.review-paper .panel.review-list-item.panel-expanded > .panel-heading .media-left > .btn {
+  vertical-align: top;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.review-paper .panel.review-list-item.panel-expanded > .panel-body {
+  padding-left: 86px;
+}
+
+.review-paper .panel [data-toggle=panel-expand] {
+  cursor: pointer;
+}
+
+@media (min-width: 992px) {
+  .review-paper > .review-paper-body {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+
 .delete-file, .rename-file, .download-file, .tag-file {
   position: absolute;
   top: auto;

@@ -48,7 +48,18 @@
                 <a href="/hahaha"><i class='fa fa-newspaper-o'></i> <span>Product Reviews</span> <i
                             class="fa fa-caret-square-o-down pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ route('admin::products::index') }}">List of Reviews</a></li>
+                    <li class="nav-item" role="presentation">
+                        <a role="menuitem" tabindex="-1" href="{{route('admin::reviews::index')}}">
+                            <span class="nav-icon"><i class="fa fa-feed"></i></span>
+                            <?php $count = \Auth::user()->newMessagesCount(); ?>
+                            @if($count > 0)
+                                <span class="nav-text"> List of Reviews</span>
+                                <span class="feedback-item-status label label-warning">{!! $count !!}</span>
+                            @else
+                                <span class="nav-text"> List of Reviews</span>
+                                <span class="feedback-item-status label label-default">0</span>
+                            @endif
+                        </a></li>
                     <li><a href="{{ route('admin::products::create') }}">Create Review</a></li>
                 </ul>
             </li>
