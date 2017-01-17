@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Core\Models\ProductReview;
 use App\Core\Repositories\ProductReviewRepository;
-use App\Http\Requests\ReplyProductReviewFormRequest;
+use App\Core\Validators\ProductReview\ReplyProductReviewFormRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Core\Repositories\ProductsRepository;
@@ -49,12 +49,12 @@ class ProductReviewController extends Controller
         try {
 
             if ($request->get('search')) {
-                $fbs = $this->productReview->getModel()->byRating($request->get('search'))->simplePaginate(15);
+                $fbs = $this->productReview->getModel()->byRating($request->get('search'))->with(['product', 'user', 'thread'])->simplePaginate(15);
 
             } else {
                 $this->productReview->pushCriteria(app(\RepositoryLab\Repository\Criteria\RequestCriteria::class));
 
-                $fbs = $this->productReview->getModel()->simplePaginate(15);
+                $fbs = $this->productReview->getModel()->with(['product', 'user', 'thread'])->simplePaginate(15);
             }
             $currentUserId = \Auth::user()->id;
             return view('admin.productReview.index', compact('fbs', 'currentUserId'));
@@ -105,7 +105,7 @@ class ProductReviewController extends Controller
 
         $fbs = $this->productReview->replyProductReview($id, $request->get('reply_message'));
 
-        return redirect()->to(route("web::admin::showFeedback", $fbs->id));
+        return redirect()->to(route("admin::reviews::show", $fbs->id));
 
     }
 

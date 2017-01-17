@@ -43,131 +43,131 @@ Route::get('/home', 'HomeController@index');
 Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], function () {
 
     Route::get('dashboard', [
-        'uses' => 'AdminController@show',
+        'uses' => 'Admin\AdminController@show',
         'as' => 'dashboard'
     ]);
     Route::get('/', [
-        'uses' => 'AdminController@show',
+        'uses' => 'Admin\AdminController@show',
         'as' => 'dashboard'
     ]);
 
     Route::get('sales', [
-        'uses' => 'AdminController@sales'
+        'uses' => 'Admin\AdminController@sales'
     ]);
     Route::group(['prefix' => 'users', 'as' => 'users::'], function () {
 
         Route::get('/', [
-            'uses' => 'UsersController@index',
+            'uses' => 'Admin\UsersController@index',
             'as' => 'index'
 
         ]);
         Route::get('/{id}', [
-            'uses' => 'UsersController@show',
+            'uses' => 'Admin\UsersController@show',
             'as' => 'show'
 
         ]);
 
 
         Route::get('create', [
-            'uses' => 'UsersController@create',
+            'uses' => 'Admin\UsersController@create',
             'as' => 'create'
 
         ]);
 
         Route::get('edit/{id}', [
-            'uses' => 'UsersController@edit',
+            'uses' => 'Admin\UsersController@edit',
             'as' => 'edit'
         ]);
 
         Route::put('update/{id}', [
-            'uses' => 'UsersController@update',
+            'uses' => 'Admin\UsersController@update',
             'as' => 'update'
         ])->middleware('shouldLeftAdmin');
 
         Route::delete('{id}', [
-            'uses' => 'UsersController@destroy',
+            'uses' => 'Admin\UsersController@destroy',
             'as' => 'delete'
         ])->middleware('notAdmin');
 
         Route::post('store', [
-            'uses' => 'UsersController@store',
+            'uses' => 'Admin\UsersController@store',
             'as' => 'store'
         ]);
 
         Route::get('/delete/{id}', [
-            'uses' => 'UsersController@destroy',
+            'uses' => 'Admin\UsersController@destroy',
             'as' => 'get::delete'
         ])->middleware('notAdmin');
     });
     Route::group(['prefix' => 'media', 'as' => 'media::'], function () {
 
         Route::get('/{path?}', [
-            'uses' => 'MediaController@index',
+            'uses' => 'Admin\MediaController@index',
             'as' => 'index'
         ]);
 
         Route::get('/getIndex/{path?}', [
-            'uses' => 'MediaController@getIndex',
+            'uses' => 'Admin\MediaController@getIndex',
             'as' => 'get.index'
         ]);
 
         Route::get('/getIndexFolders/{folder?}', [
-            'uses' => 'MediaController@getIndexFolders',
+            'uses' => 'Admin\MediaController@getIndexFolders',
             'as' => 'get.index.folders'
         ]);
 
         Route::get('getDirectories', [
-            'uses' => 'MediaController@getMediaFolders',
+            'uses' => 'Admin\MediaController@getMediaFolders',
             'as' => 'directories'
         ]);
 
         Route::get('download/{id}/{folder}', [
-            'uses' => 'MediaController@download',
+            'uses' => 'Admin\MediaController@download',
             'as' => 'download'
         ]);
 
         Route::post('/makeDirectory', [
-            'uses' => 'MediaController@makeFolder',
+            'uses' => 'Admin\MediaController@makeFolder',
             'as' => 'make.directory'
         ]);
 
         Route::post('/renameDirectory', [
-            'uses' => 'MediaController@renameFolder',
+            'uses' => 'Admin\MediaController@renameFolder',
             'as' => 'rename.directory'
         ]);
 
         Route::post('/renameFile', [
-            'uses' => 'MediaController@renameFile',
+            'uses' => 'Admin\MediaController@renameFile',
             'as' => 'rename.file'
         ]);
 
         Route::delete('{id}', [
-            'uses' => 'MediaController@destroy',
+            'uses' => 'Admin\MediaController@destroy',
             'as' => 'delete'
         ]);
 
         Route::post('upload', [
-            'uses' => 'MediaController@upload',
+            'uses' => 'Admin\MediaController@upload',
             'as' => 'upload'
         ]);
 
         Route::get('delete/{id}', [
-            'uses' => 'MediaController@destroy',
+            'uses' => 'Admin\MediaController@destroy',
             'as' => 'get.delete'
         ]);
 
         Route::get('delete/folder/{folder}', [
-            'uses' => 'MediaController@folderDestroy',
+            'uses' => 'Admin\MediaController@folderDestroy',
             'as' => 'get.folder.delete'
         ]);
 
         Route::get('bytag/{path?}/{tag}', [
-            'uses' => 'MediaController@getByTag',
+            'uses' => 'Admin\MediaController@getByTag',
             'as' => 'get.tag'
         ]);
 
         Route::delete('{id}', [
-            'uses' => 'MediaController@destroy',
+            'uses' => 'Admin\MediaController@destroy',
             'as' => 'delete'
         ]);
 
@@ -176,42 +176,42 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
     Route::group(['prefix' => 'roles', 'as' => 'roles::'], function () {
 
         Route::get('/', [
-            'uses' => 'RolesController@index',
+            'uses' => 'Admin\RolesController@index',
             'as' => 'index'
 
         ]);
         Route::get('create', [
-            'uses' => 'RolesController@create',
+            'uses' => 'Admin\RolesController@create',
             'as' => 'create'
 
         ]);
         Route::get('edit/{id}', [
-            'uses' => 'RolesController@edit',
+            'uses' => 'Admin\RolesController@edit',
             'as' => 'edit'
         ]);
 
         Route::put('update/{id}', [
-            'uses' => 'RolesController@update',
+            'uses' => 'Admin\RolesController@update',
             'as' => 'update'
         ])->middleware('notDefaultRole');
 
         Route::delete('{id}', [
-            'uses' => 'RolesController@destroy',
+            'uses' => 'Admin\RolesController@destroy',
             'as' => 'delete'
         ])->middleware('notDefaultRole');
 
         Route::post('store', [
-            'uses' => 'RolesController@store',
+            'uses' => 'Admin\RolesController@store',
             'as' => 'store'
         ]);
 
         Route::get('perms/json', [
-            'uses' => 'RolesController@getPermsJson',
+            'uses' => 'Admin\RolesController@getPermsJson',
             'as' => 'permissions::json'
         ]);
 
         Route::get('/delete/{id}', [
-            'uses' => 'RolesController@destroy',
+            'uses' => 'Admin\RolesController@destroy',
             'as' => 'get::delete'
         ])->middleware('notDefaultRole');
 
@@ -219,39 +219,45 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
     Route::group(['prefix' => 'products', 'as' => 'products::'], function () {
 
         Route::get('/', [
-            'uses' => 'ProductsController@index',
+            'uses' => 'Admin\ProductsController@index',
             'as' => 'index'
 
         ]);
+        Route::get('show/{id}',
+            [
+                'uses' => 'Admin\ProductsController@show',
+                'as' => 'show'
+            ]);
+
         Route::get('create', [
-            'uses' => 'ProductsController@create',
+            'uses' => 'Admin\ProductsController@create',
             'as' => 'create'
 
         ]);
         Route::get('edit/{id}', [
-            'uses' => 'ProductsController@edit',
+            'uses' => 'Admin\ProductsController@edit',
             'as' => 'edit'
         ]);
         Route::put('update/{id}', [
-            'uses' => 'ProductsController@update',
+            'uses' => 'Admin\ProductsController@update',
             'as' => 'update'
         ]);
         Route::delete('{id}', [
-            'uses' => 'ProductsController@destroy',
+            'uses' => 'Admin\ProductsController@destroy',
             'as' => 'delete'
         ]);
         Route::post('store', [
-            'uses' => 'ProductsController@store',
+            'uses' => 'Admin\ProductsController@store',
             'as' => 'store'
         ]);
 
         Route::get('/delete/{id}', [
-            'uses' => 'ProductsController@destroy',
+            'uses' => 'Admin\ProductsController@destroy',
             'as' => 'get::delete'
         ]);
 
     });
-    Route::group(['prefix' => 'reviews','as' => 'reviews::'], function () {
+    Route::group(['prefix' => 'reviews', 'as' => 'reviews::'], function () {
 
         Route::get('index',
             [
@@ -309,48 +315,48 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
 
     Route::group(['prefix' => 'categories', 'as' => 'categories::'], function () {
         Route::get('/', [
-            'uses' => 'CategoriesController@index',
+            'uses' => 'Admin\CategoriesController@index',
             'as' => 'index'
 
         ]);
         Route::get('create', [
-            'uses' => 'CategoriesController@create',
+            'uses' => 'Admin\CategoriesController@create',
             'as' => 'create'
         ]);
         Route::get('edit/{id}', [
-            'uses' => 'CategoriesController@edit',
+            'uses' => 'Admin\CategoriesController@edit',
             'as' => 'edit'
         ]);
         Route::put('update/{id}', [
-            'uses' => 'CategoriesController@update',
+            'uses' => 'Admin\CategoriesController@update',
             'as' => 'update'
         ]);
         Route::delete('{id}', [
-            'uses' => 'CategoriesController@destroy',
+            'uses' => 'Admin\CategoriesController@destroy',
             'as' => 'delete'
         ]);
         Route::get('/delete/{id}', [
-            'uses' => 'CategoriesController@destroy',
+            'uses' => 'Admin\CategoriesController@destroy',
             'as' => 'get::delete'
         ]);
         Route::post('store', [
-            'uses' => 'CategoriesController@store',
+            'uses' => 'Admin\CategoriesController@store',
             'as' => 'store'
         ]);
         Route::get('description/{id}', [
-            'uses' => 'CategoriesController@getDescription',
+            'uses' => 'Admin\CategoriesController@getDescription',
             'as' => 'description'
         ]);
     });
     Route::group(['prefix' => 'attribute_groups', 'as' => 'attribute_groups::'], function () {
 
         Route::get('/', [
-            'uses' => 'AttributeGroupsController@index',
+            'uses' => 'Admin\AttributeGroupsController@index',
             'as' => 'index'
 
         ]);
         Route::get('create', [
-            'uses' => 'AttributeGroupsController@create',
+            'uses' => 'Admin\AttributeGroupsController@create',
             'as' => 'create'
 
         ]);
@@ -359,26 +365,26 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
             'as' => 'edit'
         ]);
         Route::put('update/{id}', [
-            'uses' => 'AttributeGroupsController@update',
+            'uses' => 'Admin\AttributeGroupsController@update',
             'as' => 'update'
         ]);
         Route::delete('{id}', [
-            'uses' => 'AttributeGroupsController@destroy',
+            'uses' => 'Admin\AttributeGroupsController@destroy',
             'as' => 'delete'
         ]);
         Route::post('store', [
-            'uses' => 'AttributeGroupsController@store',
+            'uses' => 'Admin\AttributeGroupsController@store',
             'as' => 'store'
         ]);
 
         Route::get('/delete/{id}', [
-            'uses' => 'AttributeGroupsController@destroy',
+            'uses' => 'Admin\AttributeGroupsController@destroy',
             'as' => 'get::delete'
         ]);
 
         Route::get('/groups/json', [
 
-            'uses' => 'AttributeGroupsController@getJson',
+            'uses' => 'Admin\AttributeGroupsController@getJson',
             'as' => 'get::json'
         ]);
     });
@@ -386,52 +392,76 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
     Route::group(['prefix' => 'attributes', 'as' => 'attributes::'], function () {
 
         Route::get('/', [
-            'uses' => 'AttributesController@index',
+            'uses' => 'Admin\AttributesController@index',
             'as' => 'index'
 
         ]);
         Route::get('create', [
-            'uses' => 'AttributesController@create',
+            'uses' => 'Admin\AttributesController@create',
             'as' => 'create'
 
         ]);
         Route::get('edit/{id}', [
-            'uses' => 'AttributesController@edit',
+            'uses' => 'Admin\AttributesController@edit',
             'as' => 'edit'
         ]);
         Route::put('update/{id}', [
-            'uses' => 'AttributesController@update',
+            'uses' => 'Admin\AttributesController@update',
             'as' => 'update'
         ]);
         Route::delete('{id}', [
-            'uses' => 'AttributesController@destroy',
+            'uses' => 'Admin\AttributesController@destroy',
             'as' => 'delete'
         ]);
         Route::post('store', [
-            'uses' => 'AttributesController@store',
+            'uses' => 'Admin\AttributesController@store',
             'as' => 'store'
         ]);
         Route::get('/delete/{id}', [
-            'uses' => 'AttributesController@destroy',
+            'uses' => 'Admin\AttributesController@destroy',
             'as' => 'get::delete'
         ]);
         Route::get('/attrs/json', [
 
-            'uses' => 'AttributesController@getJson',
+            'uses' => 'Admin\AttributesController@getJson',
             'as' => 'get::json'
         ]);
     });
     Route::group(['prefix' => 'newsletter', 'as' => 'newsletter::'], function () {
 
-        Route::get('/', ['uses' => 'SubscriptionController@index', 'as' => 'subscribe::index']);
-//        Route::get('/show/{type}', ['uses' => 'SubscriptionController@show', 'as' => 'subscribe::show']);
-//        Route::get('/show/{user}', ['uses' => 'SubscriptionController@showUser', 'as' => 'subscribe::showUser']);
-//
-//        Route::post('/generate/{type}/{newsList_id}',
-//            [
-//                'uses' => 'SubscriptionController@generate',
-//                'as' => 'subscribe::generate'
-//            ]);
+        Route::get('/', ['uses' => 'Admin\SubscriptionController@index', 'as' => 'subscribe::index']);
+
+        Route::get('/show/{uid}',
+            ['uses' => 'Admin\SubscriptionController@show',
+                'as' => 'subscribe::show'
+            ]);
+        Route::get('/show_user/{user}',
+            ['uses' => 'Admin\SubscriptionController@showUser',
+                'as' => 'subscribe::showUser'
+            ]);
+
+        Route::get('/generate/{newsList_id}',
+            [
+                'uses' => 'Admin\SubscriptionController@showGenerate',
+                'as' => 'subscribe::showGenerate'
+            ]);
+        Route::get('/tmp_mail/{file}',
+            [
+                'uses' => 'Admin\SubscriptionController@getTmpMail',
+                'as' => 'subscribe::tmp_mail'
+            ]);
+
+        Route::get('/history_mail/{folder}/{filename}',
+            [
+                'uses' => 'Admin\SubscriptionController@getHistoryTmpMail',
+                'as' => 'subscribe::history_mail'
+            ]);
+
+        Route::post('/generate/{uid}/{type}',
+            [
+                'uses' => 'Admin\SubscriptionController@generate',
+                'as' => 'subscribe::generate'
+            ]);
     });
 
 });
@@ -440,33 +470,33 @@ Route::group(
     ['prefix' => '/admin/log-viewer',], function () {
     Route::get('/', [
         'as' => 'log-viewer::dashboard',
-        'uses' => 'LogViewerController@index',
+        'uses' => 'Admin\LogViewerController@index',
     ]);
     Route::group(
         ['prefix' => '/logs',], function () {
         $this->get('/', [
             'as' => 'log-viewer::logs.list',
-            'uses' => 'LogViewerController@listLogs',
+            'uses' => 'Admin\LogViewerController@listLogs',
         ]);
 
         $this->delete('delete', [
             'as' => 'log-viewer::logs.delete',
-            'uses' => 'LogViewerController@delete',
+            'uses' => 'Admin\LogViewerController@delete',
         ]);
     });
     Route::group(['prefix' => '/{date}'], function () {
         $this->get('/', [
             'as' => 'log-viewer::logs.show',
-            'uses' => 'LogViewerController@show',
+            'uses' => 'Admin\LogViewerController@show',
         ]);
 
         $this->get('download', [
             'as' => 'log-viewer::logs.download',
-            'uses' => 'LogViewerController@download',
+            'uses' => 'Admin\LogViewerController@download',
         ]);
         $this->get('{level}', [
             'as' => 'log-viewer::logs.filter',
-            'uses' => 'LogViewerController@showByLevel',
+            'uses' => 'Admin\LogViewerController@showByLevel',
         ]);
     });
 });

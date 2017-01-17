@@ -33,5 +33,9 @@ class UserTableSeeder extends Seeder
         ]);
 
         $user->attachRole(2);
+
+        factory(User::class, 20)->create()->each(function($u) {
+            $u->attachRole(2);
+        });
     }
 }

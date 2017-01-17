@@ -2,8 +2,6 @@
 
 namespace App\Core\Repositories;
 
-use App\Http\Requests\ProductReviewFormRequest;
-use App\Http\Requests\UpdateProductReviewFormRequest;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
@@ -34,14 +32,14 @@ interface ProductReviewRepository extends RepositoryInterface
      * @param $request
      * @return mixed
      */
-    public function createProductReview(ProductReviewFormRequest $request);
+    public function createProductReview(\App\Core\Validators\ProductReview\ProductReviewFormRequest $request);
 
     /**
      * @param $request
      * @param $product
      * @return mixed
      */
-    public function updateProductReview(UpdateProductReviewFormRequest $request, $product);
+    public function updateProductReview(\App\Core\Validators\ProductReview\UpdateProductReviewFormRequest $request, $product);
 
     /**
      * @param $id

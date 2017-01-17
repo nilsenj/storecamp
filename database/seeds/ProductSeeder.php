@@ -17,14 +17,13 @@ class ProductSeeder extends Seeder
     {
         Model::unguard();
 
-
         $faker = Faker::create();
         foreach (range(1,100) as $index) {
             $product = Product::create([
-                'title' => $faker->name,
-                'model' => $faker->name,
+                'title' => $faker->company." - ".$faker->numberBetween(1, 72),
+                'model' => $faker->company,
                 'body' => $faker->paragraphs(5, true),
-                'price' => $faker->randomDigitNotNull,
+                'price' => $faker->randomNumber(3, true).".".$faker->numberBetween(0, 99),
                 'availability' => $faker->boolean,
                 'date_available' => $faker->date(),
                 'quantity' => $faker->numberBetween(0, 1000),

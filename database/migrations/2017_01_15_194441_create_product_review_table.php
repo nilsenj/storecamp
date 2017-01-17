@@ -16,15 +16,17 @@ class CreateProductReviewTable extends Migration
         Schema::create('product_reviews', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->string('product')->nullable();
+            $table->integer('product_id')->unsigned();
             $table->string('unique_id')->unique();
+            $table->text('review')->nullable();
             $table->boolean('visible')->default(false);
             $table->unsignedTinyInteger('rating')->default(5);
-            $table->string('resolved')->default(false);
+            $table->boolean('archived')->default(false);
             $table->timestamp('date')->default(\Carbon\Carbon::today());
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 
@@ -37,6 +39,7 @@ class CreateProductReviewTable extends Migration
     {
         Schema::drop('product_reviews', function(Blueprint $table) {
             $table->dropForeign('product_reviews_user_id_foreign');
+            $table->dropForeign('product_reviews_product_id_foreign');
             $table->dropSoftDeletes();
         });
     }

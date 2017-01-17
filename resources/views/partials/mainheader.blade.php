@@ -6,11 +6,15 @@
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><img src="{{asset('img/Logo!.png')}}" alt="{{env('APP_NAME')}}"></span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg navbar-brand"><img style="" src="{{asset('img/Logo!.png')}}" alt="{{env('APP_NAME')}}"/></span>
+        <span class="logo-lg navbar-brand"><img style="" src="{{asset('img/Logo!.png')}}"
+                                                alt="{{env('APP_NAME')}}"/></span>
     </a>
 
     <!-- Header Navbar -->
-    <nav class="navbar navbar-static-top" role="navigation">
+    <nav class="navbar navbar-static-top" style="
+    height: 44px;
+    min-height: auto;
+" role="navigation">
         <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
@@ -97,7 +101,9 @@
                                         <!-- The progress bar -->
                                         <div class="progress xs">
                                             <!-- Change the css width attribute to simulate progress -->
-                                            <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar progress-bar-aqua" style="width: 20%"
+                                                 role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                                 aria-valuemax="100">
                                                 <span class="sr-only">20% Complete</span>
                                             </div>
                                         </div>
@@ -122,7 +128,7 @@
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
-                            <img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+                            <img src="/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
                             <p>
                                 @if($user){{ $user->name }}@else Not available right now @endif
                                 <small>Member since Nov. 2012</small>

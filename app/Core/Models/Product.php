@@ -72,6 +72,11 @@ class Product extends Model implements Transformable
         return $this->belongsTo(User::class);
     }
 
+    public function productReview() {
+
+        return $this->hasMany(ProductReview::class, "product_id");
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

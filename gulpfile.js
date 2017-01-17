@@ -20,9 +20,9 @@ require('laravel-elixir-js-uglify');
 elixir.config.notifications = false;
 
 elixir((mix) => {
-    mix.less('app.less');
-    mix.less('admin-lte/AdminLTE.less');
-    mix.less('bootstrap/bootstrap.less');
+    mix.less('less/app.less');
+    mix.less('less/admin-lte/AdminLTE.less');
+    mix.less('less/bootstrap/bootstrap.less');
     mix.coffee('../coffee/StoreCamp.coffee', 'public/js/admin.js');
     mix.uglify('admin.js', 'public/js', 'resources/assets/js/admin.js');
     mix.coffee('../coffee/main.coffee', 'public/js/app.js');
@@ -32,6 +32,7 @@ elixir((mix) => {
     mix.copy('bower_components/dropzone/dist/', 'public/plugins/dropzone/');
     mix.copy('bower_components/plyr/dist/', 'public/plugins/plyr/');
     mix.copy('bower_components/toastr/', 'public/plugins/toastr/');
+    mix.copy('bower_components/bootstrap-star-rating/', 'public/plugins/bootstrap-star-rating/');
     mix.browserSync({
         proxy: 'storecamp.app'
     });

@@ -28,7 +28,7 @@ desired effect
 |---------------------------------------------------------|
 -->
 @yield('styles-add')
-<body class="fixed sidebar-mini skin-blue-light">
+<body class="fixed sidebar-mini skin-blue">
 <div class="wrapper">
 
     @include('partials.mainheader')

@@ -48,6 +48,7 @@
 <!-- ChartJS 1.0.1 -->
 <script src="{{ asset('plugins/chartjs/Chart.min.js') }}"></script>
 <script src="{{ asset('plugins/toastr/toastr.js') }}"></script>
+<script src="{{ asset('plugins/bootstrap-star-rating/js/star-rating.js') }}"></script>
 
 <!-- Page script -->
 <script>

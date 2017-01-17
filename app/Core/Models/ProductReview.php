@@ -21,7 +21,7 @@ class ProductReview extends Model implements Transformable
     use TransformableTrait;
     use SoftDeletes;
     use GeneratesUnique;
-    
+
     /**
      * @var array
      */
@@ -39,7 +39,7 @@ class ProductReview extends Model implements Transformable
      *
      * @var array
      */
-    protected $fillable = ['product', 'rating', 'message', 'unique_id', 'visible', 'resolved', 'date'];
+    protected $fillable = ['product', 'review', 'archived', 'rating', 'unique_id', 'visible', 'date'];
 
     /**
      * @var array
@@ -65,11 +65,20 @@ class ProductReview extends Model implements Transformable
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function product()
+    {
+        return $this->belongsTo(Product::class, "product_id");
+    }
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function thread(){
+    public function thread()
+    {
 
         return $this->hasMany(Thread::class, 'product_reviews_id');
     }
@@ -77,17 +86,21 @@ class ProductReview extends Model implements Transformable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function getThread(){
+    public function getThread()
+    {
 
         return $this->thread()->first();
     }
+
     /**
      * @param $query
      */
-    public function scopeUsers($query) {
+    public function scopeUsers($query)
+    {
 
         $query->where("user_id", \Auth::user()->id);
     }
+
     /**
      * @param $query
      */
@@ -116,7 +129,8 @@ class ProductReview extends Model implements Transformable
     /**
      * @param $query
      */
-    public function scopeVisible($query){
+    public function scopeVisible($query)
+    {
 
         $query->where("visible", true);
     }
@@ -124,21 +138,22 @@ class ProductReview extends Model implements Transformable
     /**
      * @param $query
      */
-    public function scopeResolved($query){
+    public function scopeArchived($query)
+    {
 
-        $query->where("resolved", true);
+        $query->where("archived", true);
     }
 
     /**
      * @param $query
      * @param $reason
      */
-    public function scopeByRating($query, $reason) {
+    public function scopeByRating($query, $reason)
+    {
 
         $query->where("rating", $reason);
 
     }
-
 
 
 }

@@ -2,8 +2,8 @@
 
 namespace App\Core\Repositories;
 
-use App\Http\Requests\ProductReviewFormRequest;
-use App\Http\Requests\UpdateProductReviewFormRequest;
+use App\Core\Validators\ProductReview\ProductReviewFormRequest;
+use App\Core\Validators\ProductReview\UpdateProductReviewFormRequest;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use RepositoryLab\Repository\Contracts\CacheableInterface;
@@ -207,7 +207,7 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
     {
         try {
             $productReview = $this->getProductReview($id);
-            $thread = $this->thread->findOrFail($productReview->id);
+            $thread = $productReview->thread->first();
         } catch (ModelNotFoundException $e) {
             \Toastr::error('error_message', 'The thread with ID: ' . $id . ' was not found.');
             return redirect('messages');

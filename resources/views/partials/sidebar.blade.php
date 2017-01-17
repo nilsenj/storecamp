@@ -1,10 +1,8 @@
 <?php $user = Auth::user() ? Auth::user() : null; ?>
 <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
-
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
             <div class="pull-left image">
@@ -16,7 +14,6 @@
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
-
         <!-- search form (Optional) -->
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
@@ -28,7 +25,6 @@
             </div>
         </form>
         <!-- /.search form -->
-
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
             <li class="header">Store's Menu</li>
@@ -43,24 +39,23 @@
                     <!--    <li><a href="#">Link in level 2</a></li> -->
                 </ul>
             </li>
-
             <li class="treeview">
                 <a href="/hahaha"><i class='fa fa-newspaper-o'></i> <span>Product Reviews</span> <i
-                            class="fa fa-caret-square-o-down pull-right"></i></a>
+                            class="fa fa-caret-square-o-down pull-right"></i>
+                    <?php $count = \Auth::user()->newMessagesCount(); ?>
+                    @if($count > 0)
+                        <span class="feedback-item-status label label-warning">{!! $count !!}</span>
+                    @else
+                        <span class="feedback-item-status label label-default">0</span>
+                    @endif
+                </a>
                 <ul class="treeview-menu">
                     <li class="nav-item" role="presentation">
                         <a role="menuitem" tabindex="-1" href="{{route('admin::reviews::index')}}">
                             <span class="nav-icon"><i class="fa fa-feed"></i></span>
-                            <?php $count = \Auth::user()->newMessagesCount(); ?>
-                            @if($count > 0)
-                                <span class="nav-text"> List of Reviews</span>
-                                <span class="feedback-item-status label label-warning">{!! $count !!}</span>
-                            @else
-                                <span class="nav-text"> List of Reviews</span>
-                                <span class="feedback-item-status label label-default">0</span>
-                            @endif
+                            <span class="nav-text"> List of Reviews</span>
                         </a></li>
-                    <li><a href="{{ route('admin::products::create') }}">Create Review</a></li>
+                    {{--<li><a href="{{ route('admin::products::create') }}">Create Review</a></li>--}}
                 </ul>
             </li>
             <li class="treeview">
@@ -84,7 +79,8 @@
             </li>
 
             <li class="treeview">
-                <a href="{{ route('admin::attributes::index') }}"><i class='fa fa-puzzle-piece'></i> <span>Attributes</span> <i
+                <a href="{{ route('admin::attributes::index') }}"><i class='fa fa-puzzle-piece'></i>
+                    <span>Attributes</span> <i
                             class="fa fa-caret-square-o-down pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin::attributes::index') }}">Attributes</a></li>
@@ -150,7 +146,8 @@
             <li><a href="{{ route('admin::users::index') }}"><i class='fa fa-users'></i> <span>Users</span></a></li>
 
             <li class="header">Administration</li>
-            <li><a href="{{ route('admin::media::index') }}"><i class='fa fa-files-o'></i> <span>Media Storage</span></a></li>
+            <li><a href="{{ route('admin::media::index') }}"><i class='fa fa-files-o'></i>
+                    <span>Media Storage</span></a></li>
 
             <li class="treeview {{ Route::is('admin::roles::create') ? 'active' : '' }}">
                 <a href="{{ route('admin::roles::index') }}">
