@@ -1,68 +1,105 @@
 @extends('admin/app')
 <h1>
     @section('breadcrumb')
-        {!! Breadcrumbs::render('media', 'media') !!}
+        {!! Breadcrumbs::render('reviews', 'Product reviews') !!}
     @endsection
-    @section('contentheader_title')
-        All Product Reviews
-        {{--&middot; {{$count}}--}}
-    @endsection
-
+    @include('admin.partial._contentheader_title', [$model = $productReviews, $message = "All Product Reviews"])
     @section('contentheader_description')
-            <p>Product Reviews
-            </p>
+        <b>{!! link_to_route('admin::attributes::create', 'Add New Attribute') !!}</b>
     @endsection
 </h1>
 @section('main-content')
-    @include('admin.productReview.review_body')
-    <div class="btn-group pull-right">
-        {!! $fbs->links() !!}
+    <div class="row">
+        <div class="col-xs-2">
+            <div class="p-2x"><a href="{{route('admin::reviews::index')}}" class="btn btn-block btn-info">Clear review
+                    marks</a></div>
+            <ul class="nav nav-tabs nav-stacked nav-contrast-red" role="tablist">
+                <?php $colors = ['', 'text-red', 'text-orange', 'text-teal', 'text-blue']?>
+                @foreach(config('rating') as $key => $rating)
+                    <li>
+                        <a href="{{route('admin::reviews::index')}}?search={{$key}}&searchFields=rating;"
+                           aria-controls="review">
+                            <span class="pull-right label label-default"></span>
+                            <i class="fa fa-circle-o {!! $colors[$key-1] !!} mr-2x"></i> {{$rating}}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+
+            <ul class="nav nav-tabs nav-stacked nav-contrast-red" role="tablist">
+                <li>
+                    <a href="{{route('admin::reviews::index')}}?search=1&searchFields=hidden;"
+                       aria-controls="review">
+                        <span class="pull-right label label-default"></span>
+                        <i class="fa fa-eye-slash mr-2x"></i> show hidden
+                    </a>
+                </li>
+            </ul>
+            <!-- /nav-review -->
+
+            <!-- /nav-label -->
+        </div>
+
+        <div class="col-xs-10">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">List of Reviews</h3>
+                    <div class="box-tools">
+                        @include('admin.partial._box_search')
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <thead>
+                        <th>#</th>
+                        <th>Review Product Name</th>
+                        <th>Rating</th>
+                        <th>Hidden</th>
+                        <th>Author</th>
+                        <th>Created</th>
+                        <th class="text-center">Actions</th>
+                        </thead>
+                        <tbody>
+                        @foreach ($productReviews as $key => $productReview)
+                            <tr>
+                                <td>{!! $no !!}</td>
+                                <td>{!! $productReview->product->title !!}</td>
+                                <td>
+                                    <span class="review-item-status label label-default">{{$productReview->rating}}</span>
+                                </td>
+                                <td>
+                                    @if($productReview->hidden)
+                                        <span class="review-item-status label label-info"> hidden </span>
+                                    @else
+                                        <span class="review-item-status label label-info"> visible</span>
+                                    @endif
+                                </td>
+                                <td> <a href="{!! route("admin::users::show", $productReview->user->id) !!}">
+                                        {{$productReview->user->name}}
+                                    </a>
+                                </td>
+                                <td>{!! $productReview->created_at !!}</td>
+                                <td class="text-center">
+                                    <a class="edit" href="{!! route('admin::reviews::show', $productReview->id) !!}" title="Show and Edit">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </a>
+                                    <a class="delete text-warning" href="{!! route('admin::reviews::get.delete', $productReview->id) !!}"
+                                       title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
+                                </td>
+                            </tr>
+                            <?php $no++ ;?>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+    <div class="text-center">
+        {!! $productReviews->links() !!}
     </div>
 @endsection
 
 @section('scripts-add')
-    <script src="{{asset('js/page-inbox-demo.js')}}"></script>
-    <script>
-        $('.review-list .review-list-item').on({
-            "click": function (event) {
-                var feedId = $(this).data('feed-id'),
-                    feedStatus = $(this).data('feed-status');
-                console.log(feedStatus);
 
-                if (feedStatus === false) {
-                    $.ajax({
-                        type: 'GET',
-                        url: APP_URL + "/admin/reviews/markasread/productReview/" + feedId,
-//                        data: {
-//                            'class_name': _this.o.class_name,
-//                            'object_id': _this.o.object_id
-//                        },
-                        success: function (data) {
-                            if (data['error']) {
-
-                                console.log(data);
-                            }
-                            console.log(data);
-                            if (data['message']) {
-                                var navButton = $("li.productReview");
-                                var itemLabelStatus = $('.review-list-item[data-feed-id=' + feedId + '] .productReview-item-status');
-                                navButton.find('span').text(data['messages_count']);
-                                var sidebarstatus = $('.sidebar .productReview-item-status');
-                                sidebarstatus.text(data['messages_count']);
-                                itemLabelStatus.text('read');
-                                if (data['messages_count'] == 0) {
-                                    navButton.find('span').removeClass('label-danger').addClass('label-default');
-                                    sidebarstatus.removeClass('label-warning').addClass('label-default');
-                                }
-                                itemLabelStatus.removeClass('label-warning').addClass('label-default');
-                            }
-                        },
-                        error: function (data) {
-                            console.log('error' + '   ' + data);
-                        }
-                    }, 'html');
-                }
-            }
-        });
-    </script>
 @endsection

@@ -20,19 +20,14 @@ require('laravel-elixir-js-uglify');
 elixir.config.notifications = false;
 
 elixir((mix) => {
-    mix.less('less/app.less');
-    mix.less('less/admin-lte/AdminLTE.less');
-    mix.less('less/bootstrap/bootstrap.less');
+    mix.less('app.less', 'public/css/app_less.css');
+    mix.less('less/AdminLTE.less', "public/css/admin_lte.css");
+    mix.less('less/skins/_all-skins.less', "public/css/admin_skins.css");
     mix.coffee('../coffee/StoreCamp.coffee', 'public/js/admin.js');
     mix.uglify('admin.js', 'public/js', 'resources/assets/js/admin.js');
     mix.coffee('../coffee/main.coffee', 'public/js/app.js');
     mix.coffee('../coffee/modules/*.coffee', 'public/js/modules.js');
     mix.sass('../sass/app.scss', 'public/css/main/app.css');
-    mix.copy('bower_components/summernote/dist/', 'public/plugins/summernote/');
-    mix.copy('bower_components/dropzone/dist/', 'public/plugins/dropzone/');
-    mix.copy('bower_components/plyr/dist/', 'public/plugins/plyr/');
-    mix.copy('bower_components/toastr/', 'public/plugins/toastr/');
-    mix.copy('bower_components/bootstrap-star-rating/', 'public/plugins/bootstrap-star-rating/');
     mix.browserSync({
         proxy: 'storecamp.app'
     });
@@ -54,6 +49,7 @@ gulp.task('test', function() {
         mix.phpSpec();
     });
 });
+
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management

@@ -5,6 +5,15 @@
   padding: 15px 0;
   margin-top: -15px;
   margin-bottom: -15px;
+  .box-comments {
+    background: transparent;
+  }
+  .box-comments .box-comment {
+    padding: 8px 7px;
+    border-bottom: 1px solid #eee;
+    background: #f7f7f7;
+    margin-bottom: 10px;
+  }
 }
 
 @media (min-width: 992px) {

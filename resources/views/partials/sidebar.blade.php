@@ -31,8 +31,7 @@
             <!-- Optionally, you can add icons to the links -->
             <li><a href="{{ route('admin::dashboard') }}"><i class='fa fa-th'></i> <span>Widgets</span></a></li>
             <li class="treeview">
-                <a href="{{ route('admin::products::index') }}"><i class='fa fa-cube'></i> <span>Products</span> <i
-                            class="fa fa-caret-square-o-down pull-right"></i></a>
+                <a href="{{ route('admin::products::index') }}"><i class='fa fa-cube'></i> <span>Products</span> </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin::products::index') }}">List of Products</a></li>
                     <li><a href="{{ route('admin::products::create') }}">Create Product</a></li>
@@ -40,14 +39,11 @@
                 </ul>
             </li>
             <li class="treeview">
-                <a href="/hahaha"><i class='fa fa-newspaper-o'></i> <span>Product Reviews</span> <i
-                            class="fa fa-caret-square-o-down pull-right"></i>
-                    <?php $count = \Auth::user()->newMessagesCount(); ?>
-                    @if($count > 0)
-                        <span class="feedback-item-status label label-warning">{!! $count !!}</span>
-                    @else
-                        <span class="feedback-item-status label label-default">0</span>
-                    @endif
+                <a href="/hahaha"><i class='fa fa-newspaper-o'></i> <span>Product Reviews</span>
+                    <?php $count = Auth::user()->exists ? \Auth::user()->newMessagesCount() : 0; ?>
+                        <span class="pull-right-container">
+                            <small class="label pull-right bg-green">{!! $count !!}</small>
+                        </span>
                 </a>
                 <ul class="treeview-menu">
                     <li class="nav-item" role="presentation">
@@ -62,7 +58,6 @@
                 <a href="{{ route('admin::categories::index') }}">
                     <i class="fa fa-archive"></i>
                     <span>Categories</span>
-                    <i class="fa fa-caret-square-o-down pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li>
@@ -80,8 +75,7 @@
 
             <li class="treeview">
                 <a href="{{ route('admin::attributes::index') }}"><i class='fa fa-puzzle-piece'></i>
-                    <span>Attributes</span> <i
-                            class="fa fa-caret-square-o-down pull-right"></i></a>
+                    <span>Attributes</span>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin::attributes::index') }}">Attributes</a></li>
                     <li><a href="{{ route('admin::attribute_groups::index') }}">Attribute Groups</a></li>
@@ -92,7 +86,6 @@
                 <a href="/hahaha">
                     <i class="fa fa-shopping-cart"></i>
                     <span>Sales</span>
-                    <i class="fa fa-caret-square-o-down pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li>
@@ -134,8 +127,9 @@
             </li>
 
             <li class="treeview">
-                <a href="/hahaha"><i class='fa  fa-paint-brush'></i> <span>Design</span> <i
-                            class="fa fa-caret-square-o-down pull-right"></i></a>
+                <a href="/hahaha">
+                    <i class='fa  fa-paint-brush'></i> <span>Design</span>
+                </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin::attributes::index') }}">Layouts</a></li>
                     <li><a href="{{ route('admin::attribute_groups::index') }}">Banners</a></li>
@@ -153,7 +147,6 @@
                 <a href="{{ route('admin::roles::index') }}">
                     <i class="fa fa-key"></i>
                     <span>Access</span>
-                    <i class="fa fa-caret-square-o-down pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li>
@@ -172,7 +165,6 @@
                 <a href="{{ route('log-viewer::dashboard') }}">
                     <i class="fa fa-bug"></i>
                     <span>LogsViewer</span>
-                    <i class="fa fa-caret-square-o-down pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li>

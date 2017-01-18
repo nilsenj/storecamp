@@ -169,7 +169,6 @@ return [
 
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        Acacha\AdminLTETemplateLaravel\Providers\AdminLTETemplateServiceProvider::class,
 
         /*
          * Application Service Providers...

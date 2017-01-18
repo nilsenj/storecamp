@@ -47,17 +47,10 @@ class ProductReviewController extends Controller
     public function index(Request $request)
     {
         try {
+            $productReviews = $this->productReview->with(['product', 'user', 'thread'])->paginate();
+            $no = $productReviews->firstItem();
 
-            if ($request->get('search')) {
-                $fbs = $this->productReview->getModel()->byRating($request->get('search'))->with(['product', 'user', 'thread'])->simplePaginate(15);
-
-            } else {
-                $this->productReview->pushCriteria(app(\RepositoryLab\Repository\Criteria\RequestCriteria::class));
-
-                $fbs = $this->productReview->getModel()->with(['product', 'user', 'thread'])->simplePaginate(15);
-            }
-            $currentUserId = \Auth::user()->id;
-            return view('admin.productReview.index', compact('fbs', 'currentUserId'));
+            return view('admin.productReview.index', compact('productReviews', 'no'));
 
         } catch (\Error $e) {
             return response()->json(['error' => $e->getMessage(), "error_code" => $e->getCode()], $e->getCode());
@@ -74,21 +67,11 @@ class ProductReviewController extends Controller
     {
         try {
 
-            if ($request->get('search')) {
-
-                $fbs = $this->productReview->getModel()->byRating($request->get('search'))->simplePaginate(15);
-                return view('admin.productReview.index', compact('fbs'));
-
-
-            } else {
-
-                $fb = $this->productReview->getModel()->find($id);
-            }
-
+            $productReview = $this->productReview->with(['product', 'user', 'thread'])->find($id);
             $currentUserId = \Auth::user()->id;
-            $fb->getThread()->markAsRead($currentUserId);
+            $productReview->thread->first()->markAsRead($currentUserId);
 
-            return view('admin.productReview.show', compact('fb', 'currentUserId'));
+            return view('admin.productReview.show', compact('productReview', 'currentUserId'));
 
         } catch (\Error $e) {
             return response()->json(['error' => $e->getMessage(), "error_code" => $e->getCode()], $e->getCode());
@@ -103,10 +86,30 @@ class ProductReviewController extends Controller
     public function replyFeedback(ReplyProductReviewFormRequest $request, $id)
     {
 
-        $fbs = $this->productReview->replyProductReview($id, $request->get('reply_message'));
+        $productReviews = $this->productReview->replyProductReview($id, $request->get('reply_message'));
 
-        return redirect()->to(route("admin::reviews::show", $fbs->id));
+        return redirect()->to(route("admin::reviews::show", $productReviews->id));
 
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function visibility(Request $request, $id)
+    {
+
+        $productReview = $this->productReview->find($id);
+
+        if ($productReview->hidden == 0) {
+            $productReview->hidden = 1;
+        } else {
+            $productReview->hidden = 0;
+        }
+        $productReview->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -119,11 +122,11 @@ class ProductReviewController extends Controller
         try {
             if ($request->ajax()) {
 
-                $fb = $this->productReview->getModel()->find($id);
+                $productReview = $this->productReview->find($id);
 
                 $currentUser = \Auth::user();
 
-                $fb->getThread()->markAsRead($currentUser->id);
+                $productReview->thread->first()->markAsRead($currentUser->id);
 
                 return response()->json(['message' => 'productReview marked as read', 'messages_count' => $currentUser->newMessagesCount()], 200);
             } else {
@@ -144,7 +147,7 @@ class ProductReviewController extends Controller
         try {
 
             $this->productReview->delete($id);
-            return redirect('/home');
+            return redirect('admin/review/index');
         } catch (\ErrorException $e) {
             \Toastr::error('Can\'t ber deleted', "Error while deleting");
             return redirect()->back();

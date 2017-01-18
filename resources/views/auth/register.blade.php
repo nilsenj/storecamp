@@ -9,7 +9,7 @@
     <body class="register-page">
     <div class="register-box">
         <div class="register-logo">
-            <a href="{{ url('/home') }}"><b>Admin</b>LTE</a>
+            <a href="{{ url('/home') }}"><b>Admin</b>StoreCamp</a>
         </div>
 
         @if (count($errors) > 0)
@@ -57,22 +57,26 @@
                 </div>
             </form>
 
+
             <div class="social-auth-links text-center">
                 <p>- OR -</p>
-                <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign up using Facebook</a>
-                <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign up using Google+</a>
+                <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign
+                    in using
+                    Facebook</a>
+                <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign
+                    in using
+                    Google+</a>
             </div>
 
             <a href="{{ url('/login') }}" class="text-center">I already have a membership</a>
         </div><!-- /.form-box -->
     </div><!-- /.register-box -->
 
-    <!-- jQuery 2.1.4 -->
-    <script src="/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="{{ asset('custom_vendors/jQuery/jQuery-2.1.4.min.js') }}"></script>
+    <script src="{{ asset('custom_vendors/jQueryUI/jquery-ui-1.10.3.min.js') }}" type="text/javascript"></script>
+
     <!-- Bootstrap 3.3.2 JS -->
-    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
-    <!-- iCheck -->
-    <script src="/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+    <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}" type="text/javascript"></script>
     <script>
         $(function () {
             $('input').iCheck({

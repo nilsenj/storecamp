@@ -20,8 +20,8 @@ use App\Core\Components\Messenger\Models\Message;
 use App\Core\Components\Messenger\Models\Participant;
 
 /**
- * Class FeedBackRepositoryEloquent
- * @package namespace SXC\Repositories;
+ * Class ProductReviewRepositoryEloquent
+ * @package App\Core\Repositories
  */
 class ProductReviewRepositoryEloquent extends BaseRepository implements ProductReviewRepository, CacheableInterface
 {
@@ -48,9 +48,8 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
      * @var array
      */
     protected $fieldSearchable = [
-        'product' => '=',
-        'reason' => '=',
-        'message' => 'like'
+        'rating' => '=',
+        'hidden' => '='
     ];
 
     /**
@@ -128,7 +127,7 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
      */
     public function createProductReview(ProductReviewFormRequest $request)
     {
-        $data = $request->except(["unique_id", "rating", "visible", "resolved", "date"]);
+        $data = $request->except(["unique_id", "rating", "hidden", "date"]);
 
         $message = $data['message'];
         unset($data['message']);
@@ -186,10 +185,10 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
         try {
 
 
-            $data = $request->except(["unique_id", "rating", "visible", "resolved", "date"]);
+            $data = $request->except(["unique_id", "rating", "hidden", "date"]);
 
             if ($request->user()->hasRole("Admin")) {
-                $extraData = $request->only(["unique_id", "visible", "resolved", "date"]);
+                $extraData = $request->only(["unique_id", "rating", "hidden", "date"]);
                 $data = array_merge($data, $extraData);
             }
             $data['user_id'] = $request->user()->id;
@@ -206,8 +205,10 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
     public function replyProductReview($id, $message)
     {
         try {
+
             $productReview = $this->getProductReview($id);
             $thread = $productReview->thread->first();
+
         } catch (ModelNotFoundException $e) {
             \Toastr::error('error_message', 'The thread with ID: ' . $id . ' was not found.');
             return redirect('messages');
@@ -259,7 +260,7 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
      */
     public function countUserProductReviews()
     {
-        return $this->getModel()->user()->where('user_id', '=', \Auth::id())->count();
+        return $this->with('user')->where('user_id', '=', \Auth::id())->count();
     }
 
 }

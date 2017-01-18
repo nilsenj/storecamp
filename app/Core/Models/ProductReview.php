@@ -22,13 +22,7 @@ class ProductReview extends Model implements Transformable
     use SoftDeletes;
     use GeneratesUnique;
 
-    /**
-     * @var array
-     */
-    protected $searchable = [
-        'rating',
-        'product'
-    ];
+
     /**
      * @var string
      */
@@ -39,7 +33,7 @@ class ProductReview extends Model implements Transformable
      *
      * @var array
      */
-    protected $fillable = ['product', 'review', 'archived', 'rating', 'unique_id', 'visible', 'date'];
+    protected $fillable = ['product', 'review', 'rating', 'unique_id', 'hidden', 'date'];
 
     /**
      * @var array
@@ -129,19 +123,18 @@ class ProductReview extends Model implements Transformable
     /**
      * @param $query
      */
-    public function scopeVisible($query)
+    public function scopeOnlyVisible($query)
     {
 
-        $query->where("visible", true);
+        $query->where("hidden", false);
     }
 
     /**
      * @param $query
      */
-    public function scopeArchived($query)
+    public function scopeOnlyHidden($query)
     {
-
-        $query->where("archived", true);
+        $query->where("hidden", true);
     }
 
     /**

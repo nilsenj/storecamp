@@ -34,6 +34,13 @@ Breadcrumbs::register('media', function($breadcrumbs)
     $breadcrumbs->push('Media', route('admin::media::index'));
 });
 
+// / > [Media]
+Breadcrumbs::register('reviews', function($breadcrumbs)
+{
+    $breadcrumbs->parent('admin');
+    $breadcrumbs->push('Product Review', route('admin::reviews::index'));
+});
+
 // / > [Attribute]
 Breadcrumbs::register('attributes', function($breadcrumbs)
 {

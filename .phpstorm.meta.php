@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-01-15.
+    * Generated on 2017-01-18.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -49,8 +49,6 @@ namespace PHPSTORM_META {
             'tymon.jwt.validators.payload' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'tymon.jwt.payload.factory' instanceof \Tymon\JWTAuth\PayloadFactory,
             'tymon.jwt.generate' instanceof \Tymon\JWTAuth\Commands\JWTGenerateCommand,
-            'AdminLTE' instanceof \Acacha\AdminLTETemplateLaravel\AdminLTE,
-            'gravatar' instanceof \Creativeorange\Gravatar\Gravatar,
             'command.laracasts.seed' instanceof \Laracasts\Generators\Commands\SeedMakeCommand,
             'command.laracasts.migrate' instanceof \Laracasts\Generators\Commands\MigrationMakeCommand,
             'command.laracasts.migrate.pivot' instanceof \Laracasts\Generators\Commands\PivotMigrationMakeCommand,
@@ -90,6 +88,9 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\PermissionRepository' instanceof \App\Core\Repositories\PermissionRepositoryEloquent,
             'App\Core\Repositories\AttributeGroupRepository' instanceof \App\Core\Repositories\AttributeGroupRepositoryEloquent,
             'App\Core\Repositories\AttributeGroupDescriptionRepository' instanceof \App\Core\Repositories\AttributeGroupDescriptionRepositoryEloquent,
+            'App\Core\Repositories\NewsLetterListRepository' instanceof \App\Core\Repositories\NewsLetterListRepositoryEloquent,
+            'App\Core\Repositories\ProductReviewRepository' instanceof \App\Core\Repositories\ProductReviewRepositoryEloquent,
+            'App\Core\Repositories\SubscribersRepository' instanceof \App\Core\Repositories\SubscribersRepositoryEloquent,
             'App\Core\Transformers\AttributeGroupTransformer' instanceof \App\Core\Transformers\AttributeGroupTransformer,
             'App\Core\Transformers\AttributeGroupDescriptionTransformer' instanceof \App\Core\Transformers\AttributeGroupDescriptionTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
@@ -255,8 +256,6 @@ namespace PHPSTORM_META {
             'tymon.jwt.validators.payload' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'tymon.jwt.payload.factory' instanceof \Tymon\JWTAuth\PayloadFactory,
             'tymon.jwt.generate' instanceof \Tymon\JWTAuth\Commands\JWTGenerateCommand,
-            'AdminLTE' instanceof \Acacha\AdminLTETemplateLaravel\AdminLTE,
-            'gravatar' instanceof \Creativeorange\Gravatar\Gravatar,
             'command.laracasts.seed' instanceof \Laracasts\Generators\Commands\SeedMakeCommand,
             'command.laracasts.migrate' instanceof \Laracasts\Generators\Commands\MigrationMakeCommand,
             'command.laracasts.migrate.pivot' instanceof \Laracasts\Generators\Commands\PivotMigrationMakeCommand,
@@ -296,6 +295,9 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\PermissionRepository' instanceof \App\Core\Repositories\PermissionRepositoryEloquent,
             'App\Core\Repositories\AttributeGroupRepository' instanceof \App\Core\Repositories\AttributeGroupRepositoryEloquent,
             'App\Core\Repositories\AttributeGroupDescriptionRepository' instanceof \App\Core\Repositories\AttributeGroupDescriptionRepositoryEloquent,
+            'App\Core\Repositories\NewsLetterListRepository' instanceof \App\Core\Repositories\NewsLetterListRepositoryEloquent,
+            'App\Core\Repositories\ProductReviewRepository' instanceof \App\Core\Repositories\ProductReviewRepositoryEloquent,
+            'App\Core\Repositories\SubscribersRepository' instanceof \App\Core\Repositories\SubscribersRepositoryEloquent,
             'App\Core\Transformers\AttributeGroupTransformer' instanceof \App\Core\Transformers\AttributeGroupTransformer,
             'App\Core\Transformers\AttributeGroupDescriptionTransformer' instanceof \App\Core\Transformers\AttributeGroupDescriptionTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
@@ -461,8 +463,6 @@ namespace PHPSTORM_META {
             'tymon.jwt.validators.payload' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'tymon.jwt.payload.factory' instanceof \Tymon\JWTAuth\PayloadFactory,
             'tymon.jwt.generate' instanceof \Tymon\JWTAuth\Commands\JWTGenerateCommand,
-            'AdminLTE' instanceof \Acacha\AdminLTETemplateLaravel\AdminLTE,
-            'gravatar' instanceof \Creativeorange\Gravatar\Gravatar,
             'command.laracasts.seed' instanceof \Laracasts\Generators\Commands\SeedMakeCommand,
             'command.laracasts.migrate' instanceof \Laracasts\Generators\Commands\MigrationMakeCommand,
             'command.laracasts.migrate.pivot' instanceof \Laracasts\Generators\Commands\PivotMigrationMakeCommand,
@@ -502,6 +502,9 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\PermissionRepository' instanceof \App\Core\Repositories\PermissionRepositoryEloquent,
             'App\Core\Repositories\AttributeGroupRepository' instanceof \App\Core\Repositories\AttributeGroupRepositoryEloquent,
             'App\Core\Repositories\AttributeGroupDescriptionRepository' instanceof \App\Core\Repositories\AttributeGroupDescriptionRepositoryEloquent,
+            'App\Core\Repositories\NewsLetterListRepository' instanceof \App\Core\Repositories\NewsLetterListRepositoryEloquent,
+            'App\Core\Repositories\ProductReviewRepository' instanceof \App\Core\Repositories\ProductReviewRepositoryEloquent,
+            'App\Core\Repositories\SubscribersRepository' instanceof \App\Core\Repositories\SubscribersRepositoryEloquent,
             'App\Core\Transformers\AttributeGroupTransformer' instanceof \App\Core\Transformers\AttributeGroupTransformer,
             'App\Core\Transformers\AttributeGroupDescriptionTransformer' instanceof \App\Core\Transformers\AttributeGroupDescriptionTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,
@@ -667,8 +670,6 @@ namespace PHPSTORM_META {
             'tymon.jwt.validators.payload' instanceof \Tymon\JWTAuth\Validators\PayloadValidator,
             'tymon.jwt.payload.factory' instanceof \Tymon\JWTAuth\PayloadFactory,
             'tymon.jwt.generate' instanceof \Tymon\JWTAuth\Commands\JWTGenerateCommand,
-            'AdminLTE' instanceof \Acacha\AdminLTETemplateLaravel\AdminLTE,
-            'gravatar' instanceof \Creativeorange\Gravatar\Gravatar,
             'command.laracasts.seed' instanceof \Laracasts\Generators\Commands\SeedMakeCommand,
             'command.laracasts.migrate' instanceof \Laracasts\Generators\Commands\MigrationMakeCommand,
             'command.laracasts.migrate.pivot' instanceof \Laracasts\Generators\Commands\PivotMigrationMakeCommand,
@@ -708,6 +709,9 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\PermissionRepository' instanceof \App\Core\Repositories\PermissionRepositoryEloquent,
             'App\Core\Repositories\AttributeGroupRepository' instanceof \App\Core\Repositories\AttributeGroupRepositoryEloquent,
             'App\Core\Repositories\AttributeGroupDescriptionRepository' instanceof \App\Core\Repositories\AttributeGroupDescriptionRepositoryEloquent,
+            'App\Core\Repositories\NewsLetterListRepository' instanceof \App\Core\Repositories\NewsLetterListRepositoryEloquent,
+            'App\Core\Repositories\ProductReviewRepository' instanceof \App\Core\Repositories\ProductReviewRepositoryEloquent,
+            'App\Core\Repositories\SubscribersRepository' instanceof \App\Core\Repositories\SubscribersRepositoryEloquent,
             'App\Core\Transformers\AttributeGroupTransformer' instanceof \App\Core\Transformers\AttributeGroupTransformer,
             'App\Core\Transformers\AttributeGroupDescriptionTransformer' instanceof \App\Core\Transformers\AttributeGroupDescriptionTransformer,
             'presenter.decorator' instanceof \Robbo\Presenter\Decorator,

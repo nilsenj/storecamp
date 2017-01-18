@@ -42,6 +42,17 @@
   margin-bottom: -15px;
 }
 
+.review-wrapper .box-comments {
+  background: transparent;
+}
+
+.review-wrapper .box-comments .box-comment {
+  padding: 8px 7px;
+  border-bottom: 1px solid #eee;
+  background: #f7f7f7;
+  margin-bottom: 10px;
+}
+
 @media (min-width: 992px) {
   .review-wrapper {
     padding-left: 215px;

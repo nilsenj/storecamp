@@ -13,19 +13,18 @@
     @endsection
 </h1>
 @section('main-content')
-    @include('admin.productReview.review_body', [$fbs = [$fb]])
+    @include('admin.productReview.review_body', [$productReviews = [$productReview]])
 @endsection
 
 @section('scripts-add')
     <script src="{{asset('js/page-inbox-demo.js')}}"></script>
     <script>
-        $('.review-list .review-list-item').on({
+        $('.review-list-item').on({
             "click": function (event) {
                 var feedId = $(this).data('feed-id'),
                     feedStatus = $(this).data('feed-status');
-                console.log(feedStatus);
 
-                if (feedStatus === false) {
+                if (feedStatus == false) {
                     $.ajax({
                         type: 'GET',
                         url: APP_URL + "/admin/reviews/markasread/productReview/" + feedId,
@@ -41,9 +40,9 @@
                             console.log(data);
                             if (data['message']) {
                                 var navButton = $("li.productReview");
-                                var itemLabelStatus = $('.review-list-item[data-feed-id=' + feedId + '] .productReview-item-status');
+                                var itemLabelStatus = $('.review-list-item[data-feed-id=' + feedId + '] .review-item-status');
                                 navButton.find('span').text(data['messages_count']);
-                                var sidebarstatus = $('.sidebar .productReview-item-status');
+                                var sidebarstatus = $('.sidebar .review-item-status');
                                 sidebarstatus.text(data['messages_count']);
                                 itemLabelStatus.text('read');
                                 if (data['messages_count'] == 0) {

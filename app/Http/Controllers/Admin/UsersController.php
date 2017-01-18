@@ -30,7 +30,7 @@ class UsersController extends BaseController
      */
     public $errorRedirectPath = "admin/users";
     /**
-     * @var \User
+     * @var User
      */
     protected $users;
 

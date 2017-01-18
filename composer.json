@@ -10,7 +10,6 @@
         "barryvdh/laravel-ide-helper": "^2.2",
         "doctrine/dbal": "^2.5",
         "tymon/jwt-auth": "^0.5.9",
-        "acacha/admin-lte-template-laravel": "^3.1",
         "intervention/image": "dev-master",
         "codezero/mailer": "dev-master",
         "davejamesmiller/laravel-breadcrumbs": "dev-master",

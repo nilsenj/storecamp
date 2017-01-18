@@ -33,13 +33,13 @@ Route::get('/', [
 //Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 Route::get('/', [
-    'uses' => 'PagesController@index',
+    'uses' => 'HomeController@index',
     'as' => 'home::'
 ]);
 Auth::routes();
 Route::get('/logout', ['uses' => 'Auth\LoginController@logout']);
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@home');
 Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], function () {
 
     Route::get('dashboard', [
@@ -287,6 +287,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], f
 //                    'uses' => 'Admin\ProductReviewController@update',
 //                    'as' => 'updateFeedback'
 //                ]);
+
+        Route::get('delete/{id}', [
+            'uses' => 'Admin\ProductReviewController@destroy',
+            'as' => 'get.delete'
+        ]);
+
+        Route::get('toggle_visibility/{id}', [
+            'uses' => 'Admin\ProductReviewController@visibility',
+            'as' => 'visibility'
+        ]);
 
         Route::put('reply/review/{id}',
             [

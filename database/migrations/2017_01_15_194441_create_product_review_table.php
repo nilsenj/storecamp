@@ -19,9 +19,8 @@ class CreateProductReviewTable extends Migration
             $table->integer('product_id')->unsigned();
             $table->string('unique_id')->unique();
             $table->text('review')->nullable();
-            $table->boolean('visible')->default(false);
+            $table->boolean('hidden')->default(false);
             $table->unsignedTinyInteger('rating')->default(5);
-            $table->boolean('archived')->default(false);
             $table->timestamp('date')->default(\Carbon\Carbon::today());
             $table->softDeletes();
             $table->timestamps();

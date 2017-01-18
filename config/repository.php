@@ -116,7 +116,7 @@ return [
 //            |--------------------------------------------------------------------------
 //            |
 //            |
-//            | Ex: http://prettus.local/?search=lorem&skipCache=true
+//            | Ex: http://dev.local/?search=lorem&skipCache=true
 //            |
 //            */
 //            'skipCache'=>'skipCache'
@@ -144,7 +144,7 @@ return [
 //    ],
     'cache'=>[
         //Enable or disable cache repositories
-        'enabled'   => true,
+        'enabled'   => false,
 
         //Lifetime of cache
         'minutes'   => 30,
@@ -217,26 +217,26 @@ return [
         | Params :
         |
         | - search : Searched value
-        |   Ex: http://prettus.local/?search=lorem
+        |   Ex: http://dev.local/?search=lorem
         |
         | - searchFields : Fields in which research should be carried out
         |   Ex:
-        |    http://prettus.local/?search=lorem&searchFields=name;email
-        |    http://prettus.local/?search=lorem&searchFields=name:like;email
-        |    http://prettus.local/?search=lorem&searchFields=name:like
+        |    http://dev.local/?search=lorem&searchFields=name;email
+        |    http://dev.local/?search=lorem&searchFields=name:like;email
+        |    http://dev.local/?search=lorem&searchFields=name:like
         |
         | - filter : Fields that must be returned to the response object
         |   Ex:
-        |   http://prettus.local/?search=lorem&filter=id,name
+        |   http://dev.local/?search=lorem&filter=id,name
         |
         | - orderBy : Order By
         |   Ex:
-        |   http://prettus.local/?search=lorem&orderBy=id
+        |   http://dev.local/?search=lorem&orderBy=id
         |
         | - sortedBy : Sort
         |   Ex:
-        |   http://prettus.local/?search=lorem&orderBy=id&sortedBy=asc
-        |   http://prettus.local/?search=lorem&orderBy=id&sortedBy=desc
+        |   http://dev.local/?search=lorem&orderBy=id&sortedBy=asc
+        |   http://dev.local/?search=lorem&orderBy=id&sortedBy=desc
         |
         */
         'params'=>[

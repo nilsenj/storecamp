@@ -21,8 +21,7 @@ class ProductReviewSeeder extends Seeder
         $user = \App\Core\Models\User::find(2);
         $data['user_id'] = $user->id;
         $data['product_id'] = $product->id;
-        $data['visible'] = true;
-        $data['archived'] = false;
+        $data['hidden'] = false;
         $productReview = $user->productReview()->create($data);
         $data["subject"] = $product->title;
 
@@ -33,19 +32,18 @@ class ProductReviewSeeder extends Seeder
             ]);
 
 
-
         $faker = Faker::create();
-        foreach (range(1,10) as $index) {
+        foreach (range(1, 10) as $index) {
             $userId = $faker->numberBetween(2, 22);
             $message = \App\Core\Components\Messenger\Models\Message::create([
                 'thread_id' => $thread->id,
-                'user_id'   => $userId,
-                'body'      => $faker->paragraphs(5, true),
+                'user_id' => $userId,
+                'body' => $faker->paragraphs(5, true),
             ]);
 
             $participant = \App\Core\Components\Messenger\Models\Participant::create([
                 'thread_id' => $thread->id,
-                'user_id'   => $userId,
+                'user_id' => $userId,
                 'last_read' => new \Carbon\Carbon()
             ]);
         }
