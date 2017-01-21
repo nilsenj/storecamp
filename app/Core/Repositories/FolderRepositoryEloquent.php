@@ -109,10 +109,34 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     {
         while ($folder->parent_id != null) {
             $newParent = $this->find($folder->parent_id);
-            array_unshift($array,$newParent->name);
+            array_unshift($array, $newParent->name);
             return $this->getParentFoldersPath($newParent, $array);
         }
         return implode("/", array_filter($array));
     }
 
+    /**
+     * @param $folder
+     * @param array $array
+     * @return string
+     */
+    public function getParentFoldersPathLinks($folder, $array = [])
+    {
+        $array = $this->prepareParentFolderLinks($folder);
+        $item = link_to_route("admin::media::index", $folder->name ? $folder->name : "../", [$folder->unique_id], ["class" => "active", "style" => "margin-left: 10px"]);
+        array_push($array, $item);
+
+        return implode("", $array);
+    }
+
+    private function prepareParentFolderLinks($folder, $array = [])
+    {
+        while ($folder->parent_id != null) {
+                $newParent = $this->find($folder->parent_id);
+                $item = link_to_route("admin::media::index", $newParent->name ? $newParent->name : "../", [$newParent->unique_id], ["style" => "margin-left: 10px"]);
+                array_unshift($array, $item);
+                return $this->prepareParentFolderLinks($newParent, $array);
+        }
+        return array_filter($array);
+    }
 }

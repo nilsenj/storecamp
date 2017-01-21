@@ -9,18 +9,7 @@
     @endsection
 
     @section('contentheader_description')
-        @if($folder)
-            <p>Folder
-                <b style="font-size: 20px; text-decoration: underline;" class="text-info">
-                    <a class="" href="{{route('admin::media::index')}}" style="margin-left: 10px">
-                        {!! "../" !!}
-                    </a>
-                    <a class="" href="{{route('admin::media::index', $folder->unique_id)}}" style="margin-left: 10px">
-                        {!! $path !!}
-                    </a>
-                </b>
-            </p>
-        @endif
+                @include('admin.media.navigation_path')
     @endsection
 </h1>
 @section('main-content')

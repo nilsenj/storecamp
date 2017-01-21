@@ -94,8 +94,8 @@ class MediaController extends BaseController
         $path = $predefined['path'];
         $folder = $predefined['folder'];
         $count = $predefined['count'];
-
-        return $this->view('index', compact('media', 'directories', 'path', 'folder', 'count'));
+        $urlFolderPathBuild = $this->folder->getParentFoldersPathLinks($folder);
+        return $this->view('index', compact('media', 'directories', 'path', 'folder', 'count', 'urlFolderPathBuild'));
 
     }
 

@@ -107,9 +107,9 @@ class Synchronizer implements SynchronizerInterface
                     $fileName = \File::basename($file);
                     $fileNameClean = explode(".", $fileName);
                     array_pop($fileNameClean);
-                    $mediaFile = Media::where("directory", $folderParentInstance->path_on_disk)->where("filename", $fileNameClean);
+                    $mediaFile = Media::where("directory", $newFolder->path_on_disk)->where("filename", implode("", $fileNameClean));
                     if ($mediaFile->count() == 0) {
-
+                        echo $newFolder->path_on_disk . "\n";
                         $media = \MediaUploader::importPath("local", $newFolder->path_on_disk . "/" . $fileName);
                         $media->directory_id = $newFolder->id;
                         $media->save();
@@ -121,7 +121,6 @@ class Synchronizer implements SynchronizerInterface
                 $folderParentInstance = $this->findOrCreateByFolderPath($newFolderPath);
                 $folderParentInstance->parent_id = 1;
                 $folderParentInstance->save();
-
                 foreach (\File::files(public_path("uploads/" . $folderParentInstance->path_on_disk)) as $file) {
                     $fileName = \File::basename($file);
                     $fileNameClean = explode(".", $fileName);
@@ -193,13 +192,14 @@ class Synchronizer implements SynchronizerInterface
 
     private function resolveRootFolder(): Folder
     {
-        $rootFolder = Folder::where("name", null)->where("path_on_disk", null);
+        $rootFolder = Folder::where("name", "")->where("path_on_disk", null);
         if ($rootFolder->count() == 0) {
             return $rootFolder = \App\Core\Models\Folder::create([
                 'name' => '',
                 'parent_id' => null
             ]);
         } else {
+
             return $rootFolder = $rootFolder->first();
         }
 

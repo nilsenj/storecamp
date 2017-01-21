@@ -13,4 +13,5 @@ interface FolderRepository extends RepositoryInterface
     public function getFolders($folder);
     public function getParentFolders($folder);
     public function getParentFoldersPath($folder);
+    public function getParentFoldersPathLinks($folder, $array = []);
 }
