@@ -6,7 +6,7 @@ if (!function_exists('resolveModelName')) {
      * @param $model
      * @return string
      */
-    function resolveModelName($model) : string
+    function resolveModelName($model): string
     {
         $reflection = new ReflectionClass($model);
         return $reflection->getShortName();
@@ -62,7 +62,7 @@ if (!function_exists('ruTolat')) {
      * @param $str
      * @return string
      */
-    function ruTolat(string $str) : string
+    function ruTolat(string $str): string
     {
         $tr = array(
             "А" => "a", "Б" => "b", "В" => "v", "Г" => "g", "Д" => "d",
@@ -93,7 +93,7 @@ if (!function_exists('formatBytes')) {
      * @param int $precision
      * @return string
      */
-    function formatBytes($bytes, $precision = 2) : string
+    function formatBytes($bytes, $precision = 2): string
     {
         $units = array('B', 'KB', 'MB', 'GB', 'TB');
 
@@ -134,7 +134,7 @@ if (!function_exists('checkRoute')) {
      * @param string $route
      * @return bool
      */
-    function checkRoute(string $route) : bool
+    function checkRoute(string $route): bool
     {
         $routes = \Route::getRoutes()->getRoutes();
         foreach ($routes as $r) {
@@ -147,4 +147,29 @@ if (!function_exists('checkRoute')) {
     }
 }
 
+if (!function_exists('synchronizeDirectories')) {
 
+    /**
+     * @param string $root
+     */
+    function synchronizeDirectories(string $root) : void
+    {
+        $synchronizer = new \App\Drivers\FolderToDb\Synchronizer();
+
+        $synchronizer->synchronize($root);
+    }
+}
+
+
+if (!function_exists('synchronizeWithFiles')) {
+
+    /**
+     * @param string $root
+     */
+    function synchronizeWithFiles(string $root) : void
+    {
+        $synchronizer = new \App\Drivers\FolderToDb\Synchronizer();
+
+        $synchronizer->synchronizeWithFiles($root);
+    }
+}

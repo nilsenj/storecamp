@@ -12,7 +12,6 @@ class Category extends Model implements Transformable
 {
     use TransformableTrait;
     use GeneratesUnique;
-
     use \Cviebrock\EloquentSluggable\Sluggable;
     use SluggableScopeHelpers;
 
@@ -47,6 +46,13 @@ class Category extends Model implements Transformable
         ];
     }
 
+    /**
+     * bootable methods fix
+     */
+    public static function boot()
+    {
+        parent::boot();
+    }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

@@ -8,8 +8,19 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Core\Repositories\SubscribersRepository;
 
-class SubscriptionController extends Controller
+class SubscriptionController extends BaseController
 {
+
+    /**
+     * @var string
+     */
+    public $viewPathBase = "admin.subscribers.";
+
+    /**
+     * @var string
+     */
+    public $errorRedirectPath = "admin/subscribers";
+
     /**
      * @var SubscribersRepository
      */
@@ -28,15 +39,6 @@ class SubscriptionController extends Controller
     /**
      * @return mixed
      */
-    protected function redirectNotFound()
-    {
-        \Toastr::error('User Not Found!', $title = 'the user might be deleted or banned', $options = []);
-        return redirect()->back();
-    }
-
-    /**
-     * @return mixed
-     */
     protected function redirectError()
     {
         \Toastr::error("Error appeared!", $title = \Auth::user()->name, $options = []);
@@ -48,9 +50,9 @@ class SubscriptionController extends Controller
 
         $lists = $this->repository->getNewsList();
 
-        $subscribers = $this->repository->getModel()->paginate();
+        $subscribers = $this->repository->paginate();
 
-        return view('admin.subscribers.index', compact('subscribers', 'lists'));
+        return $this->view('index', compact('subscribers', 'lists'));
 
     }
 
@@ -70,13 +72,13 @@ class SubscriptionController extends Controller
 
             $subscribers = $newslist->subscribers()->paginate();
 
-            return view("admin.subscribers.index", compact('lists', 'newslist', 'subscribers', 'mails'));
+            return $this->view("index", compact('lists', 'newslist', 'subscribers', 'mails'));
 
         } else {
 
             \Toastr::error("Subscriber Not found!", $title = "Try once more.", $options = []);
 
-            return redirect()->to(route('web::admin::newsletter::subscribe::index'));
+            return redirect()->to(route('admin::newsletter::subscribe::index'));
         }
     }
 
@@ -94,7 +96,7 @@ class SubscriptionController extends Controller
 
             $subscriber = $this->repository->findSubscriber($email);
 
-            return view("admin.subscribers.showUser", compact('lists', 'subscriber'));
+            return $this->view("showUser", compact('lists', 'subscriber'));
 
         } else {
             $lists = $this->repository->getNewsList();
@@ -103,7 +105,7 @@ class SubscriptionController extends Controller
 
             \Toastr::error("Subscriber Not found!", $title = "Try once more.", $options = []);
 
-            return view("admin.subscribers.index", compact('lists', 'subscribers'));
+            return redirect()->back();
 
         }
 
@@ -129,9 +131,9 @@ class SubscriptionController extends Controller
 
             if (empty($newslist)) {
                 \Toastr::error("News list not found", "Please specify the correct newsletter uid.");
-                return \Redirect::route('web::admin::newsletter::subscribe::index');
+                return \Redirect::route('admin::newsletter::subscribe::index');
             }
-            return view("admin.subscribers.generate", compact('lists', 'newslist', 'mails', 'mailHistory'));
+            return $this->view("generate", compact('lists', 'newslist', 'mails', 'mailHistory'));
 
         } else return $this->redirectError();
 
@@ -158,7 +160,7 @@ class SubscriptionController extends Controller
 
         $mail = $this->repository->getHistoryTmpMail($folder, $filename);
 
-        return view('admin.subscribers.show-campaign-history', compact('mail'));
+        return $this->view('show-campaign-history', compact('mail'));
     }
 
     /**

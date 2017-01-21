@@ -41,7 +41,7 @@
             <li class="treeview">
                 <a href="/hahaha"><i class='fa fa-newspaper-o'></i> <span>Product Reviews</span>
                     <?php $count = Auth::user()->exists ? \Auth::user()->newMessagesCount() : 0; ?>
-                        <span class="pull-right-container">
+                    <span class="pull-right-container">
                             <small class="label pull-right bg-green">{!! $count !!}</small>
                         </span>
                 </a>
@@ -76,11 +76,11 @@
             <li class="treeview">
                 <a href="{{ route('admin::attributes::index') }}"><i class='fa fa-puzzle-piece'></i>
                     <span>Attributes</span>
-                <ul class="treeview-menu">
-                    <li><a href="{{ route('admin::attributes::index') }}">Attributes</a></li>
-                    <li><a href="{{ route('admin::attribute_groups::index') }}">Attribute Groups</a></li>
-                    <!--    <li><a href="#">Link in level 2</a></li> -->
-                </ul>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ route('admin::attributes::index') }}">Attributes</a></li>
+                        <li><a href="{{ route('admin::attribute_groups::index') }}">Attribute Groups</a></li>
+                        <!--    <li><a href="#">Link in level 2</a></li> -->
+                    </ul>
             </li>
             <li class="treeview">
                 <a href="/hahaha">
@@ -114,12 +114,12 @@
                 </a>
                 <ul class="treeview-menu">
                     <li>
-                        <a href="{{ route('admin::roles::index') }}">
+                        <a href="{{ route('admin::subscribers::index') }}">
                             <i class="fa fa-link"></i>Subscribers
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin::roles::index') }}">
+                        <a href="{{ route('admin::mail::index') }}">
                             <i class="fa fa-link"></i>Mail
                         </a>
                     </li>

@@ -90,6 +90,8 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#home" class="smoothScroll">{{ trans('message.home') }}</a></li>
                     <li><a href="#desc" class="smoothScroll">{{ trans('message.description') }}</a></li>
+                    <li><a href="#intro" class="smoothScroll">{{ trans('message.intro') }}</a></li>
+                    <li><a href="#features" class="smoothScroll">{{ trans('message.features') }}</a></li>
                     <li><a href="#showcase" class="smoothScroll">{{ trans('message.showcase') }}</a></li>
                     <li><a href="#contact" class="smoothScroll">{{ trans('message.contact') }}</a></li>
                 </ul>
@@ -136,7 +138,9 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     </div><!--/ #headerwrap -->
 
 
-    <section id="desc" name="desc"></section>
+    <section id="desc" name="desc">
+
+    </section>
     <!-- INTRO WRAP -->
     <div id="intro">
         <div class="container">

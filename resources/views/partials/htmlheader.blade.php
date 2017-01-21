@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{{asset('plugins/plyr/dist/plyr.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/dropzone/dist/dropzone.css')}}">
     <link rel="stylesheet" href="{{asset('custom_vendors/jvectormap/jquery-jvectormap-1.2.2.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/summernote/dist/summernote.css')}}">
 
 
     <!-- Theme style -->

@@ -8,6 +8,10 @@ use Juggl\UniqueHashids\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
+/**
+ * Class Subscribers
+ * @package App\Core\Models
+ */
 class Subscribers extends Model implements Transformable
 {
     use TransformableTrait, SoftDeletes;
@@ -18,17 +22,35 @@ class Subscribers extends Model implements Transformable
      */
     protected $table = "subscribers";
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'name',
         'email',
         'unique_id'
     ];
 
-    public function newsList()
+    /**
+     * bootable methods fix
+     */
+    public static function boot()
     {
-        return $this->belongsToMany(NewsLetterList::class, "news_list", 'subscriber_id', 'subscriber_list_id')->withTimestamps();
+        parent::boot();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function campaign()
+    {
+        return $this->belongsToMany(Campaign::class, "campaign_subscribers", 'subscriber_id', 'campaign_id')->withTimestamps();
+    }
+
+    /**
+     * @param $query
+     * @param $mail
+     */
     public function scopeMails($query, $mail) {
 
         $query->where("email", $mail);

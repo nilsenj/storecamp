@@ -22,7 +22,6 @@ class ProductReview extends Model implements Transformable
     use SoftDeletes;
     use GeneratesUnique;
 
-
     /**
      * @var string
      */
@@ -40,6 +39,14 @@ class ProductReview extends Model implements Transformable
      */
     protected $dates = ['date'];
 
+
+    /**
+     * bootable methods fix
+     */
+    public static function boot()
+    {
+        parent::boot();
+    }
 
     /**
      * @param $date

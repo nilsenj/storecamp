@@ -13,4 +13,13 @@ class Media extends \Plank\Mediable\Media implements Transformable
 
     protected $fillable = ['directory_id'];
     protected $guarded = ['id', 'disk', 'directory', 'directory_id', 'filename', 'extension', 'size', 'mime_type', 'aggregate_type'];
+
+
+    /**
+     * bootable methods fix
+     */
+    public static function boot()
+    {
+        parent::boot();
+    }
 }

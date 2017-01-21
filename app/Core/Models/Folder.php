@@ -22,6 +22,8 @@ class Folder extends Model implements Transformable
         'name',
         'slug',
         'order',
+        'disk',
+        'path_on_disk',
         'parent_id'
     ];
 
@@ -41,6 +43,13 @@ class Folder extends Model implements Transformable
 
 
     /**
+     * bootable methods fix
+     */
+    public static function boot()
+    {
+        parent::boot();
+    }
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function parent()
@@ -48,6 +57,9 @@ class Folder extends Model implements Transformable
         return $this->belongsTo('App\Core\Models\Folder', 'parent_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function children()
     {
         return $this->hasMany('App\Core\Models\Folder', 'parent_id');

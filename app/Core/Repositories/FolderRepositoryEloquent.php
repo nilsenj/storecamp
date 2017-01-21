@@ -109,7 +109,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     {
         while ($folder->parent_id != null) {
             $newParent = $this->find($folder->parent_id);
-            $array[] = $newParent->name;
+            array_unshift($array,$newParent->name);
             return $this->getParentFoldersPath($newParent, $array);
         }
         return implode("/", array_filter($array));

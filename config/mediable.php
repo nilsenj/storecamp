@@ -20,6 +20,7 @@ return [
      */
     'allowed_disks' => [
         'local',
+        'mails'
     ],
 
     /*
@@ -151,7 +152,8 @@ return [
                 'text/json',
                 'application/json',
                 'application/msword',
-                'application/application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                'application/application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'text/html'
             ],
             'extensions' => [
                 'doc',
@@ -160,6 +162,7 @@ return [
                 'text',
                 'xml',
                 'json',
+                'html'
             ]
         ],
         Plank\Mediable\Media::TYPE_SPREADSHEET => [

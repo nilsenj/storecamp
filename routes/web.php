@@ -11,490 +11,573 @@
 |
 */
 
-Route::get('/', [
+$this->get('/', [
     'uses' => 'LandingController@index'
 ]);
 
 //// Authentication routes...
-//Route::get('auth/login', 'Auth\AuthController@getLogin');
-//Route::post('auth/login', 'Auth\AuthController@postLogin');
-//Route::get('auth/logout', 'Auth\AuthController@getLogout');
+//$this->get('auth/login', 'Auth\AuthController@getLogin');
+//$this->post('auth/login', 'Auth\AuthController@postLogin');
+//$this->get('auth/logout', 'Auth\AuthController@getLogout');
 //
 //// Registration routes...
-//Route::get('auth/register', 'Auth\AuthController@getRegister');
-//Route::post('auth/register', 'Auth\AuthController@postRegister');
+//$this->get('auth/register', 'Auth\AuthController@getRegister');
+//$this->post('auth/register', 'Auth\AuthController@postRegister');
 //
 //// Password reset link request routes...
-//Route::get('password/email', 'Auth\PasswordController@getEmail');
-//Route::post('password/email', 'Auth\PasswordController@postEmail');
+//$this->get('password/email', 'Auth\PasswordController@getEmail');
+//$this->post('password/email', 'Auth\PasswordController@postEmail');
 //
 //// Password reset routes...
-//Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
-//Route::post('password/reset', 'Auth\PasswordController@postReset');
+//$this->get('password/reset/{token}', 'Auth\PasswordController@getReset');
+//$this->post('password/reset', 'Auth\PasswordController@postReset');
 
-Route::get('/', [
+$this->get('/', [
     'uses' => 'HomeController@index',
     'as' => 'home::'
 ]);
 Auth::routes();
-Route::get('/logout', ['uses' => 'Auth\LoginController@logout']);
+$this->get('/logout', ['uses' => 'Auth\LoginController@logout']);
 
-Route::get('/home', 'HomeController@home');
-Route::group(['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], function () {
+$this->get('/home', 'HomeController@home');
+$this->group(/**
+ *
+ */
+    ['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], function () {
 
-    Route::get('dashboard', [
+    $this->get('dashboard', [
         'uses' => 'Admin\AdminController@show',
         'as' => 'dashboard'
     ]);
-    Route::get('/', [
+    $this->get('/', [
         'uses' => 'Admin\AdminController@show',
         'as' => 'dashboard'
     ]);
 
-    Route::get('sales', [
+    $this->get('sales', [
         'uses' => 'Admin\AdminController@sales'
     ]);
-    Route::group(['prefix' => 'users', 'as' => 'users::'], function () {
+    $this->group(['prefix' => 'users', 'as' => 'users::'], function () {
 
-        Route::get('/', [
+        $this->get('/', [
             'uses' => 'Admin\UsersController@index',
             'as' => 'index'
 
         ]);
-        Route::get('/{id}', [
+        $this->get('/{id}', [
             'uses' => 'Admin\UsersController@show',
             'as' => 'show'
 
         ]);
 
-
-        Route::get('create', [
+        $this->get('create', [
             'uses' => 'Admin\UsersController@create',
             'as' => 'create'
 
         ]);
 
-        Route::get('edit/{id}', [
+        $this->get('edit/{id}', [
             'uses' => 'Admin\UsersController@edit',
             'as' => 'edit'
         ]);
 
-        Route::put('update/{id}', [
+        $this->put('update/{id}', [
             'uses' => 'Admin\UsersController@update',
             'as' => 'update'
         ])->middleware('shouldLeftAdmin');
 
-        Route::delete('{id}', [
+        $this->delete('{id}', [
             'uses' => 'Admin\UsersController@destroy',
             'as' => 'delete'
         ])->middleware('notAdmin');
 
-        Route::post('store', [
+        $this->post('store', [
             'uses' => 'Admin\UsersController@store',
             'as' => 'store'
         ]);
 
-        Route::get('/delete/{id}', [
+        $this->get('/delete/{id}', [
             'uses' => 'Admin\UsersController@destroy',
             'as' => 'get::delete'
         ])->middleware('notAdmin');
     });
-    Route::group(['prefix' => 'media', 'as' => 'media::'], function () {
+    $this->group(['prefix' => 'media', 'as' => 'media::'], function () {
 
-        Route::get('/{path?}', [
+        $this->get('/{path?}', [
             'uses' => 'Admin\MediaController@index',
             'as' => 'index'
         ]);
 
-        Route::get('/getIndex/{path?}', [
+        $this->get('/getIndex/{path?}', [
             'uses' => 'Admin\MediaController@getIndex',
             'as' => 'get.index'
         ]);
 
-        Route::get('/getIndexFolders/{folder?}', [
+        $this->get('/getIndexFolders/{folder?}', [
             'uses' => 'Admin\MediaController@getIndexFolders',
             'as' => 'get.index.folders'
         ]);
 
-        Route::get('getDirectories', [
+        $this->get('getDirectories', [
             'uses' => 'Admin\MediaController@getMediaFolders',
             'as' => 'directories'
         ]);
 
-        Route::get('download/{id}/{folder}', [
+        $this->get('download/{id}/{folder}', [
             'uses' => 'Admin\MediaController@download',
             'as' => 'download'
         ]);
 
-        Route::post('/makeDirectory', [
+        $this->post('/makeDirectory', [
             'uses' => 'Admin\MediaController@makeFolder',
             'as' => 'make.directory'
         ]);
 
-        Route::post('/renameDirectory', [
+        $this->post('/renameDirectory', [
             'uses' => 'Admin\MediaController@renameFolder',
             'as' => 'rename.directory'
         ]);
 
-        Route::post('/renameFile', [
+        $this->post('/renameFile', [
             'uses' => 'Admin\MediaController@renameFile',
             'as' => 'rename.file'
         ]);
 
-        Route::delete('{id}', [
+        $this->delete('{id}', [
             'uses' => 'Admin\MediaController@destroy',
             'as' => 'delete'
         ]);
 
-        Route::post('upload', [
+        $this->post('upload', [
             'uses' => 'Admin\MediaController@upload',
             'as' => 'upload'
         ]);
 
-        Route::get('delete/{id}', [
+        $this->get('delete/{id}', [
             'uses' => 'Admin\MediaController@destroy',
             'as' => 'get.delete'
         ]);
 
-        Route::get('delete/folder/{folder}', [
+        $this->get('delete/folder/{folder}', [
             'uses' => 'Admin\MediaController@folderDestroy',
             'as' => 'get.folder.delete'
         ]);
 
-        Route::get('bytag/{path?}/{tag}', [
+        $this->get('bytag/{path?}/{tag}', [
             'uses' => 'Admin\MediaController@getByTag',
             'as' => 'get.tag'
         ]);
 
-        Route::delete('{id}', [
+        $this->delete('{id}', [
             'uses' => 'Admin\MediaController@destroy',
             'as' => 'delete'
         ]);
 
     });
 
-    Route::group(['prefix' => 'roles', 'as' => 'roles::'], function () {
+    $this->group(['prefix' => 'roles', 'as' => 'roles::'], function () {
 
-        Route::get('/', [
+        $this->get('/', [
             'uses' => 'Admin\RolesController@index',
             'as' => 'index'
 
         ]);
-        Route::get('create', [
+
+        $this->get('create', [
             'uses' => 'Admin\RolesController@create',
             'as' => 'create'
 
         ]);
-        Route::get('edit/{id}', [
+
+        $this->get('edit/{id}', [
             'uses' => 'Admin\RolesController@edit',
             'as' => 'edit'
         ]);
 
-        Route::put('update/{id}', [
+        $this->put('update/{id}', [
             'uses' => 'Admin\RolesController@update',
             'as' => 'update'
         ])->middleware('notDefaultRole');
 
-        Route::delete('{id}', [
+        $this->delete('{id}', [
             'uses' => 'Admin\RolesController@destroy',
             'as' => 'delete'
         ])->middleware('notDefaultRole');
 
-        Route::post('store', [
+        $this->post('store', [
             'uses' => 'Admin\RolesController@store',
             'as' => 'store'
         ]);
 
-        Route::get('perms/json', [
+        $this->get('perms/json', [
             'uses' => 'Admin\RolesController@getPermsJson',
             'as' => 'permissions::json'
         ]);
 
-        Route::get('/delete/{id}', [
+        $this->get('/delete/{id}', [
             'uses' => 'Admin\RolesController@destroy',
             'as' => 'get::delete'
         ])->middleware('notDefaultRole');
 
     });
-    Route::group(['prefix' => 'products', 'as' => 'products::'], function () {
+    $this->group(['prefix' => 'products', 'as' => 'products::'], function () {
 
-        Route::get('/', [
+        $this->get('/', [
             'uses' => 'Admin\ProductsController@index',
             'as' => 'index'
 
         ]);
-        Route::get('show/{id}',
+
+        $this->get('show/{id}',
             [
                 'uses' => 'Admin\ProductsController@show',
                 'as' => 'show'
             ]);
 
-        Route::get('create', [
+        $this->get('create', [
             'uses' => 'Admin\ProductsController@create',
             'as' => 'create'
 
         ]);
-        Route::get('edit/{id}', [
+
+        $this->get('edit/{id}', [
             'uses' => 'Admin\ProductsController@edit',
             'as' => 'edit'
         ]);
-        Route::put('update/{id}', [
+
+        $this->put('update/{id}', [
             'uses' => 'Admin\ProductsController@update',
             'as' => 'update'
         ]);
-        Route::delete('{id}', [
+
+        $this->delete('{id}', [
             'uses' => 'Admin\ProductsController@destroy',
             'as' => 'delete'
         ]);
-        Route::post('store', [
+
+        $this->post('store', [
             'uses' => 'Admin\ProductsController@store',
             'as' => 'store'
         ]);
 
-        Route::get('/delete/{id}', [
+        $this->get('/delete/{id}', [
             'uses' => 'Admin\ProductsController@destroy',
             'as' => 'get::delete'
         ]);
 
     });
-    Route::group(['prefix' => 'reviews', 'as' => 'reviews::'], function () {
+    $this->group(['prefix' => 'reviews', 'as' => 'reviews::'], function () {
 
-        Route::get('index',
+        $this->get('index',
             [
                 'uses' => 'Admin\ProductReviewController@index',
                 'as' => 'index'
             ]);
 
-        Route::get('show/{id}',
+        $this->get('show/{id}',
             [
                 'uses' => 'Admin\ProductReviewController@show',
                 'as' => 'show'
             ]);
 
-//            Route::get('create/feedback',
-//                [
-//                    'uses' => 'Admin\ProductReviewController@create',
-//                    'as' => 'createFeedback'
-//                ]);
-//            Route::get('edit/feedback/{id}',
-//                [
-//                    'uses' => 'Admin\ProductReviewController@edit',
-//                    'as' => 'editFeedback'
-//                ]);
-//
-//            Route::patch('update/feedback/{id}',
-//                [
-//                    'uses' => 'Admin\ProductReviewController@update',
-//                    'as' => 'updateFeedback'
-//                ]);
-
-        Route::get('delete/{id}', [
-            'uses' => 'Admin\ProductReviewController@destroy',
+        $this->get('delete/{id}', [
+            'uses' => 'Admin\ProductReviewController@delete',
             'as' => 'get.delete'
         ]);
 
-        Route::get('toggle_visibility/{id}', [
+        $this->get('toggle_visibility/{id}', [
             'uses' => 'Admin\ProductReviewController@visibility',
             'as' => 'visibility'
         ]);
 
-        Route::put('reply/review/{id}',
+        $this->put('reply/review/{id}',
             [
                 'uses' => 'Admin\ProductReviewController@replyFeedback',
                 'as' => 'reply'
 
             ]);
 
-        Route::delete('delete/review/{id}',
+        $this->delete('delete/review/{id}',
             [
-                'uses' => 'Admin\ProductReviewController@destroy',
+                'uses' => 'Admin\ProductReviewController@delete',
                 'as' => 'destroy'
             ]);
 
-        Route::post('store/review',
+        $this->post('store/review',
             [
                 'uses' => 'Admin\ProductReviewController@store',
                 'as' => 'store'
             ]);
 
-        Route::get('markasread/productReview/{feed}', [
+        $this->get('markasread/productReview/{feed}', [
             'uses' => 'Admin\ProductReviewController@markAsRead',
             'as' => 'markasread'
         ]);
     });
 
-    Route::group(['prefix' => 'categories', 'as' => 'categories::'], function () {
-        Route::get('/', [
+    $this->group(['prefix' => 'categories', 'as' => 'categories::'], function () {
+
+        $this->get('/', [
             'uses' => 'Admin\CategoriesController@index',
             'as' => 'index'
 
         ]);
-        Route::get('create', [
+
+        $this->get('create', [
             'uses' => 'Admin\CategoriesController@create',
             'as' => 'create'
         ]);
-        Route::get('edit/{id}', [
+
+        $this->get('edit/{id}', [
             'uses' => 'Admin\CategoriesController@edit',
             'as' => 'edit'
         ]);
-        Route::put('update/{id}', [
+
+        $this->put('update/{id}', [
             'uses' => 'Admin\CategoriesController@update',
             'as' => 'update'
         ]);
-        Route::delete('{id}', [
+
+        $this->delete('{id}', [
             'uses' => 'Admin\CategoriesController@destroy',
             'as' => 'delete'
         ]);
-        Route::get('/delete/{id}', [
+
+        $this->get('/delete/{id}', [
             'uses' => 'Admin\CategoriesController@destroy',
             'as' => 'get::delete'
         ]);
-        Route::post('store', [
+
+        $this->post('store', [
             'uses' => 'Admin\CategoriesController@store',
             'as' => 'store'
         ]);
-        Route::get('description/{id}', [
+
+        $this->get('description/{id}', [
             'uses' => 'Admin\CategoriesController@getDescription',
             'as' => 'description'
         ]);
     });
-    Route::group(['prefix' => 'attribute_groups', 'as' => 'attribute_groups::'], function () {
+    $this->group(['prefix' => 'attribute_groups', 'as' => 'attribute_groups::'], function () {
 
-        Route::get('/', [
+        $this->get('/', [
             'uses' => 'Admin\AttributeGroupsController@index',
             'as' => 'index'
 
         ]);
-        Route::get('create', [
+
+        $this->get('create', [
             'uses' => 'Admin\AttributeGroupsController@create',
             'as' => 'create'
 
         ]);
-        Route::get('edit/{id}', [
-            'uses' => 'AttributeGroupsController@edit',
+
+        $this->get('edit/{id}', [
+            'uses' => 'Admin\AttributeGroupsController@edit',
             'as' => 'edit'
         ]);
-        Route::put('update/{id}', [
+
+        $this->put('update/{id}', [
             'uses' => 'Admin\AttributeGroupsController@update',
             'as' => 'update'
         ]);
-        Route::delete('{id}', [
+
+        $this->delete('{id}', [
             'uses' => 'Admin\AttributeGroupsController@destroy',
             'as' => 'delete'
         ]);
-        Route::post('store', [
+
+        $this->post('store', [
             'uses' => 'Admin\AttributeGroupsController@store',
             'as' => 'store'
         ]);
 
-        Route::get('/delete/{id}', [
+        $this->get('/delete/{id}', [
             'uses' => 'Admin\AttributeGroupsController@destroy',
             'as' => 'get::delete'
         ]);
 
-        Route::get('/groups/json', [
+        $this->get('/groups/json', [
 
             'uses' => 'Admin\AttributeGroupsController@getJson',
             'as' => 'get::json'
         ]);
     });
 
-    Route::group(['prefix' => 'attributes', 'as' => 'attributes::'], function () {
+    $this->group(['prefix' => 'attributes', 'as' => 'attributes::'], function () {
 
-        Route::get('/', [
+        $this->get('/', [
             'uses' => 'Admin\AttributesController@index',
             'as' => 'index'
 
         ]);
-        Route::get('create', [
+
+        $this->get('create', [
             'uses' => 'Admin\AttributesController@create',
             'as' => 'create'
 
         ]);
-        Route::get('edit/{id}', [
+
+        $this->get('edit/{id}', [
             'uses' => 'Admin\AttributesController@edit',
             'as' => 'edit'
         ]);
-        Route::put('update/{id}', [
+
+        $this->put('update/{id}', [
             'uses' => 'Admin\AttributesController@update',
             'as' => 'update'
         ]);
-        Route::delete('{id}', [
+
+        $this->delete('{id}', [
             'uses' => 'Admin\AttributesController@destroy',
             'as' => 'delete'
         ]);
-        Route::post('store', [
+
+        $this->post('store', [
             'uses' => 'Admin\AttributesController@store',
             'as' => 'store'
         ]);
-        Route::get('/delete/{id}', [
+
+        $this->get('/delete/{id}', [
             'uses' => 'Admin\AttributesController@destroy',
             'as' => 'get::delete'
         ]);
-        Route::get('/attrs/json', [
+
+        $this->get('/attrs/json', [
 
             'uses' => 'Admin\AttributesController@getJson',
             'as' => 'get::json'
         ]);
     });
-    Route::group(['prefix' => 'newsletter', 'as' => 'newsletter::'], function () {
+    $this->group(['prefix' => 'subscribers', 'as' => 'subscribers::'], function () {
 
-        Route::get('/', ['uses' => 'Admin\SubscriptionController@index', 'as' => 'subscribe::index']);
+        $this->get('/', ['uses' => 'Admin\SubscriptionController@index', 'as' => 'index']);
 
-        Route::get('/show/{uid}',
+        $this->get('/show/{uid}',
             ['uses' => 'Admin\SubscriptionController@show',
-                'as' => 'subscribe::show'
-            ]);
-        Route::get('/show_user/{user}',
-            ['uses' => 'Admin\SubscriptionController@showUser',
-                'as' => 'subscribe::showUser'
+                'as' => 'show'
             ]);
 
-        Route::get('/generate/{newsList_id}',
+        $this->get('/show_user/{user}',
+            ['uses' => 'Admin\SubscriptionController@showUser',
+                'as' => 'showUser'
+            ]);
+
+        $this->get('/generate/{newsList_id}',
             [
                 'uses' => 'Admin\SubscriptionController@showGenerate',
-                'as' => 'subscribe::showGenerate'
+                'as' => 'showGenerate'
             ]);
-        Route::get('/tmp_mail/{file}',
+
+        $this->get('/tmp_mail/{file}',
             [
                 'uses' => 'Admin\SubscriptionController@getTmpMail',
-                'as' => 'subscribe::tmp_mail'
+                'as' => 'tmp_mail'
             ]);
 
-        Route::get('/history_mail/{folder}/{filename}',
+        $this->get('/history_mail/{folder}/{filename}',
             [
                 'uses' => 'Admin\SubscriptionController@getHistoryTmpMail',
-                'as' => 'subscribe::history_mail'
+                'as' => 'history_mail'
             ]);
 
-        Route::post('/generate/{uid}/{type}',
+        $this->post('/generate/{uid}/{type}',
             [
                 'uses' => 'Admin\SubscriptionController@generate',
-                'as' => 'subscribe::generate'
+                'as' => 'generate'
             ]);
     });
+    $this->group(['prefix' => 'mail', 'as' => 'mail::'], function () {
 
+        $this->get('/',
+            ['uses' => 'Admin\MailController@index', 'as' => 'index'
+            ]);
+
+        $this->get('/show/{uid}',
+            ['uses' => 'Admin\MailController@show',
+                'as' => 'show'
+            ]);
+
+        $this->get('/create',
+            ['uses' => 'Admin\MailController@create',
+                'as' => 'create'
+            ]);
+
+        $this->get('/templates',
+            ['uses' => 'Admin\MailController@getTmpMails',
+                'as' => 'getTmpMails'
+            ]);
+
+
+    });
+
+    $this->group(['prefix' => 'campaign', 'as' => 'campaign::'], function () {
+
+        $this->get('/', ['uses' => 'Admin\CampaignController@index', 'as' => 'index']);
+
+        $this->get('/show/{uid}',
+            ['uses' => 'Admin\CampaignController@show',
+                'as' => 'show'
+            ]);
+
+        $this->get('/subscriber/{user}',
+            ['uses' => 'Admin\CampaignController@subscribers',
+                'as' => 'subscriber'
+            ]);
+
+        $this->get('/generate/{Campaign}',
+            [
+                'uses' => 'Admin\CampaignController@show',
+                'as' => 'show'
+            ]);
+
+        $this->get('/tmp_mail/{file}',
+            [
+                'uses' => 'Admin\CampaignController@getTmpMail',
+                'as' => 'tmp_mail'
+            ]);
+
+        $this->get('/history_mail/{folder}/{filename}',
+            [
+                'uses' => 'Admin\CampaignController@getHistoryTmpMail',
+                'as' => 'history_mail'
+            ]);
+
+        $this->post('/generate/{uid}/{type}',
+            [
+                'uses' => 'Admin\CampaignController@generate',
+                'as' => 'generate'
+            ]);
+        $this->get('/groups/json', [
+
+            'uses' => 'Admin\CampaignController@getJson',
+            'as' => 'get::json'
+        ]);
+    });
 });
 
-Route::group(
+$this->group(/**
+ *
+ */
     ['prefix' => '/admin/log-viewer',], function () {
-    Route::get('/', [
+
+    $this->get('/', [
         'as' => 'log-viewer::dashboard',
         'uses' => 'Admin\LogViewerController@index',
     ]);
-    Route::group(
-        ['prefix' => '/logs',], function () {
+
+    $this->group(['prefix' => '/logs',], function () {
         $this->get('/', [
             'as' => 'log-viewer::logs.list',
             'uses' => 'Admin\LogViewerController@listLogs',
         ]);
-
         $this->delete('delete', [
             'as' => 'log-viewer::logs.delete',
             'uses' => 'Admin\LogViewerController@delete',
         ]);
     });
-    Route::group(['prefix' => '/{date}'], function () {
+
+    $this->group(['prefix' => '/{date}'], function () {
         $this->get('/', [
             'as' => 'log-viewer::logs.show',
             'uses' => 'Admin\LogViewerController@show',

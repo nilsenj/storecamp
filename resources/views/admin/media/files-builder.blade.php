@@ -181,7 +181,6 @@
             <h3 class="text-warning">No Files found</h3>
         @endif
     @endforeach
-
 </div>
 <div class="modal" id="file-modal">
     <div class="modal-dialog modal-lg" role="document">

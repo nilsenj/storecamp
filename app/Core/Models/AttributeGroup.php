@@ -18,6 +18,10 @@ class AttributeGroup extends Model implements Transformable
     use SoftDeletes;
     use GeneratesUnique;
 
+    public static function boot()
+    {
+        parent::boot();
+    }
     /**
      * @var array
      */

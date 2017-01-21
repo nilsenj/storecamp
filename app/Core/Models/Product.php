@@ -65,6 +65,14 @@ class Product extends Model implements Transformable
     }
 
     /**
+     * bootable methods fix
+     */
+    public static function boot()
+    {
+        parent::boot();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()

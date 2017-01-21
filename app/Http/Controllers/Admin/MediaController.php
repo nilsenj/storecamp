@@ -218,6 +218,7 @@ class MediaController extends BaseController
                 \File::makeDirectory($newFolder, 0775, true);
                 $folder = Folder::create([
                     'name' => $new_path,
+                    'path_on_disk' => $newFolder,
                     'parent_id' => $parentFolder->id
                 ]);
                 return redirect()->route('admin::media::index', $folder->unique_id);
@@ -263,6 +264,7 @@ class MediaController extends BaseController
                     $media->save();
                 }
                 $renameFolder->name = $new_name;
+                $renameFolder->path_on_disk = $beRenamedToPath;
                 $renameFolder->save();
             }
 

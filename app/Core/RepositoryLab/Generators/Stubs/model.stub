@@ -9,7 +9,13 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
 class $CLASS$ extends Model implements Transformable
 {
     use TransformableTrait;
+    use GeneratesUnique;
 
     protected $fillable = $FILLABLE$;
+
+    public static function boot()
+    {
+       parent::boot();
+    }
 
 }

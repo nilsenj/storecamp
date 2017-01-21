@@ -19,6 +19,8 @@ class CreateFoldersTable extends Migration
 
             $table->integer('parent_id')->nullable()->default(1);
             $table->string('name')->nullable();
+            $table->string('disk')->nullable();
+            $table->string('path_on_disk')->nullable();
             $table->string('slug')->nullable();
             $table->tinyInteger('order')->default(0);
             $table->timestamps();

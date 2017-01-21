@@ -3,20 +3,21 @@
 return [
 
     /*
-    |--------------------------------------------------------------------------
-    | Mail Driver
-    |--------------------------------------------------------------------------
-    |
-    | Laravel supports both SMTP and PHP's "mail" function as drivers for the
-    | sending of e-mail. You may specify which one you're using throughout
-    | your application here. By default, Laravel is setup for SMTP mail.
-    |
-    | Supported: "smtp", "mail", "sendmail", "mailgun", "mandrill",
-    |            "ses", "sparkpost", "log"
-    |
-    */
+   |--------------------------------------------------------------------------
+   | Mail Driver
+   |--------------------------------------------------------------------------
+   |
+   | Laravel supports both SMTP and PHP's "mail" function as drivers for the
+   | sending of e-mail. You may specify which one you're using throughout
+   | your application here. By default, Laravel is setup for SMTP mail.
+   |
+   | Supported: "smtp", "mail", "sendmail", "mailgun", "mandrill",
+   |            "ses", "sparkpost", "log"
+   |
+   */
 
-    'driver' => env('MAIL_DRIVER', 'smtp'),
+    'driver' => env('APP_ENV') == 'local' ? env('MAIL_DRIVER_LOCAL', 'mail') : env('MAIL_DRIVER', 'sendmail'),
+
 
     /*
     |--------------------------------------------------------------------------
@@ -54,11 +55,8 @@ return [
     | used globally for all e-mails that are sent by your application.
     |
     */
-
-    'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
-    ],
+    'from' =>
+        array('address' => env('APP_ENV') == 'local' ? 'dev@domain.com' : env('MAIL_FROM'), 'name' => env('APP_ENV') == 'local' ? 'Dev Example' : env('MAIL_NAME')),
 
     /*
     |--------------------------------------------------------------------------
@@ -111,5 +109,9 @@ return [
     */
 
     'sendmail' => '/usr/sbin/sendmail -bs',
+
+    'pretend' => true,
+
+    'default_mail_templates_path' => "uploads/mails/",
 
 ];

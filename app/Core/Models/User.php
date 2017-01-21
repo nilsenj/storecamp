@@ -71,6 +71,15 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
             ]
         ];
     }
+
+    /**
+     * bootable methods fix
+     */
+    public static function boot()
+    {
+        parent::boot();
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

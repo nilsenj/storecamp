@@ -21,6 +21,14 @@ class Role extends AccessRole implements Transformable
     protected $fillable = ['name', 'display_name', 'description'];
 
     /**
+     * bootable methods fix
+     */
+    public static function boot()
+    {
+        parent::boot();
+    }
+
+    /**
      * @return array
      */
     public function getRoleIds()

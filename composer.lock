@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "dc4ee8733e85890315232cd89c751b47",
+    "content-hash": "17ece1d6fd8d2964bf750b7790f7da8a",
     "packages": [
         {
             "name": "a6digital/laravel-default-profile-image",
@@ -1977,19 +1977,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "297945170f17298247a4bd2fd5fe1d8a9a277e21"
+                "reference": "9f23589476ed433e4e1a7faa1c1fb8c834870dac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/297945170f17298247a4bd2fd5fe1d8a9a277e21",
-                "reference": "297945170f17298247a4bd2fd5fe1d8a9a277e21",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/9f23589476ed433e4e1a7faa1c1fb8c834870dac",
+                "reference": "9f23589476ed433e4e1a7faa1c1fb8c834870dac",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "~5.0|~6.0",
-                "illuminate/contracts": "~5.0",
-                "illuminate/http": "~5.0",
-                "illuminate/support": "~5.0",
+                "guzzlehttp/guzzle": "~6.0",
+                "illuminate/contracts": "~5.4",
+                "illuminate/http": "~5.4",
+                "illuminate/support": "~5.4",
                 "league/oauth1-client": "~1.0",
                 "php": ">=5.4.0"
             },

@@ -2,6 +2,7 @@
 
 namespace App\Core\Repositories;
 
+use App\Core\Models\Mail;
 use App\Events\MailSentTOReceiver;
 use App\Jobs\SendCampaignEmails;
 use App\Core\Models\User;
@@ -22,7 +23,7 @@ use Illuminate\Mail\Mailer;
 
 /**
  * Class SubscribersRepositoryEloquent
- * @package namespace SXC\Repositories;
+ * @package App\Core\Repositories
  */
 class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\Repositories\SubscribersRepository, CacheableInterface
 {
@@ -32,19 +33,35 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
      * @var RolesRepository
      */
     protected $roleRepository;
-    protected $newsLetterListRepository;
+    /**
+     * @var CampaignRepository
+     */
+    protected $campaignRepository;
+    /**
+     * @var User
+     */
     protected $user;
+    /**
+     * @var Dispatcher
+     */
     protected $dispatcher;
 
+    /**
+     * SubscribersRepositoryEloquent constructor.
+     * @param Application $app
+     * @param Dispatcher $dispatcher
+     * @param RolesRepository $roleRepository
+     * @param CampaignRepository $campaignRepository
+     */
     public function __construct(Application $app, Dispatcher $dispatcher,
                                 RolesRepository $roleRepository,
-                                NewsLetterListRepository $newsLetterListRepository
+                                CampaignRepository $campaignRepository
     )
     {
         parent::__construct($app, $dispatcher);
 
         $this->roleRepository = $roleRepository;
-        $this->newsLetterListRepository = $newsLetterListRepository;
+        $this->campaignRepository = $campaignRepository;
         $this->user = new User();
         $this->dispatcher = $dispatcher;
     }
@@ -87,21 +104,25 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
      * @param bool $uid
      * @return mixed
      */
-    public function findOrCreateList($listName, $uid = FALSE)
+    public function findOrCreateCampaign($listName, $uid = FALSE)
     {
         $field = $uid ? 'unique_id' : 'listName';
-        $list = $this->newsLetterListRepository->getModel()->where($field, $listName)->first();
+        $list = $this->campaignRepository->getModel()->where($field, $listName)->first();
         if (is_null($list)) return $this->createList($listName);
         return $list;
     }
 
+    /**
+     * @param $uid
+     * @return null
+     */
     public function findList($uid)
     {
 
         if (!is_null($uid)) {
             $field = $uid ? 'unique_id' : 'listName';
 
-            $list = $this->newsLetterListRepository->getModel()->where($field, $uid)->first();
+            $list = $this->campaignRepository->getModel()->where($field, $uid)->first();
             return $list;
 
         } else {
@@ -115,16 +136,24 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
      */
     public function createList($listName)
     {
-        $list = $this->newsLetterListRepository->getModel();
-        $list->listName = $listName;
+        $list = $this->campaignRepository->getModel();
+        $list->campaign = $listName;
         $list->save();
         return $list;
     }
 
+    /**
+     * @param $data
+     * @param $list
+     * @return bool
+     */
     private function createSubscriber($data, $list)
     {
         $subscriber = $this->getModel();
-        foreach ($data as $key => $value) $subscriber->{$key} = $value;
+        foreach ($data as $key => $value)
+        {
+            $subscriber->{$key} = $value;
+        }
         $subscriber->save();
         if (!is_null($list)) {
             $list->subscribers()->attach($subscriber);
@@ -133,6 +162,11 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
         return true;
     }
 
+    /**
+     * @param $request
+     * @param $type
+     * @return bool
+     */
     public function createSubscription($request, $type)
     {
         $mail = $request->get('subscriber_email');
@@ -143,7 +177,7 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
         }
 
         if (!is_null($type)) {
-            $list = $this->findOrCreateList($type);
+            $list = $this->findOrCreateCampaign($type);
         } else {
             $list = NULL;
         }
@@ -177,6 +211,12 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
         }
     }
 
+    /**
+     * @param $request
+     * @param $type
+     * @param $subscription_id
+     * @return bool|\Illuminate\Http\RedirectResponse
+     */
     public function deleteSubscription($request, $type, $subscription_id)
     {
         $mail = $request->get('subscriber_email');
@@ -220,11 +260,11 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
     {
         if (is_null($type)) {
 
-            return $this->newsLetterListRepository->all();
+            return $this->campaignRepository->all();
 
         } else {
 
-            return $this->newsLetterListRepository->findByField("listName", $type);
+            return $this->campaignRepository->findByField("listName", $type);
 
         }
     }
@@ -245,6 +285,10 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
         return $mails;
     }
 
+    /**
+     * @param $uid
+     * @return array
+     */
     public function resolveMailHistory($uid)
     {
         $mailHistory = [];
@@ -274,11 +318,16 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
 
             return \File::get($path);
 
-        } catch (\Error $e) {
+        } catch (\Throwable $e) {
             return back()->withErrors($e);
         }
     }
 
+    /**
+     * @param $folder
+     * @param $filename
+     * @return $this|null|string
+     */
     public function getHistoryTmpMail($folder, $filename)
     {
         $path = base_path('resources/views/storage/tmp_mails/');
@@ -292,7 +341,7 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
                 return null;
             }
 
-        } catch (\Error $e) {
+        } catch (\Throwable $e) {
 
             return back()->withErrors($e);
         }
@@ -300,6 +349,11 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
     }
 
 
+    /**
+     * @param $request
+     * @param $uid
+     * @return array
+     */
     private function putMail($request, $uid)
     {
         $root = base_path('resources/views/storage/tmp_mails') . "/" . $uid . "/";
@@ -313,10 +367,14 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
         $viewFolder = "storage/tmp_mails" . "/" . $uid . "/" . $randomStr;
         \File::put($path, $request->mail);
 
-        return array($root, $path, $viewFolder);
+        return array("root" => $root, "path" => $path, "viewFolder" => $viewFolder);
 
     }
 
+    /**
+     * @param $root
+     * @return string
+     */
     private function putCSV($root)
     {
         if (!\File::exists($root)) {
@@ -331,6 +389,10 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
 
     }
 
+    /**
+     * @param $file
+     * @return array
+     */
     private function mailFromFile($file)
     {
         $reader = Reader::createFromPath($file, 'r');
@@ -362,7 +424,7 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
         foreach (range($start, $end) as $num) {
             if ($num > count($mails) - 1) {
                 echo "\n Maximum reached";
-                break;
+                return;
             }
             $name = isset($mails[$num][1]) ? trim($mails[$num][1]) : null;
             $receiverMail = trim($mails[$num][0]);
@@ -381,9 +443,9 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
     public function generateCampaign($request, $uid, $type)
     {
         $pathArr = $this->putMail($request, $uid);
-        $path = $pathArr[1];
-        $root = $pathArr[0];
-        $viewFolder = $pathArr[2];
+        $path = $pathArr["path"];
+        $root = $pathArr["root"];
+        $viewFolder = $pathArr["viewFolder"];
         $rows = $this->findList($uid)->subscribers();
         $csvPath = $this->putCSV($root);
         $csv = Writer::createFromPath($csvPath);
@@ -395,15 +457,20 @@ class SubscribersRepositoryEloquent extends BaseRepository implements \App\Core\
             unset($personArr['pivot']);
             $csv->insertOne($personArr);
         }
-
         $sender_email = env('MAIL_FROM');
         $sender_name = strstr($sender_email, '@', true); // As of PHP 5.3.0
         $typeArr = explode(" ", $type);
         $type = implode("_", $typeArr);
 //      echo $type;
 //      $cmd = "mail:campaign " . $csvPath . " --view=" . $viewFolder . " -f=" . $sender_email . " --sender_name=" . $sender_name . " -t=" . ".$type." . "";
-
         $this->handleCampaign($type, $sender_email, $sender_name, $viewFolder, $csvPath);
+        Mail::create([
+            'user_id' => \Auth::check() ? \Auth::id() : null,
+            'from' => $sender_email,
+            'to' => $type,
+            'subject' => $request->subject ? $request->subject : "StoreCamp Online Store",
+            'message' => $request->message ? $request->message : " StoreCamp Message Here!",
+        ]);
 
 //        return \Artisan::call("mail:campaign", [
 //                '-t' => "$type",

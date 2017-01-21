@@ -47,6 +47,7 @@
 <script src="{{ asset('plugins/morris.js/morris.min.js') }}"></script>
 <script src="{{ asset('plugins/toastr/toastr.js') }}"></script>
 <script src="{{ asset('plugins/bootstrap-star-rating/js/star-rating.min.js') }}"></script>
+<script src="{{ asset('plugins/summernote/dist/summernote.min.js') }}"></script>
 <script src="{{ asset('/js/app.js') }}" type="text/javascript"></script>
 
 <!-- Page script -->

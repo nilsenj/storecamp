@@ -13,4 +13,11 @@ class Permission extends AccessPermission implements Transformable
     use TransformableTrait;
     use GeneratesUnique;
 
+    /**
+     * bootable methods fix
+     */
+    public static function boot()
+    {
+        parent::boot();
+    }
 }

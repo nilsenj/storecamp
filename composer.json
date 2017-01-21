@@ -14,7 +14,7 @@
         "codezero/mailer": "dev-master",
         "davejamesmiller/laravel-breadcrumbs": "dev-master",
         "cviebrock/eloquent-sluggable": ">=3.0.0-alpha",
-        "laravel/socialite": "^3.0@dev",
+        "laravel/socialite": "dev-master",
         "laravelcollective/html": "^5.3",
         "league/fractal": "^0.14.0",
         "intervention/imagecache": "^2.3",
@@ -59,7 +59,8 @@
             "App/Core/Repositories",
             "App/Core/Traits",
             "App/Core/MailComposers",
-            "App/Core/Components/EmailMarketer"
+            "App/Core/Components/EmailMarketer",
+            "App/Core/Drivers/FolderToDb"
         ],
         "psr-4": {
             "App\\": "app/",
@@ -79,6 +80,7 @@
             "App\\Core\\Interfaces\\": "app/Core/interfaces/",
             "App\\Core\\Policies\\": "app/Core/policies/",
             "App\\Core\\Traits\\": "app/Core/traits/",
+            "App\\Core\\Drivers\\FolderToDb\\": "App/Core/Drivers/FolderToDb/",
             "App\\Core\\Components\\Sidebar\\": "App/Core/Components/Sidebar/",
             "App\\Core\\Components\\Timezone\\":"App/Core/Components/Timezone/",
             "App\\Core\\Components\\Country\\":"App/Core/Components/Country/",

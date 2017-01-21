@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Core\Models\Folder;
 use Illuminate\Support\ServiceProvider;
 
 class FolderServiceProvider extends ServiceProvider
@@ -13,7 +14,17 @@ class FolderServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->app->bind(
+                "App\\Drivers\\FolderToDb\\Synchronizer",
+                "App\\Core\\Repositories\\SynchronizerInterface");
+
+        Folder::created(function ($folder) {
+            //setDiskAttribute fix
+            if (empty($folder->disk)) {
+                $folder->disk = "local";
+                $folder->save();
+            }
+        });
     }
 
     /**

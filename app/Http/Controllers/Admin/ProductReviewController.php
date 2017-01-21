@@ -52,7 +52,7 @@ class ProductReviewController extends Controller
 
             return view('admin.productReview.index', compact('productReviews', 'no'));
 
-        } catch (\Error $e) {
+        } catch (\Throwable $e) {
             return response()->json(['error' => $e->getMessage(), "error_code" => $e->getCode()], $e->getCode());
         }
 
@@ -73,7 +73,7 @@ class ProductReviewController extends Controller
 
             return view('admin.productReview.show', compact('productReview', 'currentUserId'));
 
-        } catch (\Error $e) {
+        } catch (\Throwable $e) {
             return response()->json(['error' => $e->getMessage(), "error_code" => $e->getCode()], $e->getCode());
         }
     }
@@ -132,7 +132,7 @@ class ProductReviewController extends Controller
             } else {
                 return response()->json('not allowed', 400);
             }
-        } catch (\Error $e) {
+        } catch (\Throwable $e) {
 
             return response(["error"], 400);
         }
@@ -147,8 +147,8 @@ class ProductReviewController extends Controller
         try {
 
             $this->productReview->delete($id);
-            return redirect('admin/review/index');
-        } catch (\ErrorException $e) {
+            return redirect('admin/reviews/index');
+        } catch (\Throwable $e) {
             \Toastr::error('Can\'t ber deleted', "Error while deleting");
             return redirect()->back();
         }

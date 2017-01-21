@@ -63,7 +63,6 @@ class UsersController extends BaseController
     public function index()
     {
         $users = $this->repository->paginate();
-
         $no = $users->firstItem();
 
         return $this->view('index', compact('users', 'no'));

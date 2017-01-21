@@ -17,6 +17,9 @@ class UserServiceProvider extends ServiceProvider
         User::created(function ($user) {
 
         });
+        User::creating(function ($user) {
+
+        });
     }
 
     /**
