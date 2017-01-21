@@ -554,6 +554,19 @@ $this->group(/**
             'as' => 'get::json'
         ]);
     });
+    $this->group(['prefix' => 'audits', 'as' => 'audits::'], function () {
+
+        $this->get('/{model?}', [
+            'uses' => 'Admin\AuditsController@index',
+            'as' => 'index'
+        ]);
+
+        $this->get('show/{model}/{id}',
+            [
+                'uses' => 'Admin\AuditsController@show',
+                'as' => 'show'
+            ]);
+    });
 });
 
 $this->group(/**

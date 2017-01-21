@@ -81,9 +81,8 @@ class MailController extends BaseController
      */
     public function getTmpMails()
     {
-        $tmpPath = public_path("uploads");
-        $directories = synchronizeWithFiles($tmpPath);
-        dd(Folder::all());
+        $folder = Folder::find(4);
+        dd($folder->files);
         $mail = $this->repository->getTmpMail($file = null);
         return $mail;
     }

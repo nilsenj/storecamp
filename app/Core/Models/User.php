@@ -4,6 +4,7 @@ namespace App\Core\Models;
 
 
 use App\Core\Access\Traits\AccessUserTrait;
+use App\Core\Components\Auditing\Auditable;
 use App\Core\Components\Messenger\Traits\Messagable;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
@@ -18,7 +19,47 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 /**
  * Class User
+ *
  * @package App\Core\Models
+ * @property int $id
+ * @property string $unique_id
+ * @property string $name
+ * @property string $email
+ * @property string $telephone
+ * @property string $ip
+ * @property string $password
+ * @property string $slug
+ * @property string $logo_path
+ * @property string $remember_token
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $notify
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\ProductReview[] $productReview
+ * @property-write mixed $date
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Role[] $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Messenger\Models\Message[] $messages
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Messenger\Models\Thread[] $threads
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereUniqueId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereTelephone($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereIp($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User wherePassword($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereSlug($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereLogoPath($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereNotify($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User today()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User byMailOrName($name)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User allExcept()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User users()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
+ * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  */
 class User extends Authenticatable implements Transformable, AuthenticatableContract,
     CanResetPasswordContract
@@ -30,6 +71,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     use AccessUserTrait;
     use GeneratesUnique;
     use Messagable;
+    use Auditable;
 
     /**
      * @var string

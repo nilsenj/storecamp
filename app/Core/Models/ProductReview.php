@@ -2,6 +2,7 @@
 
 namespace App\Core\Models;
 
+use App\Core\Components\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use RepositoryLab\Repository\Contracts\Transformable;
@@ -14,13 +15,48 @@ use Toastr;
 
 /**
  * Class FeedBack
+ *
  * @package SXC\Models
+ * @property int $id
+ * @property int $user_id
+ * @property int $product_id
+ * @property string $unique_id
+ * @property string $review
+ * @property bool $hidden
+ * @property bool $rating
+ * @property \Carbon\Carbon $date
+ * @property string $deleted_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \App\Core\Models\User $user
+ * @property-read \App\Core\Models\Product $product
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Messenger\Models\Thread[] $thread
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereProductId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereUniqueId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereReview($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereHidden($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereRating($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview users()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview today()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview usersByID($id)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview onlyVisible()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview onlyHidden()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview byRating($reason)
+ * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  */
 class ProductReview extends Model implements Transformable
 {
     use TransformableTrait;
     use SoftDeletes;
     use GeneratesUnique;
+    use Auditable;
 
     /**
      * @var string

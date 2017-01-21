@@ -29,6 +29,7 @@
                         <th>Quantity</th>
                         <th>Availability</th>
                         <th>Stock Status</th>
+                        <th>Db Activity</th>
                         <th>Created At</th>
                         <th class="text-center">Actions</th>
                         </thead>
@@ -55,6 +56,15 @@
                                     </td>
                                 @endif
                                 <td>{!! $product->stock_status !!}</td>
+                                <td>
+                                    <a data-toggle="modal" href="#activity-modal"
+                                       class="btn btn-xs btn-info"
+                                       data-desc-url="{{route('admin::audits::show', ["product", $product->id])}}"
+                                       data-desc-id="{{ $product->id }}"
+                                       data-desc-name="{{ $product->title }}">
+                                        show db activity
+                                    </a>
+                                </td>
                                 <td>{!! $product->created_at !!}</td>
                                 <td class="text-center">
                                     <a class="edit" href="{!! route('admin::products::edit', $product->unique_id) !!}"
@@ -76,7 +86,6 @@
     </div>
     <div class="text-center">
         {!! $products->links() !!}
-        {{--{!! pagination_links($categories) !!}--}}
     </div>
-
 @endsection
+@include('admin.components.modal-description', [$attrName = "activity" ])

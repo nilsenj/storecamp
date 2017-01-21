@@ -127,7 +127,7 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
         $model = $this->getModel();
         $parentsPath = $this->folder->getParentFoldersPath($folder);
         $folderPath = $parentsPath ? $parentsPath . '/' . $folder->name : $folder->name;
-        $count = $model->inDirectory('local', $folderPath)->count();
+        $count = $folder->files->count();
         $media = $this->filesPreRender($model, $folderPath, $tag, $request, $folder);
         $directories = $folder->children;
         return [

@@ -6,6 +6,23 @@
  *
  * @license MIT
  * @package App\Core\Access
+ * @property int $id
+ * @property string $unique_id
+ * @property string $name
+ * @property string $display_name
+ * @property string $description
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\User[] $users
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Permission[] $perms
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Access\AccessRole whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Access\AccessRole whereUniqueId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Access\AccessRole whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Access\AccessRole whereDisplayName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Access\AccessRole whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Access\AccessRole whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Access\AccessRole whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 
 use App\Core\Access\Contracts\AccessRoleInterface;

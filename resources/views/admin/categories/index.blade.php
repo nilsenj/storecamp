@@ -48,7 +48,7 @@
     </div>
 @endsection
 
-@include('admin.components.modal-description')
+@include('admin.components.modal-description', [$attrName = "Description" ])
 @section('scripts-add')
 
 @endsection

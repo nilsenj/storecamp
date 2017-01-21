@@ -193,6 +193,8 @@ return [
         \App\Providers\SubscriberServiceProvider::class,
         \App\Core\Components\EmailMarketer\EmailMarketerServiceProvider::class,
         \App\Core\Components\Messenger\MessengerServiceProvider::class,
+        \App\Core\Components\Auditing\AuditingServiceProvider::class,
+
         \App\Providers\MailServiceProvider::class,
         //Apis service providers
         \App\Core\APIs\Youtube\YoutubeServiceProviderLaravel5::class,
@@ -210,7 +212,6 @@ return [
         Webpatser\Countries\CountriesServiceProvider::class,
         Camroncade\Timezone\TimezoneServiceProvider::class,
         A6digital\Image\DefaultProfileImageServiceProvider::class,
-        Laravel\Socialite\SocialiteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
         \Cviebrock\ImageValidator\ImageValidatorServiceProvider::class,

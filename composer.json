@@ -14,7 +14,6 @@
         "codezero/mailer": "dev-master",
         "davejamesmiller/laravel-breadcrumbs": "dev-master",
         "cviebrock/eloquent-sluggable": ">=3.0.0-alpha",
-        "laravel/socialite": "dev-master",
         "laravelcollective/html": "^5.3",
         "league/fractal": "^0.14.0",
         "intervention/imagecache": "^2.3",
@@ -34,7 +33,8 @@
         "barryvdh/laravel-debugbar": "^2.3",
         "torann/hashids": "^2.0",
         "nilsenj/toastr-laravel": "dev-1.0-stable",
-        "league/csv": "8.0"
+        "league/csv": "8.0",
+        "laravel/socialite": "^2.0"
 
     },
     "require-dev": {
@@ -85,10 +85,11 @@
             "App\\Core\\Components\\Timezone\\":"App/Core/Components/Timezone/",
             "App\\Core\\Components\\Country\\":"App/Core/Components/Country/",
             "App\\Core\\Components\\Select\\SelectBuilder\\":"App/Core/Components/Select/",
-            "App\\Core\\components\\ActiveItem\\":"App/Core/Components/ActiveItem/",
-            "App\\Core\\Components\\Flash\\":"App/Core/Components/Flash/",
-            "App\\Core\\Components\\Messenger\\": "app/Core/Components/Messenger/Messenger/",
-            "nilsenj\\Toastr\\": "packages/nilsenj/toastr-laravel/src/"
+            "App\\Core\\Components\\ActiveItem\\": "packages/ActiveItem/",
+            "App\\Core\\Components\\Flash\\": "packages/Flash/",
+            "App\\Core\\Components\\Messenger\\": "packages/Messenger/Messenger/",
+            "nilsenj\\Toastr\\": "packages/nilsenj/toastr-laravel/src/",
+            "App\\Core\\Components\\Auditing\\": "packages/laravel-auditing/src/"
         }
     },
     "autoload-dev": {

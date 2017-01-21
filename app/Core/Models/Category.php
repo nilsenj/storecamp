@@ -2,18 +2,61 @@
 
 namespace App\Core\Models;
 
+use App\Core\Components\Auditing\Auditable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
 use Juggl\UniqueHashids\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
+/**
+ * App\Core\Models\Category
+ *
+ * @property int $id
+ * @property string $unique_id
+ * @property int $parent_id
+ * @property string $name
+ * @property string $description
+ * @property string $image_link
+ * @property string $slug
+ * @property string $meta_tag_title
+ * @property string $meta_tag_description
+ * @property string $meta_tag_keywords
+ * @property bool $status
+ * @property bool $top
+ * @property bool $sort_order
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Product[] $products
+ * @property-read \App\Core\Models\Category $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Category[] $children
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereUniqueId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereParentId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereImageLink($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereSlug($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereMetaTagTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereMetaTagDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereMetaTagKeywords($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereTop($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereSortOrder($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category options()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
+ * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
+ */
 class Category extends Model implements Transformable
 {
     use TransformableTrait;
     use GeneratesUnique;
     use \Cviebrock\EloquentSluggable\Sluggable;
     use SluggableScopeHelpers;
+    use Auditable;
 
     /**
      * @var array
@@ -57,7 +100,7 @@ class Category extends Model implements Transformable
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function products() {
-        return $this->belongsToMany('Product', 'products_categories');
+        return $this->belongsToMany(Product::class, 'products_categories');
     }
     /**
      * @param $query

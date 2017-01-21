@@ -2,6 +2,7 @@
 
 namespace App\Core\Models;
 
+use App\Core\Components\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Juggl\UniqueHashids\GeneratesUnique;
@@ -10,13 +11,35 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
 
 /**
  * Class AttributeGroupDescription
+ *
  * @package App\Core\Models
+ * @property int $id
+ * @property string $name
+ * @property string $unique_id
+ * @property int $attributes_group_id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property bool $sort_order
+ * @property string $deleted_at
+ * @property-read \App\Core\Models\AttributeGroup $attributesGroup
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Product[] $product
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription whereUniqueId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription whereAttributesGroupId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription whereSortOrder($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\AttributeGroupDescription whereDeletedAt($value)
+ * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  */
 class AttributeGroupDescription extends Model implements Transformable
 {
     use TransformableTrait;
     use SoftDeletes;
     use GeneratesUnique;
+    use Auditable;
 
     /**
      * @var array

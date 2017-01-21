@@ -1,4 +1,4 @@
-<div class="modal" id="description-modal">
+<div class="modal" id="{!! $attrName !!}-modal">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -19,7 +19,7 @@
 @push('scripts-add_on')
     <script>
         $(function () {
-            var descModal = $('#description-modal'),
+            var descModal = $('#{!! $attrName !!}-modal'),
                 submitBtn = descModal.find('button[type=submit]'),
                 modalTitle = descModal.find('.modal-title'),
                 modalBody = descModal.find('.modal-body');
@@ -35,7 +35,7 @@
                     type: 'GET',
                     success: function (data) {
                         modalBody.html(data);
-                        modalTitle.html('Category - '+descTrigger.data('desc-name'));
+                        modalTitle.html('{!! $attrName !!} - '+descTrigger.data('desc-name'));
                     },
                     error: function (xhr, textStatus, errorThrown) {
                         modalTitle.html("<p class='text-danger'>ERROR Appeared!</p>");

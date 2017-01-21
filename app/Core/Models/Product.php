@@ -2,17 +2,92 @@
 
 namespace App\Core\Models;
 
+use App\Core\Components\Auditing\Auditable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Juggl\UniqueHashids\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
+/**
+ * App\Core\Models\Product
+ *
+ * @property int $id
+ * @property string $unique_id
+ * @property string $title
+ * @property string $body
+ * @property string $model
+ * @property string $slug
+ * @property string $stock_status
+ * @property int $viewed
+ * @property int $quantity
+ * @property string $sku
+ * @property string $upc
+ * @property string $ean
+ * @property string $jan
+ * @property string $isbn
+ * @property string $mpn
+ * @property float $price
+ * @property float $length
+ * @property float $width
+ * @property float $height
+ * @property float $weight
+ * @property \Carbon\Carbon $date_available
+ * @property bool $availability
+ * @property string $meta_tag_title
+ * @property string $meta_tag_description
+ * @property string $meta_tag_keywords
+ * @property bool $sort_order
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \App\Core\Models\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\ProductReview[] $productReview
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Category[] $categories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\AttributeGroupDescription[] $attributeGroupDescription
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereUniqueId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereBody($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereModel($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereSlug($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereStockStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereViewed($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereQuantity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereSku($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereUpc($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereEan($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereJan($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereIsbn($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereMpn($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product wherePrice($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereLength($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereWidth($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereHeight($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereWeight($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereDateAvailable($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereAvailability($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereMetaTagTitle($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereMetaTagDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereMetaTagKeywords($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereSortOrder($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product unpublished()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product published()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product newest()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product drafted()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product bySlugOrId($id)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product categorized(\App\Core\Models\Category $category = null)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
+ * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
+ */
 class Product extends Model implements Transformable
 {
     use TransformableTrait;
     use \Cviebrock\EloquentSluggable\Sluggable;
     use GeneratesUnique;
+    use Auditable;
 
     /**
      * @var array
@@ -104,14 +179,6 @@ class Product extends Model implements Transformable
      */
     public function getFirstCategory() {
         return $this->categories()->first();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function comments()
-    {
-        return $this->morphMany('Comment', 'commentable');
     }
 
     /**
