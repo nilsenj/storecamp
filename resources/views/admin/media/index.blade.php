@@ -1,7 +1,7 @@
 ﻿@extends('admin/app')
 <h1>
     @section('breadcrumb')
-        {!! Breadcrumbs::render('media', 'media') !!}
+        {!! Breadcrumbs::render('media', $disk) !!}
     @endsection
     @section('contentheader_title')
         Amount of Media Files
@@ -13,7 +13,6 @@
     @endsection
 </h1>
 @section('main-content')
-
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
@@ -21,12 +20,11 @@
                     <h3 class="box-title">List of Media Files
 
                     </h3>
-
                     <div class="box-tools">
 
                         <div class="form-group">
                             @if(!$folder)
-                                <a class="btn btn-xs btn-default" href="{{route('admin::media::index')}}"
+                                <a class="btn btn-xs btn-default" href="{{route('admin::media::index', [$disk])}}"
                                    style="margin-left: 10px">
                                     back
                                 </a>
@@ -54,43 +52,43 @@
                     <span class="media_tags">
                            <span class="text-muted">only: </span>
                         <li>
-                    <a href="{{url('admin/media/'.$folder->unique_id)}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
+                    <a href="{{route('admin::media::index',[$disk, $folder->unique_id])}}" class="btn btn-xs btn-icon" style="margin-left: 10px">
                         - all
                     </a>
                         </li>
                         <li>
-                            <a href="{{url('admin/media/'.$folder->unique_id."?tag=video")}}" class="btn btn-xs btn-icon"
+                            <a href="{{route('admin::media::index',[$disk, $folder->unique_id])."?tag=video"}}" class="btn btn-xs btn-icon"
                                style="margin-left: 10px">
                         <i class="fa fa-video-camera"></i> - video
                     </a>
                         </li>
 
                         <li>
-                             <a href="{{url('admin/media/'.$folder->unique_id."?tag=audio")}}" class="btn btn-xs btn-icon"
+                             <a href="{{route('admin::media::index',[$disk, $folder->unique_id])."?tag=audio"}}" class="btn btn-xs btn-icon"
                                 style="margin-left: 10px">
                         <i class="fa fa-music"></i> - audio
                     </a>
                         </li>
                         <li>
-                              <a href="{{url('admin/media/'.$folder->unique_id."?tag=image")}}" class="btn btn-xs btn-icon"
+                              <a href="{{route('admin::media::index',[$disk, $folder->unique_id])."?tag=image"}}" class="btn btn-xs btn-icon"
                                  style="margin-left: 10px">
                         <i class="fa fa-image"></i> - image
                     </a>
                         </li>
                         <li>
-                            <a href="{{url('admin/media/'.$folder->unique_id."?tag=pdf")}}" class="btn btn-xs btn-icon"
+                            <a href="{{route('admin::media::index',[$disk, $folder->unique_id])."?tag=pdf"}}" class="btn btn-xs btn-icon"
                                style="margin-left: 10px">
                         <i class="fa fa-file-pdf-o"></i> - pdf
                     </a>
                         </li>
                         <li>
-                             <a href="{{url('admin/media/'.$folder->unique_id."?tag=archive")}}" class="btn btn-xs btn-icon"
+                             <a href="{{route('admin::media::index',[$disk, $folder->unique_id])."?tag=archive"}}" class="btn btn-xs btn-icon"
                                 style="margin-left: 10px">
                         <i class="fa fa-file-archive-o"></i> - archive
                     </a>
                         </li>
                         <li>
-                            <a href="{{url('admin/media/'.$folder->unique_id."?tag=document")}}" class="btn btn-xs btn-icon"
+                            <a href="{{route('admin::media::index',[$disk, $folder->unique_id])."?tag=document"}}" class="btn btn-xs btn-icon"
                                style="margin-left: 10px">
                         <i class="fa fa-file-archive-o"></i> - document
                     </a>
@@ -98,7 +96,7 @@
 
                     </span>
                 </div><!-- /.box-header -->
-                {!! Form::open(['files' => true, 'route' => 'admin::media::upload',  'id' => 'my-awesome-dropzone-body', 'class' => 'dropzone box-body folder-body']) !!}
+                {!! Form::open(['files' => true, 'route' => ['admin::media::upload', $disk],  'id' => 'my-awesome-dropzone-body', 'class' => 'dropzone box-body folder-body']) !!}
                 <input type="hidden" name="folder" value="{{$folder->unique_id}}">
                 @include('admin.media.index-body_part')
                 {!! Form::close() !!}

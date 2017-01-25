@@ -1,4 +1,4 @@
-{!! Form::open(['files' => false, 'id' => 'newDirForm','route' => 'admin::media::make.directory']) !!}
+{!! Form::open(['files' => false, 'id' => 'newDirForm','route' => ['admin::media::make.directory', $disk]]) !!}
 
 <div class="form-group">
     {!! Form::label('path', 'Path:') !!}

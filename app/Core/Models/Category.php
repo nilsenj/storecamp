@@ -112,11 +112,17 @@ class Category extends Model implements Transformable
     }
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function parent()
     {
         return $this->belongsTo('App\Core\Models\Category', 'parent_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function children()
     {
         return $this->hasMany('App\Core\Models\Category', 'parent_id');

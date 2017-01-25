@@ -38,11 +38,24 @@ class Thread extends Eloquent
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     /**
+     * @var array
+     */
+    protected $with = ['parentMessage'];
+
+    /**
      * "Users" table name to use for manual queries
      *
      * @var string|null
      */
     private $usersTable = null;
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function parentMessage()
+    {
+        return $this->belongsTo(Message::class, 'parent_id');
+    }
 
     /**
      * Messages relationship
@@ -362,4 +375,5 @@ class Thread extends Eloquent
         $userModel = Config::get('messenger.user_model');
         return $this->usersTable = (new $userModel)->getTable();
     }
+
 }

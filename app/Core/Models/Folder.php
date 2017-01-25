@@ -56,6 +56,8 @@ class Folder extends Model implements Transformable
         'slug',
         'order',
         'disk',
+        'locked',
+        'unique_id',
         'path_on_disk',
         'parent_id'
     ];

@@ -51,7 +51,7 @@ return [
             'driver' => 'local',
             'root' => public_path('uploads'),
             'visibility' => 'uploads',
-            'prefix' => 'assets',
+            'prefix' => 'uploads',
         ],
         'mails' => [
             'driver' => 'local',

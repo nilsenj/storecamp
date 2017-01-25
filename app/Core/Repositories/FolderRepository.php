@@ -10,7 +10,8 @@ use RepositoryLab\Repository\Contracts\RepositoryInterface;
  */
 interface FolderRepository extends RepositoryInterface
 {
-    public function getFolders($folder);
+    public function disk(string $name) : FolderRepositoryEloquent;
+    public function defaultFolder($disk, $folder = null);
     public function getParentFolders($folder);
     public function getParentFoldersPath($folder);
     public function getParentFoldersPathLinks($folder, $array = []);

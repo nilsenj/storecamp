@@ -1,4 +1,4 @@
-{!! Form::open(['files' => false, 'route' => 'admin::media::rename.directory']) !!}
+{!! Form::open(['files' => false, 'route' => ['admin::media::rename.directory', $disk]]) !!}
 
 <div class="form-group">
     {!! Form::label('path', 'Path:') !!}

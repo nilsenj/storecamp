@@ -5,6 +5,8 @@ namespace App\Drivers\FolderToDb;
 
 use App\Core\Models\Folder;
 use App\Core\Models\Media;
+use App\Core\Repositories\FolderRepository;
+use App\Core\Repositories\MediaRepository;
 
 /**
  * Class Synchronizer
@@ -20,55 +22,63 @@ class Synchronizer implements SynchronizerInterface
 
     /**
      * Synchronizer constructor.
+     * @param MediaRepository $media
+     * @param FolderRepository $folder
      */
-    public function __construct()
+    public function __construct(MediaRepository $media, FolderRepository $folder)
     {
-        $this->folder = new Folder();
-        $this->media = new Media();
+        $this->folder = $folder;
+        $this->media = $media;
     }
 
     /**
      * @param string $folderPath
+     * @param string $disk
      * @return Folder
      */
-    public function findOrCreateByFolderPath(string $folderPath): Folder
+    public function findOrCreateByFolderPath(string $folderPath, $disk = 'local'): Folder
     {
-        $folder = $this->folder->where("path_on_disk", $folderPath);
+        $folder = $this->folder->disk($disk)->where("path_on_disk", $folderPath)->where('disk', $disk);
         if ($folder->count() > 0) {
             return $folder->first();
         } else {
             $folderName = explode("/", $folderPath);
             $folderName = $folderName[count($folderName) - 1];
-            return $this->folder->create(['name' => $folderName, "path_on_disk" => $folderPath]);
+            return $this->folder->create(['name' => $folderName, "path_on_disk" => $folderPath, "disk" => $disk]);
         }
     }
 
     /**
      * synchronize folders  with
-     *
      * folder structure
      *
      * @param string $path
+     * @param string $disk
      */
-    public function synchronize(string $path): void
+    public function synchronize(string $path, $disk = 'local'): void
     {
         $directories = $this->directoriesIterate($path, true);
-
+        $rootFolder = $this->resolveRootFolder();
         foreach ($directories as $key => $dir) {
             $folderPath = $dir["folderPath"];
-            echo $folderPath . "<br>" . "\n";
+            echo $folderPath . "on disk - " . $disk . "\n";
             $folders = explode("/", $folderPath);
             if (count($folders) > 1) {
                 array_pop($folders);
                 $newFolderPath = implode("/", $folders);
-                $folderParentInstance = $this->findOrCreateByFolderPath($newFolderPath);
-                $newFolder = $this->findOrCreateByFolderPath($folderPath);
+                $folderParentInstance = $this->findOrCreateByFolderPath($newFolderPath, $disk);
+                if ($folderParentInstance->parent_id == null) {
+
+                    $folderParentInstance->parent_id = $rootFolder->id;
+                    $folderParentInstance->save();
+                }
+                $newFolder = $this->findOrCreateByFolderPath($folderPath, $disk);
                 $newFolder->parent_id = $folderParentInstance->id;
                 $newFolder->save();
             } else {
                 $newFolderPath = implode("/", $folders);
-                $folderParentInstance = $this->findOrCreateByFolderPath($newFolderPath);
-                $folderParentInstance->parent_id = 1;
+                $folderParentInstance = $this->findOrCreateByFolderPath($newFolderPath, $disk);
+                $folderParentInstance->parent_id = $rootFolder->id;;
                 $folderParentInstance->save();
             }
         }
@@ -80,37 +90,37 @@ class Synchronizer implements SynchronizerInterface
      * folder structure
      *
      * @param string $path
+     * @param string $disk
      */
-    public function synchronizeWithFiles(string $path): void
+    public function synchronizeWithFiles(string $path, $disk = 'local'): void
     {
         $directories = $this->directoriesIterate($path, true);
-        $rootFolder = $this->resolveRootFolder();
+        $rootFolder = $this->resolveRootFolder($disk);
         foreach ($directories as $key => $dir) {
             $folderPath = $dir["folderPath"];
-            echo $folderPath . "<br>" . "\n";
+            echo $folderPath . "on disk - " . $disk . "\n";
             $folders = explode("/", $folderPath);
             if (count($folders) > 1) {
                 array_pop($folders);
                 $newFolderPath = implode("/", $folders);
-                $folderParentInstance = $this->findOrCreateByFolderPath($newFolderPath);
+                $folderParentInstance = $this->findOrCreateByFolderPath($newFolderPath, $disk);
                 if ($folderParentInstance->parent_id == null) {
-
                     $folderParentInstance->parent_id = $rootFolder->id;
                     $folderParentInstance->save();
                 }
-                $newFolder = $this->findOrCreateByFolderPath($folderPath);
+                $newFolder = $this->findOrCreateByFolderPath($folderPath, $disk);
                 $newFolder->parent_id = $folderParentInstance->id;
                 $newFolder->save();
                 $iter = 0;
-                foreach (\File::files(public_path("uploads/" . $newFolder->path_on_disk)) as $file) {
+                foreach (\File::files($this->folder->disk($disk)->getDiskRoot() . '/' . $newFolder->path_on_disk) as $file) {
                     $iter++;
                     $fileName = \File::basename($file);
                     $fileNameClean = explode(".", $fileName);
                     array_pop($fileNameClean);
-                    $mediaFile = Media::where("directory", $newFolder->path_on_disk)->where("filename", implode("", $fileNameClean));
+                    $mediaFile = Media::where("directory", $newFolder->path_on_disk)->where("filename", implode("", $fileNameClean))->where('disk', $disk);
                     if ($mediaFile->count() == 0) {
                         echo $newFolder->path_on_disk . "\n";
-                        $media = \MediaUploader::importPath("local", $newFolder->path_on_disk . "/" . $fileName);
+                        $media = \MediaUploader::importPath($disk, $newFolder->path_on_disk . "/" . $fileName);
                         $media->directory_id = $newFolder->id;
                         $media->save();
 
@@ -118,16 +128,16 @@ class Synchronizer implements SynchronizerInterface
                 }
             } else {
                 $newFolderPath = implode("/", $folders);
-                $folderParentInstance = $this->findOrCreateByFolderPath($newFolderPath);
-                $folderParentInstance->parent_id = 1;
+                $folderParentInstance = $this->findOrCreateByFolderPath($newFolderPath, $disk);
+                $folderParentInstance->parent_id = $rootFolder->id;
                 $folderParentInstance->save();
-                foreach (\File::files(public_path("uploads/" . $folderParentInstance->path_on_disk)) as $file) {
+                foreach (\File::files($this->folder->disk($disk)->getDiskRoot() . "/" . $folderParentInstance->path_on_disk) as $file) {
                     $fileName = \File::basename($file);
                     $fileNameClean = explode(".", $fileName);
                     array_pop($fileNameClean);
-                    $mediaFile = Media::where("directory", $folderParentInstance->path_on_disk)->where("filename", $fileNameClean);
+                    $mediaFile = Media::where("directory", $folderParentInstance->path_on_disk)->where("filename", $fileNameClean)->where('disk', $disk);
                     if ($mediaFile->count() == 0) {
-                        $media = \MediaUploader::importPath("local", $folderParentInstance->path_on_disk . "/" . $fileName);
+                        $media = \MediaUploader::importPath($disk, $folderParentInstance->path_on_disk . "/" . $fileName);
                         $media->directory_id = $folderParentInstance->id;
                         $media->save();
                     }
@@ -190,18 +200,20 @@ class Synchronizer implements SynchronizerInterface
         return $items;
     }
 
-    private function resolveRootFolder(): Folder
+    private function resolveRootFolder($disk = 'local'): Folder
     {
-        $rootFolder = Folder::where("name", "")->where("path_on_disk", null);
+        $rootFolder = $this->folder->disk($disk)
+            ->where('disk', $disk)->where("name", "")
+            ->where("path_on_disk", null);
         if ($rootFolder->count() == 0) {
             return $rootFolder = \App\Core\Models\Folder::create([
                 'name' => '',
-                'parent_id' => null
+                'parent_id' => null,
+                'disk' => $disk
             ]);
         } else {
 
             return $rootFolder = $rootFolder->first();
         }
-
     }
 }

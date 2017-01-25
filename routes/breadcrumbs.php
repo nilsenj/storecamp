@@ -28,10 +28,10 @@ Breadcrumbs::register('categories', function($breadcrumbs)
 });
 
 // / > [Media]
-Breadcrumbs::register('media', function($breadcrumbs)
+Breadcrumbs::register('media', function($breadcrumbs, $disk)
 {
     $breadcrumbs->parent('admin');
-    $breadcrumbs->push('Media', route('admin::media::index'));
+    $breadcrumbs->push('Media', route('admin::media::index', [$disk]));
 });
 
 // / > [Media]

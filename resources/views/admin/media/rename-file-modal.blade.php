@@ -7,7 +7,7 @@
                 <h4 class="modal-title">Please Rename Directory</h4>
             </div>
             <div class="modal-body" style="word-wrap: break-word;">
-                {!! Form::open(['files' => false, 'route' => 'admin::media::rename.file']) !!}
+                {!! Form::open(['files' => false, 'route' => ['admin::media::rename.file', $disk]]) !!}
                 <div class="form-group">
                     {!! Form::label('new_name', 'New file name:') !!}
 

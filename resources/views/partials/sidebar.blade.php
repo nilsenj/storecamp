@@ -140,7 +140,7 @@
             <li><a href="{{ route('admin::users::index') }}"><i class='fa fa-users'></i> <span>Users</span></a></li>
 
             <li class="header">Administration</li>
-            <li><a href="{{ route('admin::media::index') }}"><i class='fa fa-files-o'></i>
+            <li><a href="{{ route('admin::media::indexs') }}"><i class='fa fa-files-o'></i>
                     <span>Media Storage</span></a></li>
 
             <li class="treeview {{ Route::is('admin::roles::create') ? 'active' : '' }}">

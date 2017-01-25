@@ -23,6 +23,11 @@ $white: white;
   top: 30px;
   z-index: 9999;
 }
+.locked-file {
+  position: absolute;
+  top: 5px;
+  color: chocolate;
+}
 .download-file {
   @extend %extend_1;
   display: none;

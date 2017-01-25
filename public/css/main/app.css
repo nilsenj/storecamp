@@ -160,6 +160,12 @@
   z-index: 9999;
 }
 
+.locked-file {
+  position: absolute;
+  top: 5px;
+  color: chocolate;
+}
+
 .download-file {
   display: none;
   top: 30px;

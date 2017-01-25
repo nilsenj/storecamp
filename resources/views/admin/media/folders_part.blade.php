@@ -16,15 +16,22 @@
                 <div class="col-xs-12 col-md-6 directory-item">
                     <a class="delete-file text-danger btn btn-default btn-xs" type="delete"
                        role="button"
-                       href="{{route("admin::media::get.folder.delete", [$directory->unique_id])}}"><i
+                       href="{{route("admin::media::get.folder.delete", [$disk, $directory->unique_id])}}"><i
                                 class="fa fa-times" aria-hidden="true"></i></a>
                     <a class="rename-file text-danger btn btn-default btn-xs" data-toggle="modal"
                        href="#renameDir-modal" data-new_name="{{$path.$directory->name}}"
                        data-rename-id="{{$directory->unique_id}}" type="rename" role="button"><i
                                 class="fa fa-edit" aria-hidden="true"></i></a>
-                    <a href="{{ route('admin::media::index', [$directory->unique_id]) }}"
+                    <a href="{{ route('admin::media::index', [$disk, $directory->unique_id]) }}"
                        class="btn btn-app"><i class='fa fa-file'></i>
-                        <span>{{str_limit($directory['name'], 15)}}</span></a>
+                        <span>{{str_limit($directory['name'], 15)}}</span>
+                        @if($directory->locked)
+                            <span rel="tooltip" title="Folder Locked" data-toggle="tooltip" data-container="body"
+                                  class="locked-file text-info btn-xs" role="button">
+                                <span class="fa fa-key" aria-hidden="true"></span>
+                            </span>
+                        @endif
+                    </a>
                 </div>
             @endforeach
             @if($directories->count() == 0)

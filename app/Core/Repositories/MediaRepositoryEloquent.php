@@ -15,8 +15,15 @@ use App\Core\Models\Media;
  */
 class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
 {
+    /**
+     * @var FolderRepository
+     */
     public $folder;
+    /**
+     * @var int
+     */
     protected $perPage = 100;
+
     /**
      * MediaRepositoryEloquent constructor.
      * @param Application $app
@@ -37,6 +44,7 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
         'extension' => 'like',
         'aggregate_type' => 'like'
     ];
+
     /**
      * Specify Model class name
      *
@@ -66,52 +74,19 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
     }
 
     /**
-     * @param null $searchQuery
+     * @param $model
+     * @param $request
      * @return mixed
      */
-    public function allOrSearch($searchQuery = null)
-    {
-        if (is_null($searchQuery)) {
-            return $this->getAll();
-        }
-        return $this->search($searchQuery);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAll()
-    {
-        return $this->getModel()->all();
-    }
-
-    /**
-     * @param $searchQuery
-     * @return mixed
-     */
-    public function search($searchQuery)
-    {
-        $search = "%{$searchQuery}%";
-
-        return $this->getModel()->where('filename', 'like', $search)
-            ->orWhere('aggregate_type', '=', $search)
-            ->orWhere('directory', '=', $search)
-            ->get();
-    }
-
     public function specificSearch($model, $request)
     {
-        $searchMask = $request->get('q') ? $request->get('q') : $request->get('search');
-        $search = "%{$searchMask}%";
         $tagSearch = $request->get('tag');
         if ($tagSearch) {
-            $specificTag = "%{$tagSearch}%";
-            return $model->where('aggregate_type', 'like', $specificTag)
-                ->simplePaginate();
+            return $model->where('aggregate_type', 'like', $tagSearch)
+                ->paginate($this->perPage);
         } else {
-            return $model->simplePaginate($this->perPage);
+            return $model->paginate($this->perPage);
         }
-
     }
 
     /**
@@ -120,16 +95,18 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
      * @param $request
      * @param null $folder
      * @param null $tag
+     * @param string $disk
      * @return array
      */
-    public function transform($request, $folder = null, $tag = null)
+    public function transform($request, $folder = null, $tag = null, $disk = '')
     {
         $model = $this->getModel();
-        $parentsPath = $this->folder->getParentFoldersPath($folder);
+        $parentsPath = $this->folder->disk($disk)->getParentFoldersPath($folder);
         $folderPath = $parentsPath ? $parentsPath . '/' . $folder->name : $folder->name;
         $count = $folder->files->count();
-        $media = $this->filesPreRender($model, $folderPath, $tag, $request, $folder);
+        $media = $this->filesPreRender($model, $folderPath, $tag, $request, $folder, $disk);
         $directories = $folder->children;
+
         return [
             'directories' => $directories,
             'media' => $media,
@@ -137,13 +114,6 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
             'path' => $folder->name
         ];
     }
-    public function transformFolders($request, $folder = null, $path) {
-
-        $directories = $folder->children;
-        return view('admin.media.folders_part', compact('directories', 'path'));
-
-    }
-
 
     /**
      * preRender files
@@ -152,28 +122,47 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
      * @param string $path
      * @param string $tag
      * @param $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param $folder
+     * @param string $disk
+     * @return array
      */
-    private function filesPreRender($model, $path = "", $tag = "", $request, $folder)
+    private function filesPreRender($model, $path = "", $tag = "", $request, $folder, $disk = '')
     {
+        $folderInstance = $this->folder->disk($disk);
         if ($tag) {
-            $media = $this->specificSearch($model->inDirectory('local', $path), $request);
+            $media = $this->inDirectory($folderInstance->getDisk(), $path, $tag);
 
         } else {
-            $media = $this->specificSearch($model->inDirectory('local', $path), $request);
+            $media = $this->inDirectory($folderInstance->getDisk(), $path);
         }
-        $media = ["media" => $media, "path" => $path, "tag" => $tag, "folderInstance" => $folder];
+        $media = ["media" => $media, "path" => $path, "tag" => $tag, "folderInstance" => $folder, 'disk' => $disk];
         return $media;
     }
 
     /**
-     * @param $media
-     * @param $path
-     * @param $tag
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param $disk
+     * @param $directory
+     * @param null $tag
+     * @param bool $recursive
+     * @return mixed
      */
-    private function filesRender($media, $path, $tag, $folder)
+    public function inDirectory($disk, $directory, $tag = null, $recursive = false)
     {
-        return view('admin.media.files-builder', compact('media', 'path', 'tag', 'folder'));
+        $this->applyCriteria();
+        $this->applyScope();
+        $model = $this->model->where('disk', $disk);
+        if($tag) {
+            $model = $this->model->where('aggregate_type', 'like', $tag);
+        }
+        if ($recursive) {
+            $directory = str_replace(['%', '_'], ['\%', '\_'], $directory);
+            $model = $model->where('directory', 'like', $directory.'%')->paginate($this->perPage);
+        } else {
+            $model = $model->where('directory', '=', $directory)->paginate($this->perPage);
+        }
+        $this->resetModel();
+
+        return $this->parserResult($model);
     }
+
 }

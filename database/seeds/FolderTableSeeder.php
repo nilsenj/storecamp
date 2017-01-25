@@ -8,7 +8,15 @@ class FolderTableSeeder extends Seeder
     {
         \App\Core\Models\Folder::create([
             'name' => '',
-            'parent_id' => null
+            'parent_id' => null,
+            'locked' => true
+        ]);
+
+        \App\Core\Models\Folder::create([
+            'name' => '',
+            'parent_id' => null,
+            'disk' => 'mails',
+            'locked' => true
         ]);
     }
 }

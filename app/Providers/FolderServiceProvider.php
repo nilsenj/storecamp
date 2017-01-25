@@ -15,12 +15,12 @@ class FolderServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->bind(
-                "App\\Drivers\\FolderToDb\\Synchronizer",
-                "App\\Core\\Repositories\\SynchronizerInterface");
+            "App\\Drivers\\FolderToDb\\SynchronizerInterface",
+            "App\\Drivers\\FolderToDb\\Synchronizer");
 
         Folder::created(function ($folder) {
             //setDiskAttribute fix
-            if (empty($folder->disk)) {
+            if (!$folder->disk) {
                 $folder->disk = "local";
                 $folder->save();
             }

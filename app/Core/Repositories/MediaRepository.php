@@ -10,8 +10,6 @@ use RepositoryLab\Repository\Contracts\RepositoryInterface;
  */
 interface MediaRepository extends RepositoryInterface
 {
-    public function getModel();
-    public function allOrSearch($searchQuery = null);
-    public function transform($request, $path = null, $tag = null);
-    public function transformFolders($request, $folder = null, $path);
+    public function transform($request, $folder = null, $tag = null, $disk = '');
+    public function inDirectory($disk, $directory, $tag = null, $recursive = false);
 }

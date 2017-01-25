@@ -103,42 +103,41 @@ $this->group(/**
     });
     $this->group(['prefix' => 'media', 'as' => 'media::'], function () {
 
-        $this->get('/{path?}', [
+        $this->get('/', [
+            'uses' => 'Admin\MediaController@index',
+            'as' => 'indexs'
+        ]);
+        $this->get('/{disk}/{path?}', [
             'uses' => 'Admin\MediaController@index',
             'as' => 'index'
         ]);
 
-        $this->get('/getIndex/{path?}', [
+        $this->get('/getIndex/{disk}/{path?}/', [
             'uses' => 'Admin\MediaController@getIndex',
             'as' => 'get.index'
         ]);
 
-        $this->get('/getIndexFolders/{folder?}', [
+        $this->get('/getIndexFolders/{disk}/{folder?}', [
             'uses' => 'Admin\MediaController@getIndexFolders',
             'as' => 'get.index.folders'
         ]);
 
-        $this->get('getDirectories', [
-            'uses' => 'Admin\MediaController@getMediaFolders',
-            'as' => 'directories'
-        ]);
-
-        $this->get('download/{id}/{folder}', [
+        $this->get('download/{disk}/{id}/{folder}', [
             'uses' => 'Admin\MediaController@download',
             'as' => 'download'
         ]);
 
-        $this->post('/makeDirectory', [
+        $this->post('/makeDirectory/{disk}', [
             'uses' => 'Admin\MediaController@makeFolder',
             'as' => 'make.directory'
         ]);
 
-        $this->post('/renameDirectory', [
+        $this->post('/renameDirectory/{disk}', [
             'uses' => 'Admin\MediaController@renameFolder',
             'as' => 'rename.directory'
-        ]);
+        ])->middleware('folderLocked');
 
-        $this->post('/renameFile', [
+        $this->post('/renameFile/{disk}', [
             'uses' => 'Admin\MediaController@renameFile',
             'as' => 'rename.file'
         ]);
@@ -148,7 +147,7 @@ $this->group(/**
             'as' => 'delete'
         ]);
 
-        $this->post('upload', [
+        $this->post('upload/{disk}', [
             'uses' => 'Admin\MediaController@upload',
             'as' => 'upload'
         ]);
@@ -158,17 +157,17 @@ $this->group(/**
             'as' => 'get.delete'
         ]);
 
-        $this->get('delete/folder/{folder}', [
+        $this->get('delete/folder/{disk}/{folder}', [
             'uses' => 'Admin\MediaController@folderDestroy',
             'as' => 'get.folder.delete'
-        ]);
+        ])->middleware('folderLocked');
 
-        $this->get('bytag/{path?}/{tag}', [
+        $this->get('bytag/{disk}/{path?}/{tag}', [
             'uses' => 'Admin\MediaController@getByTag',
             'as' => 'get.tag'
         ]);
 
-        $this->delete('{id}', [
+        $this->delete('{disk}/{id}', [
             'uses' => 'Admin\MediaController@destroy',
             'as' => 'delete'
         ]);

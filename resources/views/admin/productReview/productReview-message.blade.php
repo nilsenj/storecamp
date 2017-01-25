@@ -25,9 +25,7 @@
                 @else
                     <span class="review-item-status label label-info"> visible</span>
                 @endif
-
             </h3>
-
             <div class="box-tools pull-right">
                 <a class="btn btn-warning btn-xs text-warning"
                    href="{!! route('admin::reviews::visibility', $productReview->id) !!}"
@@ -82,50 +80,15 @@
                                value="{{$productReview->rating}}" disabled="disabled" min=1 max=5 step=1 data-size="xs"
                                data-rtl="false">
                     </div>
-
                 </div>
-
             </div>
             <hr>
             <div class="box-footer box-comments" style="display: block;">
                 <b class="text-muted">comments:</b>
-                @foreach($productReview->thread->first()->messages as $message)
-                    <div class="box-comment">
-                        <div class="media-left">
-                            {{--<a href="{!! route('admin::users::show', $message->user->id) !!}"--}}
-                            {{--class="kit-avatar kit-avatar-42 no-border">--}}
-                            {{--<img class="media-object" src="#" alt="{!! $message->user->name !!}">--}}
-                            {{--</a>--}}
-                        </div>
-                        <div class="comment-text">
-                         <span class="username">
-                             <a href="{!! route("admin::users::show", $message->user->id) !!}">
-                            {{$message->user->name}}
-                             </a>
-                        <span class="text-muted pull-right">Posted {!! $message->created_at->diffForHumans() !!}</span>
-                      </span>
-                            <p class="comment-text">{!! $message->body !!}</p>
-                            <div class="text-muted">
-                                <small>Posted {!! $message->created_at->diffForHumans() !!}</small>
-                                <small> | Regards, <b>{{$message->user->name}}</b></small>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+                @include('admin.productReview.messages', [$messages = $productReview->thread->first()->messages])
             </div>
-
             <div class="clearfix"></div>
-            {!! Form::open(['route' => ['admin::reviews::reply', $productReview->id], 'method' => 'PUT', "role" => "form", ]) !!}
-            <h2>Reply review</h2>
-            <!-- Message Form Input -->
-            <div class="form-group">
-                {!! Form::textarea('reply_message', null, [
-                'class' => 'form-control autogrow', "rows" => "3","placeholder"=>"Reply form here.."]) !!}
-            </div>
-            <div class="form-group text-right">
-                <button class="btn btn-primary">Reply</button>
-            </div>
-            {!! Form::close() !!}
+           @include('admin.productReview.productReview-form')
         </div>
         <!-- /.box-body -->
     </div>

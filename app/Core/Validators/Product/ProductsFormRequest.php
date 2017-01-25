@@ -33,7 +33,7 @@ class ProductsFormRequest extends FormRequest{
         'meta_tag_title' => 'string|min:2',
         'meta_tag_description' => 'string|min:5',
         'meta_tag_keywords' => 'string|min:2',
-        'sort_order' => 'numeric|max:1',
+        'sort_order' => 'numeric|max:10',
         'weight' => 'string|min:1'
     ];
 

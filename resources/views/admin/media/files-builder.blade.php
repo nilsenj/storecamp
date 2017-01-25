@@ -7,7 +7,7 @@
             @if($file->aggregate_type == "video")
                     <li class="col-xs-12 col-md-12 col-lg-4 file-item media-plyr-item" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
-                           href="{{route("admin::media::get.delete", $file->id)}}">
+                           href="{{route("admin::media::get.delete", [$disk, $file->id])}}">
                             <i class="fa fa-times" aria-hidden="true"></i>
                         </a>
                         <span class="mailbox-attachment-icon has-img">
@@ -30,7 +30,7 @@
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
                                 <a class="pull-right btn btn-info btn-xs" type="download" role="button"
-                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i
+                                   href="{{route("admin::media::download", [$disk, $file->id, $folder->id])}}"><i
                                             class="fa fa-cloud-download"
                                             aria-hidden="true"></i></a>
                             </span>
@@ -39,7 +39,7 @@
                 @elseif($file->aggregate_type == "image")
                     <li class="col-xs-12 col-md-12 col-lg-4 file-item" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
-                           href="{{route("admin::media::get.delete", $file->id)}}"><i class="fa fa-times"
+                           href="{{route("admin::media::get.delete", [$disk, $file->id])}}"><i class="fa fa-times"
                                                                                       aria-hidden="true"></i></a>
                         <span class="mailbox-attachment-icon has-img">
                             <img src="{{$file->getUrl()}}" width="266"
@@ -56,7 +56,7 @@
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
                                 <a class="pull-right btn btn-info btn-xs" type="download" role="button"
-                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i
+                                   href="{{route("admin::media::download", [$disk, $file->id, $folder->id])}}"><i
                                             class="fa fa-cloud-download"
                                             aria-hidden="true"></i></a>
                         </span>
@@ -66,7 +66,7 @@
                 @elseif($file->aggregate_type == 'audio')
                     <li class="col-xs-12 col-md-12 col-lg-4 file-item media-plyr-item" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
-                           href="{{route("admin::media::get.delete", $file->id)}}"><i class="fa fa-times"
+                           href="{{route("admin::media::get.delete", [$disk, $file->id])}}"><i class="fa fa-times"
                                                                                       aria-hidden="true"></i></a>
                         <span class="mailbox-attachment-icon has-img">
                            <audio controls title="{{$file->filename}}">
@@ -87,7 +87,7 @@
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
                                 <a class="pull-right btn btn-info btn-xs" type="download" role="button"
-                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i
+                                   href="{{route("admin::media::download", [$disk, $file->id, $folder->id])}}"><i
                                             class="fa fa-cloud-download"
                                             aria-hidden="true"></i></a>
 
@@ -114,7 +114,7 @@
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
                                 <a class="pull-right btn btn-info btn-xs" type="download" role="button"
-                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i
+                                   href="{{route("admin::media::download", [$disk, $file->id, $folder->id])}}"><i
                                             class="fa fa-cloud-download"
                                             aria-hidden="true"></i></a>
                         </span>
@@ -125,7 +125,7 @@
 
                     <li class="col-xs-12 col-md-12 col-lg-4 file-item" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
-                           href="{{route("admin::media::get.delete", $file->id)}}">
+                           href="{{route("admin::media::get.delete", [$disk, $file->id])}}">
                             <i class="fa fa-times" aria-hidden="true"></i>
                         </a>
                         <span class="mailbox-attachment-icon"><i class="fa fa-file-word-o"></i></span>
@@ -141,7 +141,7 @@
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
                                 <a class="pull-right btn btn-info btn-xs" type="download" role="button"
-                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i
+                                   href="{{route("admin::media::download", [$disk, $file->id, $folder->id])}}"><i
                                             class="fa fa-cloud-download"
                                             aria-hidden="true"></i></a>
                         </span>
@@ -167,7 +167,7 @@
                                     <i class="fa fa-edit" aria-hidden="true"></i>
                                 </a>
                                 <a class="pull-right btn btn-info btn-xs" type="download" role="button"
-                                   href="{{route("admin::media::download", [$file->id, $folder->id])}}"><i
+                                   href="{{route("admin::media::download", [$disk, $file->id, $folder->id])}}"><i
                                             class="fa fa-cloud-download"
                                             aria-hidden="true"></i></a>
                         </span>

@@ -20,6 +20,10 @@ class Message extends Eloquent
     protected $touches = ['thread'];
 
     /**
+     * @var array
+     */
+    protected $with = ['childThread'];
+    /**
      * The attributes that can be set with Mass Assignment.
      *
      * @var array
@@ -43,6 +47,14 @@ class Message extends Eloquent
     public function thread()
     {
         return $this->belongsTo('App\Core\Components\Messenger\Models\Thread');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function childThread()
+    {
+        return $this->hasMany(Thread::class, 'parent_id');
     }
 
     /**

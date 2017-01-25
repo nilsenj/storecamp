@@ -22,6 +22,7 @@ class CreateFoldersTable extends Migration
             $table->string('disk')->nullable();
             $table->string('path_on_disk')->nullable();
             $table->string('slug')->nullable();
+            $table->boolean('locked')->default(false);
             $table->tinyInteger('order')->default(0);
             $table->timestamps();
         });
