@@ -535,7 +535,7 @@
     mediaEvents: function() {
       var _this;
       _this = this;
-      return _this.options.players.forEach(function(player, i, arr) {
+      _this.options.players.forEach(function(player, i, arr) {
         player.on('ready timeupdate pause ended play playing', function(event) {
           var playInstanse;
           switch (event.type) {
@@ -568,6 +568,16 @@
           }
         });
       });
+      return $("#folder-body > .files a.delete-file").on("click", function(event) {
+        var btn, deleteUrl, fileItem, folderBody;
+        event.preventDefault();
+        btn = $(this);
+        deleteUrl = btn.attr('href');
+        fileItem = btn.closest('.file-item');
+        folderBody = $('#folder-body');
+        _this.deleteFile(deleteUrl, fileItem);
+        return console.log(btn.attr('href'));
+      });
     },
     reindex: function(mediaItems, players) {
       var _this;
@@ -576,6 +586,23 @@
         $(item).attr('data-media-number', i);
       });
       return _this._triggerNewFile(mediaItems, players);
+    },
+    deleteFile: function(deleteUrl, fileItem) {
+      var _this;
+      _this = this;
+      return $.ajax({
+        url: deleteUrl,
+        type: 'GET',
+        success: function(data) {
+          fileItem.remove();
+          $.StoreCamp.templates.alert('success', data.title, data.message);
+          console.log(data);
+        },
+        error: function(xhr, textStatus, errorThrown) {
+          $.StoreCamp.templates.alert('danger', xhr.statusText, xhr.responseText);
+          console.error(xhr);
+        }
+      }, false);
     },
     pausePlayers: function() {
       var _this, players;
@@ -608,6 +635,28 @@
   };
 
   $.StoreCamp.media.activate();
+
+}).call(this);
+
+(function() {
+  $.StoreCamp.templates = {
+    options: {
+      alertTemplate: function(type, title, message) {
+        return "<div class=\"alert alert-" + type + " alert-dismissible\">\n<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>\n<h4>" + title + "</h4>\n" + message + "\n</div>";
+      }
+    },
+    activate: function() {
+      var _this;
+      return _this = this;
+    },
+    alert: function(type, title, message) {
+      var _this;
+      _this = this;
+      return $('#alerts').append(_this.options.alertTemplate(type, title, message));
+    }
+  };
+
+  $.StoreCamp.templates.activate();
 
 }).call(this);
 

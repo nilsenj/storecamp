@@ -38,10 +38,10 @@ desired effect
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         @include('partials.contentheader')
-
+            <div class="clearfix"></div>
         <!-- Main content -->
         <section class="content">
-            <div style="display: block; height: auto; width: 100%; background: whitesmoke">
+            <div id="alerts" style="display: block; height: auto; width: 100%; background: whitesmoke">
                 @include('components.flash.message')
             </div>
             <!-- Your Page Content Here -->

@@ -98,11 +98,11 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
      * @param string $name
      * @return FolderRepositoryEloquent
      */
-    public function disk(string $name) : FolderRepositoryEloquent
+    public function disk(string $name): FolderRepositoryEloquent
     {
-        if(!empty($name)) {
+        if (!empty($name)) {
             $this->setDisk($name);
-            $this->setDiskRoot(config('filesystems.disks.'.$name.'.root'));
+            $this->setDiskRoot(config('filesystems.disks.' . $name . '.root'));
         }
         return $this;
     }
@@ -153,7 +153,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
         $this->applyCriteria();
         $this->applyScope();
         if (is_numeric($id)) {
-            $model = $this->model->where("id", '=', $id)->where('disk', $this->getDisk())->first();
+            $model = $this->model->where('disk', '=', $this->getDisk())->where('id', $id)->first();
         } else {
             $model = $this->model->where('disk', '=', $this->getDisk())->where('unique_id', $id)->first();
         }
@@ -163,7 +163,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
 
                 return $this->parserResult($model);
             }
-        } elseif (! is_null($model)) {
+        } elseif (!is_null($model)) {
             $this->resetModel();
             return $this->parserResult($model);
         }
@@ -192,16 +192,17 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     /**
      * @return string
      */
-    public function getDiskUrls() {
+    public function getDiskUrls()
+    {
 
-       $rootFolders = $this->getDiskRoots();
-       $diskUrls = [];
-       foreach ($rootFolders as $key => $item) {
-           $item = link_to_route("admin::media::index", $item->disk,
-               [$item->disk, $item->unique_id], ["style" => "margin-left: 10px", "class" => $this->getDisk() == $item->disk ? "active btn btn-xs btn-default" : "btn btn-xs btn-default"]);
-           array_unshift($diskUrls, $item);
-       }
-       return implode("", $diskUrls);
+        $rootFolders = $this->getDiskRoots();
+        $diskUrls = [];
+        foreach ($rootFolders as $key => $item) {
+            $item = link_to_route("admin::media::index", $item->disk,
+                [$item->disk, $item->unique_id], ["style" => "margin-left: 10px", "class" => $this->getDisk() == $item->disk ? "active btn btn-xs btn-default" : "btn btn-xs btn-default"]);
+            array_unshift($diskUrls, $item);
+        }
+        return implode("", $diskUrls);
     }
 
     /**
@@ -275,7 +276,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
         while ($folder->parent_id != null) {
             $newParent = $this->find($folder->parent_id);
             $item = link_to_route("admin::media::index", $newParent->name ? $newParent->name : "../",
-                [$this->getDisk(),$newParent->unique_id], ["style" => "margin-left: 10px"]);
+                [$this->getDisk(), $newParent->unique_id], ["style" => "margin-left: 10px"]);
             array_unshift($array, $item);
             return $this->prepareParentFolderLinks($newParent, $array);
         }
@@ -289,7 +290,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
      */
     public function defaultFolder($disk, $folder = null)
     {
-        if($folder) {
+        if ($folder) {
             $newFolder = $this->disk($disk)->find($folder);
         } else {
             $newFolder = $this->disk($disk)->findByField('disk', $disk)->first();

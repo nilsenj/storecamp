@@ -48,8 +48,8 @@ class Media extends \Plank\Mediable\Media implements Transformable
     use TransformableTrait;
     use Auditable;
 
-    protected $fillable = ['directory_id'];
-    protected $guarded = ['id', 'disk', 'directory', 'directory_id', 'filename', 'extension', 'size', 'mime_type', 'aggregate_type'];
+    protected $fillable = ['directory_id', 'disk'];
+    protected $guarded = ['id', 'directory', 'directory_id', 'filename', 'extension', 'size', 'mime_type', 'aggregate_type'];
 //    protected $with = ["folder"];
 
     /**

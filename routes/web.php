@@ -103,18 +103,23 @@ $this->group(/**
     });
     $this->group(['prefix' => 'media', 'as' => 'media::'], function () {
 
-        $this->get('/', [
+        $this->get('/index', [
             'uses' => 'Admin\MediaController@index',
             'as' => 'indexs'
         ]);
-        $this->get('/{disk}/{path?}', [
+        $this->get('/index/{disk}/{path?}', [
             'uses' => 'Admin\MediaController@index',
             'as' => 'index'
         ]);
 
-        $this->get('/getIndex/{disk}/{path?}/', [
+        $this->get('getIndex/{disk}/{path?}/', [
             'uses' => 'Admin\MediaController@getIndex',
             'as' => 'get.index'
+        ]);
+
+        $this->get('getIndexJson/{disk}/{path?}/', [
+            'uses' => 'Admin\MediaController@getIndexJson',
+            'as' => 'get.index.json'
         ]);
 
         $this->get('/getIndexFolders/{disk}/{folder?}', [
@@ -165,11 +170,6 @@ $this->group(/**
         $this->get('bytag/{disk}/{path?}/{tag}', [
             'uses' => 'Admin\MediaController@getByTag',
             'as' => 'get.tag'
-        ]);
-
-        $this->delete('{disk}/{id}', [
-            'uses' => 'Admin\MediaController@destroy',
-            'as' => 'delete'
         ]);
 
     });

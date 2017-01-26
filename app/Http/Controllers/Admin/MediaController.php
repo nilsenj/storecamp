@@ -68,6 +68,7 @@ class MediaController extends BaseController
     private function preDefineIndexPart($request, $disk = '', $folder = null)
     {
         $disk = $disk ? $disk : 'local';
+
         $folder = $this->folder->disk($disk)->defaultFolder($disk, $folder);
         $tag = $request->get('tag');
         $files = $this->repository->transform($request, $folder, $tag, $disk);
@@ -125,7 +126,7 @@ class MediaController extends BaseController
      * @param string $disk
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
-    public function getIndex(Request $request, $folder = null, $disk = '')
+    public function getIndex(Request $request, $disk = '', $folder = null)
     {
         try {
             $predefined = $this->preDefineIndexPart($request, $disk, $folder);
@@ -146,6 +147,34 @@ class MediaController extends BaseController
         }
     }
 
+    /**
+     * get folders and files in json format and response for json requests
+     *
+     * @param Request $request
+     * @param null $folder
+     * @param string $disk
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     */
+    public function getIndexJson(Request $request, $folder = null, $disk = '')
+    {
+        try {
+            $predefined = $this->preDefineIndexPart($request, $disk, $folder);
+            $media = $predefined['media'];
+            $directories = $predefined['directories'];
+            $path = $predefined['path'];
+            $folder = $predefined['folder'];
+            $count = $predefined['count'];
+            $disk = $predefined['disk'];
+
+            return response()->json($predefined, 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json($e->getMessage(), $e->getCode());
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), $exception->getCode());
+        } catch (\Throwable $exception) {
+            return response()->json($exception->getMessage(), $exception->getCode());
+        }
+    }
     /**
      * get media description for json
      *
@@ -369,14 +398,17 @@ class MediaController extends BaseController
      * @param $id
      * @return Response|\Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         try {
-            $media = Media::find($id);
+            $media = $this->repository->find($id);
             $mediaFolder = $media->directory_id;
-            $disk = $mediaFolder->disk;
-            $media->delete();
-            return redirect()->to('admin/media/' . $disk . "/" . $mediaFolder);
+            $disk = $media->disk;
+            $this->repository->delete($id);
+            if($request->ajax()) {
+                return response()->json(['message' => 'File deleted', 'title' => 'Success'], 200);
+            }
+            return redirect()->route('admin::media::index', [$disk, $mediaFolder]);
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         } catch (FileNotFoundException $e) {
