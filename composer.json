@@ -8,7 +8,7 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "php": ">=5.6.4",
+    "php": ">=7.0",
     "laravel/framework": "5.3.*",
     "barryvdh/laravel-ide-helper": "^2.2",
     "doctrine/dbal": "^2.5",
@@ -90,8 +90,7 @@
       "App\\Core\\Components\\Select\\SelectBuilder\\": "App/Core/Components/Select/",
       "App\\Core\\Components\\ActiveItem\\": "packages/ActiveItem/",
       "App\\Core\\Components\\Flash\\": "packages/Flash/",
-      "App\\Core\\Components\\Messenger\\": "packages/Messenger/Messenger/",
-      "App\\Core\\Components\\Auditing\\": "packages/laravel-auditing/src/"
+      "App\\Core\\Components\\Messenger\\": "packages/Messenger/Messenger/"
     }
   },
   "autoload-dev": {
@@ -104,7 +103,8 @@
       "require": [
         "packages/nilsenj/toastr-laravel/composer.json",
         "packages/vinkla/hashids/composer.json",
-        "packages/juggl/unique-hashids/composer.json"
+        "packages/juggl/unique-hashids/composer.json",
+        "packages/laravel-auditing/composer.json"
       ],
       "recurse": true,
       "replace": false,

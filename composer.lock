@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e7eff65f3f4101a7943b97265a9c09a",
+    "content-hash": "9f3a83f91dda39c174109d120122e8b4",
     "packages": [
         {
             "name": "a6digital/laravel-default-profile-image",
@@ -6678,7 +6678,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6.4"
+        "php": ">=7.0"
     },
     "platform-dev": []
 }
