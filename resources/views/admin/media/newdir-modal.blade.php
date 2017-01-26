@@ -41,7 +41,7 @@
                 data: {new_path: folderNewPath, folder: folderId},
                 success: function (data) {
                     $.ajax({
-                        url: "{{route('admin::media::get.index.folders', $folder->id)}}",
+                        url: "{{route('admin::media::get.index.folders', [$disk, $folder->id])}}",
                         type: 'GET',
                         success: function (data) {
                             folderSide.html(data);

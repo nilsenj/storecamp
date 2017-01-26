@@ -239,7 +239,7 @@ class MediaController extends BaseController
      */
     public function getIndexFolders(Request $request, $disk, $folder = null)
     {
-        $folder = $request->folder ? $this->folder->disk($disk)->find($request->folder) : $this->defaultFolder;
+        $folder = $this->folder->disk($disk)->find($request->folder);
         $path = $this->folder->getParentFoldersPath($folder);
         $folderName = $folder->name ? $folder->name : '';
         $path = $path ? $path . "/" . $folderName : $folderName;
@@ -274,9 +274,9 @@ class MediaController extends BaseController
                     'path_on_disk' => $newFolder,
                     'parent_id' => $parentFolder->id
                 ]);
-                return redirect()->route('admin::media::index', $folder->unique_id);
+                return redirect()->route('admin::media::index', [$disk, $folder->unique_id]);
             } else {
-                return redirect()->route('admin::media::index');
+                return redirect()->route('admin::media::index', $disk);
             }
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
@@ -320,7 +320,7 @@ class MediaController extends BaseController
                 $renameFolder->path_on_disk = $beRenamedToPath;
                 $renameFolder->save();
             }
-            return redirect()->route('admin::media::index', $request->folder);
+            return redirect()->route('admin::media::index', [$disk, $request->folder]);
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         } catch (FilesystemException $exception) {
@@ -355,7 +355,7 @@ class MediaController extends BaseController
                 $file->filename = $new_name;
                 $file->save();
             }
-            return redirect()->to('admin/media/' . $folderFile->unique_id);
+            return redirect()->route('admin::media::index', [$disk, $folderFile->unique_id]);
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         } catch (FilesystemException $exception) {

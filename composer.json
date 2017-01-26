@@ -1,121 +1,137 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
-    "type": "project",
-    "require": {
-        "php": ">=5.6.4",
-        "laravel/framework": "5.3.*",
-        "barryvdh/laravel-ide-helper": "^2.2",
-        "doctrine/dbal": "^2.5",
-        "tymon/jwt-auth": "^0.5.9",
-        "intervention/image": "dev-master",
-        "codezero/mailer": "dev-master",
-        "davejamesmiller/laravel-breadcrumbs": "dev-master",
-        "cviebrock/eloquent-sluggable": ">=3.0.0-alpha",
-        "laravelcollective/html": "^5.3",
-        "league/fractal": "^0.14.0",
-        "intervention/imagecache": "^2.3",
-        "predis/predis": "^1.1",
-        "robclancy/presenter": "^1.3",
-        "webpatser/laravel-countries": "^1.4",
-        "guzzlehttp/guzzle": "^6.2",
-        "camroncade/timezone": "^0.1.0",
-        "a6digital/laravel-default-profile-image": "^1.0",
-        "arcanedev/log-viewer": "^4.2",
-        "cviebrock/image-validator": "^2.1",
-        "juggl/unique-hashids": "^1.1",
-        "darrylkuhn/dialect": "^1.0",
-        "plank/laravel-mediable": "^2.4",
-        "that0n3guy/transliteration": "^2.0",
-        "maatwebsite/excel": "^2.1",
-        "barryvdh/laravel-debugbar": "^2.3",
-        "torann/hashids": "^2.0",
-        "nilsenj/toastr-laravel": "dev-1.0-stable",
-        "league/csv": "8.0",
-        "laravel/socialite": "^2.0"
-
-    },
-    "require-dev": {
-        "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.0",
-        "symfony/css-selector": "3.1.*",
-        "symfony/dom-crawler": "3.1.*",
-        "laracasts/generators": "dev-master",
-        "doctrine/dbal": "^2.6@dev",
-        "laracasts/flash": "dev-master",
-        "Landish/Pagination": "dev-master",
-        "squizlabs/php_codesniffer": "^2.7",
-        "laravel/homestead": "^4.0"
-    },
-    "autoload": {
-        "classmap": [
-            "database",
-            "App/Helpers/helpers.php",
-            "App/Core/Models",
-            "App/Core/Presenters",
-            "App/Core/Repositories",
-            "App/Core/Traits",
-            "App/Core/MailComposers",
-            "App/Core/Components/EmailMarketer",
-            "App/Core/Drivers/FolderToDb"
-        ],
-        "psr-4": {
-            "App\\": "app/",
-            "Core\\": "app/Core/",
-            "RepositoryLab\\Repository\\": "App/Core/RepositoryLab/",
-            "App\\Core\\Repositories\\": "App/Core/repositories/",
-            "App\\Core\\Models\\": "app/Core/models/",
-            "App\\Core\\Presenters\\": "app/Core/Presenters/",
-            "App\\Core\\Transformers\\": "app/Core/Transformers/",
-            "App\\Core\\APIs\\": "app/Core/APIs/",
-            "App\\Core\\APIs\\Youtube\\": "app/Core/APIs/Youtube/",
-            "App\\Core\\Access\\": "App/Core/Access/",
-            "App\\Core\\Access\\Commands\\": "App/Core/Access/commands/",
-            "App\\Core\\Components\\": "app/Core/components/",
-            "App\\Core\\Base\\": "app/Core/Base/",
-            "App\\Core\\Drivers\\": "app/Core/drivers/",
-            "App\\Core\\Interfaces\\": "app/Core/interfaces/",
-            "App\\Core\\Policies\\": "app/Core/policies/",
-            "App\\Core\\Traits\\": "app/Core/traits/",
-            "App\\Core\\Drivers\\FolderToDb\\": "App/Core/Drivers/FolderToDb/",
-            "App\\Core\\Components\\Sidebar\\": "App/Core/Components/Sidebar/",
-            "App\\Core\\Components\\Timezone\\":"App/Core/Components/Timezone/",
-            "App\\Core\\Components\\Country\\":"App/Core/Components/Country/",
-            "App\\Core\\Components\\Select\\SelectBuilder\\":"App/Core/Components/Select/",
-            "App\\Core\\Components\\ActiveItem\\": "packages/ActiveItem/",
-            "App\\Core\\Components\\Flash\\": "packages/Flash/",
-            "App\\Core\\Components\\Messenger\\": "packages/Messenger/Messenger/",
-            "nilsenj\\Toastr\\": "packages/nilsenj/toastr-laravel/src/",
-            "App\\Core\\Components\\Auditing\\": "packages/laravel-auditing/src/"
-        }
-    },
-    "autoload-dev": {
-        "classmap": [
-            "tests/TestCase.php"
-        ]
-    },
-    "scripts": {
-        "post-root-package-install": [
-            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "php artisan key:generate"
-        ],
-        "post-install-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "php artisan optimize"
-        ],
-        "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan ide-helper:generate",
-            "php artisan ide-helper:meta",
-            "php artisan optimize"
-        ]
-    },
-    "config": {
-        "preferred-install": "dist"
+  "name": "laravel/laravel",
+  "description": "The Laravel Framework.",
+  "keywords": [
+    "framework",
+    "laravel"
+  ],
+  "license": "MIT",
+  "type": "project",
+  "require": {
+    "php": ">=5.6.4",
+    "laravel/framework": "5.3.*",
+    "barryvdh/laravel-ide-helper": "^2.2",
+    "doctrine/dbal": "^2.5",
+    "tymon/jwt-auth": "^0.5.9",
+    "intervention/image": "dev-master",
+    "codezero/mailer": "dev-master",
+    "davejamesmiller/laravel-breadcrumbs": "dev-master",
+    "cviebrock/eloquent-sluggable": ">=3.0.0-alpha",
+    "laravelcollective/html": "^5.3",
+    "league/fractal": "^0.14.0",
+    "intervention/imagecache": "^2.3",
+    "predis/predis": "^1.1",
+    "robclancy/presenter": "^1.3",
+    "webpatser/laravel-countries": "^1.4",
+    "guzzlehttp/guzzle": "^6.2",
+    "camroncade/timezone": "^0.1.0",
+    "a6digital/laravel-default-profile-image": "^1.0",
+    "arcanedev/log-viewer": "^4.2",
+    "cviebrock/image-validator": "^2.1",
+    "juggl/unique-hashids": "^1.1",
+    "darrylkuhn/dialect": "^1.0",
+    "plank/laravel-mediable": "^2.4",
+    "that0n3guy/transliteration": "^2.0",
+    "barryvdh/laravel-debugbar": "^2.3",
+    "torann/hashids": "^2.0",
+    "nilsenj/toastr-laravel": "dev-1.0-stable",
+    "league/csv": "8.0",
+    "laravel/socialite": "^2.0",
+    "laravel/tinker": "1.0.x-dev",
+    "wikimedia/composer-merge-plugin": "^1.3"
+  },
+  "require-dev": {
+    "fzaninotto/faker": "~1.4",
+    "mockery/mockery": "0.9.*",
+    "phpunit/phpunit": "~5.0",
+    "symfony/css-selector": "3.1.*",
+    "symfony/dom-crawler": "3.1.*",
+    "laracasts/generators": "dev-master",
+    "doctrine/dbal": "^2.6@dev",
+    "laracasts/flash": "dev-master",
+    "Landish/Pagination": "dev-master",
+    "squizlabs/php_codesniffer": "^2.7",
+    "laravel/homestead": "^4.0"
+  },
+  "autoload": {
+    "classmap": [
+      "database",
+      "App/Helpers/helpers.php",
+      "App/Core/Models",
+      "App/Core/Presenters",
+      "App/Core/Repositories",
+      "App/Core/Traits",
+      "App/Core/MailComposers",
+      "App/Core/Components/EmailMarketer",
+      "App/Core/Drivers/FolderToDb"
+    ],
+    "psr-4": {
+      "App\\": "app/",
+      "Core\\": "app/Core/",
+      "RepositoryLab\\Repository\\": "App/Core/RepositoryLab/",
+      "App\\Core\\Repositories\\": "App/Core/repositories/",
+      "App\\Core\\Models\\": "app/Core/models/",
+      "App\\Core\\Presenters\\": "app/Core/Presenters/",
+      "App\\Core\\Transformers\\": "app/Core/Transformers/",
+      "App\\Core\\APIs\\": "app/Core/APIs/",
+      "App\\Core\\APIs\\Youtube\\": "app/Core/APIs/Youtube/",
+      "App\\Core\\Access\\": "App/Core/Access/",
+      "App\\Core\\Access\\Commands\\": "App/Core/Access/commands/",
+      "App\\Core\\Components\\": "app/Core/components/",
+      "App\\Core\\Base\\": "app/Core/Base/",
+      "App\\Core\\Drivers\\": "app/Core/drivers/",
+      "App\\Core\\Interfaces\\": "app/Core/interfaces/",
+      "App\\Core\\Policies\\": "app/Core/policies/",
+      "App\\Core\\Traits\\": "app/Core/traits/",
+      "App\\Core\\Drivers\\FolderToDb\\": "App/Core/Drivers/FolderToDb/",
+      "App\\Core\\Components\\Sidebar\\": "App/Core/Components/Sidebar/",
+      "App\\Core\\Components\\Timezone\\": "App/Core/Components/Timezone/",
+      "App\\Core\\Components\\Country\\": "App/Core/Components/Country/",
+      "App\\Core\\Components\\Select\\SelectBuilder\\": "App/Core/Components/Select/",
+      "App\\Core\\Components\\ActiveItem\\": "packages/ActiveItem/",
+      "App\\Core\\Components\\Flash\\": "packages/Flash/",
+      "App\\Core\\Components\\Messenger\\": "packages/Messenger/Messenger/",
+      "App\\Core\\Components\\Auditing\\": "packages/laravel-auditing/src/"
     }
+  },
+  "autoload-dev": {
+    "classmap": [
+      "tests/TestCase.php"
+    ]
+  },
+  "extra": {
+    "merge-plugin": {
+      "require": [
+        "packages/nilsenj/toastr-laravel/composer.json",
+        "packages/vinkla/hashids/composer.json",
+        "packages/juggl/unique-hashids/composer.json"
+      ],
+      "recurse": true,
+      "replace": false,
+      "merge-dev": true,
+      "merge-extra": true,
+      "merge-extra-deep": false
+    }
+  },
+  "scripts": {
+    "post-root-package-install": [
+      "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+    ],
+    "post-create-project-cmd": [
+      "php artisan key:generate"
+    ],
+    "post-install-cmd": [
+      "Illuminate\\Foundation\\ComposerScripts::postInstall",
+      "php artisan optimize"
+    ],
+    "post-update-cmd": [
+      "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+      "php artisan ide-helper:generate",
+      "php artisan ide-helper:meta",
+      "php artisan optimize"
+    ]
+  },
+  "config": {
+    "preferred-install": "dist"
+  }
 }
