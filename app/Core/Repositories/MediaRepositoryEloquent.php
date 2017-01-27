@@ -74,22 +74,6 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
     }
 
     /**
-     * @param $model
-     * @param $request
-     * @return mixed
-     */
-    public function specificSearch($model, $request)
-    {
-        $tagSearch = $request->get('tag');
-        if ($tagSearch) {
-            return $model->where('aggregate_type', 'like', $tagSearch)
-                ->paginate($this->perPage);
-        } else {
-            return $model->paginate($this->perPage);
-        }
-    }
-
-    /**
      * transform files and directories
      *
      * @param $request
@@ -155,6 +139,9 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
     }
 
     /**
+     * method rewrite from
+     * Media scopeInDirectory()
+     *
      * @param $disk
      * @param $directory
      * @param null $tag
@@ -179,5 +166,4 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
 
         return $this->parserResult($model);
     }
-
 }
