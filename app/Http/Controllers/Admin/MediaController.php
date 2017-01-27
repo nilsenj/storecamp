@@ -424,17 +424,21 @@ class MediaController extends BaseController
      * remove folder and the files
      * attached
      *
-     * @param $folder
+     * @param Request $request
      * @param string $disk
-     * @return Response|\Illuminate\Http\RedirectResponse
+     * @param $folder
+     * @return Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function folderDestroy($disk = '', $folder)
+    public function folderDestroy(Request $request, $disk = '', $folder)
     {
         try {
             if (intval($folder) == 1) {
                 return redirect()->back();
             }
             $this->folder->disk($disk)->delete($folder);
+            if($request->ajax()) {
+                return response()->json(['message' => 'Folder deleted', 'title' => 'Success'], 200);
+            }
             return redirect()->back();
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();

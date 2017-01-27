@@ -4,7 +4,7 @@
     <td>{{ $category->name }}</td>
     <td>{{ $category->slug }}</td>
     <td>
-        <a data-toggle="modal" href="#description-modal"
+        <a data-toggle="modal" href="#Description-modal"
            class="btn btn-xs btn-info"
            data-desc-url="{{route('admin::categories::description', $category->unique_id)}}"
            data-desc-id="{{ $category->unique_id }}"

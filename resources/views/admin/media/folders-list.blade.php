@@ -10,7 +10,7 @@
             <!-- /.box-tools -->
         </div>
         <!-- /.box-header -->
-        <div class="box-body" style="display: block;">
+        <div class="box-body directories" style="display: block;">
 
             @foreach($directories as $directory)
                 <div class="col-xs-12 col-md-6 directory-item">

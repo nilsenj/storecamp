@@ -568,7 +568,7 @@
           }
         });
       });
-      return $("#folder-body a.delete-file").on("click", function(event) {
+      $(".files a.delete-file").on("click", function(event) {
         var btn, deleteUrl, fileItem, folderBody;
         event.preventDefault();
         btn = $(this);
@@ -577,6 +577,15 @@
         folderBody = $('#folder-body');
         _this.deleteFile(deleteUrl, fileItem);
         return console.log(btn.attr('href'));
+      });
+      return $(".directories a.delete-file").on("click", function(event) {
+        var btn, deleteUrl, fileItem, folderBody;
+        event.preventDefault();
+        btn = $(this);
+        deleteUrl = btn.attr('href');
+        fileItem = btn.closest('.directory-item');
+        folderBody = $('#folder-body');
+        return _this.deleteFile(deleteUrl, fileItem);
       });
     },
     reindex: function(mediaItems, players) {
