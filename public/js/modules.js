@@ -568,7 +568,7 @@
           }
         });
       });
-      return $("#folder-body > .files a.delete-file").on("click", function(event) {
+      return $("#folder-body a.delete-file").on("click", function(event) {
         var btn, deleteUrl, fileItem, folderBody;
         event.preventDefault();
         btn = $(this);

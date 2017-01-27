@@ -31,10 +31,16 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
      * @var string
      */
     public $disk = 'local';
+
     /**
      * @var mixed
      */
     public $diskRoot;
+
+    /**
+     * @var mixed
+     */
+    public $rootFromProject;
 
     /**
      * FolderRepositoryEloquent constructor.
@@ -50,6 +56,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
         $this->file = $file;
         $this->disk;
         $this->diskRoot = config('filesystems.disks.local.root');
+        $this->rootFromProject = config('filesystems.disks.local.rootFromProject');
     }
 
     /**
@@ -61,11 +68,13 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     }
 
     /**
-     * @param mixed $disk
+     * @param $disk
+     * @return $this
      */
     public function setDisk($disk)
     {
         $this->disk = $disk;
+        return $this;
     }
 
     /**
@@ -77,13 +86,30 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     }
 
     /**
-     * @param mixed $diskRoot
+     * @param $diskRoot
+     * @return $this
      */
     public function setDiskRoot($diskRoot)
     {
         $this->diskRoot = $diskRoot;
+        return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getRootFromProject()
+    {
+        return $this->rootFromProject;
+    }
+
+    /**
+     * @param mixed $rootFromProject
+     */
+    public function setRootFromProject($rootFromProject)
+    {
+        $this->rootFromProject = $rootFromProject;
+    }
     /**
      * Specify Model class name
      *
@@ -101,8 +127,10 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     public function disk(string $name): FolderRepositoryEloquent
     {
         if (!empty($name)) {
-            $this->setDisk($name);
-            $this->setDiskRoot(config('filesystems.disks.' . $name . '.root'));
+            $that = $this->setDisk($name);
+            $that->setDiskRoot(config('filesystems.disks.' . $name . '.root'));
+            $that->setRootFromProject(config('filesystems.disks.' . $name . '.rootFromProject'));
+            return $that;
         }
         return $this;
     }

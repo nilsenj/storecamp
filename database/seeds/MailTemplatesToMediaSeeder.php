@@ -17,9 +17,7 @@ class MailTemplatesToMediaSeeder extends Seeder
      */
     public function run()
     {
-        $uploadsPath = public_path("uploads");
         $mailsPath = public_path("mails");
-        $this->synchronizer->synchronizeWithFiles($uploadsPath, "local");
         $this->synchronizer->synchronizeWithFiles($mailsPath, "mails");
     }
 }

@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "a6digital/laravel-default-profile-image",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/a6digital/laravel-default-profile-image.git",
-                "reference": "65ae9de21b3aad8ad6a8adbff44235d00ad42bf6"
+                "reference": "29eb45f733f2a5518bdd6b1f4985efe474dd4330"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/a6digital/laravel-default-profile-image/zipball/65ae9de21b3aad8ad6a8adbff44235d00ad42bf6",
-                "reference": "65ae9de21b3aad8ad6a8adbff44235d00ad42bf6",
+                "url": "https://api.github.com/repos/a6digital/laravel-default-profile-image/zipball/29eb45f733f2a5518bdd6b1f4985efe474dd4330",
+                "reference": "29eb45f733f2a5518bdd6b1f4985efe474dd4330",
                 "shasum": ""
             },
             "require": {
@@ -45,20 +45,20 @@
             "keywords": [
                 "laravel default profile image"
             ],
-            "time": "2015-05-01T17:03:54+00:00"
+            "time": "2017-01-27T06:06:12+00:00"
         },
         {
             "name": "arcanedev/log-viewer",
-            "version": "4.2.0",
+            "version": "4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ARCANEDEV/LogViewer.git",
-                "reference": "4c8845f33b3bb751b0be0fcf0c293a5df13bd1d5"
+                "reference": "e22ae5bc8e9e68b5a6e0bff68cc0fb26288361a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ARCANEDEV/LogViewer/zipball/4c8845f33b3bb751b0be0fcf0c293a5df13bd1d5",
-                "reference": "4c8845f33b3bb751b0be0fcf0c293a5df13bd1d5",
+                "url": "https://api.github.com/repos/ARCANEDEV/LogViewer/zipball/e22ae5bc8e9e68b5a6e0bff68cc0fb26288361a1",
+                "reference": "e22ae5bc8e9e68b5a6e0bff68cc0fb26288361a1",
                 "shasum": ""
             },
             "require": {
@@ -73,7 +73,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.0.x-dev"
+                    "dev-master": "4.3.x-dev"
                 }
             },
             "autoload": {
@@ -108,7 +108,7 @@
                 "log-viewer",
                 "logviewer"
             ],
-            "time": "2016-12-19T18:50:02+00:00"
+            "time": "2017-01-27T11:49:48+00:00"
         },
         {
             "name": "arcanedev/support",
@@ -2753,16 +2753,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.5.5",
+            "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "399c1f9781e222f6eb6cc238796f5200d1b7f108"
+                "reference": "5a5a9fc8025a08d8919be87d6884d5a92520cefe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/399c1f9781e222f6eb6cc238796f5200d1b7f108",
-                "reference": "399c1f9781e222f6eb6cc238796f5200d1b7f108",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/5a5a9fc8025a08d8919be87d6884d5a92520cefe",
+                "reference": "5a5a9fc8025a08d8919be87d6884d5a92520cefe",
                 "shasum": ""
             },
             "require": {
@@ -2791,7 +2791,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2016-10-31T17:19:45+00:00"
+            "time": "2017-01-26T22:05:40+00:00"
         },
         {
             "name": "namshi/jose",

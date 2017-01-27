@@ -20,9 +20,8 @@
                         {!! $errors->first('new_name', '<div class="text-danger">:message</div>') !!}
                         {!! Form::text('selected_id', null, ['class' => 'form-control selected_id hidden']) !!}
                     </div>
+                    {!! Form::submit('confirm file rename', ['class' => "btn btn-default"]) !!}
                 </div>
-                {!! Form::submit('confirm file rename', ['class' => "btn btn-default"]) !!}
-
                 {!! Form::close() !!}
             </div>
             <div class="modal-footer">

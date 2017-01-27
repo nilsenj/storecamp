@@ -1,6 +1,5 @@
 <div class="col-xs-8 col-md-9 files">
     <?php $tag = isset($tag) ? $tag : null; ?>
-
     @foreach(array_chunk($media->all(), 3) as $row)
         <div class="row file-list">
             @foreach($row as $file)
@@ -176,27 +175,8 @@
                 @endif
             @endforeach
         </div>
-
         @if($media->count() == 0)
             <h3 class="text-warning">No Files found</h3>
         @endif
     @endforeach
-</div>
-<div class="modal" id="file-modal">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title"></h4>
-            </div>
-            <div class="modal-body" style="word-wrap: break-word;">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
 </div>

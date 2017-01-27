@@ -41,7 +41,7 @@ $.StoreCamp.media =
             playInstanse.closest('.media-plyr-item').addClass('playing')
         return
       return
-    $("#folder-body > .files a.delete-file").on "click", (event) ->
+    $("#folder-body a.delete-file").on "click", (event) ->
       event.preventDefault()
       btn = $(this)
       deleteUrl = btn.attr('href')
