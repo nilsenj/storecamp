@@ -154,3 +154,6 @@
 <script src="{{asset("js/modules.js")}}"></script>
 <script src="{{asset("js/page-inbox-demo.js")}}"></script>
 @yield('scripts_add')
+
+<a data-toggle="modal" style="display: none" href="#generic" class="hidden modal-auto-Trigger">Trigger Modal
+</a>

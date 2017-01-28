@@ -657,6 +657,9 @@
     options: {
       alertTemplate: function(type, title, message) {
         return "<div class=\"alert alert-" + type + " alert-dismissible\">\n<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>\n<h4>" + title + "</h4>\n" + message + "\n</div>";
+      },
+      modalTemplate: function(modalId, Message, Header, AriaLabel, Ok, Cancel) {
+        return "<div class=\"modal fade\" id=\"" + modalId + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"" + AriaLabel + "\" aria-hidden=\"true\">\n<div class=\"modal-dialog\"><div class=\"modal-content\"><div class=\"modal-header\">\n<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n<h3>" + Header + "</h3></div>\n<div class=\"modal-body\"><p>" + Message + "</p></div><div class=\"modal-footer\">\n<button class=\"btn btn-primary\" data-dismiss=\"ok\">" + Ok + "</button>\n<button class=\"btn btn-default\" data-dismiss=\"modal\">" + Cancel + "</button></div>\n</div></div></div>";
       }
     },
     activate: function() {
@@ -667,6 +670,43 @@
       var _this;
       _this = this;
       return $('#alerts').append(_this.options.alertTemplate(type, title, message));
+    },
+    modal: function(modalId, Message, Header, btntrigger, AriaLabel, Ok, Cancel) {
+      var _this, aria, autoLaunch, cancelText, confirmLink, defaultCallback, genericModal, html, message, okText, title, triggerLink;
+      _this = this;
+      title = Header != null ? Header : 'Please confirm...';
+      message = Message != null ? Message : 'Are you sure?';
+      okText = Ok != null ? Ok : 'Ok';
+      cancelText = Cancel != null ? Cancel : 'Cancel';
+      modalId = '';
+      aria = AriaLabel != null ? AriaLabel : modalId;
+      autoLaunch = true;
+      triggerLink = btntrigger != null ? btntrigger : $('.modal-auto-Trigger');
+      html = _this.options.modalTemplate(modalId, message, title, aria, okText, cancelText);
+      defaultCallback = function(target) {
+        window.location.hash = target.hash;
+      };
+      if (modalId === '') {
+        modalId = 'genericModal' + parseInt(Date.now());
+      }
+      html = _this.options.modalTemplate(modalId, message, title, AriaLabel, okText, cancelText);
+      $('body').append(html);
+      genericModal = $('#' + modalId);
+      confirmLink = triggerLink;
+      if (autoLaunch) {
+        genericModal.modal('show');
+        defaultCallback(genericModal);
+      }
+      confirmLink.on('click', function(e) {
+        e.preventDefault();
+        if (autoLaunch) {
+          genericModal.modal('show');
+        }
+      });
+      $('button[data-dismiss="ok"]', genericModal).on('click', function() {
+        genericModal.modal('hide');
+        defaultCallback(confirmLink);
+      });
     }
   };
 
