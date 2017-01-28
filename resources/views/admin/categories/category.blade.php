@@ -1,5 +1,4 @@
 <tr>
-
     <td>{{ $no-1}}</td>
     <td>{{ $category->name }}</td>
     <td>{{ $category->slug }}</td>

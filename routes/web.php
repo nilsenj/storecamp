@@ -117,9 +117,9 @@ $this->group(/**
             'as' => 'get.index'
         ]);
 
-        $this->get('getIndexJson/{disk}/{path?}/', [
-            'uses' => 'Admin\MediaController@getIndexJson',
-            'as' => 'get.index.json'
+        $this->post('file_linker/{disk}/{folder?}', [
+            'uses' => 'Admin\MediaController@filesLinker',
+            'as' => 'file_linker'
         ]);
 
         $this->get('/getIndexFolders/{disk}/{folder?}', [

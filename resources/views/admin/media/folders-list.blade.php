@@ -1,4 +1,4 @@
-<div class="col-xs-5 col-sm-5 col-md-4 col-lg-3">
+<div class="col-xs-5 col-sm-5 col-md-4 col-lg-3 directories">
     <div class="box box-default">
         <div class="box-header with-border">
             <h3 class="box-title">Folders</h3>
@@ -10,7 +10,7 @@
             <!-- /.box-tools -->
         </div>
         <!-- /.box-header -->
-        <div class="box-body directories" style="display: block;">
+        <div class="box-body" style="display: block;">
 
             @foreach($directories as $directory)
                 <div class="col-xs-12 col-md-6 directory-item">

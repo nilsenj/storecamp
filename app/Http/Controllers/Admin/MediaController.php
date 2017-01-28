@@ -65,14 +65,14 @@ class MediaController extends BaseController
      * @param string $disk
      * @return array
      */
-    private function preDefineIndexPart($request, $disk = '', $folder = null)
+    private function preDefineIndexPart($request, $disk = '', $folder = null, $skipPaginate = false)
     {
         $disk = $disk ? $disk : 'local';
         $folderDisk = $this->folder->disk($disk);
 
         $folder = $folderDisk->defaultFolder($disk, $folder);
         $tag = $request->get('tag');
-        $files = $this->repository->transform($request, $folder, $tag, $disk);
+        $files = $this->repository->transform($request, $folder, $tag, $disk, $skipPaginate);
         $media = $files['media'];
         $directories = $files['directories'];
         $count = $files['count'];
@@ -159,11 +159,22 @@ class MediaController extends BaseController
      * @param string $disk
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
-    public function getIndexJson(Request $request, $folder = null, $disk = '')
+    public function filesLinker(Request $request, $disk = '', $folder = null)
     {
         try {
-            $predefined = $this->preDefineIndexPart($request, $disk, $folder);
-            return response()->json($predefined, 200);
+            $folderDisk = $this->folder->disk($disk);
+            $predefined = $this->preDefineIndexPart($request,$disk, $folder, true);
+            $media = $predefined['media']['media'];
+            $directories = $predefined['directories'];
+            $path = $predefined['path'];
+            $folder = $predefined['folder'];
+            $count = $predefined['count'];
+            $disk = $predefined['disk'];
+            $urlFolderPathBuild = $folderDisk->getParentFoldersPathLinks($folder);
+            $rootFolders = $folderDisk->getDiskUrls();
+            $multiple = $request->get('multiple') === "true" ? true : false;
+            $dataTypes = explode(',', $request->get('dataTypes'));
+            return view('admin.fileLinker.file-linker', compact('media', 'directories', 'path', 'folder', 'count', 'urlFolderPathBuild', 'disk', 'rootFolders', 'multiple', 'dataTypes'));
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         } catch (\Exception $exception) {
@@ -172,6 +183,7 @@ class MediaController extends BaseController
             return response()->json($exception->getMessage(), $exception->getCode());
         }
     }
+
     /**
      * get media description for json
      *

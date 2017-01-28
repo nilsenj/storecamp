@@ -23,6 +23,7 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
      * @var int
      */
     protected $perPage = 100;
+    protected $skipPaginate = false;
 
     /**
      * MediaRepositoryEloquent constructor.
@@ -35,7 +36,21 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
         parent::__construct($app, $dispatcher);
         $this->folder = $folder;
     }
+    /**
+     * @return bool
+     */
+    public function isSkipPaginate(): bool
+    {
+        return $this->skipPaginate;
+    }
 
+    /**
+     * @param bool $skipPaginate
+     */
+    public function setSkipPaginate(bool $skipPaginate)
+    {
+        $this->skipPaginate = $skipPaginate;
+    }
     /**
      * @var array
      */
@@ -74,21 +89,24 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
     }
 
     /**
-     * transform files and directories
-     *
      * @param $request
      * @param null $folder
      * @param null $tag
      * @param string $disk
+     * @param bool $getAll
      * @return array
      */
-    public function transform($request, $folder = null, $tag = null, $disk = '')
+    public function transform($request, $folder = null, $tag = null, $disk = '', bool $getAll = false)
     {
         $model = $this->getModel();
         $parentsPath = $this->folder->disk($disk)->getParentFoldersPath($folder);
         $folderPath = $parentsPath ? $parentsPath . '/' . $folder->name : $folder->name;
         $count = $folder->files->count();
+        if($getAll) {
+            $this->setSkipPaginate(true);
+        }
         $media = $this->filesPreRender($model, $folderPath, $tag, $request, $folder, $disk);
+
         $directories = $folder->children;
 
         return [
@@ -158,9 +176,17 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
         }
         if ($recursive) {
             $directory = str_replace(['%', '_'], ['\%', '\_'], $directory);
-            $model = $model->where('directory', 'like', $directory.'%')->paginate($this->perPage);
+            if($this->isSkipPaginate()) {
+                $model = $model->where('directory', 'like', $directory.'%')->get();
+            } else {
+                $model = $model->where('directory', 'like', $directory.'%')->paginate($this->perPage);
+            }
         } else {
-            $model = $model->where('directory', '=', $directory)->paginate($this->perPage);
+            if($this->isSkipPaginate()) {
+                $model = $model->where('directory', '=', $directory)->get();
+            } else {
+                $model = $model->where('directory', '=', $directory)->paginate($this->perPage);
+            }
         }
         $this->resetModel();
 

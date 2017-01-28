@@ -28,6 +28,7 @@
         {!! Form::label('image_link', 'Category Image', ['class' => 'control-label']) !!}
         {!! Form::text('image_link', null, ['class' => 'form-control category-image hidden']) !!}
         <img src="{{asset('img/image-not-found.gif')}}" alt="" class="img-responsive" width="150" height="100">
+       @include('admin.fileLinker.fileLinkerModal')
         {!! $errors->first('image_link', '<div class="text-danger">:message</div>') !!}
     </div>
     <div class="form-group">

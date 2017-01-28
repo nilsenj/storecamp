@@ -83,10 +83,6 @@ class MailController extends BaseController
      */
     public function getTmpMails(Request $request)
     {
-        $request = Request::create('admin/media/getIndexJson/mails', 'GET');
-        $response = \Route::dispatch($request);
-        dd($response);
-
         $folder = Folder::find(4);
         dd($folder->files);
         $mail = $this->repository->getTmpMail($file = null);

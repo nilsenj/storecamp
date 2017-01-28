@@ -122,3 +122,15 @@ $white: white;
     border: 1px solid #3c8dbc;
   }
 }
+
+.directories {
+  .box-default {
+    border: none;
+    box-shadow: none;
+    border-left: 2px dashed $alice_blue;
+    min-height: 400px;
+  }
+  .box-header {
+    border-bottom: 2px dashed $alice_blue;
+  }
+}

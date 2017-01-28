@@ -14,12 +14,27 @@ class ProductsFormRequest extends FormRequest{
 
     protected $rules = [
         'title' => 'required|min:2',
-        'slug' => 'required|unique:products,slug',
         'body' => 'required|min:20',
         'price' => 'required|numeric',
-        'image' => 'required',
-        'availability' => 'integer',
-        'category_id' => 'required|integer'
+        'availability' => 'required|integer',
+        'category_id' => 'required|integer',
+        'date_available' => 'required|date',
+        'model' => 'string|min:2',
+        'quantity' => 'numeric',
+        'sku' => 'string',
+        'upc' => 'string',
+        'ean' => 'string',
+        'jan' => 'string',
+        'isbn' => 'string',
+        'mpn' => 'string',
+        'length' => 'string|min:1',
+        'width'=> 'string|min:1',
+        'height'=> 'string|min:1',
+        'meta_tag_title' => 'string|min:2',
+        'meta_tag_description' => 'string|min:5',
+        'meta_tag_keywords' => 'string|min:2',
+        'sort_order' => 'numeric|max:10',
+        'weight' => 'string|min:1'
     ];
 
 

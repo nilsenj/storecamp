@@ -263,6 +263,17 @@
   border: 1px solid #3c8dbc;
 }
 
+.directories .box-default {
+  border: none;
+  box-shadow: none;
+  border-left: 2px dashed aliceblue;
+  min-height: 400px;
+}
+
+.directories .box-header {
+  border-bottom: 2px dashed aliceblue;
+}
+
 li.play-status {
   position: relative;
   border-radius: 0;
@@ -271,6 +282,18 @@ li.play-status {
 
 li.play-status i {
   color: lightyellow;
+}
+
+.modal.modal-wide .modal-dialog {
+  width: 90%;
+}
+
+.modal-wide .modal-body {
+  overflow-y: auto;
+}
+
+.tallModal .modal-body {
+  min-height: 500px;
 }
 
 /*# sourceMappingURL=app.css.map */

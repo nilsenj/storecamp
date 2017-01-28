@@ -302,6 +302,114 @@
 }).call(this);
 
 (function() {
+  var ref, ref1, ref2, ref3;
+
+  $.StoreCamp.fileLinker = {
+    options: {
+      typesAvailable: [''],
+      fileLinker: $('.file-linker'),
+      requestUrl: (ref = $('.file-linker').attr('data-requestUrl')) != null ? ref : APP_URL + "/admin/media/file_linker/local",
+      fileTypes: (ref1 = $('.file-linker').attr('data-file-types')) != null ? ref1 : "image, document, audio, video, archive",
+      fileMultiple: (ref2 = $('.file-linker').attr('data-multiple')) != null ? ref2 : false,
+      fileAttachOutputPath: (ref3 = $('.file-linker').attr('data-attach-output-path')) != null ? ref3 : "form .tab-content",
+      fileLinkerModal: $('#fileLinker-modal'),
+      submitBtn: $('#fileLinker-modal').find('button[type=submit]'),
+      modalTitle: $('#fileLinker-modal').find('.modal-title'),
+      modalBody: $('#fileLinker-modal').find('.modal-body')
+    },
+    activate: function() {
+      var _this;
+      _this = this;
+      return _this.fileSystemEvents();
+    },
+    fileSystemEvents: function() {
+      var _this;
+      _this = this;
+      _this.options.fileLinkerModal.on('shown.bs.modal', function(event) {
+        var fileLinker;
+        fileLinker = $(event.relatedTarget);
+        $(this).modal('show');
+        _this.showFiles();
+      });
+      $(".file-item .select-file").on("click", function(event) {
+        var btn, fileItem, folderBody, selectUrl;
+        event.preventDefault();
+        btn = $(this);
+        selectUrl = btn.attr('data-href');
+        fileItem = btn.closest('.file-item');
+        folderBody = $('#folder-body');
+        _this.selectFile(selectUrl, fileItem);
+        console.log(btn.attr('href'));
+      });
+      $(".directory-item .select-folder").on("click", function(event) {
+        var btn, fileItem, folderBody, folderDisk, folderId, folderUrl;
+        event.preventDefault();
+        btn = $(this);
+        folderUrl = btn.attr('data-href');
+        folderId = btn.attr('data-file-id');
+        folderDisk = btn.attr('data-disk');
+        fileItem = btn.closest('.directory-item');
+        folderBody = $('#folder-body');
+        _this.selectFolder(folderUrl, fileItem);
+      });
+    },
+    showFiles: function() {
+      var _this, dataObject;
+      _this = this;
+      dataObject = {
+        multiple: _this.options.fileMultiple,
+        dataTypes: _this.options.fileTypes
+      };
+      return $.ajax({
+        url: _this.options.requestUrl,
+        type: 'POST',
+        data: dataObject,
+        success: function(data) {
+          _this.options.modalBody.html(data);
+        },
+        error: function(xhr, textStatus, errorThrown) {
+          $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared');
+          console.error(xhr);
+        }
+      }, false);
+    },
+    reindex: function(mediaItems, players) {
+      var _this;
+      _this = this;
+      return [].forEach.call(mediaItems, function(item, i, arr) {
+        $(item).attr('data-media-number', i);
+        return;
+        return _this._triggerNewFile(mediaItems, players);
+      });
+    },
+    selectFile: function(fileURL, fileItem) {
+      var _this;
+      return _this = this;
+    },
+    selectFolder: function(folderUrl) {
+      var _this;
+      _this = this;
+      return $.ajax({
+        url: deleteUrl,
+        type: 'GET',
+        success: function(data) {
+          fileItem.remove();
+          $.StoreCamp.templates.alert('success', data.title, data.message);
+          console.log(data);
+        },
+        error: function(xhr, textStatus, errorThrown) {
+          $.StoreCamp.templates.alert('danger', xhr.statusText, xhr.responseText);
+          console.error(xhr);
+        }
+      }, false);
+    }
+  };
+
+  $.StoreCamp.fileLinker.activate();
+
+}).call(this);
+
+(function() {
   $.StoreCamp.imageLoad = {
     activate: function() {
       var _this;

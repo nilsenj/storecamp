@@ -145,6 +145,10 @@
     })
     $('#flash-overlay-modal').modal();
     $('body > h1').remove();
+    $(".modal-wide").on("show.bs.modal", function() {
+        var height = $(window).height() - 200;
+        $(this).find(".modal-body").css("max-height", height);
+    });
 </script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
