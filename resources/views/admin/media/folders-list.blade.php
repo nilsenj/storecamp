@@ -1,4 +1,4 @@
-<div class="col-xs-4 col-md-3">
+<div class="col-xs-5 col-sm-5 col-md-4 col-lg-3">
     <div class="box box-default">
         <div class="box-header with-border">
             <h3 class="box-title">Folders</h3>

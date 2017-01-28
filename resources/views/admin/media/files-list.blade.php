@@ -1,4 +1,4 @@
-<div class="col-xs-8 col-md-9 files">
+<div class="col-xs-7 col-sm-7 col-md-8 col-lg-9 files">
     <?php $tag = isset($tag) ? $tag : null; ?>
     @foreach(array_chunk($media->all(), 3) as $row)
         <div class="row file-list">
