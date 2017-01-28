@@ -46,6 +46,7 @@
                         success: function (data) {
                             folderSide.html(data);
                             newdirModal.modal('hide')
+                            $.StoreCamp.media.fileSystemEvents()
                         },
                         error: function (xhr, textStatus, errorThrown) {
                             modalTitle.html("<p class='text-danger'>ERROR Appeared!</p>");

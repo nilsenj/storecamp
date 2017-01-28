@@ -4,6 +4,3 @@
     @include('admin.media.folders-list')
     </span>
 </div>
-
-@push('scripts-add_on')
-@endpush

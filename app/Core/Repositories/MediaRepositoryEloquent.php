@@ -109,7 +109,7 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
     {
         $directories = $folder->children;
         $disk = $folder->disk;
-        return view('admin.media.folders_part', compact('directories', 'path', 'disk'));
+        return view('admin.media.folders-list', compact('directories', 'path', 'disk'));
 
     }
 

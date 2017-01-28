@@ -527,6 +527,7 @@
     activate: function() {
       var _this;
       _this = this;
+      _this.fileSystemEvents();
       if (_this.options.mediaItems.length > 0) {
         _this.mediaEvents();
         _this.reindex(_this.options.mediaItems, _this.options.players);
@@ -535,7 +536,7 @@
     mediaEvents: function() {
       var _this;
       _this = this;
-      _this.options.players.forEach(function(player, i, arr) {
+      return _this.options.players.forEach(function(player, i, arr) {
         player.on('ready timeupdate pause ended play playing', function(event) {
           var playInstanse;
           switch (event.type) {
@@ -568,7 +569,11 @@
           }
         });
       });
-      $(".files a.delete-file").on("click", function(event) {
+    },
+    fileSystemEvents: function() {
+      var _this;
+      _this = this;
+      $(".file-item .delete-file").on("click", function(event) {
         var btn, deleteUrl, fileItem, folderBody;
         event.preventDefault();
         btn = $(this);
@@ -576,16 +581,16 @@
         fileItem = btn.closest('.file-item');
         folderBody = $('#folder-body');
         _this.deleteFile(deleteUrl, fileItem);
-        return console.log(btn.attr('href'));
+        console.log(btn.attr('href'));
       });
-      return $(".directories a.delete-file").on("click", function(event) {
+      $(".directories .directory-item .delete-file").on("click", function(event) {
         var btn, deleteUrl, fileItem, folderBody;
         event.preventDefault();
         btn = $(this);
         deleteUrl = btn.attr('href');
         fileItem = btn.closest('.directory-item');
         folderBody = $('#folder-body');
-        return _this.deleteFile(deleteUrl, fileItem);
+        _this.deleteFile(deleteUrl, fileItem);
       });
     },
     reindex: function(mediaItems, players) {

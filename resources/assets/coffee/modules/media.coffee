@@ -6,6 +6,7 @@ $.StoreCamp.media =
   }
   activate: ->
     _this = this
+    _this.fileSystemEvents()
     if(_this.options.mediaItems.length > 0)
       _this.mediaEvents()
       _this.reindex(_this.options.mediaItems, _this.options.players)
@@ -41,7 +42,10 @@ $.StoreCamp.media =
             playInstanse.closest('.media-plyr-item').addClass('playing')
         return
       return
-    $(".files a.delete-file").on "click", (event) ->
+
+  fileSystemEvents: ->
+    _this = this
+    $(".file-item .delete-file").on "click", (event) ->
       event.preventDefault()
       btn = $(this)
       deleteUrl = btn.attr('href')
@@ -49,14 +53,16 @@ $.StoreCamp.media =
       folderBody = $('#folder-body')
       _this.deleteFile(deleteUrl, fileItem)
       console.log(btn.attr('href'))
-    $(".directories a.delete-file").on "click", (event) ->
+      return
+    $(".directories .directory-item .delete-file").on "click", (event) ->
       event.preventDefault()
       btn = $(this)
       deleteUrl = btn.attr('href')
       fileItem = btn.closest('.directory-item')
       folderBody = $('#folder-body')
       _this.deleteFile(deleteUrl, fileItem)
-
+      return
+    return
   reindex: (mediaItems, players) ->
     _this = this
     [].forEach.call mediaItems, (item, i, arr) ->
