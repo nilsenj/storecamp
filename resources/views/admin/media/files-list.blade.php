@@ -40,9 +40,8 @@
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
                            href="{{route("admin::media::get.delete", [$file->id])}}"><i class="fa fa-times"
                                                                                       aria-hidden="true"></i></a>
-                        <span class="mailbox-attachment-icon has-img">
-                            <img src="{{$file->getUrl()}}" width="266"
-                                 height="150" alt="{{$file->filename}}">
+                        <span class="file-item-img">
+                            <img src="{{$file->getUrl()}}" class="item-icon" alt="{{$file->filename}}">
                         </span>
                         <div class="mailbox-attachment-info">
                             <a href="#" class="mailbox-attachment-name"><i class="fa fa-camera"></i> {{$file->filename}}
@@ -67,7 +66,7 @@
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
                            href="{{route("admin::media::get.delete", [$file->id])}}"><i class="fa fa-times"
                                                                                       aria-hidden="true"></i></a>
-                        <span class="mailbox-attachment-icon has-img">
+                        <span class="item-icon">
                            <audio controls title="{{$file->filename}}">
                             <source src="{{$file->getUrl()}}"
                                     type="audio/mp3">
@@ -125,7 +124,7 @@
                     <li class="col-xs-12 col-md-12 col-lg-4 file-item" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
                            href="{{route("admin::media::get.delete", [$file->id])}}">
-                            <i class="fa fa-times" aria-hidden="true"></i>
+                            <i class="item-icon fa fa-times" aria-hidden="true"></i>
                         </a>
                         <span class="mailbox-attachment-icon"><i class="fa fa-file-word-o"></i></span>
                         <div class="mailbox-attachment-info">
@@ -153,7 +152,9 @@
                            href="{{route("admin::media::get.delete", $file->id)}}">
                             <i class="fa fa-times" aria-hidden="true"></i>
                         </a>
-                        <span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
+                        <span class="mailbox-attachment-icon">
+                            <i class="item-icon fa fa-file-pdf-o"></i>
+                        </span>
                         <div class="mailbox-attachment-info">
                             <a href="#" class="mailbox-attachment-name"><i
                                         class="fa fa-paperclip"></i> {{$file->filename}}

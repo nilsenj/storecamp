@@ -10,10 +10,9 @@
                 {!! Form::open(['files' => false, 'route' => ['admin::media::rename.file', $disk]]) !!}
                 <div class="form-group">
                     {!! Form::label('new_name', 'New file name:') !!}
-
                     <div class="input-group margin">
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-info disabled">{!! $folder->name !!}</button>
+                            <button type="button" class="btn btn-info disabled">@if($folder->name){!! $folder->name !!} @else ../ @endif</button>
                         </div>
                         <!-- /btn-group -->
                         {!! Form::text('new_name', null, ['class' => 'form-control rename-file-field']) !!}

@@ -12,6 +12,7 @@
                 <label for="to">Subject</label>
                 <input class="form-control" placeholder="Subject:">
             </div>
+            @include('admin.fileLinker.fileLinkerModal', [$btnMsg='choose email template', $fileTypes = 'document', $multiple = false, $outputElementPath = "#general", $disk = "mails"])
             <div class="form-group">
                 @include('admin.components.description-form', [$property_name='message'])
             </div>

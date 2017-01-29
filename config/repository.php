@@ -144,7 +144,7 @@ return [
 //    ],
     'cache'=>[
         //Enable or disable cache repositories
-        'enabled'   => false,
+        'enabled'   => true,
 
         //Lifetime of cache
         'minutes'   => 30,

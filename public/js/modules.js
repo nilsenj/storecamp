@@ -302,20 +302,25 @@
 }).call(this);
 
 (function() {
-  var ref, ref1, ref2, ref3;
+  var ref, ref1, ref2, ref3, ref4;
 
   $.StoreCamp.fileLinker = {
     options: {
       typesAvailable: [''],
       fileLinker: $('.file-linker'),
+      fileLinkerSelectedBlock: $('.selected-block'),
       requestUrl: (ref = $('.file-linker').attr('data-requestUrl')) != null ? ref : APP_URL + "/admin/media/file_linker/local",
       fileTypes: (ref1 = $('.file-linker').attr('data-file-types')) != null ? ref1 : "image, document, audio, video, archive",
       fileMultiple: (ref2 = $('.file-linker').attr('data-multiple')) != null ? ref2 : false,
-      fileAttachOutputPath: (ref3 = $('.file-linker').attr('data-attach-output-path')) != null ? ref3 : "form .tab-content",
+      disk: (ref3 = $('.file-linker').attr('data-disk')) != null ? ref3 : 'local',
+      fileAttachOutputPath: (ref4 = $('.file-linker').attr('data-attach-output-path')) != null ? ref4 : "form .tab-content",
       fileLinkerModal: $('#fileLinker-modal'),
       submitBtn: $('#fileLinker-modal').find('button[type=submit]'),
       modalTitle: $('#fileLinker-modal').find('.modal-title'),
-      modalBody: $('#fileLinker-modal').find('.modal-body')
+      modalBody: $('#fileLinker-modal').find('.modal-body'),
+      fileBlockTemplate: function(selectorId, content, fileName) {
+        return "<div data-id='" + selectorId + "' class='col-xs-6 col-md-3 col-lg-2'>" + content + "<strong class='text-muted'>" + fileName + "</strong></div>";
+      }
     },
     activate: function() {
       var _this;
@@ -331,27 +336,6 @@
         $(this).modal('show');
         _this.showFiles();
       });
-      $(".file-item .select-file").on("click", function(event) {
-        var btn, fileItem, folderBody, selectUrl;
-        event.preventDefault();
-        btn = $(this);
-        selectUrl = btn.attr('data-href');
-        fileItem = btn.closest('.file-item');
-        folderBody = $('#folder-body');
-        _this.selectFile(selectUrl, fileItem);
-        console.log(btn.attr('href'));
-      });
-      $(".directory-item .select-folder").on("click", function(event) {
-        var btn, fileItem, folderBody, folderDisk, folderId, folderUrl;
-        event.preventDefault();
-        btn = $(this);
-        folderUrl = btn.attr('data-href');
-        folderId = btn.attr('data-file-id');
-        folderDisk = btn.attr('data-disk');
-        fileItem = btn.closest('.directory-item');
-        folderBody = $('#folder-body');
-        _this.selectFolder(folderUrl, fileItem);
-      });
     },
     showFiles: function() {
       var _this, dataObject;
@@ -366,6 +350,7 @@
         data: dataObject,
         success: function(data) {
           _this.options.modalBody.html(data);
+          _this.fileEvents();
         },
         error: function(xhr, textStatus, errorThrown) {
           $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared');
@@ -373,18 +358,84 @@
         }
       }, false);
     },
-    reindex: function(mediaItems, players) {
+    fileEvents: function() {
       var _this;
       _this = this;
-      return [].forEach.call(mediaItems, function(item, i, arr) {
-        $(item).attr('data-media-number', i);
-        return;
-        return _this._triggerNewFile(mediaItems, players);
+      return $(".files .file-item").on("click", function(event) {
+        var btn, fileItemCheckBox, folderBody, selectFileName, selectId, selectUrl;
+        event.preventDefault();
+        btn = $(this);
+        selectId = btn.attr('data-file-id');
+        fileItemCheckBox = btn.find('input:checkbox');
+        selectUrl = btn.attr('data-href');
+        selectFileName = btn.attr('data-file-name');
+        folderBody = $('#folder-body');
+        _this.selectFile(btn, selectId, fileItemCheckBox, selectFileName, selectUrl);
+        return console.log(btn.attr('data-href'));
       });
     },
-    selectFile: function(fileURL, fileItem) {
+    folderEvents: function() {
       var _this;
-      return _this = this;
+      _this = this;
+      return $(".directory-item .select-folder").on("click", function(event) {
+        var btn, fileItem, folderBody, folderDisk, folderId, folderUrl;
+        event.preventDefault();
+        btn = $(this);
+        folderUrl = btn.attr('data-href');
+        folderId = btn.attr('data-file-id');
+        folderDisk = btn.attr('data-disk');
+        fileItem = btn.closest('.directory-item');
+        folderBody = $('#folder-body');
+        _this.selectFolder(folderUrl, fileItem);
+      });
+    },
+    selectFile: function(btn, selectId, fileItemCheckBox, selectFileName, selectUrl) {
+      var _this;
+      _this = this;
+      console.log("select file not triggered");
+      if (!_this.options.fileMultiple) {
+        $('.file-item').find('input:checkbox').iCheck('uncheck');
+        $('.file-item').find('input:checkbox').iCheck('disable');
+        fileItemCheckBox.iCheck('enable');
+        fileItemCheckBox.iCheck('check');
+        $('.file-item').removeClass('checked');
+        btn.addClass('checked');
+        _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'add');
+      } else {
+        if (btn.hasClass('checked')) {
+          btn.removeClass('checked');
+          _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'remove');
+        } else {
+          btn.addClass('checked');
+          _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'add');
+        }
+        fileItemCheckBox.iCheck('toggle');
+      }
+    },
+    manageToFileBlock: function(btn, selectFileName, selectId, selectUrl, methodType) {
+      var _this;
+      _this = this;
+      switch (methodType) {
+        case "add":
+          return _this.fileBlockAddTemplate(btn);
+        case "remove":
+          return _this.fileBlockRemoveTemplate(btn);
+      }
+    },
+    fileBlockAddTemplate: function(btn) {
+      var _this, content, fileName, htmlContent, selectorId;
+      _this = this;
+      selectorId = btn.attr('data-file-id');
+      content = btn.find(".mailbox-attachment-icon").html();
+      fileName = btn.find(".mailbox-attachment-name").html();
+      htmlContent = _this.options.fileBlockTemplate(selectorId, content, fileName);
+      return _this.options.fileLinkerSelectedBlock.append(htmlContent);
+    },
+    fileBlockRemoveTemplate: function(btn) {
+      var blockItem;
+      blockItem = $(".selected-block [data-id='" + (btn.attr('data-file-id')) + "']");
+      console.log(blockItem);
+      return blockItem.remove();
     },
     selectFolder: function(folderUrl) {
       var _this;

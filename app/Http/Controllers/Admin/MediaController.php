@@ -61,18 +61,20 @@ class MediaController extends BaseController
 
     /**
      * @param $request
-     * @param null $folder
      * @param string $disk
+     * @param null $folder
+     * @param bool $skipPaginate
+     * @param array $dataTypes
      * @return array
      */
-    private function preDefineIndexPart($request, $disk = '', $folder = null, $skipPaginate = false)
+    private function preDefineIndexPart($request, $disk = '', $folder = null, $skipPaginate = false, array $dataTypes = [])
     {
         $disk = $disk ? $disk : 'local';
         $folderDisk = $this->folder->disk($disk);
 
         $folder = $folderDisk->defaultFolder($disk, $folder);
         $tag = $request->get('tag');
-        $files = $this->repository->transform($request, $folder, $tag, $disk, $skipPaginate);
+        $files = $this->repository->transform($request, $folder, $tag, $disk, $skipPaginate, $dataTypes);
         $media = $files['media'];
         $directories = $files['directories'];
         $count = $files['count'];
@@ -141,7 +143,7 @@ class MediaController extends BaseController
             $count = $predefined['count'];
             $disk = $predefined['disk'];
 
-            return $this->view('getIndex', compact('media', 'directories', 'path', 'folder', 'count', 'disk'));
+            return $this->view('index-body_part', compact('media', 'directories', 'path', 'folder', 'count', 'disk'));
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         } catch (\Exception $exception) {
@@ -163,7 +165,8 @@ class MediaController extends BaseController
     {
         try {
             $folderDisk = $this->folder->disk($disk);
-            $predefined = $this->preDefineIndexPart($request,$disk, $folder, true);
+            $dataTypes = explode(',', $request->get('dataTypes'));
+            $predefined = $this->preDefineIndexPart($request,$disk, $folder, true, $dataTypes);
             $media = $predefined['media']['media'];
             $directories = $predefined['directories'];
             $path = $predefined['path'];
@@ -173,8 +176,8 @@ class MediaController extends BaseController
             $urlFolderPathBuild = $folderDisk->getParentFoldersPathLinks($folder);
             $rootFolders = $folderDisk->getDiskUrls();
             $multiple = $request->get('multiple') === "true" ? true : false;
-            $dataTypes = explode(',', $request->get('dataTypes'));
-            return view('admin.fileLinker.file-linker', compact('media', 'directories', 'path', 'folder', 'count', 'urlFolderPathBuild', 'disk', 'rootFolders', 'multiple', 'dataTypes'));
+            return view('admin.fileLinker.file-linker',
+                compact('media', 'directories', 'path', 'folder', 'count', 'urlFolderPathBuild', 'disk', 'rootFolders', 'multiple', 'types'));
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         } catch (\Exception $exception) {

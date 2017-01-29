@@ -4,17 +4,21 @@ namespace App\Core\Repositories;
 
 use Illuminate\Container\Container as Application;
 use Illuminate\Contracts\Bus\Dispatcher;
+use RepositoryLab\Repository\Contracts\CacheableInterface;
 use RepositoryLab\Repository\Eloquent\BaseRepository;
 use RepositoryLab\Repository\Criteria\RequestCriteria;
 use App\Core\Repositories\MediaRepository;
 use App\Core\Models\Media;
+use RepositoryLab\Repository\Traits\CacheableRepository;
 
 /**
  * Class MediaRepositoryEloquent
  * @package namespace App\Core\Repositories;
  */
-class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
+class MediaRepositoryEloquent extends BaseRepository implements MediaRepository, CacheableInterface
 {
+    use CacheableRepository;
+
     /**
      * @var FolderRepository
      */
@@ -23,7 +27,14 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
      * @var int
      */
     protected $perPage = 100;
+    /**
+     * @var bool
+     */
     protected $skipPaginate = false;
+    /**
+     * @var
+     */
+    protected $dataTypes;
 
     /**
      * MediaRepositoryEloquent constructor.
@@ -36,6 +47,7 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
         parent::__construct($app, $dispatcher);
         $this->folder = $folder;
     }
+
     /**
      * @return bool
      */
@@ -51,6 +63,27 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
     {
         $this->skipPaginate = $skipPaginate;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDataTypes()
+    {
+        return $this->dataTypes;
+    }
+
+    /**
+     * @param mixed $dataTypes
+     */
+    public function setDataTypes(array $dataTypes)
+    {
+        $types = [];
+        foreach ($dataTypes as $type) {
+            $types[] = trim($type);
+        }
+        $this->dataTypes = $types;
+    }
+
     /**
      * @var array
      */
@@ -94,16 +127,20 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
      * @param null $tag
      * @param string $disk
      * @param bool $getAll
+     * @param array $dataTypes
      * @return array
      */
-    public function transform($request, $folder = null, $tag = null, $disk = '', bool $getAll = false)
+    public function transform($request, $folder = null, $tag = null, $disk = '', bool $getAll = false, array $dataTypes = [])
     {
         $model = $this->getModel();
         $parentsPath = $this->folder->disk($disk)->getParentFoldersPath($folder);
         $folderPath = $parentsPath ? $parentsPath . '/' . $folder->name : $folder->name;
         $count = $folder->files->count();
-        if($getAll) {
+        if ($getAll) {
             $this->setSkipPaginate(true);
+        }
+        if (!empty($dataTypes)) {
+            $this->setDataTypes($dataTypes);
         }
         $media = $this->filesPreRender($model, $folderPath, $tag, $request, $folder, $disk);
 
@@ -171,25 +208,25 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository
         $this->applyCriteria();
         $this->applyScope();
         $model = $this->model->where('disk', $disk);
-        if($tag) {
+        $dataTypes = $this->getDataTypes();
+        if ($tag) {
             $model = $this->model->where('aggregate_type', 'like', $tag);
         }
         if ($recursive) {
             $directory = str_replace(['%', '_'], ['\%', '\_'], $directory);
-            if($this->isSkipPaginate()) {
-                $model = $model->where('directory', 'like', $directory.'%')->get();
-            } else {
-                $model = $model->where('directory', 'like', $directory.'%')->paginate($this->perPage);
-            }
+            $model = $model->where('directory', 'like', $directory . '%');
         } else {
-            if($this->isSkipPaginate()) {
-                $model = $model->where('directory', '=', $directory)->get();
-            } else {
-                $model = $model->where('directory', '=', $directory)->paginate($this->perPage);
-            }
+            $model = $model->where('directory', '=', $directory);
+        }
+        if (!empty($dataTypes)) {
+            $model = $model->whereIn('aggregate_type', $dataTypes);
+        }
+        if ($this->isSkipPaginate()) {
+            $model = $model->get();
+        } else {
+            $model = $model->paginate($this->perPage);
         }
         $this->resetModel();
-
         return $this->parserResult($model);
     }
 }

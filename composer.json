@@ -28,7 +28,6 @@
     "a6digital/laravel-default-profile-image": "^1.0",
     "arcanedev/log-viewer": "^4.2",
     "cviebrock/image-validator": "^2.1",
-    "juggl/unique-hashids": "^1.1",
     "darrylkuhn/dialect": "^1.0",
     "plank/laravel-mediable": "^2.4",
     "that0n3guy/transliteration": "^2.0",

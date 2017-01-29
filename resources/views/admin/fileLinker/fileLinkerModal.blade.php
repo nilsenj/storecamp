@@ -1,10 +1,12 @@
 <a data-toggle="modal" href="#fileLinker-modal"
    class="btn btn-md btn-info file-linker"
-   data-file-types="image, document"
-   data-multiple="false"
-   data-attach-output-path="#general"
+   data-file-types="{!! $fileTypes ? $fileTypes : "images" !!}"
+   data-multiple="{!! $multiple ? $multiple : false !!}"
+   data-disk="{!! $disk ? $disk : 'local' !!}"
+   data-attach-output-path="{!! $outputElementPath !!}"
+   data-requestUrl="{!! route('admin::media::file_linker', [$disk]) !!}"
 >
-    attach images
+    {!! $btnMsg ? $btnMsg : "attach file" !!}
 </a>
 <div class="modal tallModal modal-wide" id="fileLinker-modal">
     <div class="modal-dialog modal-lg" role="document">
@@ -17,7 +19,10 @@
             <div class="modal-body" style="word-wrap: break-word;">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <div class="col-md-10 selected-block"></div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
         <!-- /.modal-content -->

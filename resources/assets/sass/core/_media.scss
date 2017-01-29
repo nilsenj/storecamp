@@ -38,6 +38,12 @@ $white: white;
   @extend %extend_1;
 }
 .file-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  &.checked {
+    -webkit-box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 7px #0073aa;
+    box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 7px #0073aa;
+  }
   .mailbox-attachment-icon {
     border: 1px solid transparent;
   }
@@ -132,5 +138,31 @@ $white: white;
   }
   .box-header {
     border-bottom: 2px dashed $alice_blue;
+  }
+}
+#fileLinker-modal {
+  .selected-block {
+    div {
+      text-align: center;
+      img {
+        width: 100%;
+        height: auto;
+        position: relative;
+        background: #f4f4f4;
+        border: 2px solid #f4f4f4;
+      }
+      small {
+      }
+      .item-icon {
+        width: 100%;
+        height: 150px;
+        display: block;
+        font-size: 120px;
+        text-align: center;
+        list-style-type: none !important;
+        border: 2px solid #f4f4f4;
+        background: #f4f4f4;
+      }
+    }
   }
 }

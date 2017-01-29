@@ -172,6 +172,15 @@
   z-index: 9999;
 }
 
+.file-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.file-item.checked {
+  box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 7px #0073aa;
+}
+
 .file-item .mailbox-attachment-icon {
   border: 1px solid transparent;
 }
@@ -272,6 +281,29 @@
 
 .directories .box-header {
   border-bottom: 2px dashed aliceblue;
+}
+
+#fileLinker-modal .selected-block div {
+  text-align: center;
+}
+
+#fileLinker-modal .selected-block div img {
+  width: 100%;
+  height: auto;
+  position: relative;
+  background: #f4f4f4;
+  border: 2px solid #f4f4f4;
+}
+
+#fileLinker-modal .selected-block div .item-icon {
+  width: 100%;
+  height: 150px;
+  display: block;
+  font-size: 120px;
+  text-align: center;
+  list-style-type: none !important;
+  border: 2px solid #f4f4f4;
+  background: #f4f4f4;
 }
 
 li.play-status {

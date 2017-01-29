@@ -1,141 +1,20 @@
 <div class="col-xs-7 col-sm-7 col-md-8 col-lg-9 files">
     <?php $tag = isset($tag) ? $tag : null; ?>
-
-    @foreach(array_chunk($media->all(), 3) as $row)
+    @foreach(array_chunk($media->all(), 4) as $row)
         <div class="row file-list">
             @foreach($row as $file)
                 @if($file->aggregate_type == "video")
-                    <li class="col-xs-12 col-md-12 col-lg-4 file-item media-plyr-item"
-                        style="margin-bottom: 10px">
-                        <a class="select-file text-danger btn btn-default btn-xs"
-                           type="select"
-                           role="checkbox"
-                           data-file-id="{!! $file->id !!}"
-                           href="{{$file->getUrl()}}">
-                            <i class="fa fa-times" aria-hidden="true"></i>
-                        </a>
-                        <span class="mailbox-attachment-icon has-img">
-                            <video controls>
-                                <source src="{{$file->getUrl()}}"
-                                        type="video/mp4">
-                                <source src="{{$file->getUrl()}}"
-                                        type="video/webm">
-                            </video>
-                        </span>
-                        <div class="mailbox-attachment-info">
-                            <a href="#" class="mailbox-attachment-name"><i
-                                        class="fa  fa-video-camera"></i> {{$file->filename}}
-                            </a>
-                            <span class="mailbox-attachment-size">
-                                            {!! formatBytes($file->size)!!}
-                            </span>
-                        </div>
-                    </li>
+                    @include('admin.fileLinker.fileLinker-item', [$icon = 'item-icon fa fa-video-camera', $file])
                 @elseif($file->aggregate_type == "image")
-                    <li role="checkbox"
-                        data-disk="{!! $disk !!}"
-                        data-file-id="{!! $file->id !!}"
-                        data-href="{{$file->getUrl()}}"
-                        class="col-xs-12 col-md-12 col-lg-4 file-item"
-                        style="margin-bottom: 10px">
-
-                        <span class="mailbox-attachment-icon has-img">
-                            <img src="{{$file->getUrl()}}" width="266"
-                                 height="150" alt="{{$file->filename}}">
-                        </span>
-                        <div class="mailbox-attachment-info">
-                            <a href="#" class="mailbox-attachment-name"><i
-                                        class="fa fa-camera"></i> {{$file->filename}}
-                            </a>
-                            <span class="mailbox-attachment-size">
-                                            {!! formatBytes($file->size)!!}
-                            </span>
-                            <input class="pull-right selectedFile" type="checkbox" name="selectedFile[]">
-                        </div>
-                    </li>
-
+                    @include('admin.fileLinker.fileLinker-item', [$icon = 'item-icon fa fa-image', $file])
                 @elseif($file->aggregate_type == 'audio')
-                    <li role="checkbox"
-                        data-disk="{!! $disk !!}"
-                        data-file-id="{!! $file->id !!}"
-                        data-href="{{$file->getUrl()}}"
-                        class="col-xs-12 col-md-12 col-lg-4 file-item media-plyr-item"
-                        style="margin-bottom: 10px">
-                        <span class="mailbox-attachment-icon has-img">
-                           <audio controls title="{{$file->filename}}">
-                            <source src="{{$file->getUrl()}}"
-                                    type="audio/mp3">
-                            <source src="{{$file->getUrl()}}"
-                                    type="audio/ogg">
-                           </audio>
-                        </span>
-                        <div class="mailbox-attachment-info">
-                            <a href="#" class="mailbox-attachment-name"><i
-                                        class="fa fa-music"></i> {{$file->filename}}
-                            </a>
-                            <span class="mailbox-attachment-size">
-                                {!! formatBytes($file->size)!!}
-                            </span>
-                            <input class="pull-right selectedFile" type="checkbox" name="selectedFile[]">
-                        </div>
-                    </li>
+                    @include('admin.fileLinker.fileLinker-item', [$icon = 'item-icon fa fa-file-audio-o', $file])
                 @elseif($file->aggregate_type == 'archive')
-                    <li role="checkbox"
-                        data-disk="{!! $disk !!}"
-                        data-file-id="{!! $file->id !!}"
-                        data-href="{{$file->getUrl()}}"
-                        class="col-xs-12 col-md-12 col-lg-4 file-item"
-                        style="margin-bottom: 10px">
-                        <span class="mailbox-attachment-icon has-img">
-                                            <i class="item-icon fa fa-archive"></i>
-                                        </span>
-                        <div class="mailbox-attachment-info">
-                            <a href="#" class="mailbox-attachment-name"><i
-                                        class="fa fa-paperclip"></i> {{$file->filename}}
-                            </a>
-                            <span class="mailbox-attachment-size">
-                                {!! formatBytes($file->size)!!}
-                            </span>
-                            <input class="pull-right selectedFile" type="checkbox" name="selectedFile[]">
-                        </div>
-                    </li>
-
+                    @include('admin.fileLinker.fileLinker-item', [$icon = 'item-icon fa fa-archive', $file])
                 @elseif($file->aggregate_type == 'document')
-                    <li role="checkbox"
-                        data-disk="{!! $disk !!}"
-                        data-file-id="{!! $file->id !!}"
-                        data-href="{{$file->getUrl()}}"
-                        class="col-xs-12 col-md-12 col-lg-4 file-item"
-                        style="margin-bottom: 10px">
-                        <span class="mailbox-attachment-icon"><i class="fa fa-file-word-o"></i></span>
-                        <div class="mailbox-attachment-info">
-                            <a href="#" class="mailbox-attachment-name"><i
-                                        class="fa fa-paperclip"></i> {{$file->filename}}
-                            </a>
-                            <span class="mailbox-attachment-size">
-                                {!! formatBytes($file->size)!!}
-                            </span>
-                            <input class="pull-right selectedFile" type="checkbox" name="selectedFile[]">
-                        </div>
-                    </li>
+                    @include('admin.fileLinker.fileLinker-item', [$icon = 'item-icon fa fa-file-word-o', $file])
                 @elseif($file->aggregate_type == 'pdf')
-                    <li role="checkbox"
-                        data-disk="{!! $disk !!}"
-                        data-file-id="{!! $file->id !!}"
-                        data-href="{{$file->getUrl()}}"
-                        class="col-xs-12 col-md-12 col-lg-4 file-item"
-                        style="margin-bottom: 10px">
-                        <span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
-                        <div class="mailbox-attachment-info">
-                            <a href="#" class="mailbox-attachment-name"><i
-                                        class="fa fa-paperclip"></i> {{$file->filename}}
-                            </a>
-                            <span class="mailbox-attachment-size">
-                                {!! formatBytes($file->size)!!}
-                            </span>
-                            <input class="pull-right selectedFile" type="checkbox" name="selectedFile[]">
-                        </div>
-                    </li>
+                   @include('admin.fileLinker.fileLinker-item', [$icon = 'item-icon fa fa-file-pdf-o', $file])
                 @endif
             @endforeach
         </div>
@@ -185,3 +64,9 @@
     </div>
 </div>
 <div class="clearfix"></div>
+<script>
+    $('input[type="checkbox"].selectedFile, input[type="radio"].selectedFile').iCheck({
+        checkboxClass: 'icheckbox_minimal-blue',
+        radioClass: 'iradio_minimal-blue'
+    });
+</script>

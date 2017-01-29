@@ -31,33 +31,12 @@ class ProductsUpdateFormRequest extends FormRequest{
      */
     public function rules()
     {
-        $rules = [
-            'title' => 'required|min:2',
-            'body' => 'required|min:20',
-            'price' => 'required|numeric',
-            'availability' => 'required|integer',
-            'category_id' => 'required|integer',
-            'date_available' => 'date',
-            'model' => 'string|min:2',
-            'quantity' => 'numeric',
-            'sku' => 'string',
-            'upc' => 'string',
-            'ean' => 'string',
-            'jan' => 'string',
-            'isbn' => 'string',
-            'mpn' => 'string',
-            'length' => 'string|min:1',
-            'width'=> 'string|min:1',
-            'height'=> 'string|min:1',
-            'meta_tag_title' => 'string|min:2',
-            'meta_tag_description' => 'string|min:5',
-            'meta_tag_keywords' => 'string|min:2',
-            'sort_order' => 'numeric|max:10',
-            'weight' => 'string|min:1',
-            'product_attribute.*.attr_description_id' => ""
+        return [
+            'title' => 'required',
+            'slug' => 'required|unique:products,slug,' . $this->id,
+            'body' => 'required',
+            'price' => 'required',
         ];
-
-        return $rules;
 
     }
 

@@ -6,18 +6,21 @@ use App\Core\Models\Media;
 use Illuminate\Container\Container as Application;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use RepositoryLab\Repository\Contracts\CacheableInterface;
 use RepositoryLab\Repository\Eloquent\BaseRepository;
 use RepositoryLab\Repository\Criteria\RequestCriteria;
 use App\Core\Repositories\FolderRepository;
 use App\Core\Models\Folder;
 use \Illuminate\Filesystem\Filesystem;
+use RepositoryLab\Repository\Traits\CacheableRepository;
 
 /**
  * Class FolderRepositoryEloquent
  * @package namespace App\Core\Repositories;
  */
-class FolderRepositoryEloquent extends BaseRepository implements FolderRepository
+class FolderRepositoryEloquent extends BaseRepository implements FolderRepository, CacheableInterface
 {
+    use CacheableRepository;
 
     /**
      * @var Media
@@ -69,9 +72,9 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
 
     /**
      * @param $disk
-     * @return $this
+     * @return FolderRepositoryEloquent
      */
-    public function setDisk($disk)
+    public function setDisk($disk) : FolderRepositoryEloquent
     {
         $this->disk = $disk;
         return $this;
@@ -80,16 +83,16 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     /**
      * @return mixed
      */
-    public function getDiskRoot()
+    public function getDiskRoot() : string
     {
         return $this->diskRoot;
     }
 
     /**
      * @param $diskRoot
-     * @return $this
+     * @return FolderRepositoryEloquent
      */
-    public function setDiskRoot($diskRoot)
+    public function setDiskRoot($diskRoot) : FolderRepositoryEloquent
     {
         $this->diskRoot = $diskRoot;
         return $this;
@@ -98,7 +101,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     /**
      * @return mixed
      */
-    public function getRootFromProject()
+    public function getRootFromProject() : string
     {
         return $this->rootFromProject;
     }
@@ -106,10 +109,11 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     /**
      * @param mixed $rootFromProject
      */
-    public function setRootFromProject($rootFromProject)
+    public function setRootFromProject($rootFromProject) : void
     {
         $this->rootFromProject = $rootFromProject;
     }
+
     /**
      * Specify Model class name
      *

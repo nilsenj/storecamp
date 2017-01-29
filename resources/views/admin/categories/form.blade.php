@@ -28,7 +28,7 @@
         {!! Form::label('image_link', 'Category Image', ['class' => 'control-label']) !!}
         {!! Form::text('image_link', null, ['class' => 'form-control category-image hidden']) !!}
         <img src="{{asset('img/image-not-found.gif')}}" alt="" class="img-responsive" width="150" height="100">
-       @include('admin.fileLinker.fileLinkerModal')
+       @include('admin.fileLinker.fileLinkerModal', [$btnMsg = 'attach image to category', $fileTypes = 'image, video, audio', $multiple = true, $outputElementPath = "#general", $disk = "local"])
         {!! $errors->first('image_link', '<div class="text-danger">:message</div>') !!}
     </div>
     <div class="form-group">
