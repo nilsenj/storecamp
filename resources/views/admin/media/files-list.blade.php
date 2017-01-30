@@ -124,7 +124,7 @@
                     <li class="col-xs-12 col-md-12 col-lg-4 file-item" style="margin-bottom: 10px">
                         <a class="delete-file text-danger btn btn-default btn-xs" type="delete" role="button"
                            href="{{route("admin::media::get.delete", [$file->id])}}">
-                            <i class="item-icon fa fa-times" aria-hidden="true"></i>
+                            <i class="fa fa-times" aria-hidden="true"></i>
                         </a>
                         <span class="mailbox-attachment-icon"><i class="fa fa-file-word-o"></i></span>
                         <div class="mailbox-attachment-info">

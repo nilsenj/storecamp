@@ -128,6 +128,14 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
     abstract public function model();
 
     /**
+     * @return mixed
+     */
+    public function getModel()
+    {
+
+        return new $this->model();
+    }
+    /**
      * Specify Presenter class name
      *
      * @return string
@@ -137,6 +145,9 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         return null;
     }
 
+    /**
+     * @return mixed
+     */
     public function perPage() {
         return config('repository.pagination.limit', $this->perPage);
     }
@@ -859,6 +870,12 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         return $result;
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @param string $operator
+     * @return mixed
+     */
     public function where($key, $value, $operator = '=')
     {
         $this->applyCriteria();
@@ -870,5 +887,4 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
 
         return $this->parserResult($model);
     }
-
 }

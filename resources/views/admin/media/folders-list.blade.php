@@ -19,7 +19,7 @@
                        href="{{route("admin::media::get.folder.delete", [$disk, $directory->unique_id])}}"><i
                                 class="fa fa-times" aria-hidden="true"></i></a>
                     <a class="rename-file text-danger btn btn-default btn-xs" data-toggle="modal"
-                       href="#renameDir-modal" data-new_name="{{$path.$directory->name}}"
+                       href="#renameDir-modal" data-new_name="{{$directory->name}}"
                        data-rename-id="{{$directory->unique_id}}" type="rename" role="button"><i
                                 class="fa fa-edit" aria-hidden="true"></i></a>
                     <a href="{{ route('admin::media::index', [$disk, $directory->unique_id]) }}"

@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Components\MediaSystem\MediaSystemBuilder;
 use App\Core\Components\Flash\Flash;
-use App\Core\Models\Folder;
+use App\Core\Contracts\MediaSystemContract;
 use App\Core\Repositories\FolderRepository;
 use App\Core\Repositories\MediaRepository;
 use Arcanedev\LogViewer\Exceptions\FilesystemException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Plank\Mediable\Exceptions\MediaUpload\FileSizeException;
 use Plank\Mediable\Exceptions\MediaUploadException;
 use Plank\Mediable\HandlesMediaUploadExceptions;
-use Plank\Mediable\Media;
-use Plank\Mediable\MediaUploaderFacade;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use That0n3guy\Transliteration\Facades\Transliteration;
 
 /**
  * Class MediaController
@@ -48,15 +44,27 @@ class MediaController extends BaseController
     public $defaultFolder;
 
     /**
-     * MediaController constructor.
-     * @param MediaRepository $repository
-     * @param FolderRepository $folder
+     * @var MediaSystemBuilder
      */
-    public function __construct(MediaRepository $repository, FolderRepository $folder)
+    public $mediaSystemBuilder;
+    /**
+     * @var
+     */
+    public $mediaSystem;
+
+    /**
+     * MediaController constructor.
+     * @param MediaSystemContract $mediaSystem
+     * @param MediaSystemBuilder $mediaSystemBuilder
+     */
+    public function __construct(MediaSystemContract $mediaSystem, MediaSystemBuilder $mediaSystemBuilder)
     {
-        $this->repository = $repository;
-        $this->folder = $folder;
-        $this->defaultFolder = $folder->disk('local')->first();
+        $this->mediaSystemBuilder = $mediaSystemBuilder;
+        $this->mediaSystem = $mediaSystem;
+
+        $this->repository = $this->mediaSystem->media;
+        $this->folder = $this->mediaSystem->folder;
+        $this->defaultFolder = $this->folder->disk('local')->first();
     }
 
     /**
@@ -72,9 +80,9 @@ class MediaController extends BaseController
         $disk = $disk ? $disk : 'local';
         $folderDisk = $this->folder->disk($disk);
 
-        $folder = $folderDisk->defaultFolder($disk, $folder);
+        $folder = $folderDisk->getDefaultFolder($disk, $folder);
         $tag = $request->get('tag');
-        $files = $this->repository->transform($request, $folder, $tag, $disk, $skipPaginate, $dataTypes);
+        $files = $this->mediaSystem->present($request, $folder, $tag, $disk, $skipPaginate, $dataTypes);
         $media = $files['media'];
         $directories = $files['directories'];
         $count = $files['count'];
@@ -100,19 +108,17 @@ class MediaController extends BaseController
     public function index(Request $request, $disk = '', $folder = null)
     {
         try {
-        $folderDisk = $this->folder->disk($disk);
-
-        $predefined = $this->preDefineIndexPart($request, $disk, $folder);
-        $media = $predefined['media'];
-        $directories = $predefined['directories'];
-        $path = $predefined['path'];
-        $folder = $predefined['folder'];
-        $count = $predefined['count'];
-        $disk = $predefined['disk'];
-        $urlFolderPathBuild = $folderDisk->getParentFoldersPathLinks($folder);
-        $rootFolders = $folderDisk->getDiskUrls();
-
-        return $this->view('index', compact('media', 'directories', 'path', 'folder', 'count', 'urlFolderPathBuild', 'disk', 'rootFolders'));
+            $diskName = $disk;
+            $predefined = $this->preDefineIndexPart($request, $disk, $folder);
+            $media = $predefined['media'];
+            $directories = $predefined['directories'];
+            $path = $predefined['path'];
+            $folder = $predefined['folder'];
+            $count = $predefined['count'];
+            $disk = $predefined['disk'];
+            $urlFolderPathBuild = $this->mediaSystemBuilder->getParentFoldersPathLinks($folder, $diskName);
+            $rootFolders = $this->mediaSystemBuilder->getDiskUrls($diskName);
+            return $this->view('index', compact('media', 'directories', 'path', 'folder', 'count', 'urlFolderPathBuild', 'disk', 'rootFolders'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         } catch (FileNotFoundException $exception) {
@@ -164,76 +170,23 @@ class MediaController extends BaseController
     public function filesLinker(Request $request, $disk = '', $folder = null)
     {
         try {
-            $folderDisk = $this->folder->disk($disk);
+            $diskName = $disk;
             $dataTypes = explode(',', $request->get('dataTypes'));
-            $predefined = $this->preDefineIndexPart($request,$disk, $folder, true, $dataTypes);
+            $predefined = $this->preDefineIndexPart($request, $disk, $folder, true, $dataTypes);
             $media = $predefined['media']['media'];
             $directories = $predefined['directories'];
             $path = $predefined['path'];
             $folder = $predefined['folder'];
             $count = $predefined['count'];
             $disk = $predefined['disk'];
-            $urlFolderPathBuild = $folderDisk->getParentFoldersPathLinks($folder);
-            $rootFolders = $folderDisk->getDiskUrls();
+            $urlFolderPathBuild = $this->mediaSystemBuilder->getParentFoldersPathLinks($folder, $diskName);
+            $rootFolders = $this->mediaSystemBuilder->getDiskUrls($diskName);
             $multiple = $request->get('multiple') === "true" ? true : false;
             return view('admin.fileLinker.file-linker',
                 compact('media', 'directories', 'path', 'folder', 'count', 'urlFolderPathBuild', 'disk', 'rootFolders', 'multiple', 'types'));
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         } catch (\Exception $exception) {
-            return response()->json($exception->getMessage(), $exception->getCode());
-        } catch (\Throwable $exception) {
-            return response()->json($exception->getMessage(), $exception->getCode());
-        }
-    }
-
-    /**
-     * get media description for json
-     *
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
-     */
-    public function getDescription($id)
-    {
-        try {
-            $file = Media::find($id);
-            return response()->view('admin.media.description', compact('file'));
-        } catch (ModelNotFoundException $e) {
-            return response()->json($e->getMessage(), $e->getCode());
-        } catch (\Exception $exception) {
-            return response()->json($exception->getMessage(), $exception->getCode());
-        } catch (\Throwable $exception) {
-            return response()->json($exception->getMessage(), $exception->getCode());
-        }
-    }
-
-    /**
-     * upload files
-     *
-     * @param Request $request
-     * @param string $disk
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function upload(Request $request, $disk = '')
-    {
-        try {
-            $folderDisk = $this->folder->disk($disk);
-            $folder = $request->folder ? $folderDisk->find($request->folder) : $this->defaultFolder;
-            $parentFoldersPath = $folderDisk->getParentFoldersPath($folder);
-            $folderPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folder->name : $folder->name;
-            $folderFullPath = $folderDisk->getDiskRoot() . '/' . $folderPath;
-            $file = $request->file('file');
-            if (class_exists('That0n3guy\Transliteration\Transliteration')) {
-                $filename = Transliteration::clean_filename($file->getClientOriginalName());  // You can see I am cleaning the filename
-            }
-            $media = MediaUploaderFacade::fromSource($file)->toDestination($folderDisk->getDisk(), $folderPath)->useFilename($filename)->upload();
-            $media->directory = $folderPath;
-            $media->directory_id = $folder->id;
-            $media->save();
-
-        } catch (MediaUploadException $e) {
-            throw $this->transformMediaUploadException($e);
-        } catch (FilesystemException $exception) {
             return response()->json($exception->getMessage(), $exception->getCode());
         } catch (\Throwable $exception) {
             return response()->json($exception->getMessage(), $exception->getCode());
@@ -256,9 +209,29 @@ class MediaController extends BaseController
         $path = $this->folder->getParentFoldersPath($folder);
         $folderName = $folder->name ? $folder->name : '';
         $path = $path ? $path . "/" . $folderName : $folderName;
-        $directoryTransformed = $this->repository->transformFolders($request, $folder, $path);
+        $directoryTransformed = $this->mediaSystemBuilder->presentFolders($request, $folder, $path);
         return $directoryTransformed;
 
+    }
+
+    /**
+     * upload files
+     *
+     * @param Request $request
+     * @param string $disk
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function upload(Request $request, $disk = '')
+    {
+        try {
+            $media = $this->mediaSystem->makeFile($request, $disk);
+        } catch (MediaUploadException $e) {
+            throw $this->transformMediaUploadException($e);
+        } catch (FilesystemException $exception) {
+            return response()->json($exception->getMessage(), $exception->getCode());
+        } catch (\Throwable $exception) {
+            return response()->json($exception->getMessage(), $exception->getCode());
+        }
     }
 
     /**
@@ -266,33 +239,15 @@ class MediaController extends BaseController
      * folder in table
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @param string $disk
+     * @return \Illuminate\Http\JsonResponse
      */
     public function makeFolder(Request $request, $disk = '')
     {
         try {
-            if (class_exists('That0n3guy\Transliteration\Transliteration')) {
-                $new_path = Transliteration::clean_filename(trim($request->new_path));  // You can see I am cleaning the filename
-            }
-            $folderDisk = $this->folder->disk($disk);
-            $parentFolderId = $request->folder ? $request->folder : $this->defaultFolder->unique_id;
-            $parentFolder = $folderDisk->find($parentFolderId);
-            $parentFoldersPath = $folderDisk->getParentFoldersPath($parentFolder);
-            $parentPath = $parentFoldersPath ? $parentFoldersPath . '/' . $parentFolder->name : $parentFolder->name;
-            $newFolder = $parentPath ? $folderDisk->getDiskRoot() . '/' . $parentPath . '/' . $new_path :$folderDisk->getDiskRoot() . '/' . $new_path;
-            $newFolderPath = $parentPath ? $parentPath . '/' . $new_path : $new_path;
-            if (!\File::isDirectory($newFolder)) {
-                \File::makeDirectory($newFolder, 0775, true);
-                $folder = Folder::create([
-                    'name' => $new_path,
-                    'path_on_disk' => $newFolderPath,
-                    'parent_id' => $parentFolder->id
-                ]);
+            $folder = $this->mediaSystem->disk($disk)->makeFolder($request, $disk);
+            return redirect()->route('admin::media::index', [$disk, $folder->unique_id]);
 
-                return redirect()->route('admin::media::index', [$disk, $folder->unique_id]);
-            } else {
-                return redirect()->route('admin::media::index', $disk);
-            }
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         } catch (FilesystemException $exception) {
@@ -304,40 +259,15 @@ class MediaController extends BaseController
 
 
     /**
-     * rename folder and sync
-     * media files
-     *
      * @param Request $request
      * @param string $disk
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse|mixed
      */
     public function renameFolder(Request $request, $disk = '')
     {
         try {
-            if (class_exists('That0n3guy\Transliteration\Transliteration')) {
-                $new_name = Transliteration::clean_filename(trim($request->new_name));  // You can see I am cleaning the filename
-            }
-            $folderDisk = $this->folder->disk($disk);
-
-            $renameFolder = $folderDisk->find($request->folder);
-            $parentFoldersPath = $folderDisk->getParentFoldersPath($renameFolder);
-            $renamedPath = $parentFoldersPath ? $parentFoldersPath . '/' . $renameFolder->name : $renameFolder->name;
-            $beRenamedToPath = $parentFoldersPath ? $parentFoldersPath . '/' . $new_name : $new_name;
-            $selectedFolder = $folderDisk->getDiskRoot() . '/' . $renamedPath;
-            $newFolder = $folderDisk->getDiskRoot() . '/' . $beRenamedToPath;
-
-            if (\File::isDirectory($selectedFolder)) {
-                $medias = Media::inDirectory($folderDisk->getDisk(), $renamedPath)->get();
-                $renamed = \File::move($selectedFolder, $newFolder);
-                foreach ($medias as $media) {
-                    $media->directory = $beRenamedToPath;
-                    $media->save();
-                }
-                $renameFolder->name = $new_name;
-                $renameFolder->path_on_disk = $beRenamedToPath;
-                $renameFolder->save();
-            }
-            return redirect()->route('admin::media::index', [$disk, $request->folder]);
+            $folder = $this->mediaSystem->renameFolder($request, $disk);
+            return redirect()->route('admin::media::index', [$disk, $folder->unique_id]);
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         } catch (FilesystemException $exception) {
@@ -355,25 +285,8 @@ class MediaController extends BaseController
     public function renameFile(Request $request, $disk = '')
     {
         try {
-            if (class_exists('That0n3guy\Transliteration\Transliteration')) {
-                $new_name = Transliteration::clean_filename(trim($request->new_name));  // You can see I am cleaning the filename
-            }
-            $selected_id = trim($request->selected_id);
-            $file = $this->repository->find($selected_id);
-            $folderDisk = $this->folder->disk($disk);
-
-            $folderFile = $folderDisk->find($file->directory_id);
-            $parentFoldersPath = $folderDisk->getParentFoldersPath($folderFile);
-
-            $renamedPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folderFile->name : $folderFile->name;
-            $selectedFolder = $folderDisk->getDiskRoot() . '/' . $renamedPath;
-            if (\File::isDirectory($selectedFolder)) {
-                \File::move($selectedFolder . '/' . $file->filename . '.' . $file->extension, $selectedFolder . '/' . $new_name . '.' . $file->extension);
-
-                $file->filename = $new_name;
-                $file->save();
-            }
-            return redirect()->route('admin::media::index', [$disk, $folderFile->unique_id]);
+            $folder = $this->mediaSystem->disk($disk)->renameFile($request, $disk);
+            return redirect()->route('admin::media::index', [$disk, $folder->unique_id]);
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         } catch (FilesystemException $exception) {
@@ -414,20 +327,18 @@ class MediaController extends BaseController
      * Remove the specified media
      * from storage.
      *
+     * @param Request $request
      * @param $id
-     * @return Response|\Illuminate\Http\RedirectResponse
+     * @return Response|\Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function destroy(Request $request, $id)
     {
         try {
-            $media = $this->repository->find($id);
-            $mediaFolder = $media->directory_id;
-            $disk = $media->disk;
-            $this->repository->delete($id);
-            if($request->ajax()) {
+            $media = $this->mediaSystem->fileDelete($id);
+            if ($request->ajax()) {
                 return response()->json(['message' => 'File deleted', 'title' => 'Success'], 200);
             }
-            return redirect()->route('admin::media::index', [$disk, $mediaFolder]);
+            return redirect()->route('admin::media::index', [$media->disk, $media->directory_id]);
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         } catch (FileNotFoundException $e) {
@@ -450,8 +361,8 @@ class MediaController extends BaseController
             if (intval($folder) == 1) {
                 return redirect()->back();
             }
-            $this->folder->disk($disk)->delete($folder);
-            if($request->ajax()) {
+            $this->mediaSystem->folderDelete($request, $folder, $disk);
+            if ($request->ajax()) {
                 return response()->json(['message' => 'Folder deleted', 'title' => 'Success'], 200);
             }
             return redirect()->back();
@@ -459,6 +370,9 @@ class MediaController extends BaseController
             return $this->redirectNotFound();
         } catch (FileNotFoundException $e) {
             return $this->redirectNotFound();
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors($e);
+
         }
     }
 }

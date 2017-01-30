@@ -194,7 +194,7 @@ return [
         \App\Core\Components\EmailMarketer\EmailMarketerServiceProvider::class,
         \App\Core\Components\Messenger\MessengerServiceProvider::class,
         \App\Core\Components\Auditing\AuditingServiceProvider::class,
-
+        \App\Providers\LogicServiceProvider::class,
         \App\Providers\MailServiceProvider::class,
         //Apis service providers
         \App\Core\APIs\Youtube\YoutubeServiceProviderLaravel5::class,

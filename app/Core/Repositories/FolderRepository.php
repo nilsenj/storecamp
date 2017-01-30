@@ -2,6 +2,7 @@
 
 namespace App\Core\Repositories;
 
+use App\Core\Models\Folder;
 use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
@@ -11,8 +12,6 @@ use RepositoryLab\Repository\Contracts\RepositoryInterface;
 interface FolderRepository extends RepositoryInterface
 {
     public function disk(string $name) : FolderRepositoryEloquent;
-    public function defaultFolder($disk, $folder = null);
-    public function getParentFolders($folder);
-    public function getParentFoldersPath($folder);
-    public function getParentFoldersPathLinks($folder, $array = []);
+    public function getDefaultFolder($disk, $folder = null);
+    public function getParentFoldersPath($folder, array $array = []);
 }

@@ -7,6 +7,7 @@ namespace RepositoryLab\Repository\Contracts;
  */
 interface RepositoryInterface
 {
+    public function getModel();
 
     /**
      * Retrieve all data of repository
@@ -50,7 +51,7 @@ interface RepositoryInterface
      * @param array $columns
      * @return mixed
      */
-    public function findWhere( array $where , $columns = array('*'));
+    public function findWhere(array $where, $columns = array('*'));
 
     /**
      * Find data by multiple values in one field
@@ -60,7 +61,7 @@ interface RepositoryInterface
      * @param array $columns
      * @return mixed
      */
-    public function findWhereIn( $field, array $values, $columns = array('*'));
+    public function findWhereIn($field, array $values, $columns = array('*'));
 
     /**
      * Find data by excluding multiple values in one field
@@ -70,7 +71,7 @@ interface RepositoryInterface
      * @param array $columns
      * @return mixed
      */
-    public function findWhereNotIn( $field, array $values, $columns = array('*'));
+    public function findWhereNotIn($field, array $values, $columns = array('*'));
 
     /**
      * Save a new entity in repository
@@ -185,6 +186,7 @@ interface RepositoryInterface
      * @return \Illuminate\Support\Collection|array
      */
     public function lists($column, $key = null);
+
     /**
      * Retrieve all data of repository, simple paginated
      * @param null $limit

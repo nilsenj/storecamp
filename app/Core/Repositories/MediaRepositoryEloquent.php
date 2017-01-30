@@ -154,20 +154,6 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository,
         ];
     }
 
-    /**
-     * @param $request
-     * @param null $folder
-     * @param $path
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function transformFolders($request, $folder = null, $path)
-    {
-        $directories = $folder->children;
-        $disk = $folder->disk;
-        return view('admin.media.folders-list', compact('directories', 'path', 'disk'));
-
-    }
-
 
     /**
      * preRender files

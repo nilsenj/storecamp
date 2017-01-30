@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use RepositoryLab\Repository\Contracts\CacheableInterface;
 use RepositoryLab\Repository\Eloquent\BaseRepository;
 use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\FolderRepository;
 use App\Core\Models\Folder;
 use \Illuminate\Filesystem\Filesystem;
 use RepositoryLab\Repository\Traits\CacheableRepository;
@@ -63,6 +62,23 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     }
 
     /**
+     * Specify Model class name
+     *
+     * @return string
+     */
+    public function model()
+    {
+        return Folder::class;
+    }
+
+    /**
+     * Boot up the repository, pushing criteria
+     */
+    public function boot()
+    {
+        $this->pushCriteria(app(RequestCriteria::class));
+    }
+    /**
      * @return mixed
      */
     public function getDisk()
@@ -115,16 +131,6 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     }
 
     /**
-     * Specify Model class name
-     *
-     * @return string
-     */
-    public function model()
-    {
-        return Folder::class;
-    }
-
-    /**
      * @param string $name
      * @return FolderRepositoryEloquent
      */
@@ -140,13 +146,47 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     }
 
     /**
-     * Boot up the repository, pushing criteria
+     * @return mixed
      */
-    public function boot()
+    public function getDiskRoots()
     {
-        $this->pushCriteria(app(RequestCriteria::class));
+        $rootFolders = $this->findWhere([
+            ['parent_id', '=', null],
+            ["name", "=", ""],
+            ["path_on_disk", "=", null]
+        ]);
+        return $rootFolders;
     }
 
+    /**
+     * @param $disk
+     * @param null $folder
+     * @return null
+     */
+    public function getDefaultFolder($disk, $folder = null)
+    {
+        if ($folder) {
+            $newFolder = $this->disk($disk)->find($folder);
+        } else {
+            $newFolder = $this->disk($disk)->findByField('disk', $disk)->first();
+        }
+        return $newFolder;
+    }
+
+    /**
+     * @param Folder $folder
+     * @param array $array
+     * @return string
+     */
+    public function getParentFoldersPath($folder, array $array = [])
+    {
+        while ($folder->parent_id != null) {
+            $newParent = $this->find($folder->parent_id);
+            array_unshift($array, $newParent->name);
+            return $this->getParentFoldersPath($newParent, $array);
+        }
+        return implode("/", array_filter($array));
+    }
     /**
      * rewrite of delete method
      *
@@ -165,10 +205,16 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
                 $media->delete();
             }
             $result = $this->file->deleteDirectory($folderFullPath);
-            if ($result) {
-                parent::delete($folder->id);
+        } else {
+            $medias = $this->media->inDirectory($this->getDisk(), $folderPath);
+            if($medias->count() > 0) {
+                foreach ($medias->get() as $media) {
+                    $media->delete();
+                }
             }
         }
+        parent::delete($folder->id);
+
     }
 
     /**
@@ -221,112 +267,5 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
         return $this->parserResult($model);
     }
 
-    /**
-     * @return string
-     */
-    public function getDiskUrls()
-    {
 
-        $rootFolders = $this->getDiskRoots();
-        $diskUrls = [];
-        foreach ($rootFolders as $key => $item) {
-            $item = link_to_route("admin::media::index", $item->disk,
-                [$item->disk, $item->unique_id], ["style" => "margin-left: 10px", "class" => $this->getDisk() == $item->disk ? "active btn btn-xs btn-default" : "btn btn-xs btn-default"]);
-            array_unshift($diskUrls, $item);
-        }
-        return implode("", $diskUrls);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDiskRoots()
-    {
-        $rootFolders = $this->findWhere([
-            ['parent_id', '=', null],
-            ["name", "=", ""],
-            ["path_on_disk", "=", null]
-        ]);
-        return $rootFolders;
-    }
-
-    /*TODO replace prepareParentFolderLinks to folder partial builder */
-    /**
-     * @param $folder
-     * @param array $array
-     * @return array
-     */
-    public function getParentFolders($folder, $array = [])
-    {
-        while ($folder->parent_id != null) {
-            $newParent = $this->find($folder->parent_id);
-            $array[] = $newParent;
-            return $this->getParentFolders($newParent, $array);
-        }
-        return $array;
-    }
-
-    /*TODO replace prepareParentFolderLinks to folder partial builder */
-    /**
-     * @param $folder
-     * @param array $array
-     * @return string
-     */
-    public function getParentFoldersPath($folder, array $array = [])
-    {
-        while ($folder->parent_id != null) {
-            $newParent = $this->find($folder->parent_id);
-            array_unshift($array, $newParent->name);
-            return $this->getParentFoldersPath($newParent, $array);
-        }
-        return implode("/", array_filter($array));
-    }
-
-    /*TODO replace prepareParentFolderLinks to folder partial builder */
-    /**
-     * @param $folder
-     * @param array $array
-     * @return string
-     */
-    public function getParentFoldersPathLinks($folder, $array = [])
-    {
-        $array = $this->prepareParentFolderLinks($folder);
-        $item = link_to_route("admin::media::index", $folder->name ? $folder->name : "../", [$this->getDisk(), $folder->unique_id],
-            ["class" => "active", "style" => "margin-left: 10px"]);
-        array_push($array, $item);
-
-        return implode("", $array);
-    }
-    /*TODO replace prepareParentFolderLinks to folder partial builder */
-    /**
-     * @param $folder
-     * @param array $array
-     * @return array
-     */
-    private function prepareParentFolderLinks($folder, $array = [])
-    {
-        while ($folder->parent_id != null) {
-            $newParent = $this->find($folder->parent_id);
-            $item = link_to_route("admin::media::index", $newParent->name ? $newParent->name : "../",
-                [$this->getDisk(), $newParent->unique_id], ["style" => "margin-left: 10px"]);
-            array_unshift($array, $item);
-            return $this->prepareParentFolderLinks($newParent, $array);
-        }
-        return array_filter($array);
-    }
-
-    /**
-     * @param $disk
-     * @param null $folder
-     * @return null
-     */
-    public function defaultFolder($disk, $folder = null)
-    {
-        if ($folder) {
-            $newFolder = $this->disk($disk)->find($folder);
-        } else {
-            $newFolder = $this->disk($disk)->findByField('disk', $disk)->first();
-        }
-        return $newFolder;
-    }
 }
