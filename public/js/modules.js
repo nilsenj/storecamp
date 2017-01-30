@@ -393,23 +393,28 @@
       var _this;
       _this = this;
       console.log("select file not triggered");
+      $('.file-item').find('input:checkbox').iCheck('disable');
       if (!_this.options.fileMultiple) {
         $('.file-item').find('input:checkbox').iCheck('uncheck');
-        $('.file-item').find('input:checkbox').iCheck('disable');
         fileItemCheckBox.iCheck('enable');
         fileItemCheckBox.iCheck('check');
         $('.file-item').removeClass('checked');
+        fileItemCheckBox.iCheck('disable');
         btn.addClass('checked');
         _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'add');
       } else {
         if (btn.hasClass('checked')) {
           btn.removeClass('checked');
+          fileItemCheckBox.iCheck('uncheck');
+          fileItemCheckBox.iCheck('disable');
           _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'remove');
         } else {
           btn.addClass('checked');
+          fileItemCheckBox.iCheck('enable');
+          fileItemCheckBox.iCheck('check');
           _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'add');
+          fileItemCheckBox.iCheck('disable');
         }
-        fileItemCheckBox.iCheck('toggle');
       }
     },
     manageToFileBlock: function(btn, selectFileName, selectId, selectUrl, methodType) {
