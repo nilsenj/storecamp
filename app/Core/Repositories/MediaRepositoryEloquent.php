@@ -122,64 +122,6 @@ class MediaRepositoryEloquent extends BaseRepository implements MediaRepository,
     }
 
     /**
-     * @param $request
-     * @param null $folder
-     * @param null $tag
-     * @param string $disk
-     * @param bool $getAll
-     * @param array $dataTypes
-     * @return array
-     */
-    public function transform($request, $folder = null, $tag = null, $disk = '', bool $getAll = false, array $dataTypes = [])
-    {
-        $model = $this->getModel();
-        $parentsPath = $this->folder->disk($disk)->getParentFoldersPath($folder);
-        $folderPath = $parentsPath ? $parentsPath . '/' . $folder->name : $folder->name;
-        $count = $folder->files->count();
-        if ($getAll) {
-            $this->setSkipPaginate(true);
-        }
-        if (!empty($dataTypes)) {
-            $this->setDataTypes($dataTypes);
-        }
-        $media = $this->filesPreRender($model, $folderPath, $tag, $request, $folder, $disk);
-
-        $directories = $folder->children;
-
-        return [
-            'directories' => $directories,
-            'media' => $media,
-            'count' => $count,
-            'path' => $folder->name
-        ];
-    }
-
-
-    /**
-     * preRender files
-     *
-     * @param $model
-     * @param string $path
-     * @param string $tag
-     * @param $request
-     * @param $folder
-     * @param string $disk
-     * @return array
-     */
-    private function filesPreRender($model, $path = "", $tag = "", $request, $folder, $disk = '')
-    {
-        $folderInstance = $this->folder->disk($disk);
-        if ($tag) {
-            $media = $this->inDirectory($folderInstance->getDisk(), $path, $tag);
-
-        } else {
-            $media = $this->inDirectory($folderInstance->getDisk(), $path);
-        }
-        $media = ["media" => $media, "path" => $path, "tag" => $tag, "folderInstance" => $folder, 'disk' => $disk];
-        return $media;
-    }
-
-    /**
      * method rewrite from
      * Media scopeInDirectory()
      *
