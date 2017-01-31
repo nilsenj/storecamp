@@ -100,7 +100,7 @@ class ProductsController extends BaseController
             $product = $this->productSystem->present($data, $id);
             return $this->view('show', compact('product'));
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 
@@ -121,7 +121,7 @@ class ProductsController extends BaseController
             return $this->view('edit', compact('product', 'categories', 'pictures', 'chosenCategory', 'attributesList'));
 
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 
@@ -156,7 +156,7 @@ class ProductsController extends BaseController
             $this->productSystem->delete($id);
             return redirect('admin/products');
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 

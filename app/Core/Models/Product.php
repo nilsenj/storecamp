@@ -123,6 +123,9 @@ class Product extends Model implements Transformable
         'value'
     ];
 
+    /**
+     * @var array
+     */
     protected $dates = ['date_available'];
 
     /**
@@ -147,6 +150,9 @@ class Product extends Model implements Transformable
         parent::boot();
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function productReview() {
 
         return $this->hasMany(ProductReview::class, "product_id");
@@ -161,6 +167,9 @@ class Product extends Model implements Transformable
 
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function attributeGroupDescription()
     {
         return $this->belongsToMany(AttributeGroupDescription::class, "product_attribute", "product_id", "attr_description_id")->withPivot("value");

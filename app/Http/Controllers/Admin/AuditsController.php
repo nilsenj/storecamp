@@ -16,8 +16,11 @@ use App\Core\Models\Role;
 use App\Core\Models\Subscribers;
 use App\Core\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
+/**
+ * Class AuditsController
+ * @package App\Http\Controllers\Admin
+ */
 class AuditsController extends BaseController
 {
     /**
@@ -29,33 +32,8 @@ class AuditsController extends BaseController
      */
     public $errorRedirectPath = "admin/audits";
 
-    /**
-     * @param $model
-     * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index($model=null) {
-        switch ($model) {
-            case "products":
-                if (Product::isAuditEnabled()) {
-                    $model = new Product();
-                    $audits = $model->audits;
-                } else {
-                    return $this->redirectNotFound();
-                }
-                break;
-            default:
-                if (Product::isAuditEnabled()) {
-                    $model = new Product();
-                    $audits = $model->audits;
-                } else {
-                    return $this->redirectNotFound();
-                }
-        }
-        dd($audits);
-        return $this->view('index', compact('model', 'audits'));
-    }
-
-    public function show(Request $request, $model, $id) {
+    public function show(Request $request, $model, $id)
+    {
         switch ($model) {
             case "product":
                 if (Product::isAuditEnabled()) {

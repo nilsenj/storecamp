@@ -210,13 +210,6 @@ interface RepositoryInterface
      * @return mixed
      */
     public function simplePaginate($limit = null, $columns = array('*'));
-    /**
-     * Find data by id
-     *
-     * @param $id
-     * @param array $columns
-     * @return mixed
-     */
 
     /**
      * Reset Query Scope
