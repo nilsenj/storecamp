@@ -7,6 +7,9 @@ namespace RepositoryLab\Repository\Contracts;
  */
 interface RepositoryInterface
 {
+    /**
+     * get model instance
+     */
     public function getModel();
 
     /**

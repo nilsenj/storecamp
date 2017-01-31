@@ -1,3 +1,9 @@
+###ecommerce platform
+###see the main code base in app/Core directory
+###the project is still in active development and it's nto required to use it anywhere
+###please if you'd like to help  - become a contributor
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img width="150"src="https://laravel.com/laravel.png"></a></p>
 
 <p align="center">

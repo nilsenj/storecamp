@@ -63,7 +63,8 @@ class ProductsController extends BaseController
      */
     public function index(Request $request)
     {
-        $products = $this->productSystem->present($request, null, $with = ["categories"]);
+        $data = $request->all();
+        $products = $this->productSystem->present($data, null, $with = ["categories"]);
         $no = $products->firstItem();
         return $this->view('index', compact('products', 'no'));
     }
@@ -84,9 +85,11 @@ class ProductsController extends BaseController
      */
     public function store(Create $request)
     {
-        $this->productSystem->create($request);
+        $data = $request->all();
+        $product = $this->productSystem->create($data);
         return redirect('admin/products');
     }
+
     /**
      * @param Request $request
      * @param $id
@@ -95,7 +98,8 @@ class ProductsController extends BaseController
     public function show(Request $request, $id)
     {
         try {
-            $product = $this->productSystem->present($request, $id);
+            $data = $request->all();
+            $product = $this->productSystem->present($data, $id);
             return $this->view('show', compact('product'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
@@ -103,13 +107,15 @@ class ProductsController extends BaseController
     }
 
     /**
+     * @param Request $request
      * @param $id
      * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function edit(Request $request, $id)
     {
         try {
-            $product = $this->productSystem->present($request, $id, ['attributeGroupDescription', 'categories']);
+            $data = $request->all();
+            $product = $this->productSystem->present($data, $id, ['attributeGroupDescription', 'categories']);
             $categories = $this->categoryRepository->all();
             $pictures = array();
             $chosenCategory = $product->categories->first();
@@ -131,25 +137,8 @@ class ProductsController extends BaseController
     public function update(Update $request, $id)
     {
         try {
-            $product = $this->productRepository->find($id);
             $data = $request->all();
-            $product->update($data);
-            $categoryId = $request->category_id ? $request->category_id : null;
-            if ($categoryId) {
-                $product->categories()->detach();
-                $product->categories()->attach($categoryId);
-            }
-            $attributes = [];
-            $productAttributes = $product->attributeGroupDescription();
-            if ($productAttributes->count() > 0) {
-                $product->attributeGroupDescription()->sync([]);
-            }
-            if(isset($data['product_attribute'])) {
-                foreach ($data['product_attribute'] as $key => $attr) {
-                    $attribute = $product->attributeGroupDescription()->save(AttributeGroupDescription::find($attr["attr_description_id"]), ["value" => $data['product_attribute'][$key]["value"]]);
-                    $attributes[] = $attribute;
-                }
-            }
+            $this->productSystem->update($data, $id);
 
             return redirect('admin/products');
 
@@ -167,7 +156,7 @@ class ProductsController extends BaseController
     public function destroy($id)
     {
         try {
-            $this->productRepository->delete($id);
+            $this->productSystem->delete($id);
             return redirect('admin/products');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();

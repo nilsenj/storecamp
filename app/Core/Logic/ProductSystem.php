@@ -8,9 +8,16 @@ use App\Core\Models\Product;
 use App\Core\Repositories\AttributeGroupDescriptionRepository;
 use App\Core\Repositories\ProductsRepository;
 
+/**
+ * Class ProductSystem
+ * @package App\Core\Logic
+ */
 class ProductSystem implements ProductSystemContract
 {
 
+    /**
+     * @var ProductsRepository
+     */
     public $productRepository;
     public $attributeGroupDescriptionRepository;
     /**
@@ -25,7 +32,13 @@ class ProductSystem implements ProductSystemContract
         $this->attributeGroupDescriptionRepository = $attributeGroupDescriptionRepository;
     }
 
-    public function present($request, $id = null, array $with = [])
+    /**
+     * @param $data
+     * @param null $id
+     * @param array $with
+     * @return mixed
+     */
+    public function present($data, $id = null, array $with = [])
     {
         if ($id) {
             $products = $this->productRepository->find($id);
@@ -39,11 +52,14 @@ class ProductSystem implements ProductSystemContract
         return $products;
     }
 
-    public function create($request)
+    /**
+     * @param $data
+     * @return mixed
+     */
+    public function create($data)
     {
-        $data = $request->all();
         $product = $this->productRepository->create($data);
-        $categoryId = $request->category_id ? $request->category_id : null;
+        $categoryId = $data->category_id ? $data->category_id : null;
         $product->categories()->attach($categoryId);
         $attributes = [];
         if(isset($attr["attr_description_id"])) {
@@ -55,14 +71,41 @@ class ProductSystem implements ProductSystemContract
         return $product;
     }
 
-    public function update($request, $id)
+    /**
+     * @param $data
+     * @param $id
+     * @return mixed
+     */
+    public function update($data, $id)
     {
-
+        $product = $this->productRepository->find($id);
+        $product->update($data);
+        $categoryId = $data->category_id ? $data->category_id : null;
+        if ($categoryId) {
+            $product->categories()->detach();
+            $product->categories()->attach($categoryId);
+        }
+        $attributes = [];
+        $productAttributes = $product->attributeGroupDescription();
+        if ($productAttributes->count() > 0) {
+            $product->attributeGroupDescription()->sync([]);
+        }
+        if(isset($data['product_attribute'])) {
+            foreach ($data['product_attribute'] as $key => $attr) {
+                $attribute = $product->attributeGroupDescription()->save($this->attributeGroupDescriptionRepository->find($attr["attr_description_id"]), ["value" => $data['product_attribute'][$key]["value"]]);
+                $attributes[] = $attribute;
+            }
+        }
+        return $product;
     }
 
-    public function delete($request, $id)
+    /**
+     * @param $data
+     * @param $id
+     */
+    public function delete($data = [], $id)
     {
-
+        $this->productRepository->delete($id);
     }
 
 }
