@@ -28,7 +28,8 @@ class LogicServiceProvider extends ServiceProvider
         $models = [
             'MediaSystem',
             'CategorySystem',
-            'ProductSystem'
+            'ProductSystem',
+            'AttributeGroupSystem'
         ];
 
         foreach ($models as $repo) {

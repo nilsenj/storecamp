@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Core\Components\Flash\Flash;
+use App\Core\Contracts\AttributeGroupSystemContract;
 use App\Core\Repositories\AttributeGroupDescriptionRepository;
 use App\Core\Repositories\AttributeGroupRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
+/**
+ * Class AttributeGroupsController
+ * @package App\Http\Controllers\Admin
+ */
 class AttributeGroupsController extends BaseController
 {
     /**
@@ -18,13 +24,28 @@ class AttributeGroupsController extends BaseController
      */
     public $errorRedirectPath = "admin/attribute_groups";
 
+    /**
+     * @var AttributeGroupRepository
+     */
     protected $groupRepository;
+    /**
+     * @var AttributeGroupDescriptionRepository
+     */
     protected $groupDescriptionRepository;
+    /**
+     * @var AttributeGroupSystemContract
+     */
+    protected $attributeGroupSystem;
 
-    function __construct(AttributeGroupRepository $groupRepository, AttributeGroupDescriptionRepository $groupDescriptionRepository)
+    /**
+     * AttributeGroupsController constructor.
+     * @param AttributeGroupSystemContract $attributeGroupSystem
+     */
+    function __construct(AttributeGroupSystemContract $attributeGroupSystem)
     {
-        $this->groupRepository = $groupRepository;
-        $this->groupDescriptionRepository = $groupDescriptionRepository;
+        $this->attributeGroupSystem = $attributeGroupSystem;
+        $this->groupRepository = $attributeGroupSystem->group;
+        $this->groupDescriptionRepository = $attributeGroupSystem->description;
     }
 
 
@@ -34,7 +55,8 @@ class AttributeGroupsController extends BaseController
      */
     public function index(Request $request)
     {
-        $groupAttributes = $this->groupRepository->paginate();
+        $data = $request->all();
+        $groupAttributes = $this->attributeGroupSystem->presentGroup($data);
 
         $no = $groupAttributes->firstItem();
 
@@ -57,23 +79,24 @@ class AttributeGroupsController extends BaseController
     public function store(Request $request)
     {
         $data = $request->all();
-        $groupAttribute = $this->groupRepository->getModel()->withTrashed()->where("name", $data["name"]);
-        if($groupAttribute->count() > 0) {
-            $groupAttribute->restore();
-            return redirect('admin/attribute_groups');
+        $group = $this->attributeGroupSystem->createGroup($data);
+        if(!$group) {
+            Flash::info("Current Group Attribute exists but was deleted. Not it is restored!");
         }
-        $groupDescriptionRepository = $this->groupRepository->create($data);
+
         return redirect('admin/attribute_groups');
     }
 
     /**
+     * @param Request $request
      * @param $id
-     * @return Response|\Illuminate\View\View
+     * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         try {
-            $groupAttributes = $this->groupRepository->find($id);
+            $data = $request->all();
+            $groupAttributes = $this->attributeGroupSystem->presentGroup($data, $id);
             return $this->view('show', compact('groupAttributes'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
@@ -81,14 +104,15 @@ class AttributeGroupsController extends BaseController
     }
 
     /**
+     * @param Request $request
      * @param $id
-     * @return Response|\Illuminate\View\View
+     * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         try {
-            $groupAttribute = $this->groupRepository->find($id);
-
+            $data = $request->all();
+            $groupAttribute = $this->attributeGroupSystem->presentGroup($data, $id);
             return $this->view('edit', compact('groupAttribute'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
@@ -104,15 +128,10 @@ class AttributeGroupsController extends BaseController
     {
         try {
             $data = $request->except('_method', '_token');
-            $groupAttributeOnlyTrashed = $this->groupRepository->getModel()->onlyTrashed()->where("name", $data["name"]);
-            $groupAttribute = $this->groupRepository->find($id);
-
-            if($groupAttributeOnlyTrashed->count() > 0) {
-                $groupAttribute->restore();
-                return redirect('admin/attribute_groups');
-            }
-
-            $groupAttribute->update($data);
+            $groupAttribute = $this->attributeGroupSystem->updateGroup($data, $id);
+            if(!$groupAttribute) {
+                Flash::info("Current Group Attribute exists but was deleted. Not it is restored!");
+             }
 
             return redirect('admin/attribute_groups');
         } catch (ModelNotFoundException $e) {
@@ -127,7 +146,10 @@ class AttributeGroupsController extends BaseController
     public function destroy($id)
     {
         try {
-            $this->groupRepository->delete($id);
+            $group = $this->groupRepository->delete($id);
+            if(!$group) {
+                Flash::warning("Item not deleted. Some error appeared!");
+            }
             return redirect('admin/attribute_groups');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
@@ -140,7 +162,8 @@ class AttributeGroupsController extends BaseController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getJson(Request $request) {
+    public function getJson(Request $request)
+    {
         $query = $this->parserSearchValue($request->get('search'));
         $attrGroup = $this->groupRepository->getModel()->where("name", "like", $query)->select('name', 'id')->get();
         $attrGroupArr = [];
