@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Validation\User;
+namespace App\Core\Validators\User;
 
 use Illuminate\Foundation\Http\FormRequest as Request;
 

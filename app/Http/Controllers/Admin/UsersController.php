@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Core\Models\Role;
+use App\Core\Contracts\UsersSystemContract;
 use App\Core\Repositories\RolesRepository;
 use Illuminate\Http\Request;
-
-use App\Http\Controllers\Controller;
-use App\Core\Models\User;
-use Illuminate\Support\Facades\Input;
 use App\Core\Repositories\UserRepository;
-use App\Core\Validation\User\UsersUpdateFormRequest;
-use App\Core\Validation\User\UsersFormRequest;
+use App\Core\Validators\User\UsersUpdateFormRequest;
+use App\Core\Validators\User\UsersFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * Class UsersController
@@ -29,16 +24,15 @@ class UsersController extends BaseController
      * @var string
      */
     public $errorRedirectPath = "admin/users";
+
     /**
-     * @var User
+     * @var UsersSystemContract
      */
-    protected $users;
-
-
+    protected $usersSystem;
     /**
      * @var UserRepository
      */
-    protected $repository;
+    protected $userRepository;
 
     /**
      * @var RolesRepository
@@ -47,22 +41,24 @@ class UsersController extends BaseController
 
     /**
      * UsersController constructor.
-     * @param UserRepository $repository
-     * @param RolesRepository $rolesRepository
+     * @param UsersSystemContract $usersSystem
      */
-    public function __construct(UserRepository $repository, RolesRepository $rolesRepository)
+    public function __construct(UsersSystemContract $usersSystem)
     {
-        $this->repository = $repository;
-        $this->rolesRepository = $rolesRepository;
+        $this->usersSystem = $usersSystem;
+        $this->userRepository = $usersSystem->userRepository;
+        $this->rolesRepository = $usersSystem->rolesRepository;
         $this->middleware('role:Admin');
     }
 
     /**
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = $this->repository->paginate();
+        $data = $request->all();
+        $users = $this->usersSystem->present($data);
         $no = $users->firstItem();
 
         return $this->view('index', compact('users', 'no'));
@@ -83,20 +79,26 @@ class UsersController extends BaseController
      */
     public function store(UsersFormRequest $request)
     {
-        $data = $request->all();
-        $user = $this->repository->create($data);
-        $user->addRole($request->get('role'));
-        return redirect('admin/users');
+        try {
+            $data = $request->all();
+            $user = $this->usersSystem->create($data);
+            return redirect('admin/users');
+        } catch (\Exception $exception) {
+            \Flash::error($exception->getCode(), $exception->getMessage());
+            return redirect()->to($this->errorRedirectPath)->withErrors($exception);
+        }
     }
 
     /**
+     * @param Request $request
      * @param $id
-     * @return Response|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         try {
-            $user = $this->repository->find($id);
+            $data = $request->all();
+            $user = $this->usersSystem->present($data, $id);
             $role = $user->getRole();
             return $this->view('show', compact('user', 'role'));
         } catch (ModelNotFoundException $e) {
@@ -105,14 +107,15 @@ class UsersController extends BaseController
     }
 
     /**
+     * @param Request $request
      * @param $id
-     * @return Response|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         try {
-            $user = $this->repository->find($id);
-
+            $data = $request->all();
+            $user = $this->usersSystem->present($data, $id);
             $roles = $this->rolesRepository->all()->pluck('name', 'id');
             $roleEntity = $user->getRole();
             $role['name'] = $roleEntity->name;
@@ -132,16 +135,14 @@ class UsersController extends BaseController
     public function update(UsersUpdateFormRequest $request, $id)
     {
         try {
-            $data = ! $request->has('password') ? $request->except('password') : $request->all();
-
-            $user = $this->repository->find($id);
-
-            $user->update($data);
-
-            $user->roles()->sync((array) $request->role);
+            $data = !$request->has('password') ? $request->except('password') : $request->all();
+            $user = $this->usersSystem->update($data, $id);
             return redirect('admin/users');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
+        } catch (\Exception $exception) {
+            \Flash::error($exception->getCode(), $exception->getMessage());
+            return redirect()->to($this->errorRedirectPath)->withErrors($exception);
         }
     }
 
@@ -152,7 +153,10 @@ class UsersController extends BaseController
     public function destroy($id)
     {
         try {
-            $this->repository->delete($id);
+            $deleted = $this->usersSystem->delete($id);
+            if (!$deleted) {
+                \Flash::warning("Sorry user is not deleted");
+            }
             return redirect('admin/users');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);

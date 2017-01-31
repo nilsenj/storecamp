@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Core\Validation\User;
+namespace App\Core\Validators\User;
 
 use Illuminate\Foundation\Http\FormRequest as Request;
-use App\Core\Models\User;
-use Exception;
 
 class UsersUpdateFormRequest extends Request
 {

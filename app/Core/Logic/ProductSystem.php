@@ -106,12 +106,14 @@ class ProductSystem implements ProductSystemContract
     }
 
     /**
-     * @param $data
      * @param $id
+     * @param array $data
+     * @return int
      */
-    public function delete($data = [], $id)
+    public function delete($id, array $data = []): int
     {
-        $this->productRepository->delete($id);
+        $deleted = $this->productRepository->delete($id);
+        return $deleted;
     }
 
 }
