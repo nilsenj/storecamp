@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Core\Contracts\ProductSystemContract;
-use App\Core\Models\AttributeGroupDescription;
 use App\Core\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Core\Repositories\ProductsRepository;
 use App\Core\Validators\Product\ProductsFormRequest as Create;
 use App\Core\Validators\Product\ProductsUpdateFormRequest as Update;
 
@@ -17,10 +15,6 @@ use App\Core\Validators\Product\ProductsUpdateFormRequest as Update;
  */
 class ProductsController extends BaseController
 {
-    /**
-     * @var ProductsRepository
-     */
-    protected $repository;
     /**
      * @var CategoryRepository
      */
@@ -46,12 +40,10 @@ class ProductsController extends BaseController
     /**
      * ProductsController constructor.
      * @param ProductSystemContract $productSystem
-     * @param ProductsRepository $repository
      * @param CategoryRepository $categoryRepository
      */
-    public function __construct(ProductSystemContract $productSystem, ProductsRepository $repository, CategoryRepository $categoryRepository)
+    public function __construct(ProductSystemContract $productSystem, CategoryRepository $categoryRepository)
     {
-        $this->repository = $repository;
         $this->categoryRepository = $categoryRepository;
         $this->productSystem = $productSystem;
         $this->productRepository= $this->productSystem->productRepository;
