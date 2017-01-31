@@ -6,7 +6,8 @@
 ###For future wiki
 1. Repositories and it's concrete classes are used to manage model collections and it's state.
 Please do not include business logic to it.
-2. We have app/Core/Logic folder for business logic classes. And its'  contracts or interfaces are situated in app/Core/Contracts folder.
+2. We have app/Core/Logic folder for business logic classes. 
+And its'  contracts or interfaces are situated in app/Core/Contracts folder.
 3.app/Core/Components folder for form builders only.
 4. app/Core/Base is for base abstract classes. 
 5. app/Core/APIs is for APIs implementation as for example youtube
