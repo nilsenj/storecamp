@@ -2,7 +2,7 @@
 
 namespace App\Core\Presenters;
 
-use App\Transformers\CampaignTransformer;
+use App\Core\Transformers\CampaignTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**

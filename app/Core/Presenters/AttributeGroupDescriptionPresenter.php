@@ -2,7 +2,7 @@
 
 namespace App\Core\Presenters;
 
-use App\Transformers\AttributeGroupDescriptionTransformer;
+use App\Core\Transformers\AttributeGroupDescriptionTransformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
