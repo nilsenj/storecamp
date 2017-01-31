@@ -100,7 +100,7 @@ class UsersController extends BaseController
             $role = $user->getRole();
             return $this->view('show', compact('user', 'role'));
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 
@@ -120,7 +120,7 @@ class UsersController extends BaseController
 
             return $this->view('edit', compact('user', 'roles', 'role'));
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 
@@ -141,7 +141,7 @@ class UsersController extends BaseController
             $user->roles()->sync((array) $request->role);
             return redirect('admin/users');
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 
@@ -155,7 +155,7 @@ class UsersController extends BaseController
             $this->repository->delete($id);
             return redirect('admin/users');
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 }

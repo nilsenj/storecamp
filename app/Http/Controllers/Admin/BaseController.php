@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 abstract class BaseController extends Controller
 {
@@ -16,7 +18,7 @@ abstract class BaseController extends Controller
      * @param array $mergeData
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    protected function view($view, $data = [], $mergeData = [])
+    protected function view($view, array $data = [], array $mergeData = []) : View
     {
         return view($this->viewPathBase . $view, $data, $mergeData);
     }
@@ -25,7 +27,7 @@ abstract class BaseController extends Controller
      * @param $e
      * @return \Illuminate\Http\RedirectResponse
      */
-    protected function redirectNotFound($e = null)
+    protected function redirectNotFound($e = null) : RedirectResponse
     {
         if (isset($e)) {
             \Flash::error('Not Found! Server message is - ' . $e->getMessage() . ' and code is - ' . $e->getCode());
