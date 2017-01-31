@@ -17,9 +17,8 @@ use RepositoryLab\Repository\Traits\CacheableRepository;
  * Class FolderRepositoryEloquent
  * @package namespace App\Core\Repositories;
  */
-class FolderRepositoryEloquent extends BaseRepository implements FolderRepository, CacheableInterface
+class FolderRepositoryEloquent extends BaseRepository implements FolderRepository
 {
-    use CacheableRepository;
 
     /**
      * @var Media

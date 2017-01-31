@@ -26,7 +26,9 @@ class LogicServiceProvider extends ServiceProvider
     public function register()
     {
         $models = [
-            'MediaSystem'
+            'MediaSystem',
+            'CategorySystem',
+            'ProductSystem'
         ];
 
         foreach ($models as $repo) {

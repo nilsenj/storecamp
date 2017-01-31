@@ -91,6 +91,13 @@ interface RepositoryInterface
     public function update(array $attributes, $id);
 
     /**
+     * @param array $attributes
+     * @param array $values
+     * @return mixed
+     */
+    public function updateOrCreate(array $attributes, array $values = []);
+
+    /**
      * Delete a entity in repository by id
      *
      * @param $id
@@ -216,4 +223,12 @@ interface RepositoryInterface
      * @return mixed
      */
     public function where($key, $value, $operator = '=');
+
+    /**
+     * @param $key
+     * @param $order
+     * @return mixed
+     */
+    public function order($key, $order);
+
 }

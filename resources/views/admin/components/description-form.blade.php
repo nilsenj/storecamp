@@ -1,7 +1,7 @@
 @if(isset($property_name))
 <div class="form-group">
     {!! Form::label($property_name, ucwords($property_name).':') !!}
-    {!! Form::textarea($property_name, null, ['class' => 'form-control description']) !!}
+    {!! Form::textarea($property_name, old(ucwords($property_name)), ['class' => 'form-control description']) !!}
     {!! $errors->first($property_name, '<div class="text-danger">:message</div>') !!}
     </div>
 @push('scripts-add_on')

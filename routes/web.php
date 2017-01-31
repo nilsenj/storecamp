@@ -227,11 +227,10 @@ $this->group(/**
 
         ]);
 
-        $this->get('show/{id}',
-            [
-                'uses' => 'Admin\ProductsController@show',
-                'as' => 'show'
-            ]);
+        $this->get('show/{id}',[
+            'uses' => 'Admin\ProductsController@show',
+            'as' => 'show'
+        ]);
 
         $this->get('create', [
             'uses' => 'Admin\ProductsController@create',

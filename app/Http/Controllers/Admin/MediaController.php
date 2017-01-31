@@ -286,7 +286,7 @@ class MediaController extends BaseController
     {
         try {
             $folder = $this->mediaSystem->disk($disk)->renameFile($request, $disk);
-            return redirect()->route('admin::media::index', [$disk, $folder->unique_id]);
+            return redirect()->route('admin::media::index', [$folder->disk, $folder->unique_id]);
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         } catch (FilesystemException $exception) {

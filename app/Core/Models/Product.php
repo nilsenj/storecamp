@@ -109,14 +109,9 @@ class Product extends Model implements Transformable
         'jan',
         'isbn',
         'mpn',
-//        'length',
-//        'width',
-//        'height',
-//        'weight',
         'meta_tag_title',
         'meta_tag_description',
         'meta_tag_keywords',
-//        'sort_order',
         'stock_status',
         'attr_description_id',
         'product_id',
@@ -147,14 +142,6 @@ class Product extends Model implements Transformable
         parent::boot();
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function productReview() {
 
         return $this->hasMany(ProductReview::class, "product_id");
@@ -177,32 +164,48 @@ class Product extends Model implements Transformable
     /**
      * @return mixed
      */
-    public function getFirstCategory() {
+    public function getFirstCategory()
+    {
         return $this->categories()->first();
     }
 
     /**
      * @param $date
      */
-    public function setDateAvailable($date) {
+    public function setDateAvailableAttribute($date)
+    {
         if(!$date) {
             $this->attributes['date_available'] = Carbon::now();
         } else {
-            $this->attributes['date_available'] = Carbon::createFromFormat("yyyy-mm-dd h:m", $date);
+            $this->attributes['date_available'] = $date;
+        }
+    }
+
+    /**
+     * @param $quantity
+     */
+    public function setQuantityAttribute($quantity)
+    {
+        if($quantity) {
+            $this->attributes['quantity'] = intval($quantity);
+        } else {
+            $this->attributes['quantity'] = 1;
         }
     }
 
     /**
      * @param $query
      */
-    public function scopeUnpublished($query) {
+    public function scopeUnpublished($query)
+    {
         $query->where('date_available', '>', Carbon::now());
     }
 
     /**
      * @param $query
      */
-    public function scopePublished($query) {
+    public function scopePublished($query)
+    {
         $query->where('date_available', '<=', Carbon::now());
     }
 

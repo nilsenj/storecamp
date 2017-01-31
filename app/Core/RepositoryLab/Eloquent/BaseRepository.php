@@ -5,6 +5,7 @@ use Closure;
 use Exception;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Str;
 use RepositoryLab\Repository\Contracts\CriteriaInterface;
 use RepositoryLab\Repository\Contracts\Presentable;
 use RepositoryLab\Repository\Contracts\PresenterInterface;
@@ -152,6 +153,37 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         return config('repository.pagination.limit', $this->perPage);
     }
 
+    /**
+     * Handle dynamic method calls into the BaseRepository.
+     *
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return mixed
+     */
+    public function __call($method, $parameters)
+    {
+        if($this->isBaseMethod($method)) {
+            return $this->$method(...$parameters);
+        }
+        if($this->hasScopePrefix($method)) { //handle dynamic scope call from the model
+            $this->applyCriteria();
+            $this->applyScope();
+            $this->model = $this->model->$method($this->getModel()->newQuery(), ...$parameters);
+            return $this;
+        }
+    }
+
+    /**
+     * Handle dynamic static method calls into the method.
+     *
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return mixed
+     */
+    public static function __callStatic($method, $parameters)
+    {
+        return (new static)->$method(...$parameters);
+    }
     /**
      * Specify Validator class name of RepositoryLab\Validator\Contracts\ValidatorInterface
      *
@@ -886,5 +918,41 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         $this->resetModel();
 
         return $this->parserResult($model);
+    }
+
+    /**
+     * @param $key
+     * @param $order
+     * @return mixed
+     */
+    public function order($key, $order)
+    {
+        $this->applyCriteria();
+        $this->applyScope();
+
+        $this->model = $this->model->orderBy($key, $order);
+
+        return $this;
+    }
+
+    /**
+     * determine if the given method is scope in the model
+     *
+     * @param $key
+     * @return bool
+     */
+    private function  hasScopePrefix($key)
+    {
+        return method_exists($this->getModel(), 'scope'.Str::studly($key));
+    }
+
+    /**
+     * determine if the method belongs to this class
+     *
+     * @param $key
+     * @return bool
+     */
+    private function isBaseMethod($key) {
+        return method_exists($this, Str::studly($key));
     }
 }

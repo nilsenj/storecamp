@@ -90,7 +90,9 @@ class MediaSystem implements MediaSystemContract
         if (!empty($name)) {
             $this->folder->setDisk($name);
             $this->setDisk($name);
-            return $this;
+        } else {
+            $this->folder->setDisk($this->disk);
+            $this->setDisk($this->disk);
         }
         return $this;
     }
@@ -228,15 +230,17 @@ class MediaSystem implements MediaSystemContract
         $selected_id = trim($request->selected_id);
         $file = $this->media->find($selected_id);
         $folderDisk = $this->folder->disk($disk);
-
         $folderFile = $folderDisk->find($file->directory_id);
         $parentFoldersPath = $folderDisk->getParentFoldersPath($folderFile);
 
         $renamedPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folderFile->name : $folderFile->name;
         $selectedFolder = $folderDisk->getDiskRoot() . '/' . $renamedPath;
         if ($this->filesystem->isDirectory($selectedFolder)) {
-            $this->filesystem->move($selectedFolder . '/' . $file->filename . '.' . $file->extension,
-                $selectedFolder . '/' . $new_name . '.' . $file->extension);
+            if(!$this->filesystem->exists($selectedFolder . $file->filename . '.' . $file->extension)) {
+                throw new \Exception("Sorry File not found", 404);
+            }
+            $this->filesystem->move($selectedFolder . $file->filename . '.' . $file->extension,
+                $selectedFolder . $new_name . '.' . $file->extension);
 
             $file->filename = $new_name;
             $file->save();
