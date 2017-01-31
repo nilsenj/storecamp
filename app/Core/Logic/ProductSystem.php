@@ -4,7 +4,6 @@ namespace App\Core\Logic;
 
 
 use App\Core\Contracts\ProductSystemContract;
-use App\Core\Models\Product;
 use App\Core\Repositories\AttributeGroupDescriptionRepository;
 use App\Core\Repositories\ProductsRepository;
 
@@ -46,7 +45,7 @@ class ProductSystem implements ProductSystemContract
             if(!empty($with)) {
                 $products = $this->productRepository->with($with)->newest()->paginate();
             } else {
-                $products = $this->productRepository->paginate();
+                $products = $this->productRepository->newest()->paginate();
             }
         }
         return $products;

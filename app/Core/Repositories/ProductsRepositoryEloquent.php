@@ -51,5 +51,4 @@ class ProductsRepositoryEloquent extends BaseRepository implements ProductsRepos
 
         return new $model;
     }
-
 }

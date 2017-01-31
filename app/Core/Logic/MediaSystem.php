@@ -221,7 +221,8 @@ class MediaSystem implements MediaSystemContract
     /**
      * @param $request
      * @param string $disk
-     * @return Folder
+     * @return mixed
+     * @throws \Exception
      */
     public function renameFile($request, $disk = '')
     {

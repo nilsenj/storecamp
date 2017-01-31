@@ -127,4 +127,13 @@ class Category extends Model implements Transformable
     {
         return $this->hasMany('App\Core\Models\Category', 'parent_id');
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeOnlyParent($query)
+    {
+        return $query->where('parent_id', '=', null);
+    }
 }

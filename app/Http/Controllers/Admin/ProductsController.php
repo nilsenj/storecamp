@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Core\Components\Flash\Flash;
 use App\Core\Contracts\ProductSystemContract;
 use App\Core\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
@@ -77,9 +78,14 @@ class ProductsController extends BaseController
      */
     public function store(Create $request)
     {
-        $data = $request->all();
-        $product = $this->productSystem->create($data);
-        return redirect('admin/products');
+        try {
+            $data = $request->all();
+            $product = $this->productSystem->create($data);
+            return redirect('admin/products');
+        } catch (\Exception $exception) {
+            Flash::error($exception->getCode(), $exception->getMessage());
+            return redirect()->to($this->errorRedirectPath)->withErrors($exception);
+        }
     }
 
     /**

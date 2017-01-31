@@ -15,7 +15,7 @@ class UserRegisteredToAdminComposer extends MailComposer
     {
         $toEmail = env('MAIL_FROM');
         $toName = $user->name;
-        $subject = 'New User Registered in SXC!';
+        $subject = 'New User Registered in Storecamp!';
         $view = 'emails.welcome-admin';
         $data = ['name' => $user->name, 'email' => $user->email, 'user' => $user];
         $options = null;

@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Core\Contracts\CategorySystemContract;
 use Illuminate\Http\Request;
-
-use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Core\Models\Category;
 use App\Core\Repositories\CategoryRepository;
-use App\Core\Validators\Category\CategoriesFormRequest;
 use App\Core\Validators\Category\CategoriesUpdateFormRequest;
 use Illuminate\Support\Facades\Redirect;
 
@@ -33,22 +30,20 @@ class CategoriesController extends BaseController
     protected $repository;
 
     /**
-     * CategoriesController constructor.
-     * @param CategoryRepository $repository
+     * @var CategorySystemContract
      */
-    public function __construct(CategoryRepository $repository)
-    {
-        $this->repository = $repository;
-        $this->middleware('role:Admin');
-    }
+    protected $categorySystem;
 
     /**
-     * Redirect not found.
-     * @return Redirect
+     * CategoriesController constructor.
+     * @param CategorySystemContract $categorySystem
      */
-    protected function redirectNotFound()
+    public function __construct(CategorySystemContract $categorySystem)
     {
-        return redirect('admin.categories.index');
+        $this->categorySystem = $categorySystem;
+        $this->repository = $this->categorySystem->categoryRepository;
+
+        $this->middleware('role:Admin');
     }
 
     /**
@@ -59,8 +54,8 @@ class CategoriesController extends BaseController
      */
     public function index(Request $request)
     {
-        $categories = $this->repository->with('parent', 'children')->paginate();
-
+        $data = $request->all();
+        $categories = $this->categorySystem->present($data, null, ['parent', 'children']);
         $no = $categories->firstItem();
 
         return $this->view('index', compact('categories', 'no'));
@@ -86,22 +81,29 @@ class CategoriesController extends BaseController
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        $data['top'] = $request->top ? $request->top == "on" ? true : false : false;
-        $category = $this->repository->create($data);
+        try {
+            $data = $request->all();
+            $data['top'] = $request->top ? $request->top == "on" ? true : false : false;
+            $category = $this->categorySystem->create($data);
+            return redirect('admin/categories');
 
-        return redirect('admin/categories');
+        } catch (\Exception $exception) {
+            return redirect()->back($this->errorRedirectPath)->withErrors(\Flash::error($exception->getCode(), $exception->getMessage()));
+        }
     }
 
     /**
+     * @param Request $request
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|Redirect|\Illuminate\View\View
+     * @return Response|Redirect
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         try {
-            $category = $this->repository->find($id);
-            $categories = Category::all();
+            $data = $request->all();
+            $category = $this->categorySystem->present($data, $id);
+            $categories = $this->repository->all();
             return $this->view('show', compact('category', 'categories'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
@@ -127,6 +129,7 @@ class CategoriesController extends BaseController
     /**
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|Redirect|\Illuminate\View\View
+     * @return Response|Redirect
      */
     public function edit($id)
     {
@@ -143,16 +146,13 @@ class CategoriesController extends BaseController
     /**
      * @param CategoriesUpdateFormRequest $request
      * @param $id
-     * @return Redirect
+     * @return Response|Redirect
      */
     public function update(CategoriesUpdateFormRequest $request, $id)
     {
         try {
             $data = $request->all();
-            $data['top'] = $request->top ? $request->top == "on" ? true : false : false;
-            $data["parent_id"] = empty($data["parent_id"]) ? null : $data["parent_id"];
-            $category = $this->repository->find($id);
-            $category->update($data);
+            $category = $this->categorySystem->update($data, $id);
             return redirect('admin/categories');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
@@ -168,7 +168,7 @@ class CategoriesController extends BaseController
     public function destroy($id)
     {
         try {
-            $this->repository->delete($id);
+            $deleted = $this->categorySystem->delete($id);
             return redirect('admin/categories');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
