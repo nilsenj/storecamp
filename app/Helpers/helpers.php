@@ -147,29 +147,3 @@ if (!function_exists('checkRoute')) {
     }
 }
 
-if (!function_exists('synchronizeDirectories')) {
-
-    /**
-     * @param string $root
-     */
-    function synchronizeDirectories(string $root) : void
-    {
-        $synchronizer = new \App\Drivers\FolderToDb\Synchronizer();
-
-        $synchronizer->synchronize($root);
-    }
-}
-
-
-if (!function_exists('synchronizeWithFiles')) {
-
-    /**
-     * @param string $root
-     */
-    function synchronizeWithFiles(string $root) : void
-    {
-        $synchronizer = new \App\Drivers\FolderToDb\Synchronizer();
-
-        $synchronizer->synchronizeWithFiles($root);
-    }
-}

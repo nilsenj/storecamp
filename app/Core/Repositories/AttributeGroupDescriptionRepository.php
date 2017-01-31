@@ -10,5 +10,5 @@ use RepositoryLab\Repository\Contracts\RepositoryInterface;
  */
 interface AttributeGroupDescriptionRepository extends RepositoryInterface
 {
-    //
+
 }

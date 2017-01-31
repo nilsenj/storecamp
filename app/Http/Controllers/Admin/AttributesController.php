@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Core\Repositories\AttributeGroupDescriptionRepository;
-use App\Core\Repositories\AttributeGroupRepository;
+use App\Core\Contracts\AttributeGroupSystemContract;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
+/**
+ * Class AttributesController
+ * @package App\Http\Controllers\Admin
+ */
 class AttributesController extends BaseController
 {
     /**
@@ -18,13 +21,28 @@ class AttributesController extends BaseController
      */
     public $errorRedirectPath = "admin/attributes";
 
+    /**
+     * @var AttributeGroupSystemContract
+     */
+    protected $attributeGroupSystem;
+    /**
+     * @var
+     */
     protected $groupRepository;
+    /**
+     * @var
+     */
     protected $groupDescriptionRepository;
 
-    function __construct(AttributeGroupRepository $groupRepository, AttributeGroupDescriptionRepository $groupDescriptionRepository)
+    /**
+     * AttributesController constructor.
+     * @param AttributeGroupSystemContract $attributeGroupSystem
+     */
+    function __construct(AttributeGroupSystemContract $attributeGroupSystem)
     {
-        $this->groupRepository = $groupRepository;
-        $this->groupDescriptionRepository = $groupDescriptionRepository;
+        $this->attributeGroupSystem = $attributeGroupSystem;
+        $this->groupRepository = $attributeGroupSystem->group;
+        $this->groupDescriptionRepository = $attributeGroupSystem->description;
     }
 
 
@@ -34,8 +52,8 @@ class AttributesController extends BaseController
      */
     public function index(Request $request)
     {
-        $groupDescriptions = $this->groupDescriptionRepository->with('attributesGroup')->paginate();
-
+        $data = $request->all();
+        $groupDescriptions = $this->attributeGroupSystem->presentDescription($data, null, ['attributesGroup']);
         $no = $groupDescriptions->firstItem();
 
         return $this->view('index', compact('groupDescriptions', 'no'));
@@ -47,59 +65,67 @@ class AttributesController extends BaseController
     public function create()
     {
         $groupDescriptions = $this->groupDescriptionRepository->all()->pluck('name', 'id');
-        $selector = buildSelect(route('admin::attribute_groups::get::json'), 'attributes_group_id', false, [], []);
+        $selector = buildSelect(route('admin::attribute_groups::get::json'),
+            'attributes_group_id', false, [], []);
 
-        return $this->view('create', compact('groupDescriptions','selector'));
+        return $this->view('create', compact('groupDescriptions', 'selector'));
     }
 
+    /*TODO Create form request*/
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        $groupDescriptionRepository = $this->groupDescriptionRepository->getModel()->withTrashed()->where("name", $data["name"]);
-        if($groupDescriptionRepository->count() > 0) {
-            $groupDescriptionRepository->restore();
+        try {
+            $data = $request->all();
+            $groupDescription = $this->attributeGroupSystem->createDescription($data);
             return redirect('admin/attributes');
+        } catch (\Throwable $exception) {
+            return $this->redirectNotFound($exception);
         }
-        $groupDescriptionRepository = $this->groupDescriptionRepository->create($data);
-        return redirect('admin/attributes');
-
     }
 
     /**
+     * @param Request $request
      * @param $id
-     * @return Response|\Illuminate\View\View
+     * @return Response|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         try {
-            $groupDescriptions = $this->groupDescriptionRepository->find($id);
+            $data = $request->all();
+            $groupDescriptions = $this->attributeGroupSystem->presentDescription($data, $id, ['attributesGroup']);
             return $this->view('show', compact('groupDescriptions'));
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 
     /**
+     * @param Request $request
      * @param $id
-     * @return Response|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         try {
-            $groupDescription = $this->groupDescriptionRepository->with("attributesGroup")->find($id);
+            $data = $request->all();
+            $groupDescription = $this->attributeGroupSystem->presentDescription($data, $id, ['attributesGroup']);
             $attributesList = $groupDescription->attributesGroup->pluck("name", "id");
-            $selector = buildSelect(route('admin::attribute_groups::get::json'), 'attributes_group_id', false, $attributesList->toArray(), $attributesList->toArray());
+            $selector = buildSelect(route('admin::attribute_groups::get::json'),
+                'attributes_group_id', false, $attributesList->toArray(), $attributesList->toArray());
 
             return $this->view('edit', compact('groupDescription', 'selector'));
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
+        } catch (\Throwable $exception) {
+            return $this->redirectNotFound($exception);
         }
     }
 
+    /*TODO Create form request*/
     /**
      * @param Request $request
      * @param $id
@@ -109,14 +135,12 @@ class AttributesController extends BaseController
     {
         try {
             $data = $request->all();
-
-            $groupDescriptions = $this->groupDescriptionRepository->find($id);
-
-            $groupDescriptions->update($data);
-
+            $groupdescription = $this->attributeGroupSystem->updateDescription($data, $id);
             return redirect('admin/attributes');
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
+        } catch (\Throwable $exception) {
+            return $this->redirectNotFound($exception);
         }
     }
 
@@ -127,10 +151,15 @@ class AttributesController extends BaseController
     public function destroy($id)
     {
         try {
-            $this->groupDescriptionRepository->delete($id);
+            $deleted = $this->attributeGroupSystem->deleteDescription($id);
+            if (!$deleted) {
+                \Flash::warning("Item not deleted. Some error appeared!");
+            }
             return redirect('admin/users');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
+        } catch (\Throwable $exception) {
+            return $this->redirectNotFound($exception);
         }
     }
 
@@ -140,7 +169,8 @@ class AttributesController extends BaseController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getJson(Request $request) {
+    public function getJson(Request $request)
+    {
         $query = $this->parserSearchValue($request->get('search'));
         $attrGroup = $this->groupDescriptionRepository->getModel()->where("name", "like", $query)->select('name', 'id')->get();
         $attrGroupArr = [];

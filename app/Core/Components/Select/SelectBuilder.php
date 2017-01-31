@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ivan
- * Date: 26.12.2015
- * Time: 12:06
- */
 
 namespace App\Core\Components\Select;
 
@@ -51,7 +45,8 @@ class SelectBuilder
                 $result = $data->toArray();
             }
         }
-        return view('_builders.select2', compact('result', 'placeholder', 'selected', 'multiple', 'attrName', 'class', 'className', 'actionUrl'));
+        return view('_builders.select2',
+            compact('result', 'placeholder', 'selected', 'multiple', 'attrName', 'class', 'className', 'actionUrl'));
     }
 
     protected function resolveAttrName($attrName = null) {

@@ -18,7 +18,11 @@ class ProductSystem implements ProductSystemContract
      * @var ProductsRepository
      */
     public $productRepository;
+    /**
+     * @var AttributeGroupDescriptionRepository
+     */
     public $attributeGroupDescriptionRepository;
+
     /**
      * ProductSystem constructor.
      *
@@ -42,7 +46,7 @@ class ProductSystem implements ProductSystemContract
         if ($id) {
             $products = $this->productRepository->find($id);
         } else {
-            if(!empty($with)) {
+            if (!empty($with)) {
                 $products = $this->productRepository->with($with)->newest()->paginate();
             } else {
                 $products = $this->productRepository->newest()->paginate();
@@ -57,13 +61,15 @@ class ProductSystem implements ProductSystemContract
      */
     public function create($data)
     {
+        $formAttributes = $data['product_attribute'];
+        unset($data['product_attribute']);
         $product = $this->productRepository->create($data);
-        $categoryId = $data->category_id ? $data->category_id : null;
+        $categoryId = isset($data['category_id']) ? $data['category_id'] : null;
         $product->categories()->attach($categoryId);
         $attributes = [];
-        if(isset($attr["attr_description_id"])) {
-            foreach ($data['product_attribute'] as $key => $attr) {
-                $attribute = $product->attributeGroupDescription()->save($this->attributeGroupDescriptionRepository->find(intval($attr["attr_description_id"])), ["value" => $data['product_attribute'][$key]["value"]]);
+        if (isset($formAttributes)) {
+            foreach ($formAttributes as $key => $attr) {
+                $attribute = $product->attributeGroupDescription()->save($this->attributeGroupDescriptionRepository->find(intval($attr["attr_description_id"])), ["value" => $formAttributes[$key]["value"]]);
                 $attributes[] = $attribute;
             }
         }
@@ -77,9 +83,10 @@ class ProductSystem implements ProductSystemContract
      */
     public function update($data, $id)
     {
-        $product = $this->productRepository->find($id);
-        $product->update($data);
-        $categoryId = $data->category_id ? $data->category_id : null;
+        $formAttributes = $data['product_attribute'];
+        unset($data['product_attribute']);
+        $product = $this->productRepository->update($data, $id);
+        $categoryId = isset($data['category_id']) ? $data['category_id'] : null;
         if ($categoryId) {
             $product->categories()->detach();
             $product->categories()->attach($categoryId);
@@ -89,9 +96,9 @@ class ProductSystem implements ProductSystemContract
         if ($productAttributes->count() > 0) {
             $product->attributeGroupDescription()->sync([]);
         }
-        if(isset($data['product_attribute'])) {
-            foreach ($data['product_attribute'] as $key => $attr) {
-                $attribute = $product->attributeGroupDescription()->save($this->attributeGroupDescriptionRepository->find($attr["attr_description_id"]), ["value" => $data['product_attribute'][$key]["value"]]);
+        if (isset($formAttributes)) {
+            foreach ($formAttributes as $key => $attr) {
+                $attribute = $product->attributeGroupDescription()->save($this->attributeGroupDescriptionRepository->find($attr["attr_description_id"]), ["value" => $formAttributes[$key]["value"]]);
                 $attributes[] = $attribute;
             }
         }

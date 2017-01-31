@@ -22,14 +22,18 @@ abstract class BaseController extends Controller
     }
 
     /**
-     * Redirect not found.
-     *
-     * @return Response
+     * @param $e
+     * @return \Illuminate\Http\RedirectResponse
      */
-    protected function redirectNotFound()
+    protected function redirectNotFound($e = null)
     {
-        return redirect($this->errorRedirectPath)
-            ->with(\Flash::error('Item Not Found!'));
+        if (isset($e)) {
+            \Flash::error('Not Found! Server message is - ' . $e->getMessage() . ' and code is - ' . $e->getCode());
+            return redirect($this->errorRedirectPath);
+        } else {
+            return redirect($this->errorRedirectPath)
+                ->with(\Flash::error('Sorry Item Not Found!'));
+        }
     }
 
     /**

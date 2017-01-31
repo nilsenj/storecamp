@@ -78,13 +78,14 @@ class AttributeGroupsController extends BaseController
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-        $group = $this->attributeGroupSystem->createGroup($data);
-        if(!$group) {
-            Flash::info("Current Group Attribute exists but was deleted. Not it is restored!");
+        try {
+            $data = $request->all();
+            $group = $this->attributeGroupSystem->createGroup($data);
+            return redirect('admin/attribute_groups');
+        } catch
+        (\Throwable $exception) {
+            return $this->redirectNotFound($exception);
         }
-
-        return redirect('admin/attribute_groups');
     }
 
     /**
@@ -99,7 +100,7 @@ class AttributeGroupsController extends BaseController
             $groupAttributes = $this->attributeGroupSystem->presentGroup($data, $id);
             return $this->view('show', compact('groupAttributes'));
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 
@@ -115,7 +116,7 @@ class AttributeGroupsController extends BaseController
             $groupAttribute = $this->attributeGroupSystem->presentGroup($data, $id);
             return $this->view('edit', compact('groupAttribute'));
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 
@@ -129,13 +130,12 @@ class AttributeGroupsController extends BaseController
         try {
             $data = $request->except('_method', '_token');
             $groupAttribute = $this->attributeGroupSystem->updateGroup($data, $id);
-            if(!$groupAttribute) {
-                Flash::info("Current Group Attribute exists but was deleted. Not it is restored!");
-             }
 
             return redirect('admin/attribute_groups');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
+        } catch (\Throwable $exception) {
+            return $this->redirectNotFound($exception);
         }
     }
 
@@ -146,13 +146,13 @@ class AttributeGroupsController extends BaseController
     public function destroy($id)
     {
         try {
-            $group = $this->groupRepository->delete($id);
-            if(!$group) {
+            $deleted = $this->groupRepository->delete($id);
+            if (!$deleted) {
                 Flash::warning("Item not deleted. Some error appeared!");
             }
             return redirect('admin/attribute_groups');
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 

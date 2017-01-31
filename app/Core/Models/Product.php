@@ -109,9 +109,14 @@ class Product extends Model implements Transformable
         'jan',
         'isbn',
         'mpn',
+//        'length',
+//        'width',
+//        'height',
+//        'weight',
         'meta_tag_title',
         'meta_tag_description',
         'meta_tag_keywords',
+//        'sort_order',
         'stock_status',
         'attr_description_id',
         'product_id',
@@ -189,7 +194,7 @@ class Product extends Model implements Transformable
         if($quantity) {
             $this->attributes['quantity'] = intval($quantity);
         } else {
-            $this->attributes['quantity'] = 1;
+            $this->attributes['quantity'] = 0;
         }
     }
 

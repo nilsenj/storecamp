@@ -145,7 +145,7 @@
 
             <div class="form-group">
                 <label class="control-label" for="input-quantity">Quantity</label>
-                {!! Form::text('quantity', isset($product) ? $product->quantity ? $product->quantity : 999 : old('quantity'), ["id" => "input-quantity", "placeholder" => "Quantity", "class" => "form-control"]) !!}
+                {!! Form::text('quantity', isset($product) ? $product->quantity ? $product->quantity : old('quantity') : null, ["id" => "input-quantity", "placeholder" => "Quantity", "class" => "form-control"]) !!}
                 {!! $errors->first('quantity', '<div class="text-danger">:message</div>') !!}
 
             </div>

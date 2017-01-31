@@ -452,7 +452,35 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         }
 
         throw (new ModelNotFoundException())->setModel(get_class($this->model), $id);
-//        $model = $this->model->findOrFail($id, $columns);
+    }
+
+    /**
+     * Find a model by its primary key|unique_id or throw an exception.
+     *
+     * @param  mixed  $id
+     * @param  array  $columns
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     */
+    public function findOrFail($id, $columns = ['*'])
+    {
+        $this->applyCriteria();
+        $this->applyScope();
+        $result = $this->find($id, $columns);
+
+        if (is_array($id)) {
+            if (count($result) == count(array_unique($id))) {
+                $this->resetModel();
+
+                return $this->parserResult($result);
+            }
+        } elseif (! is_null($result)) {
+            $this->resetModel();
+
+            return $this->parserResult($result);
+        }
+        throw (new ModelNotFoundException)->setModel(get_class($this->model), $id);
     }
 
     /**
@@ -595,7 +623,7 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
 
         $this->skipPresenter(true);
 
-        $model = $this->model->findOrFail($id);
+        $model = $this->findOrFail($id);
         $model->fill($attributes);
         $model->save();
 

@@ -137,11 +137,10 @@ class ProductsController extends BaseController
         try {
             $data = $request->all();
             $this->productSystem->update($data, $id);
-
             return redirect('admin/products');
 
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 
