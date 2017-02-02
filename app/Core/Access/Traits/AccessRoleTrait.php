@@ -46,7 +46,7 @@ trait AccessRoleTrait
         parent::boot();
 
         static::deleting(function($role) {
-            if (!method_exists(Config::get('access.role'), 'bootSoftDeletingTrait')) {
+            if (!method_exists(Config::get('access.role'), 'bootSoftDeletes')) {
                 $role->users()->sync([]);
                 $role->perms()->sync([]);
             }

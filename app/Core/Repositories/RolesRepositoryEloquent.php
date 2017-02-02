@@ -11,6 +11,10 @@ use RepositoryLab\Repository\Criteria\RequestCriteria;
 use Illuminate\Container\Container as Application;
 use Illuminate\Contracts\Bus\Dispatcher;
 
+/**
+ * Class RolesRepositoryEloquent
+ * @package App\Core\Repositories
+ */
 class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
 {
 
@@ -75,18 +79,16 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
     {
 
         $role->update($data);
-
-        $listIds = $dataPerm["permissions"];
         $permissionsCount = count($role->perms()->get());
 
         if ($permissionsCount) {
             $role->detachAllPermissions();
-            foreach ($listIds as $key => $value) {
+            foreach ($dataPerm as $key => $value) {
                 $role->attachPermission(Permission::find($value));
             }
         }
         if ($permissionsCount == 0 && count(Input::get('permissions')) > 0) {
-            foreach ($listIds as $key => $value) {
+            foreach ($dataPerm as $key => $value) {
                 $role->attachPermission(Permission::find($value));
             }
         }

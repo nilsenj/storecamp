@@ -27,11 +27,13 @@
 use App\Core\Access\Contracts\AccessPermissionInterface;
 use App\Core\Access\Traits\AccessPermissionTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Config;
 
 class AccessPermission extends Model implements AccessPermissionInterface
 {
     use AccessPermissionTrait;
+    use SoftDeletes;
 
     /**
      * The database table used by the model.

@@ -36,15 +36,6 @@ class SubscriptionController extends BaseController
         $this->repository = $repository;
     }
 
-    /**
-     * @return mixed
-     */
-    protected function redirectError()
-    {
-        \Toastr::error("Error appeared!", $title = \Auth::user()->name, $options = []);
-        return redirect()->back();
-    }
-
     public function index(Request $request)
     {
 

@@ -1,6 +1,6 @@
 @if(isset($role))
     {!! Form::model($role, ['route' => ['admin::roles::update', $role->id], 'method' => 'PUT', 'files' => true]) !!}
-    @if($role->isAppsdefault())
+    @if($role->isAppsDefault())
         <h4 class="text-warning">The role is default for app - <b class="text-danger">no actions can be performed</b>
         </h4>
     @endif
@@ -40,7 +40,7 @@
             </div>
 
             @if(isset($role))
-                @if(!$role->isAppsdefault())
+                @if(!$role->isAppsDefault())
                     <div class="form-group">
                         {!! Form::submit(isset($role) ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}
                     </div>

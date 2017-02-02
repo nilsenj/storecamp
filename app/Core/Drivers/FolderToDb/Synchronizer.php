@@ -98,7 +98,7 @@ class Synchronizer implements SynchronizerInterface
         $rootFolder = $this->resolveRootFolder($disk);
         foreach ($directories as $key => $dir) {
             $folderPath = $dir["folderPath"];
-            echo $folderPath . "on disk - " . $disk . "\n";
+            echo $folderPath . " on disk - " . $disk . "\n";
             $folders = explode("/", $folderPath);
             if (count($folders) > 1) {
                 array_pop($folders);
@@ -119,7 +119,6 @@ class Synchronizer implements SynchronizerInterface
                     array_pop($fileNameClean);
                     $mediaFile = Media::where("directory", $newFolder->path_on_disk)->where("filename", implode("", $fileNameClean))->where('disk', $disk);
                     if ($mediaFile->count() == 0) {
-                        echo $newFolder->path_on_disk . "\n";
                         $media = \MediaUploader::importPath($disk, $newFolder->path_on_disk . "/" . $fileName);
                         $media->directory_id = $newFolder->id;
                         $media->save();
@@ -144,6 +143,7 @@ class Synchronizer implements SynchronizerInterface
                 }
             }
         }
+        $this->rootFolderFilesSearch($path, $disk);
     }
 
     /**
@@ -158,7 +158,6 @@ class Synchronizer implements SynchronizerInterface
             \RecursiveIteratorIterator::SELF_FIRST,
             \RecursiveIteratorIterator::CATCH_GET_CHILD // Ignore "Permission denied"
         );
-
         $paths = array($root);
         foreach ($iter as $path => $dir) {
             if ($dir->isDir()) {
@@ -167,6 +166,7 @@ class Synchronizer implements SynchronizerInterface
         }
         $items = [];
         foreach ($paths as $key => $item) {
+
             $folderPath = explode("/", implode("", explode($paths[0], $item)));
             unset($folderPath[0]);
             $folderPath = implode("/", $folderPath);
@@ -196,10 +196,23 @@ class Synchronizer implements SynchronizerInterface
             }
 
         }
-
         return $items;
     }
 
+    private function rootFolderFilesSearch($root, $disk) {
+        $rootFolder = $this->resolveRootFolder($disk);
+        foreach (\File::files($root) as $file) {
+            $fileName = \File::basename($file);
+            $fileNameClean = explode(".", $fileName);
+            array_pop($fileNameClean);
+            $mediaFile = Media::where("directory", '')->where("filename", implode("", $fileNameClean))->where('disk', $disk);
+            if ($mediaFile->count() == 0) {
+                $media = \MediaUploader::importPath($disk, $rootFolder->path_on_disk . "/" . $fileName);
+                $media->directory_id = $rootFolder->id;
+                $media->save();
+            }
+        }
+    }
     private function resolveRootFolder($disk = 'local'): Folder
     {
         $rootFolder = $this->folder->disk($disk)

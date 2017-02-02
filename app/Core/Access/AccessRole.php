@@ -28,11 +28,13 @@
 use App\Core\Access\Contracts\AccessRoleInterface;
 use App\Core\Access\Traits\AccessRoleTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Config;
 
 class AccessRole extends Model implements AccessRoleInterface
 {
     use AccessRoleTrait;
+    use SoftDeletes;
 
     /**
      * The database table used by the model.
@@ -55,7 +57,7 @@ class AccessRole extends Model implements AccessRoleInterface
     /**
      * @return bool
      */
-    public function isAppsdefault(): bool
+    public function isAppsDefault(): bool
     {
         $isDefault = ($this->name === "Client") || ($this->name === "Admin") ? true : false;
         return $isDefault;
