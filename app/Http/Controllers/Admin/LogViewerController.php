@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Core\Contracts\LogViewerSystemContract;
 use Illuminate\Http\Request;
 
 use Arcanedev\LogViewer\Http\Controllers\Controller as LogBaseController;
-use Arcanedev\LogViewer\Entities\Log;
-use Arcanedev\LogViewer\Exceptions\LogNotFoundException;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Arr;
-use Arcanedev\LogViewer\Tables\StatsTable;
 
 class LogViewerController extends LogBaseController
 {
@@ -19,14 +15,17 @@ class LogViewerController extends LogBaseController
      */
     protected $perPage = 30;
 
+    protected $viewerSystem;
+
+    protected $showRoute = 'log-viewer::logs.show';
     /* ------------------------------------------------------------------------------------------------
      |  Constructor
      | ------------------------------------------------------------------------------------------------
      */
-    public function __construct()
+    public function __construct(LogViewerSystemContract $viewerSystem)
     {
         parent::__construct();
-
+        $this->viewerSystem = $viewerSystem;
         $this->perPage = config('log-viewer.per-page', $this->perPage);
     }
 
@@ -41,9 +40,10 @@ class LogViewerController extends LogBaseController
      */
     public function index()
     {
-        $stats     = $this->logViewer->statsTable();
-        $chartData = $this->prepareChartData($stats);
-        $percents  = $this->calcPercentages($stats->footer(), $stats->header());
+        $data     = $this->viewerSystem->dashboard();
+        $stats     = $data['stats'];
+        $chartData = $data['chartData'];
+        $percents  = $data['percents'];
 
         return $this->view('dashboard', compact('chartData', 'percents', 'stats'));
     }
@@ -57,9 +57,10 @@ class LogViewerController extends LogBaseController
      */
     public function listLogs(Request $request)
     {
-        $stats   = $this->logViewer->statsTable();
-        $headers = $stats->header();
-        $rows    = $this->paginate($stats->rows(), $request);
+        $data     = $this->viewerSystem->showLogs($request);
+        $stats   = $data['stats'];
+        $headers = $data['headers'];
+        $rows    = $data['rows'];
 
         return $this->view('logs', compact('headers', 'rows', 'footer', 'stats'));
     }
@@ -73,10 +74,11 @@ class LogViewerController extends LogBaseController
      */
     public function show($date)
     {
-        $stats   = $this->logViewer->statsTable();
-        $log     = $this->getLogOrFail($date);
-        $levels  = $this->logViewer->levelsNames();
-        $entries = $log->entries()->paginate($this->perPage);
+        $data     = $this->viewerSystem->show($date);
+        $stats   = $data['stats'];
+        $log     = $data['log'];
+        $levels  = $data['levels'];
+        $entries =  $data['entries'];
         return $this->view('show', compact('log', 'levels', 'entries', 'stats'));
     }
 
@@ -90,17 +92,17 @@ class LogViewerController extends LogBaseController
      */
     public function showByLevel($date, $level)
     {
-        $stats   = $this->logViewer->statsTable();
+        $data = $this->viewerSystem->showByLevel($date, $level);
 
-        $log = $this->getLogOrFail($date);
+        $stats = $data['stats'];
+        $log = $data['log'];
 
-        if ($level === 'all')
+        if ($level === 'all') {
             return redirect()->route($this->showRoute, [$date]);
+        }
 
-        $levels  = $this->logViewer->levelsNames();
-        $entries = $this->logViewer
-            ->entries($date, $level)
-            ->paginate($this->perPage);
+        $levels = $data['levels'];
+        $entries = $data['entries'];
 
         return $this->view('show', compact('log', 'levels', 'entries', 'stats'));
     }
@@ -114,7 +116,9 @@ class LogViewerController extends LogBaseController
      */
     public function download($date)
     {
-        return $this->logViewer->download($date);
+        $download = $this->viewerSystem->download($date);
+
+        return $download;
     }
 
     /**
@@ -129,102 +133,10 @@ class LogViewerController extends LogBaseController
         if ( ! $request->ajax())
             abort(405, 'Method Not Allowed');
 
-        $date = $request->get('date');
+        $deleted =  $this->viewerSystem->delete($request);
 
         return response()->json([
-            'result' => $this->logViewer->delete($date) ? 'success' : 'error'
+            'result' => $deleted ? 'success' : 'error'
         ]);
-    }
-
-    /* ------------------------------------------------------------------------------------------------
-     |  Other Functions
-     | ------------------------------------------------------------------------------------------------
-     */
-    /**
-     * Paginate logs.
-     *
-     * @param  array                     $data
-     * @param  \Illuminate\Http\Request  $request
-     *
-     * @return \Illuminate\Pagination\LengthAwarePaginator
-     */
-    protected function paginate(array $data, Request $request)
-    {
-        $page   = $request->get('page', 1);
-        $offset = ($page * $this->perPage) - $this->perPage;
-        $items  = array_slice($data, $offset, $this->perPage, true);
-        $rows   = new LengthAwarePaginator($items, count($data), $this->perPage, $page);
-
-        $rows->setPath($request->url());
-
-        return $rows;
-    }
-
-    /**
-     * Get a log or fail
-     *
-     * @param  string  $date
-     *
-     * @return \Arcanedev\LogViewer\Entities\Log|null
-     */
-    protected function getLogOrFail($date)
-    {
-        $log = null;
-
-        try {
-            $log = $this->logViewer->get($date);
-        }
-        catch (LogNotFoundException $e) {
-            abort(404, $e->getMessage());
-        }
-
-        return $log;
-    }
-
-    /**
-     * Prepare chart data.
-     *
-     * @param  \Arcanedev\LogViewer\Tables\StatsTable  $stats
-     *
-     * @return string
-     */
-    protected function prepareChartData(StatsTable $stats)
-    {
-        $totals = $stats->totals()->all();
-
-        return json_encode([
-            'labels'   => Arr::pluck($totals, 'label'),
-            'datasets' => [
-                [
-                    'data'                 => Arr::pluck($totals, 'value'),
-                    'backgroundColor'      => Arr::pluck($totals, 'color'),
-                    'hoverBackgroundColor' => Arr::pluck($totals, 'highlight'),
-                ],
-            ],
-        ]);
-    }
-
-    /**
-     * Calculate the percentage.
-     *
-     * @param  array  $total
-     * @param  array  $names
-     *
-     * @return array
-     */
-    protected function calcPercentages(array $total, array $names)
-    {
-        $percents = [];
-        $all      = Arr::get($total, 'all');
-
-        foreach ($total as $level => $count) {
-            $percents[$level] = [
-                'name'    => $names[$level],
-                'count'   => $count,
-                'percent' => $all ? round(($count / $all) * 100, 2) : 0,
-            ];
-        }
-
-        return $percents;
     }
 }

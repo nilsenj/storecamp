@@ -56,7 +56,7 @@
                                 @elseif ($value == 0)
                                     <span class="level level-empty">{{ $value }}</span>
                                 @else
-                                    <a href="{{ url('admin/log-viewer/logs/'.$date.'/'.$key) }}">
+                                    <a href="{{ route('log-viewer::logs.filter', [$date, $key]) }}">
                                         <span class="level level-{{ $key }}">{{ $value }}</span>
                                     </a>
                                 @endif
