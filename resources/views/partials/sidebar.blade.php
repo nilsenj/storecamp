@@ -39,19 +39,27 @@
                 </ul>
             </li>
             <li class="treeview">
-                <a href="/hahaha"><i class='fa fa-newspaper-o'></i> <span>Product Reviews</span>
-                    <?php $count = Auth::user()->exists ? \Auth::user()->newMessagesCount() : 0; ?>
+                <a href="{{route('admin::reviews::index')}}"><i class='fa fa-newspaper-o'></i> <span>Product Reviews</span>
+                    <?php $messcount = Auth::user()->exists ? \Auth::user()->newMessagesCount() : 0; ?>
+                    @if($messcount)
                     <span class="pull-right-container">
-                            <small class="label pull-right bg-green">{!! $count !!}</small>
-                        </span>
+                            <small class="label pull-right bg-yellow">{!! $messcount !!}</small>
+                    </span>
+                    @endif
                 </a>
                 <ul class="treeview-menu">
                     <li class="nav-item" role="presentation">
                         <a role="menuitem" tabindex="-1" href="{{route('admin::reviews::index')}}">
                             <span class="nav-icon"><i class="fa fa-feed"></i></span>
                             <span class="nav-text"> List of Reviews</span>
-                        </a></li>
-                    {{--<li><a href="{{ route('admin::products::create') }}">Create Review</a></li>--}}
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a role="menuitem" tabindex="-1" href="{{route('admin::reviews::create')}}">
+                            <span class="nav-icon"><i class="fa fa-feed"></i></span>
+                            <span class="nav-text"> Create Review</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="treeview">

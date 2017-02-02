@@ -41,7 +41,7 @@ class ProductSystem implements ProductSystemContract
      * @param array $with
      * @return mixed
      */
-    public function present($data, $id = null, array $with = [])
+    public function present(array $data, $id = null, array $with = [])
     {
         if ($id) {
             $products = $this->productRepository->find($id);
@@ -59,7 +59,7 @@ class ProductSystem implements ProductSystemContract
      * @param $data
      * @return mixed
      */
-    public function create($data)
+    public function create(array $data)
     {
         $formAttributes = $data['product_attribute'];
         unset($data['product_attribute']);
@@ -69,7 +69,8 @@ class ProductSystem implements ProductSystemContract
         $attributes = [];
         if (isset($formAttributes)) {
             foreach ($formAttributes as $key => $attr) {
-                $attribute = $product->attributeGroupDescription()->save($this->attributeGroupDescriptionRepository->find(intval($attr["attr_description_id"])), ["value" => $formAttributes[$key]["value"]]);
+                $attribute = $product->attributeGroupDescription()->save(
+                    $this->attributeGroupDescriptionRepository->find(intval($attr["attr_description_id"])), ["value" => $formAttributes[$key]["value"]]);
                 $attributes[] = $attribute;
             }
         }
@@ -81,7 +82,7 @@ class ProductSystem implements ProductSystemContract
      * @param $id
      * @return mixed
      */
-    public function update($data, $id)
+    public function update(array $data, $id)
     {
         $formAttributes = $data['product_attribute'];
         unset($data['product_attribute']);
@@ -98,7 +99,8 @@ class ProductSystem implements ProductSystemContract
         }
         if (isset($formAttributes)) {
             foreach ($formAttributes as $key => $attr) {
-                $attribute = $product->attributeGroupDescription()->save($this->attributeGroupDescriptionRepository->find($attr["attr_description_id"]), ["value" => $formAttributes[$key]["value"]]);
+                $attribute = $product->attributeGroupDescription()->save(
+                    $this->attributeGroupDescriptionRepository->find($attr["attr_description_id"]), ["value" => $formAttributes[$key]["value"]]);
                 $attributes[] = $attribute;
             }
         }

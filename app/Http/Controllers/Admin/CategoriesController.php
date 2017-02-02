@@ -169,6 +169,9 @@ class CategoriesController extends BaseController
     {
         try {
             $deleted = $this->categorySystem->delete($id);
+            if (!$deleted) {
+                \Flash::warning("Sorry category is not deleted");
+            }
             return redirect('admin/categories');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();

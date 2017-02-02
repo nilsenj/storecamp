@@ -288,24 +288,25 @@ $this->group(/**
             'as' => 'visibility'
         ]);
 
-        $this->put('reply/review/{id}',
-            [
+        $this->put('reply/review/{id}', [
                 'uses' => 'Admin\ProductReviewController@replyFeedback',
                 'as' => 'reply'
+        ]);
 
-            ]);
-
-        $this->delete('delete/review/{id}',
-            [
+        $this->delete('delete/review/{id}', [
                 'uses' => 'Admin\ProductReviewController@delete',
                 'as' => 'destroy'
-            ]);
+        ]);
 
-        $this->post('store/review',
-            [
+        $this->get('create', [
+            'uses' => 'Admin\ProductReviewController@create',
+            'as' => 'create'
+        ]);
+
+        $this->post('store', [
                 'uses' => 'Admin\ProductReviewController@store',
                 'as' => 'store'
-            ]);
+        ]);
 
         $this->get('markasread/productReview/{feed}', [
             'uses' => 'Admin\ProductReviewController@markAsRead',

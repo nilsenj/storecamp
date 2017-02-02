@@ -91,6 +91,24 @@ class ProductReviewController extends BaseController
         }
     }
 
+    /*TODO implement create form for productReview functionality*/
+    /**
+     * @param Request $request
+     */
+    public function create(Request $request)
+    {
+
+    }
+
+    /*TODO implement store productReview functionality*/
+    /**
+     * @param Request $request
+     */
+    public function store(Request $request)
+    {
+
+    }
+
     /**
      * @param ReplyProductReviewFormRequest $request
      * @param $id

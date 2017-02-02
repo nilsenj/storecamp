@@ -153,7 +153,10 @@ class ProductsController extends BaseController
     public function destroy($id)
     {
         try {
-            $this->productSystem->delete($id);
+            $deleted = $this->productSystem->delete($id);
+            if (!$deleted) {
+                \Flash::warning("Sorry product is not deleted");
+            }
             return redirect('admin/products');
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);

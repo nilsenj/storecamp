@@ -3,15 +3,8 @@
 namespace App\Core\Contracts;
 
 
-interface ProductReviewSystemContract
+interface ProductReviewSystemContract extends BaseLogicContract
 {
-    /**
-     * @param $data
-     * @param null $id
-     * @param array $with
-     * @return mixed
-     */
-    public function present($data, $id = null, array $with = []);
 
     /**
      * @param $id
@@ -32,18 +25,4 @@ interface ProductReviewSystemContract
      * @param $data
      */
     public function markAsRead($id, $data) : void;
-
-    /**
-     * @param $data
-     * @param $id
-     * @return mixed
-     */
-    public function update($data, $id);
-
-    /**
-     * @param array $data
-     * @param $id
-     * @return mixed
-     */
-    public function delete($id, array $data = []) : int;
 }

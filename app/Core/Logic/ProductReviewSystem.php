@@ -6,7 +6,6 @@ use App\Core\Contracts\ProductReviewSystemContract;
 use App\Core\Repositories\ProductReviewRepository;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Repositories\UserRepository;
-use Illuminate\Http\Request;
 
 /**
  * Class ProductReviewSystem
@@ -48,7 +47,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
      * @param array $with
      * @return mixed
      */
-    public function present($data, $id = null, array $with = [])
+    public function present(array $data, $id = null, array $with = [])
     {
         if ($id) {
             $products = $this->productReview->find($id);
@@ -101,13 +100,22 @@ class ProductReviewSystem implements ProductReviewSystemContract
     }
 
     /**
+     * @param array $data
+     * @return mixed
+     */
+    public function create(array $data)
+    {
+        return;
+    }
+
+    /**
      * @param $data
      * @param $id
      * @return mixed
      */
-    public function update($data, $id)
+    public function update(array $data, $id)
     {
-
+        return;
     }
 
     /**

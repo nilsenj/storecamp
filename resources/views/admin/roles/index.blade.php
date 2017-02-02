@@ -37,7 +37,7 @@
                                 <td>{!! $role->display_name !!}</td>
                                 <td>{!! $role->description !!}</td>
                                 <td>
-                                    @foreach($role->perms()->get() as $permission)
+                                    @foreach($role->perms as $permission)
                                     &bullet; {{ $permission->name }}<br>
                                     @endforeach
                                 </td>
