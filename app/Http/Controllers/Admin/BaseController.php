@@ -39,6 +39,21 @@ abstract class BaseController extends Controller
     }
 
     /**
+     * @param $e
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function redirectError($e = null) : RedirectResponse
+    {
+        if (isset($e)) {
+            \Flash::error('Error appeared! Server message is - ' . $e->getMessage() . ' and code is - ' . $e->getCode());
+            return redirect($this->errorRedirectPath);
+        } else {
+            return redirect($this->errorRedirectPath)
+                ->with(\Flash::error('Sorry Error found!'));
+        }
+    }
+
+    /**
      * @param $search
      * @return null
      */

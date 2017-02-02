@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Core\Models\ProductReview;
+use App\Core\Contracts\ProductReviewSystemContract;
 use App\Core\Repositories\ProductReviewRepository;
 use App\Core\Validators\ProductReview\ReplyProductReviewFormRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Repositories\UserRepository;
 
-class ProductReviewController extends Controller
+/**
+ * Class ProductReviewController
+ * @package App\Http\Controllers\Admin
+ */
+class ProductReviewController extends BaseController
 {
     /**
      * @var ProductsRepository
@@ -27,33 +31,40 @@ class ProductReviewController extends Controller
     protected $productReview;
 
     /**
-     * AdminController constructor.
-     *
-     * @param $product
-     * @param $user
-     * @param $productReview
+     * @var
      */
-    public function __construct(ProductsRepository $product, UserRepository $user, ProductReviewRepository $productReview)
+    protected $productReviewSystem;
+
+    /**
+     * ProductReviewController constructor.
+     * @param ProductReviewSystemContract $productReviewSystem
+     * @param ProductsRepository $product
+     * @param UserRepository $user
+     * @param ProductReviewRepository $productReview
+     */
+    public function __construct(ProductReviewSystemContract $productReviewSystem, ProductsRepository $product, UserRepository $user, ProductReviewRepository $productReview)
     {
-        $this->product = $product;
-        $this->user = $user;
-        $this->productReview = $productReview;
+        $this->productReviewSystem = $productReviewSystem;
+        $this->product = $productReviewSystem->product;
+        $this->user = $productReviewSystem->user;
+        $this->productReview = $productReviewSystem->productReview;
     }
 
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function index(Request $request)
     {
         try {
-            $productReviews = $this->productReview->with(['product', 'user', 'thread'])->paginate();
+            $data = $request->all();
+            $productReviews = $this->productReviewSystem->present($data, null, ['product', 'user', 'thread']);
             $no = $productReviews->firstItem();
 
             return view('admin.productReview.index', compact('productReviews', 'no'));
 
         } catch (\Throwable $e) {
-            return response()->json(['error' => $e->getMessage(), "error_code" => $e->getCode()], $e->getCode());
+            return $this->redirectError($e);
         }
 
     }
@@ -61,20 +72,22 @@ class ProductReviewController extends Controller
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
     public function show(Request $request, $id)
     {
         try {
-
-            $productReview = $this->productReview->with(['product', 'user', 'thread'])->find($id);
+            $data = $request->all();
+            $productReview = $this->productReviewSystem->present($data, $id, ['product', 'user', 'thread']);;
             $currentUserId = \Auth::user()->id;
             $productReview->thread->first()->markAsRead($currentUserId);
 
             return view('admin.productReview.show', compact('productReview', 'currentUserId'));
 
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
-            return response()->json(['error' => $e->getMessage(), "error_code" => $e->getCode()], $e->getCode());
+            return $this->redirectError($e);
         }
     }
 
@@ -85,11 +98,16 @@ class ProductReviewController extends Controller
      */
     public function replyFeedback(ReplyProductReviewFormRequest $request, $id)
     {
+        try {
+            $data = $request->all();
+            $productReviews = $this->productReviewSystem->replyProductReview($id, $data);
 
-        $productReviews = $this->productReview->replyProductReview($id, $request->get('reply_message'));
-
-        return redirect()->to(route("admin::reviews::show", $productReviews->id));
-
+            return redirect()->to(route("admin::reviews::show", $productReviews->id));
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound($e);
+        } catch (\Throwable $e) {
+            return $this->redirectError($e);
+        }
     }
 
     /**
@@ -99,17 +117,15 @@ class ProductReviewController extends Controller
      */
     public function visibility(Request $request, $id)
     {
-
-        $productReview = $this->productReview->find($id);
-
-        if ($productReview->hidden == 0) {
-            $productReview->hidden = 1;
-        } else {
-            $productReview->hidden = 0;
+        try {
+            $data = $request->all();
+            $productReview = $this->productReviewSystem->toggleVisibility($id, $data);
+            return redirect()->back();
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound($e);
+        } catch (\Throwable $e) {
+            return $this->redirectError($e);
         }
-        $productReview->save();
-
-        return redirect()->back();
     }
 
     /**
@@ -120,37 +136,38 @@ class ProductReviewController extends Controller
     public function markAsRead(Request $request, $id)
     {
         try {
+            $data = $request->all();
             if ($request->ajax()) {
-
-                $productReview = $this->productReview->find($id);
-
-                $currentUser = \Auth::user();
-
-                $productReview->thread->first()->markAsRead($currentUser->id);
-
-                return response()->json(['message' => 'productReview marked as read', 'messages_count' => $currentUser->newMessagesCount()], 200);
+                $this->productReviewSystem->markAsRead($id, $data);
+                return response()->json(['message' => 'productReview marked as read', 'messages_count' => \Auth::user()->newMessagesCount()], 200);
             } else {
                 return response()->json('not allowed', 400);
             }
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
-
-            return response(["error"], 400);
+            return $this->redirectError($e);
         }
     }
 
     /**
+     * @param Request $request
      * @param $id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function delete($id)
+    public function delete(Request $request, $id)
     {
         try {
-
-            $this->productReview->delete($id);
+            $data = $request->all();
+            $deleted = $this->productReviewSystem->delete($id, $data);
+            if (!$deleted) {
+                \Flash::error('Error appeared! Review not deleted!');
+            }
             return redirect('admin/reviews/index');
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
-            \Toastr::error('Can\'t ber deleted', "Error while deleting");
-            return redirect()->back();
+            return $this->redirectError($e);
         }
     }
 }
