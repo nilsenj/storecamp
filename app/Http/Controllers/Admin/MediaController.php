@@ -124,7 +124,7 @@ class MediaController extends BaseController
         } catch (FileNotFoundException $exception) {
             return redirect()->to($this->errorRedirectPath)->withErrors($exception);
         } catch (\Throwable $exception) {
-            Flash::error($exception->getCode(), $exception->getMessage());
+            \Flash::error($exception->getCode(), $exception->getMessage());
             return redirect()->to($this->errorRedirectPath)->withErrors($exception);
         }
     }
