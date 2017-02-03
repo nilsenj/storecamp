@@ -55,7 +55,7 @@ class CategoriesController extends BaseController
     public function index(Request $request)
     {
         $data = $request->all();
-        $categories = $this->categorySystem->present($data, null, ['parent', 'children']);
+        $categories = $this->categorySystem->present($data, null, ['parent', 'children', 'media']);
         $no = $categories->firstItem();
 
         return $this->view('index', compact('categories', 'no'));
@@ -102,7 +102,7 @@ class CategoriesController extends BaseController
     {
         try {
             $data = $request->all();
-            $category = $this->categorySystem->present($data, $id);
+            $category = $this->categorySystem->present($data, $id, ['media']);
             $categories = $this->repository->all();
             return $this->view('show', compact('category', 'categories'));
         } catch (ModelNotFoundException $e) {
@@ -134,9 +134,9 @@ class CategoriesController extends BaseController
     public function edit($id)
     {
         try {
-            $category = $this->repository->find($id);
+            $category = $this->repository->with('media')->find($id);
             $parent = $category->parent;
-            $categories = $this->repository->with('parent')->all();
+            $categories = $this->repository->with(['parent'])->all();
             return $this->view('edit', compact('category', 'parent', 'categories'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();

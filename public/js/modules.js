@@ -309,6 +309,7 @@
       typesAvailable: [''],
       fileLinker: $('.file-linker'),
       fileLinkerSelectedBlock: $('.selected-block'),
+      selectedItemsClassPath: ".selected-block .selected-item",
       requestUrl: (ref = $('.file-linker').attr('data-requestUrl')) != null ? ref : APP_URL + "/admin/media/file_linker/local",
       fileTypes: (ref1 = $('.file-linker').attr('data-file-types')) != null ? ref1 : "image, document, audio, video, archive",
       fileMultiple: (ref2 = $('.file-linker').attr('data-multiple')) != null ? ref2 : false,
@@ -318,8 +319,12 @@
       submitBtn: $('#fileLinker-modal').find('button[type=submit]'),
       modalTitle: $('#fileLinker-modal').find('.modal-title'),
       modalBody: $('#fileLinker-modal').find('.modal-body'),
+      inputTemplateClass: "selected-files_input",
       fileBlockTemplate: function(selectorId, content, fileName) {
         return "<div data-id='" + selectorId + "' class='col-xs-6 col-md-2 col-lg-1 selected-item'>" + content + "<strong class='text-muted'>" + fileName + "</strong></div>";
+      },
+      inputTemplate: function() {
+        return "<input type=\"text\" name=\"selected_files\" class='" + this.inputTemplateClass + "'/>";
       }
     },
     activate: function() {
@@ -378,8 +383,7 @@
         selectUrl = btn.attr('data-href');
         selectFileName = btn.attr('data-file-name');
         folderBody = $('#folder-body');
-        _this.selectFile(btn, selectId, fileItemCheckBox, selectFileName, selectUrl);
-        return console.log(btn.attr('data-href'));
+        return _this.selectFile(btn, selectId, fileItemCheckBox, selectFileName, selectUrl);
       });
     },
     folderEvents: function(selectors) {
@@ -424,6 +428,7 @@
           fileItemCheckBox.iCheck('disable');
         }
       }
+      this.selectedMakeOutput();
     },
     manageToFileBlock: function(btn, selectFileName, selectId, selectUrl, methodType) {
       var _this;
@@ -446,28 +451,51 @@
     },
     reindexSelectedFiles: function() {
       var selectedItems;
-      selectedItems = $(".selected-block .selected-item");
-      return this._fileBlockSelectedState(selectedItems);
+      selectedItems = $("" + this.options.selectedItemsClassPath);
+      return this._setFileBlockSelectedState(selectedItems);
     },
     fileBlockRemoveTemplate: function(btn) {
       var blockItem;
       blockItem = $(".selected-block [data-id='" + (btn.attr('data-file-id')) + "']");
       return blockItem.remove();
     },
-    _fileBlockSelectedState: function(btn) {
+    _setFileBlockSelectedState: function(btn) {
       return btn.each(function(index) {
         var blockItem;
         blockItem = $(".file-item[data-file-id='" + ($(this).attr('data-id')) + "']");
-        console.log(blockItem);
         blockItem.addClass('checked');
         blockItem.find('input:checkbox').iCheck('disable');
         return blockItem.find('input:checkbox').iCheck('check');
       });
     },
+    _getFileBlockSelectedIds: function(selector) {
+      var items;
+      items = [];
+      selector.each(function(index) {
+        return items[index] = $(this).attr('data-id');
+      });
+      return items;
+    },
     selectFolder: function(folderUrl) {
       var _this;
       _this = this;
       return _this.showFiles(folderUrl);
+    },
+    selectedMakeOutput: function() {
+      var _this, generatedBlock, outputBlock;
+      _this = this;
+      outputBlock = $("" + this.options.fileAttachOutputPath);
+      if (outputBlock.length !== 0) {
+        generatedBlock = outputBlock.find("." + _this.options.inputTemplateClass);
+        if (generatedBlock.length > 0) {
+          generatedBlock.val(this._getFileBlockSelectedIds($("" + this.options.selectedItemsClassPath)));
+        } else {
+          generatedBlock = outputBlock.append(this.options.inputTemplate());
+          generatedBlock.val(this._getFileBlockSelectedIds($("" + this.options.selectedItemsClassPath)));
+        }
+      }
+      console.log(this._getFileBlockSelectedIds($("" + this.options.selectedItemsClassPath)));
+      return console.log(outputBlock);
     }
   };
 

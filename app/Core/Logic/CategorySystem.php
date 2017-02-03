@@ -3,7 +3,9 @@
 namespace App\Core\Logic;
 
 use App\Core\Contracts\CategorySystemContract;
+use App\Core\Models\Media;
 use App\Core\Repositories\CategoryRepository;
+use App\Core\Traits\MediableCore;
 
 /**
  * Class CategorySystem
@@ -11,6 +13,7 @@ use App\Core\Repositories\CategoryRepository;
  */
 class CategorySystem implements CategorySystemContract
 {
+    use MediableCore;
     /**
      * @var CategoryRepository
      */
@@ -62,10 +65,15 @@ class CategorySystem implements CategorySystemContract
      */
     public function update(array $data, $id)
     {
-        $data['top'] = $data->top ? $data->top == "on" ? true : false : false;
+        $data['top'] = isset($data['top']) ? $data['top'] == "on" ? true : false : false;
         $data["parent_id"] = empty($data["parent_id"]) ? null : $data["parent_id"];
+        $selectedFiles = $data['selected_files'];
+        unset($data['selected_files']);
         $category = $this->categoryRepository->find($id);
         $category->update($data);
+        foreach (explode(",", $selectedFiles) as $item) {
+            $category->attachMedia(Media::find($item), 'thumbnail');
+        }
         return $category;
     }
 

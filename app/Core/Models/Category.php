@@ -6,6 +6,7 @@ use App\Core\Components\Auditing\Auditable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
 use Juggl\UniqueHashids\GeneratesUnique;
+use Plank\Mediable\Mediable;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
@@ -57,6 +58,7 @@ class Category extends Model implements Transformable
     use \Cviebrock\EloquentSluggable\Sluggable;
     use SluggableScopeHelpers;
     use Auditable;
+    use Mediable;
 
     /**
      * @var array
@@ -111,6 +113,11 @@ class Category extends Model implements Transformable
         return $query->pluck('name', 'id');
     }
 
+    public function setParentAttribute($data) {
+        if(!$this->parent_id) {
+            $this->attributes['parent'] = true;
+        }
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

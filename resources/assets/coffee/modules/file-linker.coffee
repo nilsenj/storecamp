@@ -3,6 +3,7 @@ $.StoreCamp.fileLinker =
     typesAvailable: ['']
     fileLinker: $('.file-linker')
     fileLinkerSelectedBlock: $('.selected-block')
+    selectedItemsClassPath: ".selected-block .selected-item"
     requestUrl: $('.file-linker').attr('data-requestUrl') ? APP_URL + "/admin/media/file_linker/local"
     fileTypes: $('.file-linker').attr('data-file-types') ? "image, document, audio, video, archive"
     fileMultiple: $('.file-linker').attr('data-multiple') ? false
@@ -12,8 +13,11 @@ $.StoreCamp.fileLinker =
     submitBtn: $('#fileLinker-modal').find('button[type=submit]')
     modalTitle:$('#fileLinker-modal').find('.modal-title')
     modalBody: $('#fileLinker-modal').find('.modal-body')
+    inputTemplateClass: "selected-files_input"
     fileBlockTemplate: (selectorId, content, fileName) ->
       "<div data-id='#{selectorId}' class='col-xs-6 col-md-2 col-lg-1 selected-item'>#{content}<strong class='text-muted'>#{fileName}</strong></div>"
+    inputTemplate: () ->
+      """<input type="text" name="selected_files" class='#{this.inputTemplateClass}'/>"""
   }
   activate: () ->
     _this = this
@@ -65,7 +69,6 @@ $.StoreCamp.fileLinker =
       selectFileName = btn.attr('data-file-name')
       folderBody = $('#folder-body')
       _this.selectFile(btn, selectId, fileItemCheckBox, selectFileName, selectUrl)
-      console.log(btn.attr('data-href'))
   folderEvents: (selectors) ->
     _this = this
     selectors.forEach (item, i, arr) ->
@@ -101,6 +104,7 @@ $.StoreCamp.fileLinker =
         fileItemCheckBox.iCheck('check')
         _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'add')
         fileItemCheckBox.iCheck('disable')
+    @.selectedMakeOutput()
     return
   manageToFileBlock: (btn, selectFileName, selectId, selectUrl, methodType) ->
     _this = this
@@ -116,20 +120,37 @@ $.StoreCamp.fileLinker =
     htmlContent = _this.options.fileBlockTemplate(selectorId, content, fileName)
     _this.options.fileLinkerSelectedBlock.append(htmlContent)
   reindexSelectedFiles: () ->
-    selectedItems = $(".selected-block .selected-item")
-    @_fileBlockSelectedState selectedItems
+    selectedItems = $("#{@.options.selectedItemsClassPath}")
+    @_setFileBlockSelectedState selectedItems
   fileBlockRemoveTemplate: (btn) ->
     blockItem = $(".selected-block [data-id='#{btn.attr('data-file-id')}']");
     blockItem.remove()
-  _fileBlockSelectedState: (btn) ->
+  _setFileBlockSelectedState: (btn) ->
     btn.each (index) ->
       blockItem = $(".file-item[data-file-id='#{$(this).attr('data-id')}']")
-      console.log(blockItem)
       blockItem.addClass('checked')
       blockItem.find('input:checkbox').iCheck('disable')
       blockItem.find('input:checkbox').iCheck('check')
+  _getFileBlockSelectedIds: (selector) ->
+    items = []
+    selector.each (index) ->
+      items[index] = $(this).attr('data-id')
+    return items
   selectFolder: (folderUrl) ->
     _this = this
     _this.showFiles(folderUrl)
+  selectedMakeOutput: () ->
+    _this = this
+    outputBlock = $("#{@.options.fileAttachOutputPath}")
+    if(outputBlock.length != 0 )
+      generatedBlock = outputBlock.find("."+_this.options.inputTemplateClass)
+      if(generatedBlock.length > 0)
+        generatedBlock.val(@._getFileBlockSelectedIds $("#{@.options.selectedItemsClassPath}"))
+      else
+        generatedBlock = outputBlock.append(@.options.inputTemplate())
+        generatedBlock.val(@._getFileBlockSelectedIds $("#{@.options.selectedItemsClassPath}"))
+
+    console.log(@._getFileBlockSelectedIds $("#{@.options.selectedItemsClassPath}"))
+    console.log(outputBlock)
 
 $.StoreCamp.fileLinker.activate()

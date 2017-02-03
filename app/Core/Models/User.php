@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Juggl\UniqueHashids\GeneratesUnique;
+use Plank\Mediable\Mediable;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -72,7 +73,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     use GeneratesUnique;
     use Messagable;
     use Auditable;
-
+    use Mediable;
     /**
      * @var string
      */
