@@ -287,7 +287,7 @@
             $.StoreCamp.media.reindex($('.media-plyr-item'), players);
           },
           error: function(xhr, textStatus, errorThrown) {
-            folderBody.html('<b class=\'text-warning\'>' + xhr.responseJSON + '</b>' + '<br><code class=\'text-warning\'>' + 'code - ' + xhr.status + ' statusText - ' + xhr.statusText + '</code>');
+            $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared');
             console.error(xhr);
           }
         }, false);
@@ -319,7 +319,7 @@
       modalTitle: $('#fileLinker-modal').find('.modal-title'),
       modalBody: $('#fileLinker-modal').find('.modal-body'),
       fileBlockTemplate: function(selectorId, content, fileName) {
-        return "<div data-id='" + selectorId + "' class='col-xs-6 col-md-3 col-lg-2'>" + content + "<strong class='text-muted'>" + fileName + "</strong></div>";
+        return "<div data-id='" + selectorId + "' class='col-xs-6 col-md-2 col-lg-1 selected-item'>" + content + "<strong class='text-muted'>" + fileName + "</strong></div>";
       }
     },
     activate: function() {
@@ -334,23 +334,31 @@
         var fileLinker;
         fileLinker = $(event.relatedTarget);
         $(this).modal('show');
-        _this.showFiles();
+        _this.showFiles(_this.options.requestUrl);
       });
     },
-    showFiles: function() {
-      var _this, dataObject;
+    showFiles: function(requestUrl) {
+      var _this, _token, dataObject;
       _this = this;
+      _token = $('meta[name="csrf-token"]').attr('content');
       dataObject = {
         multiple: _this.options.fileMultiple,
-        dataTypes: _this.options.fileTypes
+        dataTypes: _this.options.fileTypes,
+        _token: _token
       };
       return $.ajax({
-        url: _this.options.requestUrl,
+        url: requestUrl,
         type: 'POST',
         data: dataObject,
+        _method: "post",
+        headers: {
+          'X-CSRF-TOKEN': _token
+        },
         success: function(data) {
           _this.options.modalBody.html(data);
           _this.fileEvents();
+          _this.folderEvents([$(".directory-item .select-folder"), $(".navigation-links a")]);
+          _this.reindexSelectedFiles();
         },
         error: function(xhr, textStatus, errorThrown) {
           $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared');
@@ -374,25 +382,25 @@
         return console.log(btn.attr('data-href'));
       });
     },
-    folderEvents: function() {
+    folderEvents: function(selectors) {
       var _this;
       _this = this;
-      return $(".directory-item .select-folder").on("click", function(event) {
-        var btn, fileItem, folderBody, folderDisk, folderId, folderUrl;
-        event.preventDefault();
-        btn = $(this);
-        folderUrl = btn.attr('data-href');
-        folderId = btn.attr('data-file-id');
-        folderDisk = btn.attr('data-disk');
-        fileItem = btn.closest('.directory-item');
-        folderBody = $('#folder-body');
-        _this.selectFolder(folderUrl, fileItem);
+      return selectors.forEach(function(item, i, arr) {
+        return item.on("click", function(event) {
+          var btn, fileItem, folderDisk, folderId, folderUrl;
+          event.preventDefault();
+          btn = $(this);
+          folderUrl = btn.attr('data-folder-url');
+          folderId = btn.attr('data-folder-id');
+          folderDisk = btn.attr('data-disk');
+          fileItem = btn.closest('.directory-item');
+          _this.selectFolder(folderUrl);
+        });
       });
     },
     selectFile: function(btn, selectId, fileItemCheckBox, selectFileName, selectUrl) {
       var _this;
       _this = this;
-      console.log("select file not triggered");
       $('.file-item').find('input:checkbox').iCheck('disable');
       if (!_this.options.fileMultiple) {
         $('.file-item').find('input:checkbox').iCheck('uncheck');
@@ -436,28 +444,30 @@
       htmlContent = _this.options.fileBlockTemplate(selectorId, content, fileName);
       return _this.options.fileLinkerSelectedBlock.append(htmlContent);
     },
+    reindexSelectedFiles: function() {
+      var selectedItems;
+      selectedItems = $(".selected-block .selected-item");
+      return this._fileBlockSelectedState(selectedItems);
+    },
     fileBlockRemoveTemplate: function(btn) {
       var blockItem;
       blockItem = $(".selected-block [data-id='" + (btn.attr('data-file-id')) + "']");
-      console.log(blockItem);
       return blockItem.remove();
+    },
+    _fileBlockSelectedState: function(btn) {
+      return btn.each(function(index) {
+        var blockItem;
+        blockItem = $(".file-item[data-file-id='" + ($(this).attr('data-id')) + "']");
+        console.log(blockItem);
+        blockItem.addClass('checked');
+        blockItem.find('input:checkbox').iCheck('disable');
+        return blockItem.find('input:checkbox').iCheck('check');
+      });
     },
     selectFolder: function(folderUrl) {
       var _this;
       _this = this;
-      return $.ajax({
-        url: deleteUrl,
-        type: 'GET',
-        success: function(data) {
-          fileItem.remove();
-          $.StoreCamp.templates.alert('success', data.title, data.message);
-          console.log(data);
-        },
-        error: function(xhr, textStatus, errorThrown) {
-          $.StoreCamp.templates.alert('danger', xhr.statusText, xhr.responseText);
-          console.error(xhr);
-        }
-      }, false);
+      return _this.showFiles(folderUrl);
     }
   };
 

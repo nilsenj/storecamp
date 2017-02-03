@@ -160,7 +160,9 @@ class MediaController extends BaseController
     }
 
     /**
-     * get folders and files in json format and response for json requests
+     * get folders and files in html format and
+     * response for json requests for
+     * file linker functionality
      *
      * @param Request $request
      * @param null $folder
@@ -179,11 +181,11 @@ class MediaController extends BaseController
             $folder = $predefined['folder'];
             $count = $predefined['count'];
             $disk = $predefined['disk'];
-            $urlFolderPathBuild = $this->mediaSystemBuilder->getParentFoldersPathLinks($folder, $diskName);
-            $rootFolders = $this->mediaSystemBuilder->getDiskUrls($diskName);
+            $urlFolderPathBuild = $this->mediaSystemBuilder->getParentFoldersPathLinks($folder, $diskName, "admin::media::file_linker");
+            $rootFolders = $this->mediaSystemBuilder->getDiskUrls($diskName, "admin::media::file_linker");
             $multiple = $request->get('multiple') === "true" ? true : false;
             return view('admin.fileLinker.file-linker',
-                compact('media', 'directories', 'path', 'folder', 'count', 'urlFolderPathBuild', 'disk', 'rootFolders', 'multiple', 'types'));
+                compact('media', 'directories', 'path', 'folder', 'count', 'urlFolderPathBuild', 'disk', 'rootFolders', 'multiple'));
         } catch (ModelNotFoundException $e) {
             return response()->json($e->getMessage(), $e->getCode());
         } catch (\Exception $exception) {

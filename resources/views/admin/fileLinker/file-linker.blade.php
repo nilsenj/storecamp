@@ -1,4 +1,8 @@
 <div class="col-xs-7 col-sm-7 col-md-8 col-lg-9 files">
+    <span class="navigation-links">
+        @include('admin.fileLinker.navigation_path')
+    </span>
+    <div class="clearfix"></div>
     <?php $tag = isset($tag) ? $tag : null; ?>
     @foreach(array_chunk($media->all(), 4) as $row)
         <div class="row file-list">
@@ -39,12 +43,12 @@
 
             @foreach($directories as $directory)
                 <div class="col-xs-12 col-md-6 directory-item">
-                    <a
-                            class="btn btn-app select-folder"
-                            type="select"
-                            role="checkbox"
-                            data-file-id="{{route('admin::media::index', [$disk, $directory->unique_id]) }}"
-                    ><i class='fa fa-file'></i>
+                    <a class="btn btn-app select-folder"
+                       type="select"
+                       role="checkbox"
+                       data-folder-url="{{ route('admin::media::file_linker', [$disk, $directory->unique_id]) }}"
+                       data-folder-id="{{ $directory->unique_id }}">
+                        <i class='fa fa-file'></i>
                         <span>{{str_limit($directory['name'], 15)}}</span>
                         @if($directory->locked)
                             <span rel="tooltip" title="Folder Locked" data-toggle="tooltip"

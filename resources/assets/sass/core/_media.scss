@@ -1,5 +1,5 @@
 //colors
-$alice_blue:  aliceblue;
+$alice_blue: aliceblue;
 $white: white;
 
 //@extend-elements
@@ -13,30 +13,34 @@ $white: white;
   padding: 3px;
 }
 
-
 .delete-file {
   @extend %extend_1;
 }
+
 .rename-file {
   @extend %extend_1;
   display: none;
   top: 30px;
   z-index: 9999;
 }
+
 .locked-file {
   position: absolute;
   top: 5px;
   color: chocolate;
 }
+
 .download-file {
   @extend %extend_1;
   display: none;
   top: 30px;
   z-index: 9999;
 }
+
 .tag-file {
   @extend %extend_1;
 }
+
 .file-item {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -74,6 +78,7 @@ $white: white;
     }
   }
 }
+
 #my-awesome-dropzone-body {
   border: 2px dashed $alice_blue;
   //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
@@ -87,9 +92,11 @@ $white: white;
     display: none;
   }
 }
+
 .files li {
   list-style-type: none;
 }
+
 .directory-item:hover {
   .delete-file {
     display: block;
@@ -100,6 +107,7 @@ $white: white;
     z-index: 9999;
   }
 }
+
 .media_tags {
   display: inline-block;
   li {
@@ -117,11 +125,12 @@ $white: white;
     }
   }
 }
+
 .dropzone {
-   border: 2px dashed $alice_blue!important;
-   border-radius: 5px;
-   background: white;
- }
+  border: 2px dashed $alice_blue !important;
+  border-radius: 5px;
+  background: white;
+}
 
 .playing {
   .mailbox-attachment-icon {
@@ -140,8 +149,10 @@ $white: white;
     border-bottom: 2px dashed $alice_blue;
   }
 }
+
 #fileLinker-modal {
   .selected-block {
+    word-wrap: break-word;
     div {
       text-align: center;
       img {
@@ -155,14 +166,15 @@ $white: white;
       }
       .item-icon {
         width: 100%;
-        height: 150px;
+        height: 80px;
         display: block;
-        font-size: 120px;
+        font-size: 70px;
         text-align: center;
         list-style-type: none !important;
         border: 2px solid #f4f4f4;
         background: #f4f4f4;
       }
+
     }
   }
 }

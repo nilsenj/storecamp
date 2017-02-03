@@ -18,7 +18,7 @@ $.StoreCamp.dropzone =
           $.StoreCamp.media.reindex $('.media-plyr-item'), players
           return
         error: (xhr, textStatus, errorThrown) ->
-          folderBody.html '<b class=\'text-warning\'>' + xhr.responseJSON + '</b>' + '<br><code class=\'text-warning\'>' + 'code - ' + xhr.status + ' statusText - ' + xhr.statusText + '</code>'
+          $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared')
           console.error xhr
           return
         false

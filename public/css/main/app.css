@@ -283,6 +283,10 @@
   border-bottom: 2px dashed aliceblue;
 }
 
+#fileLinker-modal .selected-block {
+  word-wrap: break-word;
+}
+
 #fileLinker-modal .selected-block div {
   text-align: center;
 }
@@ -297,9 +301,9 @@
 
 #fileLinker-modal .selected-block div .item-icon {
   width: 100%;
-  height: 150px;
+  height: 80px;
   display: block;
-  font-size: 120px;
+  font-size: 70px;
   text-align: center;
   list-style-type: none !important;
   border: 2px solid #f4f4f4;

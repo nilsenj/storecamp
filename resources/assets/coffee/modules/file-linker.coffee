@@ -13,7 +13,7 @@ $.StoreCamp.fileLinker =
     modalTitle:$('#fileLinker-modal').find('.modal-title')
     modalBody: $('#fileLinker-modal').find('.modal-body')
     fileBlockTemplate: (selectorId, content, fileName) ->
-      "<div data-id='#{selectorId}' class='col-xs-6 col-md-3 col-lg-2'>#{content}<strong class='text-muted'>#{fileName}</strong></div>"
+      "<div data-id='#{selectorId}' class='col-xs-6 col-md-2 col-lg-1 selected-item'>#{content}<strong class='text-muted'>#{fileName}</strong></div>"
   }
   activate: () ->
     _this = this
@@ -23,23 +23,31 @@ $.StoreCamp.fileLinker =
     _this.options.fileLinkerModal.on 'shown.bs.modal', (event) ->
       fileLinker = $(event.relatedTarget)
       $(this).modal('show')
-      _this.showFiles()
+      _this.showFiles(_this.options.requestUrl)
       return
     return
 
-  showFiles: () ->
+  showFiles: (requestUrl) ->
     _this = this
+    _token = $('meta[name="csrf-token"]').attr('content');
     dataObject = {
       multiple: _this.options.fileMultiple
       dataTypes: _this.options.fileTypes
+      _token: _token
     }
     $.ajax
-      url: _this.options.requestUrl
+      url: requestUrl
       type: 'POST'
       data: dataObject
+      _method: "post"
+      headers: {
+        'X-CSRF-TOKEN': _token
+      },
       success: (data) ->
         _this.options.modalBody.html(data)
         _this.fileEvents()
+        _this.folderEvents([$(".directory-item .select-folder"), $(".navigation-links a")])
+        _this.reindexSelectedFiles()
         return
       error: (xhr, textStatus, errorThrown) ->
         $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared')
@@ -58,21 +66,20 @@ $.StoreCamp.fileLinker =
       folderBody = $('#folder-body')
       _this.selectFile(btn, selectId, fileItemCheckBox, selectFileName, selectUrl)
       console.log(btn.attr('data-href'))
-  folderEvents: () ->
+  folderEvents: (selectors) ->
     _this = this
-    $(".directory-item .select-folder").on "click", (event) ->
-      event.preventDefault()
-      btn = $(this)
-      folderUrl = btn.attr('data-href')
-      folderId = btn.attr('data-file-id')
-      folderDisk = btn.attr('data-disk')
-      fileItem = btn.closest('.directory-item')
-      folderBody = $('#folder-body')
-      _this.selectFolder(folderUrl, fileItem)
-      return
+    selectors.forEach (item, i, arr) ->
+      item.on "click", (event) ->
+        event.preventDefault()
+        btn = $(this)
+        folderUrl = btn.attr('data-folder-url')
+        folderId = btn.attr('data-folder-id')
+        folderDisk = btn.attr('data-disk')
+        fileItem = btn.closest('.directory-item')
+        _this.selectFolder(folderUrl)
+        return
   selectFile: (btn, selectId, fileItemCheckBox, selectFileName, selectUrl) ->
     _this = this
-    console.log("select file not triggered")
     $('.file-item').find('input:checkbox').iCheck('disable')
     if (!_this.options.fileMultiple)
       $('.file-item').find('input:checkbox').iCheck('uncheck')
@@ -108,27 +115,21 @@ $.StoreCamp.fileLinker =
     fileName = btn.find(".mailbox-attachment-name").html()
     htmlContent = _this.options.fileBlockTemplate(selectorId, content, fileName)
     _this.options.fileLinkerSelectedBlock.append(htmlContent)
+  reindexSelectedFiles: () ->
+    selectedItems = $(".selected-block .selected-item")
+    @_fileBlockSelectedState selectedItems
   fileBlockRemoveTemplate: (btn) ->
     blockItem = $(".selected-block [data-id='#{btn.attr('data-file-id')}']");
-    console.log(blockItem)
     blockItem.remove()
-
-#TODO Perform list of selected arrays
-  #TODO and store them in input
+  _fileBlockSelectedState: (btn) ->
+    btn.each (index) ->
+      blockItem = $(".file-item[data-file-id='#{$(this).attr('data-id')}']")
+      console.log(blockItem)
+      blockItem.addClass('checked')
+      blockItem.find('input:checkbox').iCheck('disable')
+      blockItem.find('input:checkbox').iCheck('check')
   selectFolder: (folderUrl) ->
     _this = this
-    $.ajax
-      url: deleteUrl
-      type: 'GET'
-      success: (data) ->
-        fileItem.remove()
-        $.StoreCamp.templates.alert('success', data.title , data.message)
-        console.log(data);
-        return
-      error: (xhr, textStatus, errorThrown) ->
-        $.StoreCamp.templates.alert('danger', xhr.statusText, xhr.responseText)
-        console.error xhr
-        return
-      false
+    _this.showFiles(folderUrl)
 
 $.StoreCamp.fileLinker.activate()
