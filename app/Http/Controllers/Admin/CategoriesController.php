@@ -83,7 +83,6 @@ class CategoriesController extends BaseController
     {
         try {
             $data = $request->all();
-            $data['top'] = $request->top ? $request->top == "on" ? true : false : false;
             $category = $this->categorySystem->create($data);
             return redirect('admin/categories');
 

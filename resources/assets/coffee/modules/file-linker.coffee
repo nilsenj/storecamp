@@ -69,6 +69,7 @@ $.StoreCamp.fileLinker =
       selectFileName = btn.attr('data-file-name')
       folderBody = $('#folder-body')
       _this.selectFile(btn, selectId, fileItemCheckBox, selectFileName, selectUrl)
+      _this.selectedMakeOutput()
   folderEvents: (selectors) ->
     _this = this
     selectors.forEach (item, i, arr) ->
@@ -104,7 +105,6 @@ $.StoreCamp.fileLinker =
         fileItemCheckBox.iCheck('check')
         _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'add')
         fileItemCheckBox.iCheck('disable')
-    @.selectedMakeOutput()
     return
   manageToFileBlock: (btn, selectFileName, selectId, selectUrl, methodType) ->
     _this = this
@@ -147,10 +147,8 @@ $.StoreCamp.fileLinker =
       if(generatedBlock.length > 0)
         generatedBlock.val(@._getFileBlockSelectedIds $("#{@.options.selectedItemsClassPath}"))
       else
-        generatedBlock = outputBlock.append(@.options.inputTemplate())
+        outputBlock.append(@.options.inputTemplate())
+        generatedBlock = outputBlock.find("."+_this.options.inputTemplateClass)
         generatedBlock.val(@._getFileBlockSelectedIds $("#{@.options.selectedItemsClassPath}"))
-
-    console.log(@._getFileBlockSelectedIds $("#{@.options.selectedItemsClassPath}"))
-    console.log(outputBlock)
 
 $.StoreCamp.fileLinker.activate()

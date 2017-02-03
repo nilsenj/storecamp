@@ -54,7 +54,12 @@ class CategorySystem implements CategorySystemContract
      */
     public function create(array $data)
     {
+        $data['top'] = isset($data['top']) ? $data['top'] == "on" ? true : false : false;
+        $data["parent_id"] = empty($data["parent_id"]) ? null : $data["parent_id"];
+        $selectedFiles = isset($data['selected_files']) ? $data['selected_files'] : "";
+        unset($data['selected_files']);
         $category = $this->categoryRepository->create($data);
+        $this->syncMediaFile($category, $selectedFiles, 'thumbnail');
         return $category;
     }
 
@@ -67,13 +72,11 @@ class CategorySystem implements CategorySystemContract
     {
         $data['top'] = isset($data['top']) ? $data['top'] == "on" ? true : false : false;
         $data["parent_id"] = empty($data["parent_id"]) ? null : $data["parent_id"];
-        $selectedFiles = $data['selected_files'];
+        $selectedFiles = isset($data['selected_files']) ? $data['selected_files'] : "";
         unset($data['selected_files']);
         $category = $this->categoryRepository->find($id);
         $category->update($data);
-        foreach (explode(",", $selectedFiles) as $item) {
-            $category->attachMedia(Media::find($item), 'thumbnail');
-        }
+        $this->syncMediaFile($category, $selectedFiles, 'thumbnail');
         return $category;
     }
 

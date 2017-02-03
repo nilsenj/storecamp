@@ -383,7 +383,8 @@
         selectUrl = btn.attr('data-href');
         selectFileName = btn.attr('data-file-name');
         folderBody = $('#folder-body');
-        return _this.selectFile(btn, selectId, fileItemCheckBox, selectFileName, selectUrl);
+        _this.selectFile(btn, selectId, fileItemCheckBox, selectFileName, selectUrl);
+        return _this.selectedMakeOutput();
       });
     },
     folderEvents: function(selectors) {
@@ -428,7 +429,6 @@
           fileItemCheckBox.iCheck('disable');
         }
       }
-      this.selectedMakeOutput();
     },
     manageToFileBlock: function(btn, selectFileName, selectId, selectUrl, methodType) {
       var _this;
@@ -488,14 +488,13 @@
       if (outputBlock.length !== 0) {
         generatedBlock = outputBlock.find("." + _this.options.inputTemplateClass);
         if (generatedBlock.length > 0) {
-          generatedBlock.val(this._getFileBlockSelectedIds($("" + this.options.selectedItemsClassPath)));
+          return generatedBlock.val(this._getFileBlockSelectedIds($("" + this.options.selectedItemsClassPath)));
         } else {
-          generatedBlock = outputBlock.append(this.options.inputTemplate());
-          generatedBlock.val(this._getFileBlockSelectedIds($("" + this.options.selectedItemsClassPath)));
+          outputBlock.append(this.options.inputTemplate());
+          generatedBlock = outputBlock.find("." + _this.options.inputTemplateClass);
+          return generatedBlock.val(this._getFileBlockSelectedIds($("" + this.options.selectedItemsClassPath)));
         }
       }
-      console.log(this._getFileBlockSelectedIds($("" + this.options.selectedItemsClassPath)));
-      return console.log(outputBlock);
     }
   };
 
