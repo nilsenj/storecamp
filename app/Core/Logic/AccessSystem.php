@@ -106,6 +106,17 @@ class AccessSystem implements AccessSystemContract
     }
 
     /**
+     * @param array $data
+     * @param $id
+     * @return mixed
+     */
+    public function updatePermission(array $data, $id)
+    {
+        $permission = $this->permissionRepository->update($data, $id);
+        return $permission;
+    }
+
+    /**
      * @param $id
      * @param array $data
      * @return int
@@ -113,6 +124,18 @@ class AccessSystem implements AccessSystemContract
     public function deleteRole($id, array $data = []): int
     {
         $deleted = $this->rolesRepository->delete($id);
+        return $deleted;
+
+    }
+
+    /**
+     * @param $id
+     * @param array $data
+     * @return int
+     */
+    public function deletePermission($id, array $data = []): int
+    {
+        $deleted = $this->permissionRepository->delete($id);
         return $deleted;
 
     }

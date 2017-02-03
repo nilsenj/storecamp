@@ -8,8 +8,6 @@ use App\Core\Models\User;
 use Illuminate\Support\Facades\Input;
 use RepositoryLab\Repository\Eloquent\BaseRepository;
 use RepositoryLab\Repository\Criteria\RequestCriteria;
-use Illuminate\Container\Container as Application;
-use Illuminate\Contracts\Bus\Dispatcher;
 
 /**
  * Class RolesRepositoryEloquent
@@ -45,29 +43,17 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
     }
 
     /**
-     * @return mixed
-     */
-    public function getModel()
-    {
-        $model = Role::class;
-
-        return new $model;
-    }
-
-    /**
      * @param array $data
      * @return mixed
      */
     public function store(array $data)
     {
         $listIds = $data['permissions'];
-        $roleCreate = $this->getModel()->create($data);
+        $role = $this->create($data);
         foreach ($listIds as $key => $value) {
-
-            $roleCreate->attachPermission($value);
+            $role->attachPermission($value);
         }
-        return $roleCreate;
-
+        return $role;
     }
 
     /**
@@ -102,7 +88,6 @@ class RolesRepositoryEloquent extends BaseRepository implements RolesRepository
     {
         $user = new User();
         $roleUsers = $user->getUsersByRole($name);
-
         return $roleUsers;
     }
 

@@ -41,10 +41,24 @@ interface AccessSystemContract
     public function updateRole(array $data, $id);
 
     /**
+     * @param array $data
+     * @param $id
+     * @return mixed
+     */
+    public function updatePermission(array $data, $id);
+
+    /**
      * @param $id
      * @param array $data
      * @return int
      */
     public function deleteRole($id, array $data = []): int;
+
+    /**
+     * @param $id
+     * @param array $data
+     * @return int
+     */
+    public function deletePermission($id, array $data = []): int;
 
 }

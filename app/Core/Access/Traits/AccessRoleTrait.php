@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Entrust,
- * a role & permission management solution for Syrinx.
+ * a role & permission management solution for StoreCamp.
  *
  * @license MIT
  * @package App\Core\Access

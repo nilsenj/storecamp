@@ -18,6 +18,9 @@ class Synchronizer implements SynchronizerInterface
      * @var Folder
      */
     protected $folder;
+    /**
+     * @var MediaRepository
+     */
     protected $media;
 
     /**
@@ -117,7 +120,11 @@ class Synchronizer implements SynchronizerInterface
                     $fileName = \File::basename($file);
                     $fileNameClean = explode(".", $fileName);
                     array_pop($fileNameClean);
-                    $mediaFile = Media::where("directory", $newFolder->path_on_disk)->where("filename", implode("", $fileNameClean))->where('disk', $disk);
+                    $mediaFile = $this->media->findWhere([
+                        ["directory", '=', $newFolder->path_on_disk],
+                        ["filename", '=', implode("", $fileNameClean)],
+                        ['disk', '=', $disk]
+                    ]);
                     if ($mediaFile->count() == 0) {
                         $media = \MediaUploader::importPath($disk, $newFolder->path_on_disk . "/" . $fileName);
                         $media->directory_id = $newFolder->id;
@@ -134,7 +141,11 @@ class Synchronizer implements SynchronizerInterface
                     $fileName = \File::basename($file);
                     $fileNameClean = explode(".", $fileName);
                     array_pop($fileNameClean);
-                    $mediaFile = Media::where("directory", $folderParentInstance->path_on_disk)->where("filename", $fileNameClean)->where('disk', $disk);
+                    $mediaFile = $this->media->findWhere([
+                        ["directory", '=', $folderParentInstance->path_on_disk],
+                        ["filename", '=', $fileNameClean],
+                        ['disk', '=', $disk]
+                    ]);
                     if ($mediaFile->count() == 0) {
                         $media = \MediaUploader::importPath($disk, $folderParentInstance->path_on_disk . "/" . $fileName);
                         $media->directory_id = $folderParentInstance->id;
@@ -199,13 +210,21 @@ class Synchronizer implements SynchronizerInterface
         return $items;
     }
 
-    private function rootFolderFilesSearch($root, $disk) {
+    /**
+     * @param $root
+     * @param $disk
+     */
+    private function rootFolderFilesSearch($root, $disk)
+    {
         $rootFolder = $this->resolveRootFolder($disk);
         foreach (\File::files($root) as $file) {
             $fileName = \File::basename($file);
             $fileNameClean = explode(".", $fileName);
             array_pop($fileNameClean);
-            $mediaFile = Media::where("directory", '')->where("filename", implode("", $fileNameClean))->where('disk', $disk);
+            $mediaFile = $this->media->findWhere([
+                ["directory", '=', ''],
+                ["filename", '=', implode("", $fileNameClean)],
+                ['disk', '=', $disk]]);
             if ($mediaFile->count() == 0) {
                 $media = \MediaUploader::importPath($disk, $rootFolder->path_on_disk . "/" . $fileName);
                 $media->directory_id = $rootFolder->id;
@@ -213,11 +232,18 @@ class Synchronizer implements SynchronizerInterface
             }
         }
     }
+
+    /**
+     * @param string $disk
+     * @return Folder
+     */
     private function resolveRootFolder($disk = 'local'): Folder
     {
-        $rootFolder = $this->folder->disk($disk)
-            ->where('disk', $disk)->where("name", "")
-            ->where("path_on_disk", null);
+        $rootFolder = $this->folder->findWhere([
+            ['disk', '=', $disk],
+            ["name", '=', ""],
+            ["path_on_disk", '=', null]
+        ]);
         if ($rootFolder->count() == 0) {
             return $rootFolder = \App\Core\Models\Folder::create([
                 'name' => '',
@@ -225,7 +251,6 @@ class Synchronizer implements SynchronizerInterface
                 'disk' => $disk
             ]);
         } else {
-
             return $rootFolder = $rootFolder->first();
         }
     }

@@ -9,6 +9,5 @@ use RepositoryLab\Repository\Contracts\RepositoryInterface;
  */
 interface PermissionRepository extends RepositoryInterface
 {
-    public function renew($data, $permission);
 
 }
