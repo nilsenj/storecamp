@@ -124,7 +124,7 @@ class FolderRepositoryEloquent extends BaseRepository implements FolderRepositor
     /**
      * @param mixed $rootFromProject
      */
-    public function setRootFromProject($rootFromProject) : void
+    public function setRootFromProject($rootFromProject)
     {
         $this->rootFromProject = $rootFromProject;
     }
