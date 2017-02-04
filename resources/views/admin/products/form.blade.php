@@ -187,7 +187,14 @@
         </div>
         <!-- /.tab-content -->
         <div class="tab-pane" id="image">
-
+            <div class="form-group">
+                {!! Form::label('selected_files', 'Product Images', ['class' => 'control-label']) !!}
+                <div class="files selected-block">
+                    @include('admin.fileLinker.file-linker_selected_list', [$model = $product, $preferredTag])
+                </div>
+                <div class="clearfix"></div>
+                @include('admin.fileLinker.fileLinkerModal', [$model = $product, $preferredTag, $btnMsg = 'attach images to product', $fileTypes = 'image', $multiple = true, $outputElementPath = "#general", $disk = "local"])
+            </div>
         </div>
         <div class="form-group">
             {!! Form::submit(isset($product) ? 'Edit' : 'Save', ['class' => 'btn btn-primary']) !!}

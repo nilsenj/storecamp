@@ -140,7 +140,7 @@ $.StoreCamp.fileLinker =
     items = []
     selector.each (index) ->
       items[index] = $(this).attr('data-id')
-    return items
+    return $.unique(items)
   selectFolder: (folderUrl) ->
     _this = this
     _this.showFiles(folderUrl)

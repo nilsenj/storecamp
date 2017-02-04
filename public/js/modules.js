@@ -480,7 +480,7 @@
       selector.each(function(index) {
         return items[index] = $(this).attr('data-id');
       });
-      return items;
+      return $.unique(items);
     },
     selectFolder: function(folderUrl) {
       var _this;

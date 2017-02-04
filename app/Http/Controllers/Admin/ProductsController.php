@@ -57,7 +57,7 @@ class ProductsController extends BaseController
     public function index(Request $request)
     {
         $data = $request->all();
-        $products = $this->productSystem->present($data, null, $with = ["categories"]);
+        $products = $this->productSystem->present($data, null, $with = ['categories', 'media']);
         $no = $products->firstItem();
         return $this->view('index', compact('products', 'no'));
     }
@@ -69,7 +69,8 @@ class ProductsController extends BaseController
     {
         $categories = $this->categoryRepository->all();
         $chosenCategory = null;
-        return $this->view('create', compact('categories', 'chosenCategory'));
+        $preferredTag = "gallery";
+        return $this->view('create', compact('categories', 'chosenCategory', 'preferredTag'));
     }
 
     /**
@@ -97,7 +98,7 @@ class ProductsController extends BaseController
     {
         try {
             $data = $request->all();
-            $product = $this->productSystem->present($data, $id);
+            $product = $this->productSystem->present($data, $id, ['media']);
             return $this->view('show', compact('product'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -118,7 +119,8 @@ class ProductsController extends BaseController
             $pictures = array();
             $chosenCategory = $product->categories->first();
             $attributesList = $product->attributeGroupDescription->pluck("name", "id");
-            return $this->view('edit', compact('product', 'categories', 'pictures', 'chosenCategory', 'attributesList'));
+            $preferredTag = "gallery";
+            return $this->view('edit', compact('product', 'categories', 'pictures', 'chosenCategory', 'attributesList', 'preferredTag'));
 
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);

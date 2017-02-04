@@ -6,6 +6,7 @@ namespace App\Core\Logic;
 use App\Core\Contracts\ProductSystemContract;
 use App\Core\Repositories\AttributeGroupDescriptionRepository;
 use App\Core\Repositories\ProductsRepository;
+use App\Core\Traits\MediableCore;
 
 /**
  * Class ProductSystem
@@ -13,7 +14,7 @@ use App\Core\Repositories\ProductsRepository;
  */
 class ProductSystem implements ProductSystemContract
 {
-
+    use MediableCore;
     /**
      * @var ProductsRepository
      */
@@ -61,13 +62,18 @@ class ProductSystem implements ProductSystemContract
      */
     public function create(array $data)
     {
-        $formAttributes = $data['product_attribute'];
+        $formAttributes = isset($data['product_attribute']) ? $data['product_attribute'] : null;
         unset($data['product_attribute']);
+
+        $selectedFiles = isset($data['selected_files']) ? $data['selected_files'] : "";
+        unset($data['selected_files']);
         $product = $this->productRepository->create($data);
+        $this->syncMediaFiles($product, $selectedFiles, 'gallery');
+
         $categoryId = isset($data['category_id']) ? $data['category_id'] : null;
         $product->categories()->attach($categoryId);
         $attributes = [];
-        if (isset($formAttributes)) {
+        if ($formAttributes) {
             foreach ($formAttributes as $key => $attr) {
                 $attribute = $product->attributeGroupDescription()->save(
                     $this->attributeGroupDescriptionRepository->find(intval($attr["attr_description_id"])), ["value" => $formAttributes[$key]["value"]]);
@@ -84,9 +90,12 @@ class ProductSystem implements ProductSystemContract
      */
     public function update(array $data, $id)
     {
-        $formAttributes = $data['product_attribute'];
+        $formAttributes = isset($data['product_attribute']) ? $data['product_attribute'] : null;
         unset($data['product_attribute']);
+        $selectedFiles = isset($data['selected_files']) ? $data['selected_files'] : "";
+        unset($data['selected_files']);
         $product = $this->productRepository->update($data, $id);
+        $this->syncMediaFiles($product, $selectedFiles, 'gallery');
         $categoryId = isset($data['category_id']) ? $data['category_id'] : null;
         if ($categoryId) {
             $product->categories()->detach();
@@ -97,7 +106,7 @@ class ProductSystem implements ProductSystemContract
         if ($productAttributes->count() > 0) {
             $product->attributeGroupDescription()->sync([]);
         }
-        if (isset($formAttributes)) {
+        if ($formAttributes) {
             foreach ($formAttributes as $key => $attr) {
                 $attribute = $product->attributeGroupDescription()->save(
                     $this->attributeGroupDescriptionRepository->find($attr["attr_description_id"]), ["value" => $formAttributes[$key]["value"]]);
