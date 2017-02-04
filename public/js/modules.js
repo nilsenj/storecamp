@@ -312,7 +312,7 @@
       selectedItemsClassPath: ".selected-block .selected-item",
       requestUrl: (ref = $('.file-linker').attr('data-requestUrl')) != null ? ref : APP_URL + "/admin/media/file_linker/local",
       fileTypes: (ref1 = $('.file-linker').attr('data-file-types')) != null ? ref1 : "image, document, audio, video, archive",
-      fileMultiple: (ref2 = $('.file-linker').attr('data-multiple')) != null ? ref2 : false,
+      fileMultiple: (ref2 = $('.file-linker').attr('data-multiple')) != null ? ref2 : "false",
       disk: (ref3 = $('.file-linker').attr('data-disk')) != null ? ref3 : 'local',
       fileAttachOutputPath: (ref4 = $('.file-linker').attr('data-attach-output-path')) != null ? ref4 : "form .tab-content",
       fileLinkerModal: $('#fileLinker-modal'),
@@ -407,7 +407,7 @@
       var _this;
       _this = this;
       $('.file-item').find('input:checkbox').iCheck('disable');
-      if (!_this.options.fileMultiple) {
+      if (_this.options.fileMultiple === "false") {
         $('.file-item').find('input:checkbox').iCheck('uncheck');
         fileItemCheckBox.iCheck('enable');
         fileItemCheckBox.iCheck('check');
@@ -447,7 +447,12 @@
       content = btn.find(".mailbox-attachment-icon").html();
       fileName = btn.find(".mailbox-attachment-name").html();
       htmlContent = _this.options.fileBlockTemplate(selectorId, content, fileName);
-      return _this.options.fileLinkerSelectedBlock.append(htmlContent);
+      if (_this.options.fileMultiple === "false") {
+        $("" + _this.options.selectedItemsClassPath).remove();
+        return _this.options.fileLinkerSelectedBlock.append(htmlContent);
+      } else {
+        return _this.options.fileLinkerSelectedBlock.append(htmlContent);
+      }
     },
     reindexSelectedFiles: function() {
       var selectedItems;

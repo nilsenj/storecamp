@@ -6,7 +6,7 @@ $.StoreCamp.fileLinker =
     selectedItemsClassPath: ".selected-block .selected-item"
     requestUrl: $('.file-linker').attr('data-requestUrl') ? APP_URL + "/admin/media/file_linker/local"
     fileTypes: $('.file-linker').attr('data-file-types') ? "image, document, audio, video, archive"
-    fileMultiple: $('.file-linker').attr('data-multiple') ? false
+    fileMultiple: $('.file-linker').attr('data-multiple') ? "false"
     disk: $('.file-linker').attr('data-disk') ? 'local'
     fileAttachOutputPath: $('.file-linker').attr('data-attach-output-path') ? "form .tab-content"
     fileLinkerModal: $('#fileLinker-modal')
@@ -85,7 +85,7 @@ $.StoreCamp.fileLinker =
   selectFile: (btn, selectId, fileItemCheckBox, selectFileName, selectUrl) ->
     _this = this
     $('.file-item').find('input:checkbox').iCheck('disable')
-    if (!_this.options.fileMultiple)
+    if (_this.options.fileMultiple == "false")
       $('.file-item').find('input:checkbox').iCheck('uncheck')
       fileItemCheckBox.iCheck('enable')
       fileItemCheckBox.iCheck('check')
@@ -118,7 +118,11 @@ $.StoreCamp.fileLinker =
     content = btn.find(".mailbox-attachment-icon").html()
     fileName = btn.find(".mailbox-attachment-name").html()
     htmlContent = _this.options.fileBlockTemplate(selectorId, content, fileName)
-    _this.options.fileLinkerSelectedBlock.append(htmlContent)
+    if(_this.options.fileMultiple == "false")
+      $("#{_this.options.selectedItemsClassPath}").remove()
+      _this.options.fileLinkerSelectedBlock.append(htmlContent)
+    else
+      _this.options.fileLinkerSelectedBlock.append(htmlContent)
   reindexSelectedFiles: () ->
     selectedItems = $("#{@.options.selectedItemsClassPath}")
     @_setFileBlockSelectedState selectedItems

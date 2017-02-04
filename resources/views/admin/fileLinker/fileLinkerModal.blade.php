@@ -1,7 +1,7 @@
 <a data-toggle="modal" href="#fileLinker-modal"
    class="btn btn-md btn-info file-linker"
    data-file-types="{!! $fileTypes ? $fileTypes : "images" !!}"
-   data-multiple="{!! $multiple ? $multiple : false !!}"
+   data-multiple="{!! $multiple ? 'true' : 'false' !!}"
    data-disk="{!! $disk ? $disk : 'local' !!}"
    data-attach-output-path="{!! $outputElementPath !!}"
    data-requestUrl="{!! route('admin::media::file_linker', [$disk]) !!}"
