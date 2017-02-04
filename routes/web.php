@@ -29,8 +29,9 @@ $this->get('/', [
 //$this->post('password/email', 'Auth\PasswordController@postEmail');
 //
 //// Password reset routes...
-//$this->get('password/reset/{token}', 'Auth\PasswordController@getReset');
-//$this->post('password/reset', 'Auth\PasswordController@postReset');
+$this->get('password/reset', 'Auth\ResetPasswordController@showResetForm');
+$this->get('password/reset/{token}', 'Auth\PasswordController@getReset');
+$this->post('password/reset', 'Auth\PasswordController@postReset');
 
 $this->get('/', [
     'uses' => 'HomeController@index',

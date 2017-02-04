@@ -46,7 +46,7 @@ desired effect
 
                     {{ Session::get('flash_notification.message') }}
                 </div>
-                @endif
+            @endif
             <!-- Your Page Content Here -->
             @yield('main-content')
 
