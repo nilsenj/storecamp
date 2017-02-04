@@ -1,8 +1,5 @@
 <?php
 
-namespace App\Helpers;
-
-
 if (!function_exists('resolveModelName')) {
     /**
      * @param $model
