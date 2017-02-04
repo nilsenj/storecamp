@@ -126,16 +126,17 @@ class CategoriesController extends BaseController
     }
 
     /**
+     * @param Request $request
      * @param $id
-     * @return \Illuminate\Contracts\View\Factory|Redirect|\Illuminate\View\View
-     * @return Response|Redirect
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         try {
-            $category = $this->repository->with('media')->find($id);
+            $data = $request->all();
+            $category = $this->categorySystem->present($data, $id, ['media', 'parent']);
             $parent = $category->parent;
-            $categories = $this->repository->with(['parent'])->all();
+            $categories = $this->repository->with('parent')->all();
             return $this->view('edit', compact('category', 'parent', 'categories'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();

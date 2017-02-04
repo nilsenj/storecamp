@@ -4,6 +4,12 @@
         {!! Form::text('name', null, ['class' => 'form-control']) !!}
         {!! $errors->first('name', '<div class="text-danger">:message</div>') !!}
     </div>
+    @if($category->isType("parent"))
+        <div class="callout callout-warning">
+            <h4>This is a parent category!</h4>
+            <p>Please notice that some child categories can be linked to it.</p>
+        </div>
+    @endif
     @include('admin.components.modal-category_chooser', [$category, $parent])
     @include('admin.components.description-form', [$property_name='description'])
     <div class="form-group">
@@ -28,7 +34,7 @@
         {!! Form::label('image_link', 'Category Image', ['class' => 'control-label']) !!}
         {!! Form::text('image_link', null, ['class' => 'form-control category-image hidden']) !!}
         <img src="{{asset('img/image-not-found.gif')}}" alt="" class="img-responsive" width="150" height="100">
-       @include('admin.fileLinker.fileLinkerModal', [$btnMsg = 'attach image to category', $fileTypes = 'image, video, audio', $multiple = true, $outputElementPath = "#general", $disk = "local"])
+       @include('admin.fileLinker.fileLinkerModal', [$btnMsg = 'attach image to category', $fileTypes = 'image', $multiple = false, $outputElementPath = "#general", $disk = "local"])
         {!! $errors->first('image_link', '<div class="text-danger">:message</div>') !!}
     </div>
     <div class="form-group">

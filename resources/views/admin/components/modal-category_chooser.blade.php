@@ -1,5 +1,4 @@
 <?php $parentId = isset($parent) ? $parent->id : null; ?>
-
 <div class="form-group">
     {!! Form::label('parent_id', 'Parent Category', ['class' => 'control-label']) !!}
     <a data-toggle="modal" href="#category-chooser-modal"
@@ -9,7 +8,6 @@
     <div class="clearfix"></div>
     {!! Form::input('text','parent_id', $parentId, ['class' => 'chosen-category hidden']) !!}
 </div>
-
 <div class="modal" id="category-chooser-modal">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">

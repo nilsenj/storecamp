@@ -35,6 +35,8 @@ trait MediableCore
         if (!empty($selectedFiles)) {
             $model->detachMediaTags($tag);
             $this->attachMediaFiles($model, $selectedFiles, $tag);
+        } else {
+            $model->detachMediaTags($tag);
         }
     }
 
@@ -49,6 +51,8 @@ trait MediableCore
             $model->detachMediaTags($tag);
             $selectedFile = explode(",", $selectedFile);
             $model->attachMedia(Media::findOrFail($selectedFile[0]), $tag);
+        } else {
+            $model->detachMediaTags($tag);
         }
     }
 }

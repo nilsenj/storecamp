@@ -37,12 +37,12 @@ class CategorySystem implements CategorySystemContract
     public function present(array $data, $id = null, array $with = [])
     {
         if ($id) {
-            $categories = $this->categoryRepository->find($id);
+            $categories = $this->categoryRepository->with($with)->find($id);
         } else {
             if(!empty($with)) {
                 $categories = $this->categoryRepository->with($with)->order('parent_id', 'ASC')->paginate();
             } else {
-                $categories = $this->categoryRepository->byParent()->paginate();
+                $categories = $this->categoryRepository->order('parent_id', 'ASC')->paginate();
             }
         }
         return $categories;

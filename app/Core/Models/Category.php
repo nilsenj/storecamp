@@ -78,6 +78,12 @@ class Category extends Model implements Transformable
     ];
 
     /**
+     * @var array
+     */
+    protected $appends = ['type'];
+
+
+    /**
      * Return the sluggable configuration array for this model.
      *
      * @return array
@@ -98,12 +104,14 @@ class Category extends Model implements Transformable
     {
         parent::boot();
     }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function products() {
         return $this->belongsToMany(Product::class, 'products_categories');
     }
+
     /**
      * @param $query
      * @return mixed
@@ -113,9 +121,52 @@ class Category extends Model implements Transformable
         return $query->pluck('name', 'id');
     }
 
-    public function setParentAttribute($data) {
+    /**
+     * @return string
+     */
+    public function getTypeAttribute()
+    {
         if(!$this->parent_id) {
-            $this->attributes['parent'] = true;
+            return $this->attributes['type'] = 'parent';
+        } else {
+            return $this->attributes['type'] = 'child';
+        }
+    }
+
+    /**
+     * @param $data
+     * @return string
+     */
+    public function setTypeAttribute($data) {
+        if(!$this->parent_id) {
+            return $this->attributes['type'] = 'parent';
+        } else {
+            return $this->attributes['type'] = 'child';
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getType() : string
+    {
+        if($this->parent_id) {
+            return "child";
+        } else {
+            return "parent";
+        }
+    }
+
+    /**
+     * @param $type
+     * @return bool
+     */
+    public function isType($type) : bool
+    {
+        if($this->parent_id) {
+            return "child" == $type;
+        } else {
+            return "parent" == $type;
         }
     }
 

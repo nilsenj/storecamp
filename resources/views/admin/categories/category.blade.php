@@ -1,6 +1,9 @@
 <tr>
     <td>{{ $no-1}}</td>
-    <td>{{ $category->name }}</td>
+    <td>
+        <small class="text-muted label bg-info pull-right">{!! $category->getType() !!}</small>
+        {{ $category->name }}
+    </td>
     <td>{{ $category->slug }}</td>
     <td>
         <a data-toggle="modal" href="#Description-modal"
