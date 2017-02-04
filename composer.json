@@ -55,7 +55,7 @@
   "autoload": {
     "classmap": [
       "database",
-      "App/Helpers/helpers.php",
+      "App/Helpers",
       "App/Core/Models",
       "App/Core/Presenters",
       "App/Core/Repositories",
@@ -95,7 +95,8 @@
       "App\\Core\\Components\\Select\\SelectBuilder\\": "App/Core/Components/Select/",
       "App\\Core\\Components\\ActiveItem\\": "packages/ActiveItem/",
       "App\\Core\\Components\\Flash\\": "packages/Flash/",
-      "App\\Core\\Components\\Messenger\\": "packages/Messenger/Messenger/"
+      "App\\Core\\Components\\Messenger\\": "packages/Messenger/Messenger/",
+      "App\\Helpers\\": "App/Helpers/"
     }
   },
   "autoload-dev": {

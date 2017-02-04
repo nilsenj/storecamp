@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Helpers;
+
 
 if (!function_exists('resolveModelName')) {
     /**
@@ -8,7 +10,7 @@ if (!function_exists('resolveModelName')) {
      */
     function resolveModelName($model): string
     {
-        $reflection = new ReflectionClass($model);
+        $reflection = new \ReflectionClass($model);
         return $reflection->getShortName();
 
     }
