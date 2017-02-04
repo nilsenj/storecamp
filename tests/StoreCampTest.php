@@ -6,12 +6,9 @@ use Illuminate\Support\Facades\Hash;
 class StoreCampTest extends TestCase
 {
     use DatabaseMigrations;
-    use DatabaseMigrations;
 
     /**
-     * Overwrite createApplication to add Http Kernel
-     * see: https://github.com/laravel/laravel/pull/3943
-     *      https://github.com/laravel/framework/issues/15426
+     * @return mixed
      */
     public function createApplication()
     {
@@ -241,63 +238,5 @@ class StoreCampTest extends TestCase
             ->type('notexistingemail@gmail.com', 'email')
             ->press('Send Password Reset Link')
             ->see('There were some problems with your input');
-    }
-
-    /**
-     * Test make:view command
-     *
-     */
-    public function testMakeViewCommand()
-    {
-        $view = 'ehqwiqweiohqweihoqweiohqweiojhqwejioqwejjqwe';
-        $viewPath= 'views/' . $view . '.blade.php';
-        try {
-            unlink(resource_path($view));
-        } catch (\Exception $e) {
-        }
-        $this->callArtisanMakeView($view);
-        $resultAsText = Artisan::output();
-        $expectedOutput = 'File ' . resource_path($viewPath) . ' created';
-        $this->assertEquals($expectedOutput, trim($resultAsText));
-        $this->assertFileExists(resource_path($viewPath));
-        $this->callArtisanMakeView($view);
-        $resultAsText = Artisan::output();
-        $this->assertEquals('File already exists', trim($resultAsText));
-        unlink(resource_path($viewPath));
-    }
-
-    /**
-     * Create view using make:view command.
-     *
-     * @param $view
-     */
-    protected function callArtisanMakeView($view)
-    {
-        Artisan::call('make:view', [
-            'name' => $view,
-        ]);
-    }
-    /**
-     * Test adminlte:admin command
-     *
-     */
-    public function testAdminlteAdminCommand()
-    {
-        $seed = database_path('seeds/AdminUserSeeder.php');
-        try {
-            unlink($seed);
-        } catch (\Exception $e) {
-        }
-        $this->callAdminlteAdminCommand();
-        $this->assertFileExists($seed);
-    }
-
-
-    /**
-     * Call adminlte:admin command.
-     */
-    protected function callAdminlteAdminCommand()
-    {
-        Artisan::call('adminlte:admin');
     }
 }
