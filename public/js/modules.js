@@ -322,7 +322,7 @@
       preferredTag: (ref5 = $('.file-linker').attr('data-preferred-tag')) != null ? ref5 : "thumbnail",
       inputTemplateClass: "selected-files_input",
       fileBlockTemplate: function(selectorId, content, fileName) {
-        return "<div data-id='" + selectorId + "' class='col-xs-6 col-md-2 col-lg-1 selected-item'>" + content + "<strong class='text-muted'>" + fileName + "</strong></div>";
+        return "<div data-id='" + selectorId + "' class='col-xs-4 col-md-3 col-lg-2 selected-item'>" + content + "<strong class='text-muted'>" + fileName + "</strong></div>";
       },
       inputTemplate: function() {
         return "<input type=\"text\" name=\"selected_files\" class='" + this.inputTemplateClass + "'/>";

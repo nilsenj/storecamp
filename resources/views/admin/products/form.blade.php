@@ -12,6 +12,7 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="general">
+            <input type="text" name="selected_files" value="" class="hidden">
             <div class="form-group">
                 {!! Form::label('title', 'Title:') !!}
                 {!! Form::text('title', old('title'), ['class' => 'form-control', 'placeholder' => 'Title']) !!}
@@ -41,7 +42,6 @@
                 {!! Form::select('availability', [1 => "Enabled", 0 => "Disabled"], old('availability'), ["id" => "input-availability", 'class' => 'form-control']) !!}
                 {!! $errors->first('availability', '<div class="text-danger">:message</div>') !!}
             </div>
-
         </div>
         <div class="tab-pane" id="attributes">
             <div class="table-responsive">
@@ -190,10 +190,10 @@
             <div class="form-group">
                 {!! Form::label('selected_files', 'Product Images', ['class' => 'control-label']) !!}
                 <div class="files selected-block">
-                    @include('admin.fileLinker.file-linker_selected_list', [$model = $product, $preferredTag])
+                    @include('admin.fileLinker.file-linker_selected_list', [$model = isset($product) ? $product : null, $preferredTag])
                 </div>
                 <div class="clearfix"></div>
-                @include('admin.fileLinker.fileLinkerModal', [$model = $product, $preferredTag, $btnMsg = 'attach images to product', $fileTypes = 'image', $multiple = true, $outputElementPath = "#general", $disk = "local"])
+                @include('admin.fileLinker.fileLinkerModal', [$model = isset($product) ? $product : null, $preferredTag, $btnMsg = 'attach images to product', $fileTypes = 'image', $multiple = true, $outputElementPath = "#general", $disk = "local"])
             </div>
         </div>
         <div class="form-group">

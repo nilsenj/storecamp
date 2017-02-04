@@ -1,5 +1,5 @@
 @if(isset($model))
-    <?php isset($preferredTag) ? $preferredTag : 'thumbnail' ?>
+    <?php $preferredTag = isset($preferredTag) ? $preferredTag : 'thumbnail'; ?>
     @foreach($model->getMedia($preferredTag) as $file)
         @if($file->aggregate_type == "video")
             @include('admin.fileLinker.file-linker_selected_item', [$icon = 'item-icon fa fa-video-camera', $file])

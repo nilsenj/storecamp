@@ -16,7 +16,7 @@ $.StoreCamp.fileLinker =
     preferredTag: $('.file-linker').attr('data-preferred-tag') ? "thumbnail"
     inputTemplateClass: "selected-files_input"
     fileBlockTemplate: (selectorId, content, fileName) ->
-      "<div data-id='#{selectorId}' class='col-xs-6 col-md-2 col-lg-1 selected-item'>#{content}<strong class='text-muted'>#{fileName}</strong></div>"
+      "<div data-id='#{selectorId}' class='col-xs-4 col-md-3 col-lg-2 selected-item'>#{content}<strong class='text-muted'>#{fileName}</strong></div>"
     inputTemplate: () ->
       """<input type="text" name="selected_files" class='#{this.inputTemplateClass}'/>"""
   }
