@@ -24,5 +24,5 @@ interface ProductReviewSystemContract extends BaseLogicContract
      * @param $id
      * @param $data
      */
-    public function markAsRead($id, $data) : void;
+    public function markAsRead($id, $data);
 }

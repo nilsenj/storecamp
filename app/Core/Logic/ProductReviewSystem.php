@@ -92,7 +92,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
      * @param $id
      * @param $data
      */
-    public function markAsRead($id, $data) : void
+    public function markAsRead($id, $data)
     {
         $productReview = $this->productReview->find($id);
         $currentUser = \Auth::user();

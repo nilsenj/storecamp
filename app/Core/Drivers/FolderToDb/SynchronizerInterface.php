@@ -21,7 +21,7 @@ interface SynchronizerInterface {
      * @param string $path
      * @param string $disk
      */
-    public function synchronize(string $path, $disk = 'local') : void;
+    public function synchronize(string $path, $disk = 'local');
 
     /**
      * @param string $path
