@@ -31,11 +31,12 @@
 <!-- /.tab-pane -->
 <div class="tab-pane" id="extra">
     <div class="form-group">
-        {!! Form::label('image_link', 'Category Image', ['class' => 'control-label']) !!}
-        {!! Form::text('image_link', null, ['class' => 'form-control category-image hidden']) !!}
-        <img src="{{asset('img/image-not-found.gif')}}" alt="" class="img-responsive" width="150" height="100">
-       @include('admin.fileLinker.fileLinkerModal', [$btnMsg = 'attach image to category', $fileTypes = 'image', $multiple = false, $outputElementPath = "#general", $disk = "local"])
-        {!! $errors->first('image_link', '<div class="text-danger">:message</div>') !!}
+        {!! Form::label('selected_files', 'Category Image', ['class' => 'control-label']) !!}
+        <div class="files selected-block">
+            @include('admin.fileLinker.file-linker_selected_list', [$model = $category, $preferredTag])
+        </div>
+        <div class="clearfix"></div>
+        @include('admin.fileLinker.fileLinkerModal', [$model = $category, $preferredTag, $btnMsg = 'attach image to category', $fileTypes = 'image', $multiple = false, $outputElementPath = "#general", $disk = "local"])
     </div>
     <div class="form-group">
         {!! Form::label('top', 'Place to top navigation', ['class' => 'control-label']) !!}

@@ -302,7 +302,7 @@
 }).call(this);
 
 (function() {
-  var ref, ref1, ref2, ref3, ref4;
+  var ref, ref1, ref2, ref3, ref4, ref5;
 
   $.StoreCamp.fileLinker = {
     options: {
@@ -319,6 +319,7 @@
       submitBtn: $('#fileLinker-modal').find('button[type=submit]'),
       modalTitle: $('#fileLinker-modal').find('.modal-title'),
       modalBody: $('#fileLinker-modal').find('.modal-body'),
+      preferredTag: (ref5 = $('.file-linker').attr('data-preferred-tag')) != null ? ref5 : "thumbnail",
       inputTemplateClass: "selected-files_input",
       fileBlockTemplate: function(selectorId, content, fileName) {
         return "<div data-id='" + selectorId + "' class='col-xs-6 col-md-2 col-lg-1 selected-item'>" + content + "<strong class='text-muted'>" + fileName + "</strong></div>";

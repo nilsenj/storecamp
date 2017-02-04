@@ -310,6 +310,35 @@
   background: #f4f4f4;
 }
 
+.files.selected-block {
+  word-wrap: break-word;
+  display: block;
+  width: 100%;
+}
+
+.files.selected-block div {
+  text-align: center;
+}
+
+.files.selected-block div img {
+  width: 100%;
+  height: auto;
+  position: relative;
+  background: #f4f4f4;
+  border: 2px solid #f4f4f4;
+}
+
+.files.selected-block div .item-icon {
+  width: 100%;
+  height: 80px;
+  display: block;
+  font-size: 70px;
+  text-align: center;
+  list-style-type: none !important;
+  border: 2px solid #f4f4f4;
+  background: #f4f4f4;
+}
+
 li.play-status {
   position: relative;
   border-radius: 0;
@@ -318,6 +347,10 @@ li.play-status {
 
 li.play-status i {
   color: lightyellow;
+}
+
+input[type="checkbox"].minimal {
+  display: none;
 }
 
 .modal.modal-wide .modal-dialog {

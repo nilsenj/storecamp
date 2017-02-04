@@ -71,8 +71,9 @@ class CategoriesController extends BaseController
     {
         $categories = $this->repository->all();
         $parent = null;
+        $preferredTag = "thumbnail";
 
-        return $this->view('create', compact('categories', 'parent'));
+        return $this->view('create', compact('categories', 'parent', 'preferredTag'));
     }
 
     /**
@@ -137,7 +138,8 @@ class CategoriesController extends BaseController
             $category = $this->categorySystem->present($data, $id, ['media', 'parent']);
             $parent = $category->parent;
             $categories = $this->repository->with('parent')->all();
-            return $this->view('edit', compact('category', 'parent', 'categories'));
+            $preferredTag = "thumbnail";
+            return $this->view('edit', compact('category', 'parent', 'categories', 'preferredTag'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound();
         }

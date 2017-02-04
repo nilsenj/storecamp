@@ -13,6 +13,7 @@ $.StoreCamp.fileLinker =
     submitBtn: $('#fileLinker-modal').find('button[type=submit]')
     modalTitle:$('#fileLinker-modal').find('.modal-title')
     modalBody: $('#fileLinker-modal').find('.modal-body')
+    preferredTag: $('.file-linker').attr('data-preferred-tag') ? "thumbnail"
     inputTemplateClass: "selected-files_input"
     fileBlockTemplate: (selectorId, content, fileName) ->
       "<div data-id='#{selectorId}' class='col-xs-6 col-md-2 col-lg-1 selected-item'>#{content}<strong class='text-muted'>#{fileName}</strong></div>"
