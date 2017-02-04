@@ -97,7 +97,7 @@
       "App\\Core\\Components\\Messenger\\": "packages/Messenger/Messenger/"
     },
     "files": [
-      "App/Helpers/helpers.php"
+      "app/Helpers/helpers.php"
     ]
   },
   "autoload-dev": {
