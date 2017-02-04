@@ -1,6 +1,10 @@
-@extends('app')
+@extends('auth.auth')
 
-@section('main-content')
+@section('htmlheader_title')
+    Password reset
+@endsection
+
+@section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
