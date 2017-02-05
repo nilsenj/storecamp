@@ -8,8 +8,7 @@
         Edit Attribute
     @endsection
     @section('contentheader_description')
-        &middot;
-        <b>{!! link_to_route('admin::attributes::index', 'Back') !!}</b>
+        @include('admin.partial._content-head_btns', [$routeName = "admin::attributes::index", $createBtn = 'Back', $showFilters = false])
     @endsection
 </h1>
 @section('main-content')

@@ -5,12 +5,10 @@
     @endsection
     @include('admin.partial._contentheader_title', [$model = $groupDescriptions, $message = "Amount of Attributes"])
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::attributes::create', 'Add New Attribute') !!}</b>
+          @include('admin.partial._content-head_btns', [$routeName = "admin::attributes::create", $createBtn = 'Add New Attribute'])
     @endsection
 </h1>
-
 @section('main-content')
-
     <div class="row">
         <div class="col-xs-12">
             <div class="box">

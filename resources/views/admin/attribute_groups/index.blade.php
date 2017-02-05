@@ -5,7 +5,7 @@
     @endsection
     @include('admin.partial._contentheader_title', [$model = $groupAttributes, $message = "Amount of Group Attributes"])
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::attribute_groups::create', 'Add New Group Attribute') !!}</b>
+            @include('admin.partial._content-head_btns', [$routeName = "admin::attribute_groups::create", $createBtn = 'Add New Group Attribute'])
     @endsection
 </h1>
 

@@ -4,11 +4,10 @@
         Edit Category        &middot;
     @endsection
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::categories::index', 'Back') !!}</b>
+        @include('admin.partial._content-head_btns', [$routeName = "admin::categories::index", $createBtn = 'Back', $showFilters = false])
     @endsection
 </h1>
 @section('main-content')
-
     {!! Form::model($category, ['route' => ['admin::categories::update', $category->unique_id], 'method' => 'PUT', 'class' => '']) !!}
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">

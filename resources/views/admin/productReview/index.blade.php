@@ -5,7 +5,7 @@
     @endsection
     @include('admin.partial._contentheader_title', [$model = $productReviews, $message = "All Product Reviews"])
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::attributes::create', 'Add New Attribute') !!}</b>
+            @include('admin.partial._content-head_btns', [$routeName = "admin::reviews::create", $createBtn = 'Add New Product Review'])
     @endsection
 </h1>
 @section('main-content')

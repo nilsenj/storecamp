@@ -28,7 +28,6 @@
                 </ul>
             </div>
         @endif
-
         <div class="login-box-body">
             <p class="login-box-msg">Reset Password</p>
             <form action="{{ url('/password/reset') }}" method="post">

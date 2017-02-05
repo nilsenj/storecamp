@@ -4,9 +4,9 @@
     @section('breadcrumb')
         {{--{!! Breadcrumbs::render('', '') !!}--}}
     @endsection
-    @include('admin.partial._contentheader_title', [$model, $message = "All " . orders .'s'])
+    @include('admin.partial._contentheader_title', [$model, $message = "All orders'])
     @section('contentheader_description')
-        <b>{!! link_to_route("admin::orders::create", 'Add New '. orders) !!}</b>
+        <b>{!! link_to_route("admin::orders::create", 'Add New orders') !!}</b>
     @endsection
 </h1>
 @section('main-content')
@@ -14,7 +14,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">List of {!! orders !!}</h3>
+                    <h3 class="box-title">List of orders </h3>
                     <div class="box-tools">
                         @include('admin.partial._box_search')
                     </div>

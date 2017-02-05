@@ -3,11 +3,7 @@
     @section('breadcrumb')
         {!! Breadcrumbs::render('media', $disk) !!}
     @endsection
-    @section('contentheader_title')
-        Amount of Media Files
-        &middot; {{$count}}
-    @endsection
-
+        @include('admin.partial._contentheader_title', [$model = $media["media"], $message = "Amount of Media Files"])
     @section('contentheader_description')
                 @include('admin.media.navigation_path')
     @endsection

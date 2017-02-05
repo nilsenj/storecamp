@@ -49,6 +49,7 @@
     <link rel="stylesheet" href="{{ asset('css/alt/AdminLTE-fullcalendar.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/alt/AdminLTE-bootstrap-social.min.css') }}">
 
+
     <!-- iCheck -->
     <link href="{{ asset('/css/main/app.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/app_less.css') }}" rel="stylesheet" type="text/css" />

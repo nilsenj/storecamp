@@ -8,9 +8,8 @@
         Create User
         @endsection
         @section('contentheader_description')
-        &middot;
-        <b>{!! link_to_route('admin::users::index', 'Back') !!}</b>
-    @endsection
+            @include('admin.partial._content-head_btns', [$routeName = "admin::users::index", $createBtn = 'Back', $showFilters = false])
+        @endsection
 </h1>
 @section('main-content')
     <div>

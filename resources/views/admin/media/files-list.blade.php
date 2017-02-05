@@ -1,3 +1,80 @@
+<div class="panel">
+    <div class="panel-body">
+        <h5 class="headline">File lists</h5>
+        <div class="media">
+            <div class="pull-left text-muted">
+                <i class="fa fa-file-zip-o fa-2x"></i>
+            </div>
+            <div class="media-body">
+                <div>
+                    <div class="pull-right"><a href="#" class="btn btn-default btn-xs">Download</a></div>
+                    <strong>wrapkit_build-1209.zip</strong>
+                </div>
+                <div class="text-muted"><small>Latest production of wrapkit</small></div>
+            </div>
+        </div>
+        <div class="media">
+            <div class="pull-left text-muted">
+                <i class="fa fa-file-zip-o fa-2x"></i>
+            </div>
+            <div class="media-body">
+                <div>
+                    <div class="pull-right"><a href="#" class="btn btn-default btn-xs">Download</a></div>
+                    <strong>wrapkit_design-brief.zip</strong>
+                </div>
+                <div class="text-muted"><small>Latest version of wrapki</small></div>
+            </div>
+        </div>
+        <div class="media">
+            <div class="pull-left text-muted">
+                <i class="fa fa-file-pdf-o fa-2x"></i>
+            </div>
+            <div class="media-body">
+                <div>
+                    <div class="pull-right"><a href="#" class="btn btn-default btn-xs">Download</a></div>
+                    <strong>Usulan Beasiswa Tahun 2014.pdf</strong>
+                </div>
+                <div class="text-muted"><small>Latest update by Bent</small></div>
+            </div>
+        </div>
+        <div class="media">
+            <div class="pull-left text-muted">
+                <i class="fa fa-file-excel-o fa-2x"></i>
+            </div>
+            <div class="media-body">
+                <div>
+                    <div class="pull-right"><a href="#" class="btn btn-default btn-xs">Download</a></div>
+                    <strong>Daftar Peserta Ujian.xlsx</strong>
+                </div>
+                <div class="text-muted"><small>Latest update by Bent</small></div>
+            </div>
+        </div>
+        <div class="media">
+            <div class="pull-left text-muted">
+                <i class="fa fa-file-excel-o fa-2x"></i>
+            </div>
+            <div class="media-body">
+                <div>
+                    <div class="pull-right"><a href="#" class="btn btn-default btn-xs">Download</a></div>
+                    <strong>data_not_verified.xlsx</strong>
+                </div>
+                <div class="text-muted"><small>Latest update by Iin</small></div>
+            </div>
+        </div>
+        <div class="media">
+            <div class="pull-left text-muted">
+                <i class="fa fa-file-zip-o fa-2x"></i>
+            </div>
+            <div class="media-body">
+                <div>
+                    <div class="pull-right"><a href="#" class="btn btn-default btn-xs">Download</a></div>
+                    <strong>mockup-presentation.zip</strong>
+                </div>
+                <div class="text-muted"><small>Heh! nganggo iki bae ndes</small></div>
+            </div>
+        </div>
+    </div><!-- /.panel-body -->
+</div>
 <div class="col-xs-7 col-sm-7 col-md-8 col-lg-9 files">
     <?php $tag = isset($tag) ? $tag : null; ?>
     @foreach(array_chunk($media->all(), 3) as $row)

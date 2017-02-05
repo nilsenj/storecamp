@@ -1,15 +1,10 @@
 @extends('admin/app')
-
 <h1>
     @section('contentheader_title')
         Add New Role
-        &middot;
     @endsection
-
     @section('contentheader_description')
-
-        <b>{!! link_to_route('admin::roles::index', 'Back') !!}</b>
-
+            @include('admin.partial._content-head_btns', [$routeName = "admin::roles::index", $createBtn = 'Back', $showFilters = false])
     @endsection
 </h1>
 @section('main-content')

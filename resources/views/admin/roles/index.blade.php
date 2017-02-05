@@ -5,7 +5,7 @@
     @endsection
     @include('admin.partial._contentheader_title', [$model = $roles, $message = "All Roles Count"])
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::roles::create', 'Add New Role') !!}</b>
+            @include('admin.partial._content-head_btns', [$routeName = "admin::roles::create", $createBtn = 'Add New Role'])
     @endsection
 </h1>
 @section('main-content')

@@ -1,19 +1,13 @@
 @extends('admin/app')
-
 <h1>
     @section('contentheader_title')
         Create new Category
-        &middot;
     @endsection
-
     @section('contentheader_description')
-
-        <b>{!! link_to_route('admin::categories::index', 'Back') !!}</b>
-
+            @include('admin.partial._content-head_btns', [$routeName = "admin::categories::index", $createBtn = 'Back', $showFilters = false])
     @endsection
 </h1>
 @section('main-content')
-
     <div>
         {!! Form::open(['files' => true, 'route' => 'admin::categories::store']) !!}
         <div class="nav-tabs-custom">

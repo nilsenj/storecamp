@@ -1,9 +1,7 @@
 @extends('auth.auth')
-
 @section('htmlheader_title')
     Password reset
 @endsection
-
 @section('content')
     <div class="container">
         <div class="row">
@@ -16,7 +14,6 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
                         {{ csrf_field() }}
 

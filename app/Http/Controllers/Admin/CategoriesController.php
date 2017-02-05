@@ -69,7 +69,7 @@ class CategoriesController extends BaseController
      */
     public function create(Request $request)
     {
-        $categories = $this->repository->all();
+        $categories = $this->repository->with(['parent', 'children'])->all();
         $parent = null;
         $preferredTag = "thumbnail";
 

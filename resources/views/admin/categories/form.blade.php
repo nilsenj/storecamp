@@ -4,7 +4,7 @@
         {!! Form::text('name', null, ['class' => 'form-control']) !!}
         {!! $errors->first('name', '<div class="text-danger">:message</div>') !!}
     </div>
-    @if($category->isType("parent"))
+    @if(isset($category) && $category->isType("parent"))
         <div class="callout callout-warning">
             <h4>This is a parent category!</h4>
             <p>Please notice that some child categories can be linked to it.</p>

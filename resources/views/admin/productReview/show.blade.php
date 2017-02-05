@@ -8,8 +8,7 @@
         {{--&middot; {{$count}}--}}
     @endsection
     @section('contentheader_description')
-        <p>Product Reviews
-        </p>
+            @include('admin.partial._content-head_btns', [$routeName = "admin::reviews::index", $createBtn = 'Return back'])
     @endsection
 </h1>
 @section('main-content')
