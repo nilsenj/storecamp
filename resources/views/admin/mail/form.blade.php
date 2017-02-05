@@ -12,10 +12,14 @@
                 <label for="to">Subject</label>
                 <input class="form-control" placeholder="Subject:">
             </div>
-            @include('admin.fileLinker.fileLinkerModal', [$btnMsg='choose email template', $fileTypes = 'document', $multiple = false, $outputElementPath = "#general", $disk = "mails"])
+            <div class="mail-output"></div>
+
+            @include('admin.fileLinker.fileLinkerModal', [$btnMsg='choose email template', $preferredTag = "gallery", $fileTypes = 'document', $multiple = false, $outputElementPath = ".mail-output", $disk = "mails"])
             <div class="form-group">
                 @include('admin.components.description-form', [$property_name='message'])
             </div>
+            <div class="files selected-block"></div>
+            <div class="clearfix"></div>
             <div class="form-group">
                 <div class="btn btn-default btn-file">
                     <i class="fa fa-paperclip"></i> Attachment
@@ -36,3 +40,21 @@
     </div>
 </div>
 <!-- /.row -->
+@push('scripts-add_on')
+<script>
+    $('.files.selected-block').bind('DOMSubtreeModified', function(e) {
+        if (e.target.innerHTML.length > 0) {
+            // Content change handler
+            var items = $(".selected-item");
+            var href  = items.attr('data-href');
+            $.ajax({
+                url: href
+            }).done(function (data) {
+                $('#message').code(data);
+                $('#message').summernote('code', data);
+                $(this).addClass("done");
+            });
+        }
+    });
+</script>
+@endpush

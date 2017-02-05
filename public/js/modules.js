@@ -321,11 +321,11 @@
       modalBody: $('#fileLinker-modal').find('.modal-body'),
       preferredTag: (ref5 = $('.file-linker').attr('data-preferred-tag')) != null ? ref5 : "thumbnail",
       inputTemplateClass: "selected-files_input",
-      fileBlockTemplate: function(selectorId, content, fileName) {
-        return "<div data-id='" + selectorId + "' class='col-xs-4 col-md-3 col-lg-2 selected-item'>" + content + "<strong class='text-muted'>" + fileName + "</strong></div>";
+      fileBlockTemplate: function(selectorId, content, fileName, href) {
+        return "<div data-id='" + selectorId + "' data-href='" + href + "' class='col-xs-4 col-md-3 col-lg-2 selected-item'>" + content + "<strong class='text-muted'>" + fileName + "</strong></div>";
       },
       inputTemplate: function() {
-        return "<input type=\"text\" name=\"selected_files\" class='" + this.inputTemplateClass + "'/>";
+        return "<input type=\"text\" name=\"selected_files\" class='hidden " + this.inputTemplateClass + "'/>";
       }
     },
     activate: function() {
@@ -340,7 +340,9 @@
         var fileLinker;
         fileLinker = $(event.relatedTarget);
         $(this).modal('show');
-        _this.showFiles(_this.options.requestUrl);
+        if ($('#fileLinker-modal .modal-body').is(':empty')) {
+          _this.showFiles(_this.options.requestUrl);
+        }
       });
     },
     showFiles: function(requestUrl) {
@@ -442,12 +444,13 @@
       }
     },
     fileBlockAddTemplate: function(btn) {
-      var _this, content, fileName, htmlContent, selectorId;
+      var _this, content, fileName, href, htmlContent, selectorId;
       _this = this;
       selectorId = btn.attr('data-file-id');
+      href = btn.attr('data-href');
       content = btn.find(".mailbox-attachment-icon").html();
       fileName = btn.find(".mailbox-attachment-name").html();
-      htmlContent = _this.options.fileBlockTemplate(selectorId, content, fileName);
+      htmlContent = _this.options.fileBlockTemplate(selectorId, content, fileName, href);
       if (_this.options.fileMultiple === "false") {
         $("" + _this.options.selectedItemsClassPath).remove();
         return _this.options.fileLinkerSelectedBlock.append(htmlContent);

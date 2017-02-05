@@ -15,10 +15,10 @@ $.StoreCamp.fileLinker =
     modalBody: $('#fileLinker-modal').find('.modal-body')
     preferredTag: $('.file-linker').attr('data-preferred-tag') ? "thumbnail"
     inputTemplateClass: "selected-files_input"
-    fileBlockTemplate: (selectorId, content, fileName) ->
-      "<div data-id='#{selectorId}' class='col-xs-4 col-md-3 col-lg-2 selected-item'>#{content}<strong class='text-muted'>#{fileName}</strong></div>"
+    fileBlockTemplate: (selectorId, content, fileName, href) ->
+      "<div data-id='#{selectorId}' data-href='#{href}' class='col-xs-4 col-md-3 col-lg-2 selected-item'>#{content}<strong class='text-muted'>#{fileName}</strong></div>"
     inputTemplate: () ->
-      """<input type="text" name="selected_files" class='#{this.inputTemplateClass}'/>"""
+      """<input type="text" name="selected_files" class='hidden #{this.inputTemplateClass}'/>"""
   }
   activate: () ->
     _this = this
@@ -28,7 +28,8 @@ $.StoreCamp.fileLinker =
     _this.options.fileLinkerModal.on 'shown.bs.modal', (event) ->
       fileLinker = $(event.relatedTarget)
       $(this).modal('show')
-      _this.showFiles(_this.options.requestUrl)
+      if ($('#fileLinker-modal .modal-body').is(':empty'))
+        _this.showFiles(_this.options.requestUrl)
       return
     return
 
@@ -116,9 +117,10 @@ $.StoreCamp.fileLinker =
   fileBlockAddTemplate: (btn) ->
     _this = this
     selectorId = btn.attr('data-file-id')
+    href = btn.attr('data-href')
     content = btn.find(".mailbox-attachment-icon").html()
     fileName = btn.find(".mailbox-attachment-name").html()
-    htmlContent = _this.options.fileBlockTemplate(selectorId, content, fileName)
+    htmlContent = _this.options.fileBlockTemplate(selectorId, content, fileName, href)
     if(_this.options.fileMultiple == "false")
       $("#{_this.options.selectedItemsClassPath}").remove()
       _this.options.fileLinkerSelectedBlock.append(htmlContent)

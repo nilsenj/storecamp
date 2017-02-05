@@ -76,7 +76,7 @@ class StoreCampTest extends TestCase
      */
     public function testLogin()
     {
-        $user = factory(\App\Core\Models\User::class)->create(['password' => Hash::make('passw0RD')]);
+        $user = factory(\App\Core\Models\User::class)->create();
 
         $this->visit('/login')
             ->type($user->email, 'email')

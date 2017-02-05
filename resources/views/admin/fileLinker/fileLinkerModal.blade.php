@@ -20,8 +20,7 @@
                     <span aria-hidden="true">×</span></button>
                 <h4 class="modal-title">Please Select Files To Attach</h4>
             </div>
-            <div class="modal-body" style="word-wrap: break-word;">
-            </div>
+            <div class="modal-body" style="word-wrap: break-word;"></div>
             <div class="modal-footer">
                 <div class="col-md-10 selected-block">
                     @if(isset($model))
