@@ -3,6 +3,7 @@
 namespace App\Core\Models;
 
 use App\Core\Components\Auditing\Auditable;
+use App\Core\Traits\Nestedset\NodeTrait;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
 use Juggl\UniqueHashids\GeneratesUnique;
@@ -59,6 +60,7 @@ class Category extends Model implements Transformable
     use SluggableScopeHelpers;
     use Auditable;
     use Mediable;
+    use NodeTrait;
 
     /**
      * @var array
