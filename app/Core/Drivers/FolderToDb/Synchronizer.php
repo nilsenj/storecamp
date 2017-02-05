@@ -58,7 +58,7 @@ class Synchronizer implements SynchronizerInterface
      * @param string $path
      * @param string $disk
      */
-    public function synchronize(string $path, $disk = 'local'): void
+    public function synchronize(string $path, $disk = 'local')
     {
         $directories = $this->directoriesIterate($path, true);
         $rootFolder = $this->resolveRootFolder();
@@ -95,7 +95,7 @@ class Synchronizer implements SynchronizerInterface
      * @param string $path
      * @param string $disk
      */
-    public function synchronizeWithFiles(string $path, $disk = 'local'): void
+    public function synchronizeWithFiles(string $path, $disk = 'local')
     {
         $directories = $this->directoriesIterate($path, true);
         $rootFolder = $this->resolveRootFolder($disk);
