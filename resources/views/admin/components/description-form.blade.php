@@ -6,8 +6,6 @@
     </div>
 @push('scripts-add_on')
     <!-- include summernote css/js-->
-    <link rel="stylesheet" href="{{asset('plugins/summernote/summernote.css')}}">
-    <script src="{{asset('plugins/summernote/summernote.js')}}"></script>
     <script>
         $(document).ready(function() {
             $('textarea[name={{$property_name}}]').summernote({

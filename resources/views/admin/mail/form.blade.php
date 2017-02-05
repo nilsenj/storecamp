@@ -42,18 +42,20 @@
 <!-- /.row -->
 @push('scripts-add_on')
 <script>
-    $('.files.selected-block').bind('DOMSubtreeModified', function(e) {
-        if (e.target.innerHTML.length > 0) {
-            // Content change handler
-            var items = $(".selected-item");
-            var href  = items.attr('data-href');
+    emitter = $.StoreCamp.fileLinker.emitter;
+    emitter.on('selectedChanged', function () {
+        var items = $(".selected-item");
+        if (items.attr('data-href')) {
             $.ajax({
-                url: href
+                url: items.attr('data-href')
             }).done(function (data) {
                 $('#message').code(data);
                 $('#message').summernote('code', data);
                 $(this).addClass("done");
             });
+        } else {
+            $('#message').code(null);
+            $('#message').summernote('code', null);
         }
     });
 </script>

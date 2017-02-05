@@ -1,4 +1,5 @@
 $.StoreCamp.fileLinker =
+  emitter: $.StoreCamp.eventEmitter()
   options: {
     typesAvailable: ['']
     fileLinker: $('.file-linker')
@@ -88,13 +89,21 @@ $.StoreCamp.fileLinker =
     _this = this
     $('.file-item').find('input:checkbox').iCheck('disable')
     if (_this.options.fileMultiple == "false")
-      $('.file-item').find('input:checkbox').iCheck('uncheck')
-      fileItemCheckBox.iCheck('enable')
-      fileItemCheckBox.iCheck('check')
-      $('.file-item').removeClass 'checked'
-      fileItemCheckBox.iCheck('disable')
-      btn.addClass 'checked'
-      _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'add')
+      if btn.hasClass 'checked'
+        btn.removeClass 'checked'
+        fileItemCheckBox.iCheck('uncheck')
+        fileItemCheckBox.iCheck('disable')
+        $('.file-item').find('input:checkbox').iCheck('uncheck')
+        $('.file-item').removeClass 'checked'
+        _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'remove')
+      else
+        $('.file-item').find('input:checkbox').iCheck('uncheck')
+        $('.file-item').removeClass 'checked'
+        btn.addClass 'checked'
+        fileItemCheckBox.iCheck('enable')
+        fileItemCheckBox.iCheck('check')
+        _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'add')
+        fileItemCheckBox.iCheck('disable')
     else
       if btn.hasClass 'checked'
         btn.removeClass 'checked'
@@ -107,6 +116,7 @@ $.StoreCamp.fileLinker =
         fileItemCheckBox.iCheck('check')
         _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'add')
         fileItemCheckBox.iCheck('disable')
+    _this.emitter.emit "selectedChanged"
     return
   manageToFileBlock: (btn, selectFileName, selectId, selectUrl, methodType) ->
     _this = this
@@ -126,6 +136,7 @@ $.StoreCamp.fileLinker =
       _this.options.fileLinkerSelectedBlock.append(htmlContent)
     else
       _this.options.fileLinkerSelectedBlock.append(htmlContent)
+
   reindexSelectedFiles: () ->
     selectedItems = $("#{@.options.selectedItemsClassPath}")
     @_setFileBlockSelectedState selectedItems

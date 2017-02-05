@@ -302,9 +302,89 @@
 }).call(this);
 
 (function() {
+  var EventEmitter,
+    slice = [].slice;
+
+  EventEmitter = (function() {
+    function EventEmitter() {
+      this.events = {};
+    }
+
+    EventEmitter.prototype.emit = function() {
+      var args, event, i, len, listener, ref;
+      event = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+      if (!this.events[event]) {
+        return false;
+      }
+      ref = this.events[event];
+      for (i = 0, len = ref.length; i < len; i++) {
+        listener = ref[i];
+        listener.apply(null, args);
+      }
+      return true;
+    };
+
+    EventEmitter.prototype.addListener = function(event, listener) {
+      var base;
+      this.emit('newListener', event, listener);
+      ((base = this.events)[event] != null ? base[event] : base[event] = []).push(listener);
+      return this;
+    };
+
+    EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+
+    EventEmitter.prototype.once = function(event, listener) {
+      var fn;
+      fn = (function(_this) {
+        return function() {
+          _this.removeListener(event, fn);
+          return listener.apply(null, arguments);
+        };
+      })(this);
+      this.on(event, fn);
+      return this;
+    };
+
+    EventEmitter.prototype.removeListener = function(event, listener) {
+      var l;
+      if (!this.events[event]) {
+        return this;
+      }
+      this.events[event] = (function() {
+        var i, len, ref, results;
+        ref = this.events[event];
+        results = [];
+        for (i = 0, len = ref.length; i < len; i++) {
+          l = ref[i];
+          if (l !== listener) {
+            results.push(l);
+          }
+        }
+        return results;
+      }).call(this);
+      return this;
+    };
+
+    EventEmitter.prototype.removeAllListeners = function(event) {
+      delete this.events[event];
+      return this;
+    };
+
+    return EventEmitter;
+
+  })();
+
+  $.StoreCamp.eventEmitter = function() {
+    return new EventEmitter();
+  };
+
+}).call(this);
+
+(function() {
   var ref, ref1, ref2, ref3, ref4, ref5;
 
   $.StoreCamp.fileLinker = {
+    emitter: $.StoreCamp.eventEmitter(),
     options: {
       typesAvailable: [''],
       fileLinker: $('.file-linker'),
@@ -411,13 +491,22 @@
       _this = this;
       $('.file-item').find('input:checkbox').iCheck('disable');
       if (_this.options.fileMultiple === "false") {
-        $('.file-item').find('input:checkbox').iCheck('uncheck');
-        fileItemCheckBox.iCheck('enable');
-        fileItemCheckBox.iCheck('check');
-        $('.file-item').removeClass('checked');
-        fileItemCheckBox.iCheck('disable');
-        btn.addClass('checked');
-        _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'add');
+        if (btn.hasClass('checked')) {
+          btn.removeClass('checked');
+          fileItemCheckBox.iCheck('uncheck');
+          fileItemCheckBox.iCheck('disable');
+          $('.file-item').find('input:checkbox').iCheck('uncheck');
+          $('.file-item').removeClass('checked');
+          _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'remove');
+        } else {
+          $('.file-item').find('input:checkbox').iCheck('uncheck');
+          $('.file-item').removeClass('checked');
+          btn.addClass('checked');
+          fileItemCheckBox.iCheck('enable');
+          fileItemCheckBox.iCheck('check');
+          _this.manageToFileBlock(btn, selectFileName, selectId, selectUrl, 'add');
+          fileItemCheckBox.iCheck('disable');
+        }
       } else {
         if (btn.hasClass('checked')) {
           btn.removeClass('checked');
@@ -432,6 +521,7 @@
           fileItemCheckBox.iCheck('disable');
         }
       }
+      _this.emitter.emit("selectedChanged");
     },
     manageToFileBlock: function(btn, selectFileName, selectId, selectUrl, methodType) {
       var _this;
