@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use RepositoryLab\Repository\Generators\Stub;
+use App\Core\Generators\Stub;
 
 /**
  * Class MakeViewCommand

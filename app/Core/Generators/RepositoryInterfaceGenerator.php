@@ -1,21 +1,21 @@
 <?php
 
-namespace RepositoryLab\Repository\Generators;
+namespace App\Core\Generators;
 
-use RepositoryLab\Repository\Generators\Migrations\SchemaParser;
+use App\Core\Generators\Migrations\SchemaParser;
 
 /**
- * Class ModelGenerator
- * @package RepositoryLab\Repository\Generators
+ * Class RepositoryInterfaceGenerator
+ * @package App\Core\Generators
  */
-class ModelGenerator extends Generator {
+class RepositoryInterfaceGenerator extends Generator {
 
     /**
      * Get stub name.
      *
      * @var string
      */
-    protected $stub = 'model';
+    protected $stub = 'repository/interface';
 
     /**
      * Get root namespace.
@@ -34,7 +34,7 @@ class ModelGenerator extends Generator {
      */
     public function getPathConfigNode()
     {
-        return 'models';
+        return 'interfaces';
     }
 
     /**
@@ -42,10 +42,9 @@ class ModelGenerator extends Generator {
      *
      * @return string
      */
-
     public function getBasePath()
     {
-        return config('repository.generator.basePath', app_path());
+        return config('generators.generator.basePath', app_path());
     }
 
     /**
@@ -55,7 +54,7 @@ class ModelGenerator extends Generator {
      */
     public function getPath()
     {
-        return $this->getBasePath() . '/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '/' . $this->getName() . '.php';
+        return $this->getBasePath() . '/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '/' . $this->getName() . 'Repository.php';
     }
 
     /**

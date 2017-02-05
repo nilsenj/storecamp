@@ -3,7 +3,7 @@
 $NAMESPACE$
 
 use $APPNAMESPACE$Transformers\$CLASS$Transformer;
-use RepositoryLab\Repository\Presenter\FractalPresenter;
+use App\Core\Presenter\FractalPresenter;
 
 /**
  * Class $CLASS$Presenter

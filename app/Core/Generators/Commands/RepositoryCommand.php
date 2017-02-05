@@ -1,11 +1,11 @@
 <?php
-namespace RepositoryLab\Repository\Generators\Commands;
+namespace App\Core\Generators\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use RepositoryLab\Repository\Generators\ModelGenerator;
-use RepositoryLab\Repository\Generators\RepositoryEloquentGenerator;
-use RepositoryLab\Repository\Generators\RepositoryInterfaceGenerator;
+use App\Core\Generators\ModelGenerator;
+use App\Core\Generators\RepositoryEloquentGenerator;
+use App\Core\Generators\RepositoryInterfaceGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace RepositoryLab\Repository\Generators;
+namespace App\Core\Generators;
 
 use Illuminate\Console\AppNamespaceDetectorTrait;
 use Illuminate\Filesystem\Filesystem;
@@ -132,6 +132,27 @@ abstract class Generator
     }
 
     /**
+     * Get for input.
+     *
+     * @return string
+     */
+    public function getFor()
+    {
+        $for = $this->for;
+        if (str_contains($this->for, '\\'))
+        {
+            $for = str_replace('\\', '/', $this->for);
+        }
+        if (str_contains($this->for, '/'))
+        {
+            $for = str_replace('/', '/', $this->for);
+        }
+        return Str::studly(str_replace(' ', '/', ucwords(str_replace('/', ' ', $for))));
+    }
+
+
+
+    /**
      * Get class name.
      *
      * @return string
@@ -158,7 +179,7 @@ abstract class Generator
      */
     public function getRootNamespace()
     {
-        return config('repository.generator.rootNamespace', $this->getAppNamespace());
+        return config('generators.generator.rootNamespace', $this->getAppNamespace());
     }
 
     /**
@@ -171,22 +192,22 @@ abstract class Generator
     {
         switch($class) {
             case ('models' === $class):
-                $path = config('repository.generator.paths.models', 'Entities');
+                $path = config('generators.generator.paths.models', 'Entities');
                 break;
-            case ('controlers' === $class):
-                $path = config('repository.generator.paths.controlers', 'cControlers');
+            case ('controllers' === $class):
+                $path = config('generators.generator.paths.controllers', 'cControlers');
                 break;
             case ('repositories' === $class):
-                $path = config('repository.generator.paths.repositories', 'Repositories');
+                $path = config('generators.generator.paths.repositories', 'Repositories');
                 break;
             case ('interfaces' === $class):
-                $path = config('repository.generator.paths.interfaces', 'Repositories');
+                $path = config('generators.generator.paths.interfaces', 'Repositories');
                 break;
             case ('presenters' === $class):
-                $path = config('repository.generator.paths.presenters', 'Presenters');
+                $path = config('generators.generator.paths.presenters', 'Presenters');
                 break;
             case ('transformers' === $class):
-                $path = config('repository.generator.paths.transformers', 'Transformers');
+                $path = config('generators.generator.paths.transformers', 'Transformers');
                 break;
             default;
                 $path = '';

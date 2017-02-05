@@ -1,11 +1,11 @@
 <?php
-namespace RepositoryLab\Repository\Generators;
+namespace App\Core\Generators;
 
 use Exception;
 
 /**
  * Class FileAlreadyExistsException
- * @package RepositoryLab\Repository\Generators
+ * @package App\Core\Generators
  */
 class FileAlreadyExistsException extends Exception
 {

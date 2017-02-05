@@ -1,12 +1,12 @@
 <?php
 
-namespace RepositoryLab\Repository\Generators;
+namespace App\Core\Generators;
 
-use RepositoryLab\Repository\Generators\Migrations\SchemaParser;
+use App\Core\Generators\Migrations\SchemaParser;
 
 /**
  * Class ModelGenerator
- * @package RepositoryLab\Repository\Generators
+ * @package App\Core\Generators
  */
 class ControllerGenerator extends Generator {
 
@@ -24,7 +24,7 @@ class ControllerGenerator extends Generator {
      */
     public function getRootNamespace()
     {
-        return parent::getRootNamespace() . parent::getConfigGeneratorClassPath($this->getPathConfigNode());
+        return config('generators.generator.customControllerNamespace', $this->getAppNamespace());
     }
 
     /**
@@ -45,7 +45,7 @@ class ControllerGenerator extends Generator {
 
     public function getBasePath()
     {
-        return config('repository.generator.basePath', app_path());
+        return config('generators.generator.controllerBasePath', app_path());
     }
 
     /**
@@ -55,7 +55,7 @@ class ControllerGenerator extends Generator {
      */
     public function getPath()
     {
-        return $this->getBasePath() . '/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '/' . $this->getName() . '.php';
+        return $this->getBasePath() . '/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '/' . $this->getFor() . '/' . $this->getName() . '.php';
     }
 
     /**

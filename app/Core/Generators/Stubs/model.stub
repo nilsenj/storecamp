@@ -3,6 +3,7 @@
 $NAMESPACE$
 
 use Illuminate\Database\Eloquent\Model;
+use Juggl\UniqueHashids\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 

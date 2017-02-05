@@ -1,6 +1,7 @@
 <?php
-namespace RepositoryLab\Repository\Generators\Commands;
+namespace App\Core\Generators\Commands;
 
+use App\Core\Generators\ControllerGenerator;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Symfony\Component\Console\Input\InputArgument;
@@ -35,7 +36,19 @@ class cControllerCommand extends Command
      */
     public function fire()
     {
+        $this->generators = new Collection();
 
+        $this->generators->push(new ControllerGenerator([
+            'name'      => $this->argument('name'),
+            'for'      => $this->argument('for'),
+            'force'     => $this->option('force')
+        ]));
+
+        foreach ( $this->generators as $generator) {
+            $generator->run();
+        }
+
+        $this->info("Controller created successfully.");
     }
 
     /**
@@ -47,6 +60,7 @@ class cControllerCommand extends Command
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of class being generated.', null],
+            ['for', InputOption::VALUE_NONE, 'Create Controller for admin, site or something else.', null]
         ];
     }
 
@@ -58,8 +72,6 @@ class cControllerCommand extends Command
     public function getOptions()
     {
         return [
-            ['fillable', null, InputOption::VALUE_OPTIONAL, 'The fillable attributes.', null],
-            ['rules', null, InputOption::VALUE_OPTIONAL, 'The rules of validation attributes.', null],
             ['force', 'f', InputOption::VALUE_NONE, 'Force the creation if file already exists.', null]
         ];
     }

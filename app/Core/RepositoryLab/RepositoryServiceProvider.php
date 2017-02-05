@@ -40,11 +40,6 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->commands('RepositoryLab\Repository\Generators\Commands\RepositoryCommand');
-        $this->commands('RepositoryLab\Repository\Generators\Commands\TransformerCommand');
-        $this->commands('RepositoryLab\Repository\Generators\Commands\PresenterCommand');
-        $this->commands('RepositoryLab\Repository\Generators\Commands\EntityCommand');
-        $this->commands('RepositoryLab\Repository\Generators\Commands\cControllerCommand');
         $this->app->register(\RepositoryLab\Repository\EventServiceProvider::class);
     }
 

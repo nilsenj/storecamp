@@ -1,12 +1,12 @@
 <?php
 
-namespace RepositoryLab\Repository\Generators;
-use RepositoryLab\Repository\Generators\Migrations\NameParser;
-use RepositoryLab\Repository\Generators\Migrations\SchemaParser;
+namespace App\Core\Generators;
+use App\Core\Generators\Migrations\NameParser;
+use App\Core\Generators\Migrations\SchemaParser;
 
 /**
  * Class MigrationGenerator
- * @package RepositoryLab\Repository\Generators
+ * @package App\Core\Generators
  */
 class MigrationGenerator extends Generator
 {

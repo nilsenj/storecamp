@@ -1,9 +1,9 @@
 <?php
-namespace RepositoryLab\Repository\Generators;
+namespace App\Core\Generators;
 
 /**
  * Class TransformerGenerator
- * @package RepositoryLab\Repository\Generators
+ * @package App\Core\Generators
  */
 
 class TransformerGenerator extends Generator
@@ -22,7 +22,7 @@ class TransformerGenerator extends Generator
      */
     public function getBasePath()
     {
-        return config('repository.generator.basePath', app_path());
+        return config('generators.generator.basePath', app_path());
     }
 
     /**

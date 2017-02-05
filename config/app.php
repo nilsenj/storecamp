@@ -191,6 +191,7 @@ return [
         \App\Providers\UserServiceProvider::class,
         \App\Providers\CustomValidatorServiceProvider::class,
         \App\Providers\SubscriberServiceProvider::class,
+        \App\Providers\GeneratorsServiceProvider::class,
         \App\Core\Components\EmailMarketer\EmailMarketerServiceProvider::class,
         \App\Core\Components\Messenger\MessengerServiceProvider::class,
         \App\Core\Components\Auditing\AuditingServiceProvider::class,

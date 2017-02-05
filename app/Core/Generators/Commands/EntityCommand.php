@@ -1,5 +1,5 @@
 <?php
-namespace RepositoryLab\Repository\Generators\Commands;
+namespace App\Core\Generators\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;

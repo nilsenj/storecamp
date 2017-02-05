@@ -1,9 +1,9 @@
 <?php
-namespace RepositoryLab\Repository\Generators\Commands;
+namespace App\Core\Generators\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use RepositoryLab\Repository\Generators\TransformerGenerator;
+use App\Core\Generators\TransformerGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 

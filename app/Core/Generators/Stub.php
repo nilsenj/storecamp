@@ -1,10 +1,10 @@
 <?php
 
-namespace RepositoryLab\Repository\Generators;
+namespace App\Core\Generators;
 
 /**
  * Class Stub
- * @package RepositoryLab\Repository\Generators
+ * @package App\Core\Generators
  */
 class Stub
 {

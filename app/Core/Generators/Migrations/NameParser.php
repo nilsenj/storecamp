@@ -1,9 +1,9 @@
 <?php
-namespace RepositoryLab\Repository\Generators\Migrations;
+namespace App\Core\Generators\Migrations;
 
 /**
  * Class NameParser
- * @package RepositoryLab\Repository\Generators\Migrations
+ * @package App\Core\Generators\Migrations
  */
 class NameParser
 {

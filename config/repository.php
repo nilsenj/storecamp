@@ -247,23 +247,5 @@ return [
             'sortedBy'      =>'sortedBy',
             'with'          =>'with'
         ]
-    ],
-    /*
-    |--------------------------------------------------------------------------
-    | Generator Config
-    |--------------------------------------------------------------------------
-    |
-    */
-    'generator'=>[
-        'basePath'=> app_path().'/Core',
-        'rootNamespace'=>'App\\Core\\',
-        'paths'=>[
-            'models'=>'Models',
-            'repositories'=>'Repositories',
-            'controllers'=> 'Controllers',
-            'interfaces'=>'Repositories',
-            'transformers'=>'Transformers',
-            'presenters'=>'Presenters'
-        ]
     ]
 ];
