@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Console\Commands\MakeViewCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +13,12 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        MakeViewCommand::class
+        'App\Core\Generators\Commands\MakeViewCommand',
+        'App\Core\Generators\Commands\RepositoryCommand',
+        'App\Core\Generators\Commands\TransformerCommand',
+        'App\Core\Generators\Commands\PresenterCommand',
+        'App\Core\Generators\Commands\EntityCommand',
+        'App\Core\Generators\Commands\cControllerCommand'
     ];
 
     /**

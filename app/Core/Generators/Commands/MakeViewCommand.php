@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Core\Generators\Commands;
 
 use Illuminate\Console\Command;
 use App\Core\Generators\Stub;

@@ -2,17 +2,16 @@
 
 $NAMESPACE$
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 use App\Core\Models\$CLASS$;
 use App\Core\Repositories\$CLASS$Repository;
-use App;
+use App\Http\Controllers\Controller;
 
 /**
  * Class $CLASS$sController
  * @package App\Http\Controllers
  */
-class $CLASS$sController extends BaseController {
+class $CLASS$sController extends Controller {
 
     private $repository;
 

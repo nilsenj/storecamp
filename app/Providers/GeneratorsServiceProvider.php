@@ -23,10 +23,6 @@ class GeneratorsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->commands('App\Core\Generators\Commands\RepositoryCommand');
-        $this->commands('App\Core\Generators\Commands\TransformerCommand');
-        $this->commands('App\Core\Generators\Commands\PresenterCommand');
-        $this->commands('App\Core\Generators\Commands\EntityCommand');
-        $this->commands('App\Core\Generators\Commands\cControllerCommand');
+
     }
 }
