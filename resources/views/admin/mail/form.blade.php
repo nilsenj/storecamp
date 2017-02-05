@@ -1,7 +1,6 @@
 <div class="row">
     <!-- /.col -->
     <div class="col-md-12">
-
         <!-- /.box-header -->
         <div class="box-body">
             <div class="form-group">

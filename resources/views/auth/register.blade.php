@@ -59,7 +59,7 @@
                         </div>
                     </div><!-- /.col -->
                     <div class="col-xs-4 col-xs-push-1">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">register</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
                     </div><!-- /.col -->
                 </div>
             </form>

@@ -17,9 +17,6 @@
         "hashids/hashids": "^1.0"
     },
     "require-dev": {
-        "graham-campbell/testbench": "^3.2",
-        "mockery/mockery": "^0.9.5",
-        "phpunit/phpunit": "^5.4"
     },
     "autoload": {
         "psr-4": {
@@ -28,7 +25,6 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Vinkla\\Tests\\Hashids\\": "tests/"
         }
     },
     "config": {

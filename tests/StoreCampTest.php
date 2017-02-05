@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Hash;
+use Faker\Factory as Faker;
 
 class StoreCampTest extends TestCase
 {
@@ -76,7 +77,8 @@ class StoreCampTest extends TestCase
      */
     public function testLogin()
     {
-        $user = factory(\App\Core\Models\User::class)->create();
+        $faker = Faker::create();
+        $user = factory(\App\Core\Models\User::class)->create(['name' => $faker->name, 'email' => $faker->email, "password" => "passw0RD"]);
 
         $this->visit('/login')
             ->type($user->email, 'email')
