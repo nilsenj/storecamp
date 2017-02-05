@@ -8,7 +8,6 @@
         <div class="login-logo">
             <a href="{{ url('/home') }}"><b>{{env("APP_NAME")}}</b></a>
         </div><!-- /.login-logo -->
-
         @if (count($errors) > 0)
             <div class="alert alert-danger">
                 <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -19,7 +18,6 @@
                 </ul>
             </div>
         @endif
-
         <div class="login-box-body">
             <p class="login-box-msg">Sign in to start your session</p>
             <form action="{{ url('/login') }}" method="post">
@@ -36,7 +34,7 @@
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox"> Remember Me
+                                <input type="checkbox" name="remember"> remember
                             </label>
                         </div>
                     </div><!-- /.col -->
@@ -78,5 +76,4 @@
         });
     </script>
     </body>
-
 @endsection
