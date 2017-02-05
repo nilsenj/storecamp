@@ -101,6 +101,18 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                         <li><a href="{{ url('/register') }}">{{ trans('message.register') }}</a></li>
                     @else
                         <li><a href="/home">{{ Auth::user()->name }}</a></li>
+                        <li>
+                            <a href="{{ url('/logout') }}"
+                               onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                logout
+                            </a>
+                        </li>
+
+                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                            <input type="submit" value="logout" style="display: none;">
+                        </form>
                     @endif
                 </ul>
             </div><!--/.nav-collapse -->

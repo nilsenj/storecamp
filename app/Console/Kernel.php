@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'App\Core\Generators\Commands\MakeViewCommand',
+        'App\Core\Generators\Commands\PhpUnitPrepareCommand',
         'App\Core\Generators\Commands\RepositoryCommand',
         'App\Core\Generators\Commands\TransformerCommand',
         'App\Core\Generators\Commands\PresenterCommand',

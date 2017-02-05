@@ -3,17 +3,44 @@
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Hash;
 use Faker\Factory as Faker;
+use Illuminate\Contracts\Console\Kernel;
 
+/**
+ * Class StoreCampTest
+ */
 class StoreCampTest extends TestCase
 {
     use DatabaseMigrations;
+
+    /**
+     * StoreCampTest constructor.
+     */
+    function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Define hooks to migrate the database before and after each test.
+     *
+     * @return void
+     */
+    public function runDatabaseMigrations()
+    {
+        $this->artisan('migrate');
+        $this->app[Kernel::class]->setArtisan(null);
+
+        $this->beforeApplicationDestroyed(function () {
+            $this->artisan('migrate:reset');
+        });
+    }
 
     /**
      * @return mixed
      */
     public function createApplication()
     {
-        $app = require __DIR__.'/../bootstrap/app.php';
+        $app = require __DIR__ . '/../bootstrap/app.php';
 
         $app->make(Illuminate\Contracts\Http\Kernel::class);
 
@@ -51,7 +78,6 @@ class StoreCampTest extends TestCase
     public function testLandingPageWithUserLogged()
     {
         $user = factory(\App\Core\Models\User::class)->create();
-
         $this->actingAs($user)
             ->visit('/home')
             ->see('StoreCamp-laravel')
@@ -126,17 +152,6 @@ class StoreCampTest extends TestCase
     }
 
     /**
-     * Test home page is only for authorized Users.
-     *
-     * @return void
-     */
-    public function testHomePageForUnauthenticatedUsers()
-    {
-        $this->visit('/home')
-            ->seePageIs('/login');
-    }
-
-    /**
      * Test home page works with Authenticated Users.
      *
      * @return void
@@ -157,7 +172,6 @@ class StoreCampTest extends TestCase
      */
     public function testLogout()
     {
-        return true;
         $user = factory(\App\Core\Models\User::class)->create();
 
         $form = $this->actingAs($user)->visit('/home')->getForm('logout');
@@ -165,7 +179,7 @@ class StoreCampTest extends TestCase
         $this->actingAs($user)
             ->visit('/home')
             ->makeRequestUsingForm($form)
-            ->seePageIs('/');
+            ->seePageIs('/home');
     }
 
     /**
@@ -188,6 +202,7 @@ class StoreCampTest extends TestCase
      */
     public function testNewUserRegistration()
     {
+        $this->artisan('db:seed');
         $this->visit('/register')
             ->type('Sergi Tur Badenas', 'name')
             ->type('sergiturbadenas@gmail.com', 'email')
@@ -197,7 +212,7 @@ class StoreCampTest extends TestCase
             ->press('Register')
             ->seePageIs('/home')
             ->seeInDatabase('users', ['email' => 'sergiturbadenas@gmail.com',
-                'name'  => 'Sergi Tur Badenas', ]);
+                'name' => 'Sergi Tur Badenas',]);
     }
 
     /**
@@ -239,6 +254,6 @@ class StoreCampTest extends TestCase
         $this->visit('password/reset')
             ->type('notexistingemail@gmail.com', 'email')
             ->press('Send Password Reset Link')
-            ->see('There were some problems with your input');
+            ->see('We can\'t find a user with that e-mail address.');
     }
 }
