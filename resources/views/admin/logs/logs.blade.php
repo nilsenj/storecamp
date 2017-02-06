@@ -25,8 +25,6 @@
 </h1>
 @section('main-content')
     <h1 class="page-header">List of Logs</h1>
-
-
     <div class="table-responsive">
         <table class="table table-condensed table-hover table-stats">
             <thead>

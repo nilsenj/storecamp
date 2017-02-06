@@ -89,7 +89,8 @@
 
                     </span>
                 </div><!-- /.box-header -->
-                {!! Form::open(['files' => true, 'route' => ['admin::media::upload', $disk],  'id' => 'my-awesome-dropzone-body', 'class' => 'dropzone box-body folder-body']) !!}
+                {!! Form::open(['files' => true, 'route' => ['admin::media::upload', $disk],
+                'id' => 'my-awesome-dropzone-body', 'class' => 'dropzone box-body folder-body']) !!}
                 <input type="hidden" name="folder" value="{{$folder->unique_id}}">
                 @include('admin.media.index-body_part')
                 {!! Form::close() !!}

@@ -25,12 +25,7 @@
                 <div class="col-md-10 selected-block">
                     @if(isset($model))
                         @foreach($model->getMedia($preferredTag) as $item)
-                            <div data-id="{!! $item->id !!}" class="col-xs-6 col-md-2 col-lg-1 selected-item">
-                                <img src="{!! $item->getUrl() !!}" class="item-icon" alt="{!! $item->filename !!}">
-                                <strong class="text-muted"><i class="fa fa-paperclip"></i>
-                                    {!! $item->filename !!}
-                                </strong>
-                            </div>
+                            @include("admin.fileLinker.file-linker_selected_item", [$file = $item])
                         @endforeach
                     @endif
                 </div>
