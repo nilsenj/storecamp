@@ -13,11 +13,8 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">List of Media Files
-
-                    </h3>
+                    <h3 class="box-title">List of Media Files</h3>
                     <div class="box-tools">
-
                         <div class="form-group">
                             @if(!$folder)
                                 <a class="btn btn-xs btn-default" href="{{route('admin::media::index', [$disk])}}"

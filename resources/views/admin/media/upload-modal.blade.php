@@ -18,7 +18,6 @@
     <!-- /.modal-dialog -->
 </div>
 @push('scripts-add_on')
-
 <script>
     $(function () {
         var uploadModal = $('#upload-modal'),
@@ -31,6 +30,5 @@
             $(this).modal('show');
         });
     });
-
 </script>
 @endpush

@@ -11,8 +11,8 @@ $.StoreCamp.templates =
         <div class="modal-dialog"><div class="modal-content"><div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>#{Header}</h3></div>
-        <div class="modal-body"><p>#{Message}</p></div><div class="modal-footer">
-        <button class="btn btn-primary" data-dismiss="ok">#{Ok}</button>
+        <div class="modal-body"><p>#{Message}</p></div>
+        <div class='clearfix'></div> <div class="modal-footer">
         <button class="btn btn-default" data-dismiss="modal">#{Cancel}</button></div>
         </div></div></div>"""
   }
@@ -27,7 +27,7 @@ $.StoreCamp.templates =
     message = Message ? 'Are you sure?'
     okText = Ok ? 'Ok'
     cancelText = Cancel ? 'Cancel'
-    modalId = ''
+    modalId = modalId ? ''
     aria = AriaLabel ? modalId
     autoLaunch = true
     triggerLink = btntrigger ? $('.modal-auto-Trigger')

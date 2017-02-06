@@ -59,9 +59,19 @@ $white: white;
       border: 1px solid #3c8dbc;
     }
   }
+  .item-icons {
+    height: 2em;
+  }
   .item-icon {
     width: 100%;
     height: 150px;
+    display: block;
+    font-size: 120px;
+    text-align: center;
+    list-style-type: none !important;
+  }
+  .item-image {
+    width: 100%;
     display: block;
     font-size: 120px;
     text-align: center;
@@ -204,6 +214,29 @@ $white: white;
       border: 2px solid #f4f4f4;
       background: #f4f4f4;
     }
+  }
+}
+%extend_2 {
+  display: inline-block;
+  position: relative;
+}
+.items-list {
+  &:hover {
 
+  }
+  .delete-btn {
+    @extend %extend_2
+  }
+
+  .rename-btn {
+    @extend %extend_2
+
+  }
+  .download-btn {
+    @extend %extend_2
+
+  }
+  .info-btn {
+    @extend %extend_2
   }
 }

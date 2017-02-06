@@ -193,9 +193,21 @@
   border: 1px solid #3c8dbc;
 }
 
+.file-item .item-icons {
+  height: 2em;
+}
+
 .file-item .item-icon {
   width: 100%;
   height: 150px;
+  display: block;
+  font-size: 120px;
+  text-align: center;
+  list-style-type: none !important;
+}
+
+.file-item .item-image {
+  width: 100%;
   display: block;
   font-size: 120px;
   text-align: center;
@@ -337,6 +349,11 @@
   list-style-type: none !important;
   border: 2px solid #f4f4f4;
   background: #f4f4f4;
+}
+
+.items-list .delete-btn, .items-list .rename-btn, .items-list .download-btn, .items-list .info-btn {
+  display: inline-block;
+  position: relative;
 }
 
 li.play-status {

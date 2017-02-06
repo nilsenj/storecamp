@@ -820,86 +820,73 @@
 (function() {
   $.StoreCamp.media = {
     options: {
-      players: plyr.setup(),
+      players: plyr.setup(document.querySelectorAll('.js-player'), []),
       playerStatus: $('.play-status'),
-      mediaItems: $('.media-plyr-item')
+      mediaItems: $('.media[data-status="playable"]'),
+      directoryItem: $(".directories .directory-item"),
+      fileItem: $(".media"),
+      infoTemplate: function(filename, type, modified, size) {
+        return "<div class='text-muted'>\n<span class=\"container\">\n  <small class=\"label pull-left bg-gray\">name: </small>\n  <p class='pull-right'>" + filename + "</p>\n </span>\n<span class=\"container\">\n  <small class=\"label pull-left bg-gray\">type: </small>\n  <p class='pull-right'>" + type + "</p>\n</span>\n<span class=\"container\">\n  <small class=\"label pull-left bg-gray\">modified: </small>\n  <p class='pull-right'>" + modified + "</p>\n</span>\n<span class=\"container\">\n  <small class=\"label pull-left bg-gray\">size: </small>\n  <p class='pull-right'>" + size + "</p>\n</span>\n</div>\n<div class='clearfix'></div>";
+      },
+      videoTemplate: function(mediaUrl, mediaId, filename, type, modified, size) {
+        return "<div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item media-plyr-item\" style=\"margin-bottom: 10px\">\n          <span class=\"mailbox-attachment-icon has-img\">\n              <video class='js-player' controls>\n                   <source src=\"" + mediaUrl + "\"\n                             type=\"video/mp4\">\n                    <source src=\"" + mediaUrl + "\"\n                              type=\"video/webm\">\n               </video>\n          </span>\n" + (this.infoTemplate(filename, type, modified, size)) + "\n</div>";
+      },
+      audioTemplate: function(mediaUrl, mediaId, filename, type, modified, size) {
+        return " <div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item media-plyr-item\" style=\"margin-bottom: 10px\">\n           <audio class='js-player' controls title=\"" + mediaUrl + "\">\n                  <source src=\"" + mediaUrl + "\"\n                          type=\"audio/mp3\">\n                  <source src=\"" + mediaUrl + "\"\n                          type=\"audio/ogg\">\n            </audio>\n" + (this.infoTemplate(filename, type, modified, size)) + "\n  </div>";
+      },
+      documentTemplate: function(mediaUrl, mediaId, filename, type, modified, size) {
+        return "<div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item\" style=\"margin-bottom: 10px\">\n<div class=\"text-center\">\n    <i class=\"item-icon fa fa-file-word-o fa-2x\"></i>\n</div>\n<div class='clearfix'></div>\n" + (this.infoTemplate(filename, type, modified, size)) + "\n  </div>";
+      },
+      imageTemplate: function(mediaUrl, mediaId, filename, type, modified, size) {
+        return "<div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item\" style=\"margin-bottom: 10px\">\n<div class=\"pull-left text-muted\">\n  <img src=\"" + mediaUrl + "\" class=\"item-image\" alt=\"" + filename + "\">\n</div>\n<div class='clearfix'></div>\n" + (this.infoTemplate(filename, type, modified, size)) + "\n </div>";
+      },
+      pdfTemplate: function(mediaUrl, mediaId, filename, type, modified, size) {
+        return "<div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item\" style=\"margin-bottom: 10px\">\n <div class=\"text-center\">\n   <i class=\"item-icon fa fa-file-pdf-o fa-2x\"></i>\n</div>\n <div class='clearfix'></div>\n " + (this.infoTemplate(filename, type, modified, size)) + "\n  </div>";
+      },
+      archiveTemplate: function(mediaUrl, mediaId, filename, type, modified, size) {
+        return "<div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item\" style=\"margin-bottom: 10px\">\n <div class=\"text-center\">\n   <i class=\"item-icon fa fa-archive fa-2x\"></i>\n</div>\n <div class='clearfix'></div>\n " + (this.infoTemplate(filename, type, modified, size)) + "\n  </div>";
+      }
     },
     activate: function() {
       var _this;
       _this = this;
       _this.fileSystemEvents();
       if (_this.options.mediaItems.length > 0) {
-        _this.mediaEvents();
         _this.reindex(_this.options.mediaItems, _this.options.players);
       }
-    },
-    mediaEvents: function() {
-      var _this;
-      _this = this;
-      return _this.options.players.forEach(function(player, i, arr) {
-        player.on('ready timeupdate pause ended play playing', function(event) {
-          var playInstanse;
-          switch (event.type) {
-            case 'ended':
-              if (arr.length - 1 > i) {
-                _this.options.players[i + 1].play();
-                _this.options.playerStatus.toggle(200);
-                _this.options.playerStatus.html('<a href="#"><i class="fa fa-step-forward"></i></a>');
-                setTimeout(function() {
-                  return _this.options.playerStatus.html('<a onclick="$.StoreCamp.media.pausePlayers()" href="#"><i class="fa fa-pause"></i></a>');
-                }, 2000);
-              } else {
-                _this.options.players[0].play();
-                _this.options.playerStatus.toggle(200);
-                _this.options.playerStatus.html('<a href="#"><i class="fa  fa-step-forward"></i></a>');
-                setTimeout(function() {
-                  return _this.options.playerStatus.html('<a onclick="$.StoreCamp.media.pausePlayers()" href="#"><i class="fa fa-pause"></i></a>');
-                }, 2000);
-              }
-              break;
-            case 'pause':
-              console.log('fuck off');
-              _this.options.playerStatus.toggle(200);
-              _this.options.playerStatus.html('<a onclick="$.StoreCamp.media.pausePlayers()" href="#"><i class="fa fa-pause"></i></a>');
-              break;
-            case 'play':
-              $('.media-plyr-item').removeClass('playing');
-              playInstanse = $(event.target);
-              playInstanse.closest('.media-plyr-item').addClass('playing');
-          }
-        });
-      });
     },
     fileSystemEvents: function() {
       var _this;
       _this = this;
-      $(".file-item .delete-file").on("click", function(event) {
-        var btn, deleteUrl, fileItem, folderBody;
+      $(".media .info-btn").on("click", function(event) {
+        var btn;
+        event.preventDefault();
+        btn = $(this);
+        _this.infoFile(btn);
+      });
+      $(".media .delete-btn").on("click", function(event) {
+        var btn, deleteUrl, fileItem;
         event.preventDefault();
         btn = $(this);
         deleteUrl = btn.attr('href');
         fileItem = btn.closest('.file-item');
-        folderBody = $('#folder-body');
         _this.deleteFile(deleteUrl, fileItem);
-        console.log(btn.attr('href'));
       });
-      $(".directories .directory-item .delete-file").on("click", function(event) {
-        var btn, deleteUrl, fileItem, folderBody;
+      _this.options.directoryItem.find(".delete-file").on("click", function(event) {
+        var btn, deleteUrl, fileItem;
         event.preventDefault();
         btn = $(this);
         deleteUrl = btn.attr('href');
         fileItem = btn.closest('.directory-item');
-        folderBody = $('#folder-body');
         _this.deleteFile(deleteUrl, fileItem);
       });
     },
     reindex: function(mediaItems, players) {
       var _this;
       _this = this;
-      [].forEach.call(mediaItems, function(item, i, arr) {
+      return [].forEach.call(mediaItems, function(item, i, arr) {
         $(item).attr('data-media-number', i);
       });
-      return _this._triggerNewFile(mediaItems, players);
     },
     deleteFile: function(deleteUrl, fileItem) {
       var _this;
@@ -910,7 +897,6 @@
         success: function(data) {
           fileItem.remove();
           $.StoreCamp.templates.alert('success', data.title, data.message);
-          console.log(data);
         },
         error: function(xhr, textStatus, errorThrown) {
           $.StoreCamp.templates.alert('danger', xhr.statusText, xhr.responseText);
@@ -918,32 +904,56 @@
         }
       }, false);
     },
-    pausePlayers: function() {
-      var _this, players;
+    infoFile: function(btn) {
+      var _this, fileItem, item, itemDisk, itemId, itemModified, itemName, itemSize, itemType, itemUrl, players;
       _this = this;
-      players = _this.options.players;
-      return players.forEach(function(player, i, arr) {
-        player.stop();
-        players[i].pause();
-        $('.media-plyr-item').removeClass('playing');
+      fileItem = btn.closest('.media');
+      itemUrl = fileItem.attr('data-href');
+      itemType = fileItem.attr('data-file-type');
+      itemDisk = fileItem.attr('data-disk');
+      itemModified = fileItem.attr('data-modified');
+      itemName = fileItem.attr('data-filename');
+      itemSize = fileItem.attr('data-size');
+      itemId = fileItem.attr('data-file-id');
+      console.log(itemType);
+      if (itemType === "video") {
+        $.StoreCamp.templates.modal(itemId, _this.options.videoTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName);
+      }
+      if (itemType === "audio") {
+        $.StoreCamp.templates.modal(itemId, _this.options.audioTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName);
+      }
+      if (itemType === "document") {
+        $.StoreCamp.templates.modal(itemId, _this.options.documentTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName);
+      }
+      if (itemType === "image") {
+        $.StoreCamp.templates.modal(itemId, _this.options.imageTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName);
+      }
+      if (itemType === "pdf") {
+        $.StoreCamp.templates.modal(itemId, _this.options.pdfTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName);
+      }
+      if (itemType === "archive") {
+        $.StoreCamp.templates.modal(itemId, _this.options.archiveTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName);
+      }
+      item = $("#" + itemId);
+      if (item.length === 1) {
+        players = plyr.setup(item, []);
+      }
+      return $('#' + itemId).on('hidden.bs.modal', function() {
+        if (itemType === "video") {
+          _this.pausePlayers(players);
+        }
+        if (itemType === "audio") {
+          _this.pausePlayers(players);
+        }
+        return $(this).remove();
       });
     },
-    _triggerNewFile: function(mediaItems, players) {
-      var _this, playButtons;
+    pausePlayers: function(players) {
+      var _this;
       _this = this;
-      playButtons = [mediaItems.find('.plyr__controls button[data-plyr="play"]'), $('.plyr .plyr__play-large')];
-      playButtons.forEach(function(item, i, arr) {
-        return item.on('click', function(event) {
-          var audioItem, audioItemClass;
-          audioItemClass = $(event.target).closest('.media-plyr-item');
-          audioItem = audioItemClass.data('media-number');
-          $('.media-plyr-item').removeClass('playing');
-          players.forEach(function(player, i, arr) {
-            player.pause();
-            players[audioItem].play();
-            audioItemClass.addClass('playing');
-          });
-        });
+      return players.forEach(function(player, i, arr) {
+        players[i].pause();
+        $('.media-plyr-item').removeClass('playing');
       });
     }
   };
@@ -959,7 +969,7 @@
         return "<div class=\"alert alert-" + type + " alert-dismissible\">\n<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>\n<h4>" + title + "</h4>\n" + message + "\n</div>";
       },
       modalTemplate: function(modalId, Message, Header, AriaLabel, Ok, Cancel) {
-        return "<div class=\"modal fade\" id=\"" + modalId + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"" + AriaLabel + "\" aria-hidden=\"true\">\n<div class=\"modal-dialog\"><div class=\"modal-content\"><div class=\"modal-header\">\n<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n<h3>" + Header + "</h3></div>\n<div class=\"modal-body\"><p>" + Message + "</p></div><div class=\"modal-footer\">\n<button class=\"btn btn-primary\" data-dismiss=\"ok\">" + Ok + "</button>\n<button class=\"btn btn-default\" data-dismiss=\"modal\">" + Cancel + "</button></div>\n</div></div></div>";
+        return "<div class=\"modal fade\" id=\"" + modalId + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"" + AriaLabel + "\" aria-hidden=\"true\">\n<div class=\"modal-dialog\"><div class=\"modal-content\"><div class=\"modal-header\">\n<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n<h3>" + Header + "</h3></div>\n<div class=\"modal-body\"><p>" + Message + "</p></div>\n<div class='clearfix'></div> <div class=\"modal-footer\">\n<button class=\"btn btn-default\" data-dismiss=\"modal\">" + Cancel + "</button></div>\n</div></div></div>";
       }
     },
     activate: function() {
@@ -978,7 +988,7 @@
       message = Message != null ? Message : 'Are you sure?';
       okText = Ok != null ? Ok : 'Ok';
       cancelText = Cancel != null ? Cancel : 'Cancel';
-      modalId = '';
+      modalId = modalId != null ? modalId : '';
       aria = AriaLabel != null ? AriaLabel : modalId;
       autoLaunch = true;
       triggerLink = btntrigger != null ? btntrigger : $('.modal-auto-Trigger');

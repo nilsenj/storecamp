@@ -1,65 +1,118 @@
 $.StoreCamp.media =
   options: {
-    players: plyr.setup()
+    players: plyr.setup(document.querySelectorAll('.js-player'), [])
     playerStatus: $('.play-status')
-    mediaItems: $('.media-plyr-item')
+    mediaItems: $('.media[data-status="playable"]')
+    directoryItem: $(".directories .directory-item")
+    fileItem: $(".media")
+    infoTemplate: (filename, type, modified, size) ->
+      """<div class='text-muted'>
+                    <span class="container">
+                      <small class="label pull-left bg-gray">name: </small>
+                      <p class='pull-right'>#{filename}</p>
+                     </span>
+                    <span class="container">
+                      <small class="label pull-left bg-gray">type: </small>
+                      <p class='pull-right'>#{type}</p>
+                    </span>
+                    <span class="container">
+                      <small class="label pull-left bg-gray">modified: </small>
+                      <p class='pull-right'>#{modified}</p>
+                    </span>
+                    <span class="container">
+                      <small class="label pull-left bg-gray">size: </small>
+                      <p class='pull-right'>#{size}</p>
+                    </span>
+                    </div>
+                    <div class='clearfix'></div>
+    """
+    videoTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
+      """<div id='#{mediaId}' data-id='#{mediaId}' class="col-xs-12 col-md-12 col-lg-12 file-item media-plyr-item" style="margin-bottom: 10px">
+                    <span class="mailbox-attachment-icon has-img">
+                        <video class='js-player' controls>
+                             <source src="#{mediaUrl}"
+                                       type="video/mp4">
+                              <source src="#{mediaUrl}"
+                                        type="video/webm">
+                         </video>
+                    </span>
+          #{this.infoTemplate(filename, type, modified, size)}
+          </div>"""
+    audioTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
+        """ <div id='#{mediaId}' data-id='#{mediaId}' class="col-xs-12 col-md-12 col-lg-12 file-item media-plyr-item" style="margin-bottom: 10px">
+                     <audio class='js-player' controls title="#{mediaUrl}">
+                            <source src="#{mediaUrl}"
+                                    type="audio/mp3">
+                            <source src="#{mediaUrl}"
+                                    type="audio/ogg">
+                      </audio>
+          #{this.infoTemplate(filename, type, modified, size)}
+            </div>
+        """
+      documentTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
+        """
+          <div id='#{mediaId}' data-id='#{mediaId}' class="col-xs-12 col-md-12 col-lg-12 file-item" style="margin-bottom: 10px">
+          <div class="text-center">
+              <i class="item-icon fa fa-file-word-o fa-2x"></i>
+          </div>
+          <div class='clearfix'></div>
+          #{this.infoTemplate(filename, type, modified, size)}
+            </div>"""
+
+      imageTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
+        """
+            <div id='#{mediaId}' data-id='#{mediaId}' class="col-xs-12 col-md-12 col-lg-12 file-item" style="margin-bottom: 10px">
+            <div class="pull-left text-muted">
+              <img src="#{mediaUrl}" class="item-image" alt="#{filename}">
+            </div>
+            <div class='clearfix'></div>
+            #{this.infoTemplate(filename, type, modified, size)}
+             </div>"""
+      pdfTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
+        """
+           <div id='#{mediaId}' data-id='#{mediaId}' class="col-xs-12 col-md-12 col-lg-12 file-item" style="margin-bottom: 10px">
+            <div class="text-center">
+              <i class="item-icon fa fa-file-pdf-o fa-2x"></i>
+           </div>
+            <div class='clearfix'></div>
+            #{this.infoTemplate(filename, type, modified, size)}
+             </div>"""
+      archiveTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
+        """
+           <div id='#{mediaId}' data-id='#{mediaId}' class="col-xs-12 col-md-12 col-lg-12 file-item" style="margin-bottom: 10px">
+            <div class="text-center">
+              <i class="item-icon fa fa-archive fa-2x"></i>
+           </div>
+            <div class='clearfix'></div>
+            #{this.infoTemplate(filename, type, modified, size)}
+             </div>"""
   }
   activate: ->
     _this = this
     _this.fileSystemEvents()
     if(_this.options.mediaItems.length > 0)
-      _this.mediaEvents()
       _this.reindex(_this.options.mediaItems, _this.options.players)
     return
 
-  mediaEvents: ->
-    _this = this
-    _this.options.players.forEach (player, i, arr) ->
-      player.on 'ready timeupdate pause ended play playing', (event) ->
-        switch event.type
-          when 'ended'
-            if arr.length - 1 > i
-              _this.options.players[i + 1].play()
-              _this.options.playerStatus.toggle 200
-              _this.options.playerStatus.html '<a href="#"><i class="fa fa-step-forward"></i></a>'
-              setTimeout(() ->
-                _this.options.playerStatus.html '<a onclick="$.StoreCamp.media.pausePlayers()" href="#"><i class="fa fa-pause"></i></a>'
-              , 2000)
-            else
-              _this.options.players[0].play()
-              _this.options.playerStatus.toggle 200
-              _this.options.playerStatus.html '<a href="#"><i class="fa  fa-step-forward"></i></a>'
-              setTimeout(() ->
-                _this.options.playerStatus.html '<a onclick="$.StoreCamp.media.pausePlayers()" href="#"><i class="fa fa-pause"></i></a>'
-              , 2000)
-          when 'pause'
-            console.log 'fuck off'
-            _this.options.playerStatus.toggle 200
-            _this.options.playerStatus.html '<a onclick="$.StoreCamp.media.pausePlayers()" href="#"><i class="fa fa-pause"></i></a>'
-          when 'play'
-            $('.media-plyr-item').removeClass('playing')
-            playInstanse = $(event.target)
-            playInstanse.closest('.media-plyr-item').addClass('playing')
-        return
-      return
-
   fileSystemEvents: ->
     _this = this
-    $(".file-item .delete-file").on "click", (event) ->
+    $(".media .info-btn").on "click", (event) ->
+      event.preventDefault()
+      btn = $(this)
+      _this.infoFile(btn)
+      return
+    $(".media .delete-btn").on "click", (event) ->
       event.preventDefault()
       btn = $(this)
       deleteUrl = btn.attr('href')
       fileItem = btn.closest('.file-item')
-      folderBody = $('#folder-body')
       _this.deleteFile(deleteUrl, fileItem)
-      console.log(btn.attr('href'))
       return
-    $(".directories .directory-item .delete-file").on "click", (event) ->
+    _this.options.directoryItem.find(".delete-file").on "click", (event) ->
       event.preventDefault()
       btn = $(this)
       deleteUrl = btn.attr('href')
       fileItem = btn.closest('.directory-item')
-      folderBody = $('#folder-body')
       _this.deleteFile(deleteUrl, fileItem)
       return
     return
@@ -68,7 +121,6 @@ $.StoreCamp.media =
     [].forEach.call mediaItems, (item, i, arr) ->
       $(item).attr 'data-media-number', i
       return
-     _this._triggerNewFile(mediaItems, players)
   deleteFile: (deleteUrl, fileItem) ->
     _this = this
     $.ajax
@@ -77,36 +129,50 @@ $.StoreCamp.media =
       success: (data) ->
         fileItem.remove()
         $.StoreCamp.templates.alert('success', data.title , data.message)
-        console.log(data);
         return
       error: (xhr, textStatus, errorThrown) ->
         $.StoreCamp.templates.alert('danger', xhr.statusText, xhr.responseText)
         console.error xhr
         return
       false
-  pausePlayers: () ->
+  infoFile: (btn) ->
     _this = this
-    players = _this.options.players
+    fileItem = btn.closest('.media')
+    itemUrl = fileItem.attr('data-href')
+    itemType = fileItem.attr('data-file-type')
+    itemDisk = fileItem.attr('data-disk')
+    itemModified = fileItem.attr('data-modified')
+    itemName = fileItem.attr('data-filename')
+    itemSize = fileItem.attr('data-size')
+    itemId = fileItem.attr('data-file-id')
+    console.log(itemType)
+    if(itemType == "video")
+      $.StoreCamp.templates.modal(itemId, _this.options.videoTemplate(itemUrl, itemId, itemName, itemType,itemModified, itemSize), itemName)
+    if(itemType == "audio")
+      $.StoreCamp.templates.modal(itemId, _this.options.audioTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName)
+    if(itemType == "document")
+      $.StoreCamp.templates.modal(itemId, _this.options.documentTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName)
+    if(itemType == "image")
+      $.StoreCamp.templates.modal(itemId, _this.options.imageTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName)
+    if(itemType == "pdf")
+      $.StoreCamp.templates.modal(itemId, _this.options.pdfTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName)
+    if(itemType == "archive")
+      $.StoreCamp.templates.modal(itemId, _this.options.archiveTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName)
+
+    item = $("#"+itemId)
+    if item.length == 1
+      players = plyr.setup item, []
+    $('#'+itemId).on 'hidden.bs.modal', () ->
+      if(itemType == "video")
+        _this.pausePlayers(players)
+      if(itemType == "audio")
+        _this.pausePlayers(players)
+      $(this).remove()
+  pausePlayers: (players) ->
+    _this = this
     players.forEach (player, i, arr) ->
-      player.stop()
       players[i].pause()
       $('.media-plyr-item').removeClass('playing')
       return
-  _triggerNewFile: (mediaItems, players) ->
-    _this = this
-    playButtons = [mediaItems.find('.plyr__controls button[data-plyr="play"]'), $('.plyr .plyr__play-large')]
-    playButtons.forEach (item, i, arr) ->
-      item.on 'click', (event) ->
-        audioItemClass = $(event.target).closest('.media-plyr-item')
-        audioItem = audioItemClass.data('media-number')
-        $('.media-plyr-item').removeClass('playing')
-        players.forEach (player, i, arr) ->
-          player.pause()
-          players[audioItem].play()
-          audioItemClass.addClass('playing')
-          return
-        return
-    return
-  # ---
 
 $.StoreCamp.media.activate()
