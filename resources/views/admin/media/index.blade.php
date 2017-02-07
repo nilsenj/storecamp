@@ -102,7 +102,7 @@
     </div>
 @endsection
 @section('scripts_add')
-
+    <script src="{!! asset('custom_vendors/media-js/jquery.media.js') !!}"></script>
 @endsection
 @include('admin.media.upload-modal')
 @include('admin.media.newdir-modal')

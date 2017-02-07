@@ -119,9 +119,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
         </div>
     </div>
 
-
-    <section id="home" name="home"></section>
-    <div id="headerwrap">
+    <div id="home" name="home">
         <div class="container">
             <div class="row centered">
                 <div class="col-lg-12">
@@ -150,11 +148,11 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     </div><!--/ #headerwrap -->
 
 
-    <section id="desc" name="desc">
-
-    </section>
+    <div id="desc" name="desc">
+        <div class="container">Nothing here</div>
+    </div>
     <!-- INTRO WRAP -->
-    <div id="intro">
+    <div id="intro" name="intro">
         <div class="container">
             <div class="row centered">
                 <h1>{{ trans('message.designed') }}</h1>
@@ -182,7 +180,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     </div><!--/ #introwrap -->
 
     <!-- FEATURES WRAP -->
-    <div id="features">
+    <div id="features" name="features">
         <div class="container">
             <div class="row">
                 <h1 class="centered">{{ trans('message.whatnew') }}</h1>
@@ -259,8 +257,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     </div><!--/ #features -->
 
 
-    <section id="showcase" name="showcase"></section>
-    <div id="showcase">
+    <div id="showcase" name="showcase">
         <div class="container">
             <div class="row">
                 <h1 class="centered">{{ trans('message.screenshots') }}</h1>
@@ -292,42 +289,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     </div>
 
 
-    <section id="contact" name="contact"></section>
-    <div id="footerwrap">
-        <div class="container">
-            <div class="col-lg-5">
-                <h3>{{ trans('message.address') }}</h3>
-                <p>
-                    Av. Greenville 987,<br/>
-                    New York,<br/>
-                    90873<br/>
-                    United States
-                </p>
-            </div>
-
-            <div class="col-lg-7">
-                <h3>{{ trans('message.dropus') }}</h3>
-                <br>
-                <form role="form" action="#" method="post" enctype="plain">
-                    <div class="form-group">
-                        <label for="name1">{{ trans('message.yourname') }}</label>
-                        <input type="name" name="Name" class="form-control" id="name1" placeholder="{{ trans('message.yourname') }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="email1">{{ trans('message.emailaddress') }}</label>
-                        <input type="email" name="Mail" class="form-control" id="email1" placeholder="{{ trans('message.enteremail') }}">
-                    </div>
-                    <div class="form-group">
-                        <label>{{ trans('message.yourtext') }}</label>
-                        <textarea class="form-control" name="Message" rows="3"></textarea>
-                    </div>
-                    <br>
-                    <button type="submit" class="btn btn-large btn-success">{{ trans('message.submit') }}</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div id="c">
+    <div id="contact" name="contact">
         <div class="container">
             <p>
                 <a href="https://github.com/nilsenj/storecamp"></a><b>admin-StoreCamp-laravel</b></a>. {{ trans('message.descriptionpackage') }}.<br/>
@@ -337,6 +299,40 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                 <br/>
             </p>
 
+        </div>
+    </div>
+</div>
+<div id="footerwrap" name="footerwrap">
+    <div class="container">
+        <div class="col-lg-5">
+            <h3>{{ trans('message.address') }}</h3>
+            <p>
+                Av. Greenville 987,<br/>
+                New York,<br/>
+                90873<br/>
+                United States
+            </p>
+        </div>
+
+        <div class="col-lg-7">
+            <h3>{{ trans('message.dropus') }}</h3>
+            <br>
+            <form role="form" action="#" method="post" enctype="plain">
+                <div class="form-group">
+                    <label for="name1">{{ trans('message.yourname') }}</label>
+                    <input type="name" name="Name" class="form-control" id="name1" placeholder="{{ trans('message.yourname') }}">
+                </div>
+                <div class="form-group">
+                    <label for="email1">{{ trans('message.emailaddress') }}</label>
+                    <input type="email" name="Mail" class="form-control" id="email1" placeholder="{{ trans('message.enteremail') }}">
+                </div>
+                <div class="form-group">
+                    <label>{{ trans('message.yourtext') }}</label>
+                    <textarea class="form-control" name="Message" rows="3"></textarea>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-large btn-success">{{ trans('message.submit') }}</button>
+            </form>
         </div>
     </div>
 </div>

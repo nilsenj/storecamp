@@ -40,7 +40,6 @@ elixir((mix) => {
     mix.browserSync({
         proxy: 'storecamp.app'
     });
-    mix.test();
 });
 // create a task to serve the app
 gulp.task('serve', function() {

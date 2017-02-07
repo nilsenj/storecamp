@@ -74,9 +74,14 @@ $.StoreCamp.media =
             <div class="text-center">
               <i class="item-icon fa fa-file-pdf-o fa-2x"></i>
            </div>
+            <button class='btn btn-block' data-toggle="collapse" data-target="#pdf-file">Preview #{filename}</button>
+            <div id="pdf-file" class="collapse">
+                  <a class="pdf-file" href="#{mediaUrl}">#{filename}</a>
+            </div>
             <div class='clearfix'></div>
             #{this.infoTemplate(filename, type, modified, size)}
              </div>"""
+
       archiveTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
         """
            <div id='#{mediaId}' data-id='#{mediaId}' class="col-xs-12 col-md-12 col-lg-12 file-item" style="margin-bottom: 10px">
@@ -156,6 +161,7 @@ $.StoreCamp.media =
       $.StoreCamp.templates.modal(itemId, _this.options.imageTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName)
     if(itemType == "pdf")
       $.StoreCamp.templates.modal(itemId, _this.options.pdfTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName)
+      $('.pdf-file').media({width:100+"%", height:400})
     if(itemType == "archive")
       $.StoreCamp.templates.modal(itemId, _this.options.archiveTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName)
 

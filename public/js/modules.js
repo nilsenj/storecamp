@@ -841,7 +841,7 @@
         return "<div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item\" style=\"margin-bottom: 10px\">\n<div class=\"pull-left text-muted\">\n  <img src=\"" + mediaUrl + "\" class=\"item-image\" alt=\"" + filename + "\">\n</div>\n<div class='clearfix'></div>\n" + (this.infoTemplate(filename, type, modified, size)) + "\n </div>";
       },
       pdfTemplate: function(mediaUrl, mediaId, filename, type, modified, size) {
-        return "<div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item\" style=\"margin-bottom: 10px\">\n <div class=\"text-center\">\n   <i class=\"item-icon fa fa-file-pdf-o fa-2x\"></i>\n</div>\n <div class='clearfix'></div>\n " + (this.infoTemplate(filename, type, modified, size)) + "\n  </div>";
+        return "<div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item\" style=\"margin-bottom: 10px\">\n <div class=\"text-center\">\n   <i class=\"item-icon fa fa-file-pdf-o fa-2x\"></i>\n</div>\n <button class='btn btn-block' data-toggle=\"collapse\" data-target=\"#pdf-file\">Preview " + filename + "</button>\n <div id=\"pdf-file\" class=\"collapse\">\n       <a class=\"pdf-file\" href=\"" + mediaUrl + "\">" + filename + "</a>\n </div>\n <div class='clearfix'></div>\n " + (this.infoTemplate(filename, type, modified, size)) + "\n  </div>";
       },
       archiveTemplate: function(mediaUrl, mediaId, filename, type, modified, size) {
         return "<div id='" + mediaId + "' data-id='" + mediaId + "' class=\"col-xs-12 col-md-12 col-lg-12 file-item\" style=\"margin-bottom: 10px\">\n <div class=\"text-center\">\n   <i class=\"item-icon fa fa-archive fa-2x\"></i>\n</div>\n <div class='clearfix'></div>\n " + (this.infoTemplate(filename, type, modified, size)) + "\n  </div>";
@@ -930,6 +930,10 @@
       }
       if (itemType === "pdf") {
         $.StoreCamp.templates.modal(itemId, _this.options.pdfTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName);
+        $('.pdf-file').media({
+          width: 100 + "%",
+          height: 400
+        });
       }
       if (itemType === "archive") {
         $.StoreCamp.templates.modal(itemId, _this.options.archiveTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName);
