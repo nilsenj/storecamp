@@ -8,7 +8,7 @@
     @endsection
 </h1>
 @section('main-content')
-    {!! Form::model($category, ['route' => ['admin::categories::update', $category->unique_id], 'method' => 'PUT', 'class' => '']) !!}
+    {{ Form::model($category, ['route' => ['admin::categories::update', $category->unique_id], 'method' => 'PUT', 'class' => '']) }}
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#general" data-toggle="tab">General</a></li>
@@ -19,5 +19,5 @@
         </div>
         <!-- /.tab-content -->
     </div>
-    {!! Form::close() !!}
+    {{ Form::close() }}
 @endsection

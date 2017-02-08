@@ -68,7 +68,7 @@ class ProductReview extends Model implements Transformable
      *
      * @var array
      */
-    protected $fillable = ['product', 'review', 'rating', 'unique_id', 'hidden', 'date'];
+    protected $fillable = ['product', 'user_id', 'review', 'rating', 'unique_id', 'hidden', 'date'];
 
     /**
      * @var array

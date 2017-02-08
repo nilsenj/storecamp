@@ -5,11 +5,11 @@
         Edit orders
     @endsection
     @section('contentheader_description')
-        <b>{!! link_to_route("admin::orders::index", 'Back') !!}</b>
+        <b>{{ link_to_route("admin::orders::index", 'Back') }}</b>
     @endsection
 </h1>
 @section('main-content')
-    {!! Form::model($model, ['route' => ["admin::orders::update", $model], 'method' => 'PUT', 'class' => '']) !!}
+    {{ Form::model($model, ['route' => ["admin::orders::update", $model], 'method' => 'PUT', 'class' => '']) }}
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#general" data-toggle="tab">General</a></li>
@@ -20,5 +20,5 @@
         </div>
         <!-- /.tab-content -->
     </div>
-    {!! Form::close() !!}
+    {{ Form::close() }}
 @endsection

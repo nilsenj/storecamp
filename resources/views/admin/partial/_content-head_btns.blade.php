@@ -1,5 +1,5 @@
 <div class="btn-group">
-    {!! link_to_route($routeName, $createBtn, [], ['class' => 'btn btn-info']) !!}
+    {{ link_to_route($routeName, $createBtn, [], ['class' => 'btn btn-info']) }}
     <?php $showFilters = isset($showFilters) ? $showFilters : true; ?>
     @if($showFilters)
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"

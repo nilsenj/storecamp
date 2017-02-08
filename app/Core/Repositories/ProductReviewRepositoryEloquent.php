@@ -27,13 +27,38 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
 {
 
     use CacheableRepository;
+    /**
+     * @var RolesRepository
+     */
     protected $roleRepository;
+    /**
+     * @var ProductsRepository
+     */
     protected $product;
+    /**
+     * @var Thread
+     */
     protected $thread;
+    /**
+     * @var Message
+     */
     protected $message;
+    /**
+     * @var
+     */
     protected $productDescription;
+    /**
+     * @var Participant
+     */
     protected $participant;
 
+    /**
+     * ProductReviewRepositoryEloquent constructor.
+     * @param Application $app
+     * @param Dispatcher $dispatcher
+     * @param RolesRepository $roleRepository
+     * @param ProductsRepository $product
+     */
     public function __construct(Application $app, Dispatcher $dispatcher, RolesRepository $roleRepository, ProductsRepository $product)
     {
         parent::__construct($app, $dispatcher);
@@ -73,6 +98,9 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
     }
 
 
+    /**
+     * @return ProductReview
+     */
     public function getModel()
     {
 
@@ -81,6 +109,14 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
         return $model;
     }
 
+    /**
+     * return the number of user's products
+     * @return mixed
+     */
+    public function countUserProductReviews()
+    {
+        return $this->with('user')->where('user_id', '=', \Auth::id())->count();
+    }
     /**
      * get all Products
      * @return mixed
@@ -114,106 +150,16 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
         return $this->getModel()->latest('created_at')->usersById($id)->paginate();
     }
 
-    public function getById($id)
-    {
-
-        return $this->getModel()->find($id);
-    }
-
 
     /**
-     * @param ProductReviewFormRequest $request
-     * @return mixed
-     */
-    public function createProductReview(ProductReviewFormRequest $request)
-    {
-        $data = $request->except(["unique_id", "rating", "hidden", "date"]);
-
-        $message = $data['message'];
-        unset($data['message']);
-
-        $data["product"] = $request->exists('product') ? $this->product->find($request->get('product'))->name : null;
-        $data['user_id'] = $request->user()->id;
-        $productReview = $request->user()->productReview()->create($data);
-        $thread = $this->thread->create(
-            [
-                'feedback_id' => $productReview->id,
-                'subject' => $data["product"],
-            ]);
-        // Message
-        $this->message->create(
-            [
-                'thread_id' => $thread->id,
-                'user_id' => $request->user()->id,
-                'body' => $message,
-            ]
-        );
-
-        // Sender
-        $this->participant->create(
-            [
-                'thread_id' => $thread->id,
-                'user_id' => $request->user()->id,
-                'last_read' => new \Carbon\Carbon()
-            ]
-        );
-
-        $adminArr = $this->roleRepository->getRoleUsers("Admin");
-        $thread->addParticipantsObjects($adminArr);
-
-        return $productReview;
-    }
-
-    /**
-     * find the current productReview
      * @param $id
-     * @return mixed
+     * @param $message
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|mixed
      */
-    public function getProductReview($id)
-    {
-        return $this->find($id);
-    }
-
-    /*TODO needs to be tested*/
-    /**
-     * @param UpdateProductReviewFormRequest $request
-     * @param $product
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function updateProductReview(UpdateProductReviewFormRequest $request, $product)
-    {
-        try {
-
-
-            $data = $request->except(["unique_id", "rating", "hidden", "date"]);
-
-            if ($request->user()->hasRole("Admin")) {
-                $extraData = $request->only(["unique_id", "rating", "hidden", "date"]);
-                $data = array_merge($data, $extraData);
-            }
-            $data['user_id'] = $request->user()->id;
-            $product->update($data);
-
-        } catch (\Exception $e) {
-
-            return response("error appeared can't update " . $e->getMessage(), $e->getCode());
-
-        }
-    }
-
-
     public function replyProductReview($id, $message)
     {
-        try {
-
-            $productReview = $this->getProductReview($id);
-            $thread = $productReview->thread->first();
-
-        } catch (ModelNotFoundException $e) {
-            \Toastr::error('error_message', 'The thread with ID: ' . $id . ' was not found.');
-            return redirect('messages');
-        }
-
+        $productReview = $this->find($id);
+        $thread = $productReview->thread->first();
         $thread->activateAllParticipants();
         $user_id = \Auth::user()->id;
         // Message
@@ -236,31 +182,4 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
         $participant->save();
         return $productReview;
     }
-
-    /**
-     * delete product && attached body && attached tags
-     *
-     * @param $id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function deleteAll($id)
-    {
-        try {
-            $this->delete($id);
-
-        } catch (\Exception $e) {
-            return response("error appeared " . $e->getMessage(), $e->getCode());
-        }
-    }
-
-
-    /**
-     * return the number of user's products
-     * @return mixed
-     */
-    public function countUserProductReviews()
-    {
-        return $this->with('user')->where('user_id', '=', \Auth::id())->count();
-    }
-
 }

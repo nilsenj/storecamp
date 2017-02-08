@@ -5,7 +5,7 @@
     @endsection
     @include('admin.partial._contentheader_title', [$model = $products, $message = "All Products"])
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::products::create', 'Add new product') !!}</b>
+        <b>{{ link_to_route('admin::products::create', 'Add new product') }}</b>
     @endsection
 </h1>
 @section('main-content')
@@ -15,30 +15,30 @@
             <div class="panel">
                 <div class="panel-body">
                     @foreach($lists as $list)
-                        <a href="{!! route('web::admin::newsletter::subscribe::showGenerate', [$list->unique_id]) !!}"
+                        <a href="{{ route('web::admin::newsletter::subscribe::showGenerate', [$list->unique_id]) }}"
                            type="button"
                            class="btn btn-default btn-nofill mb-1x mr-1x"
                            style="word-break: break-all">
                             Compaign for
-                            <strong>{!! $list->listName !!}</strong></a>
+                            <strong>{{ $list->listName }}</strong></a>
                     @endforeach
                 </div>
             </div>
             <div class="panel">
                 <div class="panel-body">
                     @foreach($mails as $mail)
-                        <a href="{!! route('web::admin::newsletter::subscribe::showGenerate', [$mail->filename]) !!}"
+                        <a href="{{ route('web::admin::newsletter::subscribe::showGenerate', [$mail->filename]) }}"
                            type="button"
                            class="btn btn-default btn-nofill mb-1x mr-1x"
                            style="word-break: break-all">
                             mail template
-                            <strong>{!! $mail->filename !!}</strong></a>
+                            <strong>{{ $mail->filename }}</strong></a>
                     @endforeach
                 </div>
             </div>
         </div>
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-            <h3><strong>{!! $newslist->listName !!}</strong> - subscribers list</h3>
+            <h3><strong>{{ $newslist->listName }}</strong> - subscribers list</h3>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             @forelse($subscribers as $subscriber)
@@ -52,13 +52,13 @@
                                         <small>subscription types</small>
                                         @foreach($subscriber->newsList as $list)
                                             <div class="label label-default">
-                                                <a href="{!! route('web::admin::newsletter::subscribe::show', [$list->unique_id]) !!}">{!! $list->listName !!}</a>
+                                                <a href="{{ route('web::admin::newsletter::subscribe::show', [$list->unique_id]) }}">{{ $list->listName }}</a>
                                             </div>
                                         @endforeach
                                     </h3>
                                     <small>subscriber
-                                        <a href="mailto:{!! $subscriber->email !!}"> quick email</a>
-                                        <span class="text-info">or copy: {!! $subscriber->email !!}</span>
+                                        <a href="mailto:{{ $subscriber->email }}"> quick email</a>
+                                        <span class="text-info">or copy: {{ $subscriber->email }}</span>
                                     </small>
                                 </div>
                                 <!-- /.cols -->
@@ -75,7 +75,7 @@
         @if($subscribers->hasPages())
             <div class="pagination-wrapper">
                 <div class="pagination-wrapper-inner">
-                    {!! $subscribers->links() !!}
+                    {{ $subscribers->links() }}
                 </div>
             </div>
         @endif

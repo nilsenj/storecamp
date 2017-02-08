@@ -4,16 +4,19 @@
         name="{!!$attrName!!}"
         class="form-control {!! $class !!}"
         title="{!! isset($title) ? $title : ""!!}">
+    <?php echo $placeholder; ?>
         @foreach($selected as $item => $tag)
             <?php $i++;?>
             @if($i <= 1)
-                <option value="">{!! isset($placeholder) ? $placeholder : "select an option" !!}</option>
+                <option value="" disabled selected>{!! isset($placeholder) ? $placeholder : "select an option" !!}</option>
                 <option {!! array_key_exists($item, $selected) == true ? "selected" : null !!}  value="{!! strtolower($item) !!}">{{ucfirst($tag)}}</option>
             @else
-
                 <option {!! array_key_exists($item, $selected) == true ? "selected" : null !!}  value="{!! strtolower($item) !!}">{{ucfirst($tag)}}</option>
             @endif
         @endforeach
+        @if(!count($selected))
+            <option value="" disabled selected>{!! isset($placeholder) ? $placeholder : "select an option" !!}</option>
+        @endif
 </select>
 @push('scripts-add_on')
 <script>

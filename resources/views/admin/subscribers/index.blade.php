@@ -5,7 +5,7 @@
     @endsection
     @include('admin.partial._contentheader_title', [$model = $subscribers, $message = "All Subscribers"])
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::products::create', 'Add new product') !!}</b>
+        <b>{{ link_to_route('admin::products::create', 'Add new product') }}</b>
     @endsection
 </h1>
 @section('main-content')
@@ -15,12 +15,12 @@
             <div class="panel">
                 <div class="panel-body">
                     @foreach($lists as $list)
-                        <a href="{!! route('admin::subscribers::showGenerate', [$list->unique_id]) !!}"
+                        <a href="{{ route('admin::subscribers::showGenerate', [$list->unique_id]) }}"
                            type="button"
                            class="btn btn-default btn-nofill mb-1x mr-1x"
                            style="word-break: break-all">
                             Compaign for
-                            <strong>{!! $list->campaign !!}</strong>
+                            <strong>{{ $list->campaign }}</strong>
                         </a>
                         <div class="clearfix"></div>
                     @endforeach
@@ -39,16 +39,16 @@
                                         <small>subscription types</small>
                                         @foreach($subscriber->campaign as $list)
                                             <div class="label label-default mr-1x">
-                                                <a href="{!! route('admin::subscribers::show', [$list->unique_id]) !!}">
-                                                    <small>{!! $list->campaign !!}</small>
+                                                <a href="{{ route('admin::subscribers::show', [$list->unique_id]) }}">
+                                                    <small>{{ $list->campaign }}</small>
                                                 </a>
                                             </div>
                                         @endforeach
                                         <div class="clearfix"></div>
                                     </h3>
                                     <small>subscriber
-                                        <a href="mailto:{!! $subscriber->email !!}"> quick email</a>
-                                        <span class="text-info">or copy: {!! $subscriber->email !!}</span>
+                                        <a href="mailto:{{ $subscriber->email }}"> quick email</a>
+                                        <span class="text-info">or copy: {{ $subscriber->email }}</span>
                                     </small>
                                 </div>
                                 <!-- /.cols -->
@@ -65,7 +65,7 @@
         @if($subscribers->hasPages())
             <div class="pagination-wrapper">
                 <div class="pagination-wrapper-inner">
-                    {!! $subscribers->links() !!}
+                    {{ $subscribers->links() }}
                 </div>
             </div>
         @endif

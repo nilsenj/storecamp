@@ -1,5 +1,5 @@
 <div id="history" style="font-family:'Open Sans';">
-    {!! $mail !!}
+    {{ $mail }}
 </div>
 
 <script>

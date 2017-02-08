@@ -5,7 +5,7 @@
     @endsection
     @include('admin.partial._contentheader_title', [$model = $mails, $message = "Amount of sent eMails"])
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::attributes::create', 'Add New Attribute') !!}</b>
+        <b>{{ link_to_route('admin::attributes::create', 'Add New Attribute') }}</b>
     @endsection
 </h1>
 @section('main-content')
@@ -57,12 +57,12 @@
                             <div id="template1" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
                                     @foreach($mails as $mail)
-                                        <a href="{!! route('admin::subscribers::tmp_mail', [$mail['filename']]) !!}"
+                                        <a href="{{ route('admin::subscribers::tmp_mail', [$mail['filename']]) }}"
                                            type="button"
                                            class="btn btn-default btn-nofill mb-1x mr-1x tmp_mail"
                                            style="word-break: break-all">
                                             mail template
-                                            <strong>{!! $mail['filename'] !!}</strong></a>
+                                            <strong>{{ $mail['filename'] }}</strong></a>
                                         <div class="clearfix"></div>
                                     @endforeach
                                 </div>

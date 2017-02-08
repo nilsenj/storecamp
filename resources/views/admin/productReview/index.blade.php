@@ -5,7 +5,7 @@
     @endsection
     @include('admin.partial._contentheader_title', [$model = $productReviews, $message = "All Product Reviews"])
     @section('contentheader_description')
-            @include('admin.partial._content-head_btns', [$routeName = "admin::reviews::create", $createBtn = 'Add New Product Review'])
+{{--            @include('admin.partial._content-head_btns', [$routeName = "admin::reviews::create", $createBtn = 'Add New Product Review'])--}}
     @endsection
 </h1>
 @section('main-content')
@@ -20,7 +20,7 @@
                         <a href="{{route('admin::reviews::index')}}?search={{$key}}&searchFields=rating;"
                            aria-controls="review">
                             <span class="pull-right label label-default"></span>
-                            <i class="fa fa-circle-o {!! $colors[$key-1] !!} mr-2x"></i> {{$rating}}
+                            <i class="fa fa-circle-o {{ $colors[$key-1] }} mr-2x"></i> {{$rating}}
                         </a>
                     </li>
                 @endforeach
@@ -62,29 +62,36 @@
                         <tbody>
                         @foreach ($productReviews as $key => $productReview)
                             <tr>
-                                <td>{!! $no !!}</td>
-                                <td>{!! $productReview->product->title !!}</td>
+                                <td>{{ $no }}</td>
+                                <td>{{ $productReview->product->title }}</td>
                                 <td>
                                     <span class="review-item-status label label-default">{{$productReview->rating}}</span>
                                 </td>
                                 <td>
                                     @if($productReview->hidden)
-                                        <span class="review-item-status label label-info"> hidden </span>
+                                        <span class="review-item-status label label-warning"> hidden </span>
                                     @else
                                         <span class="review-item-status label label-info"> visible</span>
                                     @endif
                                 </td>
-                                <td> <a href="{!! route("admin::users::show", $productReview->user->id) !!}">
+                                <td> <a href="{{ route("admin::users::show", $productReview->user->id) }}">
                                         {{$productReview->user->name}}
                                     </a>
                                 </td>
-                                <td>{!! $productReview->created_at !!}</td>
-                                <td class="text-center">
-                                    <a class="edit" href="{!! route('admin::reviews::show', $productReview->id) !!}" title="Show and Edit">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                    </a>
-                                    <a class="delete text-warning" href="{!! route('admin::reviews::get.delete', $productReview->id) !!}"
-                                       title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
+                                <td>{{ $productReview->created_at }}</td>
+                                <td class="">
+                                    <div class="btn-group">
+                                        <a class="show" href="{{ route('admin::reviews::show', $productReview->id) }}" title="Show and Reply">
+                                            <i class="fa fa-eye"></i> Show and Reply
+                                        </a>
+                                        <a class="edit" href="{{ route('admin::reviews::edit', $productReview->id) }}" title="Edit">
+                                            <i class="fa fa-pencil-square-o"></i> Edit
+                                        </a>
+                                        <a class="delete text-warning" href="{{ route('admin::reviews::get.delete', $productReview->id) }}"
+                                           title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i>
+                                            Delete
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                             <?php $no++ ;?>
@@ -96,7 +103,7 @@
         </div>
     </div>
     <div class="text-center">
-        {!! $productReviews->links() !!}
+        {{ $productReviews->links() }}
     </div>
 @endsection
 

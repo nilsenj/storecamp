@@ -25,10 +25,9 @@ class UpdateProductReviewFormRequest extends FormRequest
     public function rules()
     {
         return [
-            "unique_id" => "string|unique:product_reviews,unique_id,". $this->id,
-            "product" => "required|string|min:3,max:255",
-            "message" => "required|string|min:25,max:1000",
-            "reason" => "required|string|min:2,max:60"
+            "review" => "required|string|min:25,max:3000",
+            "hidden" => "required|boolean",
+            "rating" => "required|numeric|min:0,max:5"
         ];
     }
 }

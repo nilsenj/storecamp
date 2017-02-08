@@ -1,13 +1,13 @@
 <?php $chosenCategoryId = $chosenCategory ? $chosenCategory->id : null; ?>
 
 <div class="form-group">
-    {!! Form::label('category_id', 'Products Category', ['class' => 'control-label']) !!}
+    {{ Form::label('category_id', 'Products Category', ['class' => 'control-label']) }}
     <a data-toggle="modal" href="#category-chooser-modal"
        class="form-control choose-opener col-sm-12">
-        {!! isset($chosenCategory) ? $chosenCategory->name : "choose category" !!}
+        {{ isset($chosenCategory) ? $chosenCategory->name : "choose category" }}
     </a>
     <div class="clearfix"></div>
-    {!! Form::input('text','category_id', $chosenCategoryId, ['class' => 'chosen-category hidden']) !!}
+    {{ Form::input('text','category_id', $chosenCategoryId, ['class' => 'chosen-category hidden']) }}
 </div>
 
 <div class="modal" id="category-chooser-modal">
@@ -25,7 +25,7 @@
                 <h4 href="#" class="pull-left chosen-category text-success"><b class="text-muted">Category </b>
                     <span class="chosen-status">
                         @if($chosenCategory)
-                            {!! $chosenCategory->name !!} - <i class="fa fa-thumbs-o-up"></i>
+                            {{ $chosenCategory->name }} - <i class="fa fa-thumbs-o-up"></i>
                         @endif
                     </span>
                 </h4>

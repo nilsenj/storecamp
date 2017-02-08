@@ -1,4 +1,4 @@
-<div class="content-body">
+<div class="tab-pane active" id="general">
     <div class="review-wrapper">
         <div class="review-control">
             <div class="p-2x"><a href="{{route('admin::reviews::index')}}" class="btn btn-block btn-info">Clear review
@@ -10,12 +10,11 @@
                         <a href="{{route('admin::reviews::index')}}?search={{$key}}&searchFields=rating;"
                            aria-controls="review">
                             <span class="pull-right label label-default"></span>
-                            <i class="fa fa-circle-o {!! $colors[$key-1] !!} mr-2x"></i> {{$rating}}
+                            <i class="fa fa-circle-o {{ $colors[$key-1] }} mr-2x"></i> {{$rating}}
                         </a>
                     </li>
                 @endforeach
             </ul>
-
             <ul class="nav nav-tabs nav-stacked nav-contrast-red" role="tablist">
                 <li>
                     <a href="{{route('admin::reviews::index')}}?search=1&searchFields=hidden;"
@@ -26,15 +25,13 @@
                 </li>
             </ul>
             <!-- /nav-review -->
-
             <!-- /nav-label -->
         </div>
         <!-- /.review-control -->
-
         <div class="review-paper">
             <!-- /.review-paper-heading -->
                     @foreach($productReviews as $productReview)
-                        <div class="panel review-list-item" data-fill-color="true" data-feed-id="{{$productReview->id}}"
+                        <div class="review-list-item" data-fill-color="true" data-feed-id="{{$productReview->id}}"
                              data-feed-status="{{$productReview->thread->first()->isUnread($productReview->user->id) ? "false" : "true"}}">
                             @include('admin.productReview.productReview-message')
                         </div><!-- /.panel.review-list-item -->
@@ -45,4 +42,4 @@
         <!-- /.review-paper -->
     </div>
     <!-- /.review-wrapper -->
-</div><!-- /.content-body -->
+</div>

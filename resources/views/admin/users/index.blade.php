@@ -35,20 +35,20 @@
                         <tbody>
                         @foreach ($users as $user)
                             <tr>
-                                <td>{!! $no !!}</td>
-                                <td>{!! $user->name !!}</td>
-                                <td>{!! $user->email !!}</td>
-                                <td>{!! $user->created_at !!}</td>
+                                <td>{{ $no }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->created_at }}</td>
                                 <td>
                                     @foreach ($user->roles()->get() as $role)
                                         {{ $role->name }}
                                     @endforeach</td>
                                 <td class="text-center">
-                                    <a class="edit" href="{!! route('admin::users::edit', $user->unique_id) !!}"
+                                    <a class="edit" href="{{ route('admin::users::edit', $user->unique_id) }}"
                                        title="Edit">
                                         <i class="fa fa-pencil-square-o"></i></a>
                                     <a class="delete text-warning"
-                                       href="{!! route('admin::users::get::delete', $user->unique_id) !!}"
+                                       href="{{ route('admin::users::get::delete', $user->unique_id) }}"
                                        title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
                                 </td>
                             </tr>
@@ -61,6 +61,6 @@
         </div>
     </div>
     <div class="text-center">
-        {!! $users->links() !!}
+        {{ $users->links() }}
     </div>
 @endsection

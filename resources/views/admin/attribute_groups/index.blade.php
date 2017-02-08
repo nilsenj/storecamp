@@ -32,17 +32,17 @@
                         <tbody>
                         @foreach ($groupAttributes as $groupAttribute)
                             <tr>
-                                <td>{!! $no !!}</td>
-                                <td>{!! $groupAttribute->name !!}</td>
-                                <td>{!! $groupAttribute->sort_order !!}</td>
-                                <td>{!! $groupAttribute->created_at !!}</td>
+                                <td>{{ $no }}</td>
+                                <td>{{ $groupAttribute->name }}</td>
+                                <td>{{ $groupAttribute->sort_order }}</td>
+                                <td>{{ $groupAttribute->created_at }}</td>
                                 <td class="text-center">
                                     <a class="edit"
-                                       href="{!! route('admin::attribute_groups::edit', $groupAttribute->unique_id) !!}"
+                                       href="{{ route('admin::attribute_groups::edit', $groupAttribute->unique_id) }}"
                                        title="Edit">
                                         <i class="fa fa-pencil-square-o"></i></a>
                                     <a class="delete text-warning"
-                                       href="{!! route('admin::attribute_groups::get::delete', $groupAttribute->unique_id) !!}"
+                                       href="{{ route('admin::attribute_groups::get::delete', $groupAttribute->unique_id) }}"
                                        title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
                                 </td>
                             </tr>
@@ -55,6 +55,6 @@
         </div>
     </div>
     <div class="text-center">
-        {!! $groupAttributes->links() !!}
+        {{ $groupAttributes->links() }}
     </div>
 @endsection

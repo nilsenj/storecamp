@@ -1,7 +1,7 @@
 @extends('admin/app')
 <h1>
     @section('breadcrumb')
-        {{--{!! Breadcrumbs::render('admin') !!}--}}
+        {{--{{ Breadcrumbs::render('admin') }}--}}
         {!! Breadcrumbs::render('attributes', 'Attributes') !!}
     @endsection
     @section('contentheader_title')
@@ -9,7 +9,7 @@
     @endsection
     @section('contentheader_description')
         &middot;
-        <b>{!! link_to_route('admin::attributes::index', 'Back') !!}</b>
+        <b>{{ link_to_route('admin::attributes::index', 'Back') }}</b>
     @endsection
 </h1>
 @section('main-content')

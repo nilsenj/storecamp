@@ -1,7 +1,7 @@
-<textarea name="{!! $name !!}" id="{{$name}}"></textarea>
+<textarea name="{{ $name }}" id="{{$name}}"></textarea>
 @push('scripts-add_on')
-    <script src="{!! asset('custom_vendors/ckeditor/ckeditor.js') !!}"></script>
-    {{--<script src="{!! asset('bower_components/summernote/dist/summernote.js') !!}"></script>--}}
+    <script src="{{ asset('custom_vendors/ckeditor/ckeditor.js') }}"></script>
+    {{--<script src="{{ asset('bower_components/summernote/dist/summernote.js') }}"></script>--}}
     <!-- endbuild -->
     <!-- END COMPONENTS -->
     <script>

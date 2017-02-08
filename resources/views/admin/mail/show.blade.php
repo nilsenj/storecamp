@@ -5,7 +5,7 @@
     @endsection
     @include('admin.partial._contentheader_title', [$model = $mail, $message = "Amount of sent eMails"])
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::attributes::create', 'Compose Email Campaign') !!}</b>
+        <b>{{ link_to_route('admin::attributes::create', 'Compose Email Campaign') }}</b>
     @endsection
 </h1>
 

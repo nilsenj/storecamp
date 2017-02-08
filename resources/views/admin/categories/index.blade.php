@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="text-center">
-        {!! $categories->links() !!}
+        {{ $categories->links() }}
     </div>
 @endsection
 

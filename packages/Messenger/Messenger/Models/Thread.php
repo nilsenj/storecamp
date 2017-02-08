@@ -5,6 +5,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use App\Core\Models\ProductReview;
 
@@ -184,7 +185,7 @@ class Thread extends Eloquent
     /**
      * Adds users to this thread
      *
-     * @param array $participants list of all participants
+     * @param array|Collection $participants list of all participants
      * @return void
      */
     public function addParticipants($participants)

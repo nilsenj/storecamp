@@ -46,7 +46,7 @@
 <script src="{{ asset('plugins/chart.js/Chart.js') }}"></script>
 <script src="{{ asset('plugins/morris.js/morris.min.js') }}"></script>
 <script src="{{ asset('plugins/toastr/toastr.js') }}"></script>
-<script src="{{ asset('plugins/bootstrap-star-rating/js/star-rating.min.js') }}"></script>
+<script src="{{ asset('plugins/jquery-bar-rating/dist/jquery.barrating.min.js') }}"></script>
 <script src="{{ asset('plugins/summernote/dist/summernote.min.js') }}"></script>
 <script src="{{ asset('/js/app.js') }}" type="text/javascript"></script>
 
@@ -154,8 +154,5 @@
       user experience. Slimscroll is required when using the
       fixed layout. -->
 <script src="{{asset("js/modules.js")}}"></script>
-<script src="{{asset("js/page-inbox-demo.js")}}"></script>
 @yield('scripts_add')
-
-<a data-toggle="modal" style="display: none" href="#generic" class="hidden modal-auto-Trigger">Trigger Modal
-</a>
+<a data-toggle="modal" style="display: none" href="#generic" class="hidden modal-auto-Trigger">Trigger Modal</a>

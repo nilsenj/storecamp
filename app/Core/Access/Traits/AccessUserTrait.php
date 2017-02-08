@@ -37,7 +37,7 @@ trait AccessUserTrait
     {
         parent::boot();
 
-        static::deleting(function($user) {
+        static::deleting(function ($user) {
             if (!method_exists(Config::get('auth.model'), 'bootSoftDeletingTrait')) {
                 $user->roles()->sync([]);
             }
@@ -49,8 +49,8 @@ trait AccessUserTrait
     /**
      * Checks if the user has a role by its name.
      *
-     * @param string|array $name       Role name or array of role names.
-     * @param bool         $requireAll All roles in the array are required.
+     * @param string|array $name Role name or array of role names.
+     * @param bool $requireAll All roles in the array are required.
      *
      * @return bool
      */
@@ -83,37 +83,18 @@ trait AccessUserTrait
     }
 
     /**
-     * Checks if the user has a role by its name.
+     * get user by the given role name
      *
-     * @param string|array $name       Role name or array of role names.
-     * @param bool         $requireAll All roles in the array are required.
-     *
-     * @return bool
+     * @param $name
+     * @return mixed
      */
-    public function getUsersByRole($name, $requireAll = false)
+    public function getUsersByRole($name)
     {
-        if (is_array($name)) {
-            foreach ($name as $roleName) {
-                $hasRole = $this->getUsersByRole($roleName);
-
-                if ($hasRole && !$requireAll) {
-                    return true;
-                } elseif (!$hasRole && $requireAll) {
-                    return false;
-                }
-            }
-
-            // If we've made it this far and $requireAll is FALSE, then NONE of the roles were found
-            // If we've made it this far and $requireAll is TRUE, then ALL of the roles were found.
-            // Return the value of $requireAll;
-            return $requireAll;
-        } else {
-            $roleByName = AccessRole::where("name", $name);
-            if ($roleByName->count() > 0){
-                $roleId = $roleByName->select("id")->first()["id"];
-                $role = AccessRole::find($roleId);
-                return $role->users()->get();
-             }
+        $roleByName = AccessRole::where("name", $name);
+        if ($roleByName->count() > 0) {
+            $roleId = $roleByName->select("id")->first()["id"];
+            $role = AccessRole::find($roleId);
+            return $role->users()->get();
         }
 
         return false;
@@ -123,7 +104,7 @@ trait AccessUserTrait
      * Check if user has a permission by its name.
      *
      * @param string|array $permission Permission string or array of permissions.
-     * @param bool         $requireAll All permissions in the array are required.
+     * @param bool $requireAll All permissions in the array are required.
      *
      * @return bool
      */
@@ -161,9 +142,9 @@ trait AccessUserTrait
     /**
      * Checks role(s) and permission(s).
      *
-     * @param string|array $roles       Array of roles or comma separated string
+     * @param string|array $roles Array of roles or comma separated string
      * @param string|array $permissions Array of permissions or comma separated string.
-     * @param array        $options     validate_all (true|false) or return_type (boolean|array|both)
+     * @param array $options validate_all (true|false) or return_type (boolean|array|both)
      *
      * @throws \InvalidArgumentException
      *
@@ -192,7 +173,8 @@ trait AccessUserTrait
         } else {
             if ($options['return_type'] != 'boolean' &&
                 $options['return_type'] != 'array' &&
-                $options['return_type'] != 'both') {
+                $options['return_type'] != 'both'
+            ) {
                 throw new InvalidArgumentException();
             }
         }
@@ -210,8 +192,9 @@ trait AccessUserTrait
         // If validate all and there is a false in either
         // Check that if validate all, then there should not be any false.
         // Check that if not validate all, there must be at least one true.
-        if(($options['validate_all'] && !(in_array(false,$checkedRoles) || in_array(false,$checkedPermissions))) ||
-            (!$options['validate_all'] && (in_array(true,$checkedRoles) || in_array(true,$checkedPermissions)))) {
+        if (($options['validate_all'] && !(in_array(false, $checkedRoles) || in_array(false, $checkedPermissions))) ||
+            (!$options['validate_all'] && (in_array(true, $checkedRoles) || in_array(true, $checkedPermissions)))
+        ) {
             $validateAll = true;
         } else {
             $validateAll = false;
@@ -235,11 +218,11 @@ trait AccessUserTrait
      */
     public function attachRole($role)
     {
-        if(is_object($role)) {
+        if (is_object($role)) {
             $role = $role->getKey();
         }
 
-        if(is_array($role)) {
+        if (is_array($role)) {
             $role = $role['id'];
         }
 

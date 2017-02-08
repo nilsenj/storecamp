@@ -7,21 +7,21 @@
                 <h4 class="modal-title">Please Rename Directory</h4>
             </div>
             <div class="modal-body" style="word-wrap: break-word;">
-                {!! Form::open(['files' => false, 'route' => ['admin::media::rename.file', $disk]]) !!}
+                {{ Form::open(['files' => false, 'route' => ['admin::media::rename.file', $disk]]) }}
                 <div class="form-group">
-                    {!! Form::label('new_name', 'New file name:') !!}
+                    {{ Form::label('new_name', 'New file name:') }}
                     <div class="input-group margin">
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-info disabled">@if($folder->name){!! $folder->name !!} @else ../ @endif</button>
+                            <button type="button" class="btn btn-info disabled">@if($folder->name){{ $folder->name }} @else ../ @endif</button>
                         </div>
                         <!-- /btn-group -->
-                        {!! Form::text('new_name', null, ['class' => 'form-control rename-file-field']) !!}
-                        {!! $errors->first('new_name', '<div class="text-danger">:message</div>') !!}
-                        {!! Form::text('selected_id', null, ['class' => 'form-control selected_id hidden']) !!}
+                        {{ Form::text('new_name', null, ['class' => 'form-control rename-file-field']) }}
+                        {{ $errors->first('new_name', '<div class="text-danger">:message</div>') }}
+                        {{ Form::text('selected_id', null, ['class' => 'form-control selected_id hidden']) }}
                     </div>
-                    {!! Form::submit('confirm file rename', ['class' => "btn btn-default"]) !!}
+                    {{ Form::submit('confirm file rename', ['class' => "btn btn-default"]) }}
                 </div>
-                {!! Form::close() !!}
+                {{ Form::close() }}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

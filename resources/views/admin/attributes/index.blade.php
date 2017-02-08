@@ -31,18 +31,18 @@
                         <tbody>
                         @foreach ($groupDescriptions as $groupDescription)
                             <tr>
-                                <td>{!! $no !!}</td>
-                                <td>{!! $groupDescription->name !!}</td>
-                                <td>{!! $groupDescription->attributesGroup->name !!}</td>
-                                <td>{!! $groupDescription->sort_order !!}</td>
-                                <td>{!! $groupDescription->created_at !!}</td>
+                                <td>{{ $no }}</td>
+                                <td>{{ $groupDescription->name }}</td>
+                                <td>{{ $groupDescription->attributesGroup->name }}</td>
+                                <td>{{ $groupDescription->sort_order }}</td>
+                                <td>{{ $groupDescription->created_at }}</td>
                                 <td class="text-center">
                                     <a class="edit"
-                                       href="{!! route('admin::attributes::edit', $groupDescription->unique_id) !!}"
+                                       href="{{ route('admin::attributes::edit', $groupDescription->unique_id) }}"
                                        title="Edit">
                                         <i class="fa fa-pencil-square-o"></i></a>
                                     <a class="delete text-warning"
-                                       href="{!! route('admin::attributes::get::delete', $groupDescription->unique_id) !!}"
+                                       href="{{ route('admin::attributes::get::delete', $groupDescription->unique_id) }}"
                                        title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
                                 </td>
                             </tr>
@@ -55,6 +55,6 @@
         </div>
     </div>
     <div class="text-center">
-        {!! $groupDescriptions->links() !!}
+        {{ $groupDescriptions->links() }}
     </div>
 @endsection

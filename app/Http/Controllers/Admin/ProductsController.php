@@ -164,5 +164,19 @@ class ProductsController extends BaseController
             return $this->redirectNotFound($e);
         }
     }
-
+    public function getSelect(Request $request)
+    {
+        if(strlen(trim($request->get('search'))) > 0) {
+            $query = $this->parserSearchValue($request->get('search'));
+            $products = $this->productRepository->getModel()->where("title", "like", $query)->select('title', 'id')->get();
+            $productGroupArr = [];
+            foreach ($products as $key => $attrGroupItem) {
+                $productGroupArr[$key]['text'] = $attrGroupItem['title'];
+                $productGroupArr[$key]['id'] = $attrGroupItem['id'];
+            }
+            return \Response::json($productGroupArr);
+        } else {
+            return \Response::json("enter more symbols");
+        }
+    }
 }

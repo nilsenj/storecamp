@@ -4,8 +4,10 @@
         {!! Breadcrumbs::render('Logs', 'Logs') !!}
     @endsection
     @section('contentheader_title')
-        Log files count({!! count($stats->rows()) !!})
-        &middot;
+        Log files count
+        <span class="pull-right-container">
+        <small class="label bg-blue text-sm">{{ count($stats->rows()) }}</small>
+        </span>
     @endsection
     @section('contentheader_description')
         @if(!Route::is('log-viewer::dashboard'))
@@ -84,7 +86,7 @@
         </table>
     </div>
 
-    {!! $rows->render() !!}
+    {{ $rows->render() }}
 @endsection
 
     {{-- DELETE MODAL --}}

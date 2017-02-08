@@ -84,7 +84,6 @@ class MailController extends BaseController
     public function getTmpMails(Request $request)
     {
         $folder = Folder::find(4);
-        dd($folder->files);
         $mail = $this->repository->getTmpMail($file = null);
         return $mail;
     }

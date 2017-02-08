@@ -5,7 +5,7 @@
         <div class="box-body">
             <div class="form-group">
                 <label for="to">To(select campaign)</label>
-                {!! buildSelect(route('admin::campaign::get::json'), 'to', false, [], [], null, "select campaign listed clients") !!}
+                {{ buildSelect(route('admin::campaign::get::json'), 'to', false, [], [], null, "select campaign listed clients") }}
             </div>
             <div class="form-group">
                 <label for="to">Subject</label>

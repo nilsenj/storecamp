@@ -15,20 +15,7 @@ $this->get('/', [
     'uses' => 'LandingController@index'
 ]);
 
-//// Authentication routes...
-//$this->get('auth/login', 'Auth\AuthController@getLogin');
-//$this->post('auth/login', 'Auth\AuthController@postLogin');
-//$this->get('auth/logout', 'Auth\AuthController@getLogout');
-//
-//// Registration routes...
-//$this->get('auth/register', 'Auth\AuthController@getRegister');
-//$this->post('auth/register', 'Auth\AuthController@postRegister');
-//
-//// Password reset link request routes...
-//$this->get('password/email', 'Auth\PasswordController@getEmail');
-//$this->post('password/email', 'Auth\PasswordController@postEmail');
-//
-//// Password reset routes...
+// Password reset routes...
 $this->get('password/reset', 'Auth\ResetPasswordController@showResetForm');
 $this->get('password/reset/{token}', 'Auth\PasswordController@getReset');
 $this->post('password/reset', 'Auth\PasswordController@postReset');
@@ -263,6 +250,10 @@ $this->group(/**
             'uses' => 'Admin\ProductsController@destroy',
             'as' => 'get::delete'
         ]);
+        $this->get('/select', [
+            'uses' => 'Admin\ProductsController@getSelect',
+            'as' => 'get::select'
+        ]);
 
     });
     $this->group(['prefix' => 'reviews', 'as' => 'reviews::'], function () {
@@ -284,11 +275,6 @@ $this->group(/**
             'as' => 'get.delete'
         ]);
 
-        $this->get('toggle_visibility/{id}', [
-            'uses' => 'Admin\ProductReviewController@visibility',
-            'as' => 'visibility'
-        ]);
-
         $this->put('reply/review/{id}', [
                 'uses' => 'Admin\ProductReviewController@replyFeedback',
                 'as' => 'reply'
@@ -299,14 +285,29 @@ $this->group(/**
                 'as' => 'destroy'
         ]);
 
-        $this->get('create', [
+        $this->get('create/{productId}', [
             'uses' => 'Admin\ProductReviewController@create',
             'as' => 'create'
         ]);
 
-        $this->post('store', [
+        $this->get('edit/{productId}', [
+            'uses' => 'Admin\ProductReviewController@edit',
+            'as' => 'edit'
+        ]);
+
+        $this->put('update/{productId}', [
+            'uses' => 'Admin\ProductReviewController@update',
+            'as' => 'update'
+        ]);
+
+        $this->post('store/{productId}', [
                 'uses' => 'Admin\ProductReviewController@store',
                 'as' => 'store'
+        ]);
+
+        $this->get('toggle_visibility/{id}', [
+            'uses' => 'Admin\ProductReviewController@visibility',
+            'as' => 'visibility'
         ]);
 
         $this->get('markasread/productReview/{feed}', [

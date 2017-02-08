@@ -32,20 +32,20 @@
                         <tbody>
                         @foreach ($roles as $role)
                             <tr>
-                                <td>{!! $no++ !!}</td>
-                                <td>{!! $role->name !!}</td>
-                                <td>{!! $role->display_name !!}</td>
-                                <td>{!! $role->description !!}</td>
+                                <td>{{ $no++ }}</td>
+                                <td>{{ $role->name }}</td>
+                                <td>{{ $role->display_name }}</td>
+                                <td>{{ $role->description }}</td>
                                 <td>
                                     @foreach($role->perms as $permission)
                                     &bullet; {{ $permission->name }}<br>
                                     @endforeach
                                 </td>
-                                <td>{!! $role->created_at !!}</td>
+                                <td>{{ $role->created_at }}</td>
                                 <td class="text-center">
-                                    <a class="edit" href="{!! route('admin::roles::edit', $role->unique_id) !!}" title="Edit">
+                                    <a class="edit" href="{{ route('admin::roles::edit', $role->unique_id) }}" title="Edit">
                                         <i class="fa fa-pencil-square-o"></i></a>
-                                    <a class="delete text-warning" href="{!! route('admin::roles::get::delete', $role->unique_id) !!}"
+                                    <a class="delete text-warning" href="{{ route('admin::roles::get::delete', $role->unique_id) }}"
                                        title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
                                 </td>
                             </tr>
@@ -57,6 +57,6 @@
         </div>
     </div>
     <div class="text-center">
-        {!! $roles->links() !!}
+        {{ $roles->links() }}
     </div>
 @endsection

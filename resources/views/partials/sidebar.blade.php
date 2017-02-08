@@ -56,12 +56,6 @@
                                 <span class="nav-text"> List of Reviews</span>
                             </a>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <a role="menuitem" tabindex="-1" href="{{route('admin::reviews::create')}}">
-                                <span class="nav-icon"><i class="fa fa-feed"></i></span>
-                                <span class="nav-text"> Create Review</span>
-                            </a>
-                        </li>
                     </ul>
                 </li>
                 <li class="treeview">

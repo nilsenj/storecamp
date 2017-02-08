@@ -163,6 +163,4 @@ class SubscriptionController extends BaseController
     {
         $this->repository->generateCampaign($request, $uid, $type);
     }
-
-
 }

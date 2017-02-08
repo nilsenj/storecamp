@@ -1,7 +1,7 @@
 <tr>
     <td>{{ $no-1}}</td>
     <td>
-        <small class="text-muted label bg-info pull-right">{!! $category->getType() !!}</small>
+        <small class="text-muted label bg-info pull-right">{{ $category->getType() }}</small>
         {{ $category->name }}
     </td>
     <td>{{ $category->slug }}</td>
@@ -23,11 +23,11 @@
             <div class="label bg-warning">not active</div>
         </td>
     @endif
-    <td>{!! $category->sort_order !!}</td>
+    <td>{{ $category->sort_order }}</td>
     <td>{{ $category->created_at }}</td>
-    <td><a class="edit" href="{!! route('admin::categories::edit', $category->unique_id) !!}" title="Edit">
+    <td><a class="edit" href="{{ route('admin::categories::edit', $category->unique_id) }}" title="Edit">
             <i class="fa fa-pencil-square-o"></i></a>
-        <a class="delete text-warning" href="{!! route('admin::categories::get::delete', $category->unique_id) !!}"
+        <a class="delete text-warning" href="{{ route('admin::categories::get::delete', $category->unique_id) }}"
            title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
     </td>
 </tr>

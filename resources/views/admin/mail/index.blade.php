@@ -5,7 +5,7 @@
     @endsection
     @include('admin.partial._contentheader_title', [$model = $mails, $message = "Amount of sent eMails"])
     @section('contentheader_description')
-        <b>{!! link_to_route('admin::attributes::create', 'Add New Attribute') !!}</b>
+        <b>{{ link_to_route('admin::attributes::create', 'Add New Attribute') }}</b>
     @endsection
 </h1>
 @section('main-content')
@@ -57,7 +57,7 @@
                                         <input type="checkbox">
                                     </td>
                                     <td class="mailbox-star"><a href="#"><i class="fa fa-star text-yellow"></i></a></td>
-                                    <td class="mailbox-name"><a href="{!! route("admin::mail::show", $mail->unique_id) !!}">{{$mail->to}} - #{{$mail->id}}</a></td>
+                                    <td class="mailbox-name"><a href="{{ route("admin::mail::show", $mail->unique_id) }}">{{$mail->to}} - #{{$mail->id}}</a></td>
                                     <td class="mailbox-subject">{{$mail->subject}}
                                     </td>
                                     <td class="mailbox-attachment"></td>

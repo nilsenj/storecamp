@@ -374,7 +374,6 @@ class MediaController extends BaseController
             return $this->redirectNotFound();
         } catch (\Exception $e) {
             return redirect()->back()->withErrors($e);
-
         }
     }
 }

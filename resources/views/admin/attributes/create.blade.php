@@ -1,7 +1,7 @@
 @extends('admin/app')
 <h1>
     @section('breadcrumb')
-        {{--{!! Breadcrumbs::render('admin') !!}--}}
+        {{--{{ Breadcrumbs::render('admin') }}--}}
         {!! Breadcrumbs::render('attributes', 'Attributes') !!}
     @endsection
     @section('contentheader_title')
@@ -21,4 +21,5 @@
                 @include('admin.attributes.form', ["model" => null])
             </div>
         </div>
+    </div>
 @endsection

@@ -2,11 +2,11 @@
 @extends('admin.app')
 <h1>
     @section('breadcrumb')
-        {{--{!! Breadcrumbs::render('', '') !!}--}}
+        {{--{{ Breadcrumbs::render('', '') }}--}}
     @endsection
     @include('admin.partial._contentheader_title', [$model, $message = "All orders'])
     @section('contentheader_description')
-        <b>{!! link_to_route("admin::orders::create", 'Add New orders') !!}</b>
+        <b>{{ link_to_route("admin::orders::create", 'Add New orders') }}</b>
     @endsection
 </h1>
 @section('main-content')
@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="text-center">
-        {{--{!! $model->links() !!}--}}
+        {{--{{ $model->links() }}--}}
     </div>
 @endsection
 @section('scripts-add')

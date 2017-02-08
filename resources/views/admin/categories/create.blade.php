@@ -9,7 +9,7 @@
 </h1>
 @section('main-content')
     <div>
-        {!! Form::open(['files' => true, 'route' => 'admin::categories::store']) !!}
+        {{ Form::open(['files' => true, 'route' => 'admin::categories::store']) }}
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#general" data-toggle="tab">General</a></li>
@@ -20,6 +20,6 @@
             </div>
             <!-- /.tab-content -->
         </div>
-        {!! Form::close() !!}
+        {{ Form::close() }}
     </div>
 @endsection

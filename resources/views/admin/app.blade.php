@@ -30,11 +30,8 @@ desired effect
 @yield('styles-add')
 <body class="fixed sidebar-mini skin-blue">
 <div class="wrapper">
-
     @include('partials.mainheader')
-
     @include('partials.sidebar')
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         @include('partials.contentheader')
@@ -57,6 +54,6 @@ desired effect
 @include('partials.scripts')
 @yield("scripts-add")
 @stack('scripts-add_on')
-{!! Toastr::render() !!}
+{{ Toastr::render() }}
 </body>
 </html>

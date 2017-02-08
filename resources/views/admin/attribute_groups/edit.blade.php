@@ -1,7 +1,7 @@
 @extends('admin/app')
 <h1>
     @section('breadcrumb')
-        {{--{!! Breadcrumbs::render('admin') !!}--}}
+        {{--{{ Breadcrumbs::render('admin') }}--}}
         {!! Breadcrumbs::render('attribute groups', 'Attribute Groups') !!}
     @endsection
     @section('contentheader_title')

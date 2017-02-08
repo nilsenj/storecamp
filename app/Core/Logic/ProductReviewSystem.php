@@ -3,9 +3,11 @@
 namespace App\Core\Logic;
 
 use App\Core\Contracts\ProductReviewSystemContract;
+use App\Core\Models\User;
 use App\Core\Repositories\ProductReviewRepository;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Repositories\UserRepository;
+use Illuminate\Http\Request;
 
 /**
  * Class ProductReviewSystem
@@ -105,17 +107,33 @@ class ProductReviewSystem implements ProductReviewSystemContract
      */
     public function create(array $data)
     {
-        return;
+        $thread = new \App\Core\Components\Messenger\Models\Thread();
+        $product = $this->product->find($data['product_id']);
+        unset($data['product_id']);
+        $review = $product->productReview()->create($data);
+        $subject = $product->title;
+        $thread = $thread->create(
+            [
+                'product_reviews_id' => $review->id,
+                'subject' => $subject
+            ]);
+        $user = new User();
+        $adminArr = $user->getUsersByRole("Admin");
+        if($adminArr) {
+            $thread->addParticipants($adminArr);
+        }
+        return $review;
     }
 
     /**
-     * @param $data
-     * @param $id
+     * @param array $data
+     * @param $reviewId
      * @return mixed
      */
-    public function update(array $data, $id)
+    public function update(array $data, $reviewId)
     {
-        return;
+        $review = $this->productReview->update($data, $reviewId);
+        return $review;
     }
 
     /**

@@ -2,14 +2,14 @@
     <?php isset($preferredTag) ? $preferredTag : 'thumbnail' ?>
     <a data-toggle="modal" href="#fileLinker-modal"
        class="btn btn-md btn-info file-linker"
-       data-file-types="{!! $fileTypes ? $fileTypes : "images" !!}"
-       data-multiple="{!! $multiple ? 'true' : 'false' !!}"
-       data-disk="{!! $disk ? $disk : 'local' !!}"
-       data-attach-output-path="{!! $outputElementPath !!}"
-       data-preferred-tag="{!! $preferredTag !!}"
-       data-requestUrl="{!! route('admin::media::file_linker', [$disk]) !!}"
+       data-file-types="{{ $fileTypes ? $fileTypes : "images" }}"
+       data-multiple="{{ $multiple ? 'true' : 'false' }}"
+       data-disk="{{ $disk ? $disk : 'local' }}"
+       data-attach-output-path="{{ $outputElementPath }}"
+       data-preferred-tag="{{ $preferredTag }}"
+       data-requestUrl="{{ route('admin::media::file_linker', [$disk]) }}"
     >
-        {!! $btnMsg ? $btnMsg : "attach file" !!}
+        {{ $btnMsg ? $btnMsg : "attach file" }}
     </a>
 </div>
 <div class="modal tallModal modal-wide" id="fileLinker-modal">

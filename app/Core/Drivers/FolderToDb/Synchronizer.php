@@ -60,8 +60,8 @@ class Synchronizer implements SynchronizerInterface
      */
     public function synchronize(string $path, $disk = 'local')
     {
+        $rootFolder = $this->resolveRootFolder($disk, $path);
         $directories = $this->directoriesIterate($path, true);
-        $rootFolder = $this->resolveRootFolder();
         foreach ($directories as $key => $dir) {
             $folderPath = $dir["folderPath"];
             echo $folderPath . "on disk - " . $disk . "\n";
@@ -97,8 +97,8 @@ class Synchronizer implements SynchronizerInterface
      */
     public function synchronizeWithFiles(string $path, $disk = 'local')
     {
+        $rootFolder = $this->resolveRootFolder($disk, $path);
         $directories = $this->directoriesIterate($path, true);
-        $rootFolder = $this->resolveRootFolder($disk);
         foreach ($directories as $key => $dir) {
             $folderPath = $dir["folderPath"];
             echo $folderPath . " on disk - " . $disk . "\n";
@@ -235,10 +235,15 @@ class Synchronizer implements SynchronizerInterface
 
     /**
      * @param string $disk
+     * @param string $root
      * @return Folder
      */
-    private function resolveRootFolder($disk = 'local'): Folder
+    private function resolveRootFolder($disk = 'local', $root = ''): Folder
     {
+        if (!empty($root) && !\File::isDirectory($root))
+        {
+            \File::makeDirectory($root);
+        }
         $rootFolder = $this->folder->findWhere([
             ['disk', '=', $disk],
             ["name", '=', ""],

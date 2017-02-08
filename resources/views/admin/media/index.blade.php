@@ -89,20 +89,20 @@
 
                     </span>
                 </div><!-- /.box-header -->
-                {!! Form::open(['files' => true, 'route' => ['admin::media::upload', $disk],
-                'id' => 'my-awesome-dropzone-body', 'class' => 'dropzone box-body folder-body']) !!}
+                {{ Form::open(['files' => true, 'route' => ['admin::media::upload', $disk],
+                'id' => 'my-awesome-dropzone-body', 'class' => 'dropzone box-body folder-body']) }}
                 <input type="hidden" name="folder" value="{{$folder->unique_id}}">
                 @include('admin.media.index-body_part')
-                {!! Form::close() !!}
+                {{ Form::close() }}
             </div><!-- /.box -->
             <div class="text-center">
-                {!! $media["media"]->links() !!}
+                {{ $media["media"]->links() }}
             </div>
         </div>
     </div>
 @endsection
 @section('scripts_add')
-    <script src="{!! asset('custom_vendors/media-js/jquery.media.js') !!}"></script>
+    <script src="{{ asset('custom_vendors/media-js/jquery.media.js') }}"></script>
 @endsection
 @include('admin.media.upload-modal')
 @include('admin.media.newdir-modal')

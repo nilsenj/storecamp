@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Core\Contracts\ProductReviewSystemContract;
 use App\Core\Repositories\ProductReviewRepository;
+use App\Core\Validators\ProductReview\ProductReviewFormRequest;
 use App\Core\Validators\ProductReview\ReplyProductReviewFormRequest;
+use App\Core\Validators\ProductReview\UpdateProductReviewFormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Core\Repositories\ProductsRepository;
@@ -16,6 +18,8 @@ use App\Core\Repositories\UserRepository;
  */
 class ProductReviewController extends BaseController
 {
+    public $viewPathBase = "admin.productReview.";
+    public $errorRedirectPath = "admin/reviews/index";
     /**
      * @var ProductsRepository
      */
@@ -61,7 +65,7 @@ class ProductReviewController extends BaseController
             $productReviews = $this->productReviewSystem->present($data, null, ['product', 'user', 'thread']);
             $no = $productReviews->firstItem();
 
-            return view('admin.productReview.index', compact('productReviews', 'no'));
+            return $this->view('index', compact('productReviews', 'no'));
 
         } catch (\Throwable $e) {
             return $this->redirectError($e);
@@ -82,7 +86,7 @@ class ProductReviewController extends BaseController
             $currentUserId = \Auth::user()->id;
             $productReview->thread->first()->markAsRead($currentUserId);
 
-            return view('admin.productReview.show', compact('productReview', 'currentUserId'));
+            return $this->view('show', compact('productReview', 'currentUserId'));
 
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -91,22 +95,68 @@ class ProductReviewController extends BaseController
         }
     }
 
-    /*TODO implement create form for productReview functionality*/
     /**
      * @param Request $request
+     * @param $productId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create(Request $request)
+    public function create(Request $request, $productId)
     {
-
+        $product = $this->product->find($productId);
+        return $this->view('create', compact('product'));
     }
 
-    /*TODO implement store productReview functionality*/
+    /**
+     * @param ProductReviewFormRequest $request
+     * @param $productId
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(ProductReviewFormRequest $request, $productId)
+    {
+        try {
+            $data = $request->all();
+            $userId = $request->user()->id;
+            $data['user_id'] = $userId;
+            $data['product_id'] = $productId;
+            $review = $this->productReviewSystem->create($data);
+            return redirect()->to(route('admin::reviews::index'));
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound($e);
+        } catch (\Throwable $e) {
+            return $this->redirectError($e);
+        }
+    }
+
+    public function update(UpdateProductReviewFormRequest$request, $reviewId)
+    {
+        try {
+            $data = $request->all();
+            $review = $this->productReviewSystem->update($data, $reviewId);
+            return redirect()->to(route('admin::reviews::index'));
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound($e);
+        } catch (\Throwable $e) {
+            return $this->redirectError($e);
+        }
+    }
+
     /**
      * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function store(Request $request)
+    public function edit(Request $request, $id)
     {
-
+        try {
+            $data = $request->all();
+            $productReview = $this->productReviewSystem->present($data, $id, ['product', 'user', 'thread']);;
+            $product = $productReview->product;
+            return $this->view('edit', compact('productReview', 'product'));
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound($e);
+        } catch (\Throwable $e) {
+            return $this->redirectError($e);
+        }
     }
 
     /**

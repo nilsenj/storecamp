@@ -1,22 +1,26 @@
 @extends('admin/app')
 <h1>
     @section('breadcrumb')
-        {!! Breadcrumbs::render('media', 'media') !!}
+        {!! Breadcrumbs::render('reviews', 'reviews') !!}
     @endsection
     @section('contentheader_title')
         All Product Reviews
-        {{--&middot; {{$count}}--}}
     @endsection
     @section('contentheader_description')
-            @include('admin.partial._content-head_btns', [$routeName = "admin::reviews::index", $createBtn = 'Return back'])
+            @include('admin.partial._content-head_btns', [$routeName = "admin::reviews::index", $createBtn = 'Back'])
     @endsection
 </h1>
 @section('main-content')
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#general" data-toggle="tab">General</a></li>
+        </ul>
+        <div class="tab-content">
     @include('admin.productReview.review_body', [$productReviews = [$productReview]])
+        </div>
+    </div>
 @endsection
-
 @section('scripts-add')
-    <script src="{{asset('js/page-inbox-demo.js')}}"></script>
     <script>
         $('.review-list-item').on({
             "click": function (event) {

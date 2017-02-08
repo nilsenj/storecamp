@@ -25,7 +25,6 @@
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.css') }}">
     <link rel="stylesheet" href="{{ asset('/plugins/iCheck/skins/all.css')}}">
     <link href="{{ asset('/plugins/iCheck/skins/square/blue.css') }}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{ asset('plugins/bootstrap-star-rating/css/star-rating.css') }}">
     <link rel="stylesheet" href="{{asset('plugins/plyr/dist/plyr.css')}}">
     <link rel="stylesheet" href="{{asset('plugins/dropzone/dist/dropzone.css')}}">
     <link rel="stylesheet" href="{{asset('custom_vendors/jvectormap/jquery-jvectormap-1.2.2.css')}}">
@@ -48,7 +47,7 @@
     <link rel="stylesheet" href="{{ asset('css/alt/AdminLTE-select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/alt/AdminLTE-fullcalendar.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/alt/AdminLTE-bootstrap-social.min.css') }}">
-
+    <link rel="stylesheet" href="{{asset('/plugins/jquery-bar-rating/dist/themes/fontawesome-stars.css')}}">
 
     <!-- iCheck -->
     <link href="{{ asset('/css/main/app.css') }}" rel="stylesheet" type="text/css" />

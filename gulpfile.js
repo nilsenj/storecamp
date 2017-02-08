@@ -19,14 +19,14 @@ var elixir = require('laravel-elixir'),
 require('laravel-elixir-js-uglify');
 elixir.config.notifications = false;
 
-elixir.extend('test', function() {
-    return gulp.task('tester', function() {
-        elixir((mix) => {
-            mix.phpUnit();
-            mix.phpSpec();
-        });
-    });
-});
+// elixir.extend('test', function() {
+//     return gulp.task('tester', function() {
+//         elixir((mix) => {
+//             mix.phpUnit();
+//             mix.phpSpec();
+//         });
+//     });
+// });
 elixir((mix) => {
     mix.less('app.less', 'public/css/app_less.css');
     mix.less('less/AdminLTE.less', "public/css/admin_lte.css");
@@ -36,7 +36,6 @@ elixir((mix) => {
     mix.coffee('../coffee/main.coffee', 'public/js/app.js');
     mix.coffee('../coffee/modules/*.coffee', 'public/js/modules.js');
     mix.sass('../sass/app.scss', 'public/css/main/app.css');
-    mix.phpUnit();
     mix.browserSync({
         proxy: 'storecamp.app'
     });
