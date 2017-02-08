@@ -15,7 +15,7 @@ class SendCampaignEmails extends Job implements ShouldQueue
 {
     use InteractsWithQueue, SerializesModels;
 
-    protected $urlhelper, $mailer, $view,$subject,$receiverEmail,$senderEmail,$senderName=null,$name=null;
+    protected $urlhelper, $mailer, $view, $subject, $receiverEmail, $senderEmail, $senderName = null, $name = null;
 
     /**
      * SendCampaignEmails constructor.
@@ -26,7 +26,7 @@ class SendCampaignEmails extends Job implements ShouldQueue
      * @param null $senderName
      * @param null $name
      */
-    public function __construct($view, $subject, $receiverEmail, $senderEmail, $senderName=null, $name=null)
+    public function __construct($view, $subject, $receiverEmail, $senderEmail, $senderName = null, $name = null)
     {
         $this->view = $view;
         $this->subject = $subject;
@@ -47,9 +47,10 @@ class SendCampaignEmails extends Job implements ShouldQueue
         $senderEmail = $this->senderEmail;
         $senderName = $this->senderName;
         $urlhelper->forceRootUrl(config('app.url'));
-        $mailer->queue($this->view, ['name'=>$this->name], function ($m) use ($receiverEmail, $subject, $senderEmail, $senderName) {
-            $m->to($receiverEmail)->subject($subject);
-            $m->from($senderEmail, $senderName);
-        });
+        $mailer->queue($this->view, ['name' => $this->name],
+            function ($m) use ($receiverEmail, $subject, $senderEmail, $senderName) {
+                $m->to($receiverEmail)->subject($subject);
+                $m->from($senderEmail, $senderName);
+            });
     }
 }

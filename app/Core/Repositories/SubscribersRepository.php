@@ -30,11 +30,6 @@ interface SubscribersRepository extends RepositoryInterface
      */
     public function deleteSubscription($request, $type, $subscription_id);
 
-    /**
-     * @param $uid
-     * @return mixed
-     */
-    public function findList($uid);
 
     /**
      * @param $email
@@ -47,36 +42,5 @@ interface SubscribersRepository extends RepositoryInterface
      * @return mixed
      */
     public function getNewsList($type=null);
-
-    /**
-     * @return mixed
-     */
-    public function resolveTmpMails();
-
-    /**
-     * @param $uid
-     * @return mixed
-     */
-    public function resolveMailHistory($uid);
-    /**
-     * @param $request
-     * @param $uid
-     * @param $type
-     * @return mixed
-     */
-    public function generateCampaign($request, $uid, $type);
-
-    /**
-     * @param $file
-     * @return mixed
-     */
-    public function getTmpMail($file);
-
-    /**
-     * @param $folder
-     * @param $filename
-     * @return mixed
-     */
-    public function getHistoryTmpMail($folder, $filename);
 
 }

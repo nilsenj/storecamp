@@ -1,5 +1,4 @@
 <div class="col-md-3">
-    <a href="{{route('admin::mail::create')}}" class="btn btn-primary btn-block margin-bottom">Compose Campaign</a>
     <div class="box box-solid">
         <div class="box-header with-border">
             <h3 class="box-title">Folders</h3>

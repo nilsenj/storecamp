@@ -8,6 +8,7 @@ use App\Core\Models\Folder;
 use App\Core\Repositories\FolderRepository;
 use App\Core\Repositories\MediaRepository;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Http\Request;
 use Plank\Mediable\MediaUploader;
 
 /**
@@ -162,7 +163,7 @@ class MediaSystem implements MediaSystemContract
     }
 
     /**
-     * @param $request
+     * @param Request $request
      * @param string $disk
      * @return \Plank\Mediable\Media
      */
@@ -175,10 +176,9 @@ class MediaSystem implements MediaSystemContract
         $folderPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folder->name : $folder->name;
         $folderFullPath = $folderDisk->getDiskRoot() . '/' . $folderPath;
         $file = $request->file('file');
-        if (class_exists('That0n3guy\Transliteration\Transliteration')) {
-            $filename = $this->transliteration->clean_filename($file->getClientOriginalName());  // You can see I am cleaning the filename
-        }
-        $media = $this->mediaUploader->fromSource($file)->toDestination($folderDisk->getDisk(), $folderPath)->useFilename($filename)->upload();
+        $filename = $this->transliteration->clean_filename($file->getClientOriginalName());  // You can see I am cleaning the filename
+        $media = $this->mediaUploader->fromSource($file)
+            ->toDestination($folderDisk->getDisk(), $folderPath)->useFilename($filename)->upload();
         $media->directory = $folderPath;
         $media->directory_id = $folder->id;
         $media->save();
@@ -186,7 +186,7 @@ class MediaSystem implements MediaSystemContract
     }
 
     /**
-     * @param $request
+     * @param Request $request
      * @param string $disk
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -237,7 +237,7 @@ class MediaSystem implements MediaSystemContract
         $renamedPath = $parentFoldersPath ? $parentFoldersPath . '/' . $folderFile->name : $folderFile->name;
         $selectedFolder = $folderDisk->getDiskRoot() . '/' . $renamedPath;
         if ($this->filesystem->isDirectory($selectedFolder)) {
-            if(!$this->filesystem->exists($selectedFolder . $file->filename . '.' . $file->extension)) {
+            if (!$this->filesystem->exists($selectedFolder . $file->filename . '.' . $file->extension)) {
                 throw new \Exception("Sorry File not found", 404);
             }
             $this->filesystem->move($selectedFolder . $file->filename . '.' . $file->extension,

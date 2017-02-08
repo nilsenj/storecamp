@@ -54,6 +54,6 @@ desired effect
 @include('partials.scripts')
 @yield("scripts-add")
 @stack('scripts-add_on')
-{{ Toastr::render() }}
+{!! Toastr::render() !!}
 </body>
 </html>

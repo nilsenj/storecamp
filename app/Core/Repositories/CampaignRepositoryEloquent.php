@@ -31,12 +31,4 @@ class CampaignRepositoryEloquent extends BaseRepository implements CampaignRepos
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-    /**
-     * @return mixed
-     */
-    public function getModel()
-    {
-        return new $this->model();
-    }
-
 }

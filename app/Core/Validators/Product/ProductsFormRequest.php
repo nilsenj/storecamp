@@ -5,34 +5,8 @@ namespace App\Core\Validators\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductsFormRequest extends FormRequest{
-
-    protected $rules = [
-        'title' => 'required|min:2',
-        'body' => 'required|min:20',
-        'price' => 'required|numeric',
-        'availability' => 'required|integer',
-        'category_id' => 'required|integer',
-        'date_available' => 'required|date',
-        'model' => 'string|min:2',
-        'quantity' => 'numeric|min:1',
-        'sku' => 'string',
-        'upc' => 'string',
-        'ean' => 'string',
-        'jan' => 'string',
-        'isbn' => 'string',
-        'mpn' => 'string',
-        'length' => 'string|min:1',
-        'width'=> 'string|min:1',
-        'height'=> 'string|min:1',
-        'meta_tag_title' => 'string|min:2',
-        'meta_tag_description' => 'string|min:5',
-        'meta_tag_keywords' => 'string|min:2',
-        'sort_order' => 'numeric|max:10',
-        'weight' => 'string|min:1'
-    ];
-
-
+class ProductsFormRequest extends FormRequest
+{
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -50,7 +24,31 @@ class ProductsFormRequest extends FormRequest{
      */
     public function rules()
     {
-        return $this->rules;
+        $rules = [
+            'title' => 'required|min:2',
+            'body' => 'required|min:20',
+            'price' => 'required|numeric',
+            'availability' => 'required|integer',
+            'category_id' => 'required|integer',
+            'date_available' => 'required|date',
+            'model' => 'string|min:2',
+            'quantity' => 'numeric|min:1',
+            'sku' => 'string',
+            'upc' => 'string',
+            'ean' => 'string',
+            'jan' => 'string',
+            'isbn' => 'string',
+            'mpn' => 'string',
+            'length' => 'string|min:1',
+            'width' => 'string|min:1',
+            'height' => 'string|min:1',
+            'meta_tag_title' => 'string|min:2',
+            'meta_tag_description' => 'string|min:5',
+            'meta_tag_keywords' => 'string|min:2',
+            'sort_order' => 'numeric|max:10',
+            'weight' => 'string|min:1'
+        ];
+        return $rules;
     }
 
 }
