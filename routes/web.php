@@ -579,7 +579,6 @@ $this->group(/**
         'as' => 'log-viewer::dashboard',
         'uses' => 'Admin\LogViewerController@index',
     ]);
-
     $this->group(['prefix' => '/logs',], function () {
         $this->get('/', [
             'as' => 'log-viewer::logs.list',

@@ -2,7 +2,7 @@
 
 $NAMESPACE$
 
-use App\Core\Contracts\RepositoryInterface;
+use RepositoryLab\Repository\Contracts\RepositoryInterface;
 
 /**
  * Interface $CLASS$Repository

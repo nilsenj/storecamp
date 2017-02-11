@@ -42,7 +42,8 @@ class RepositoriesServiceProvider extends ServiceProvider
             'ProductReview',
             'Subscribers',
             'Campaign',
-            'Mail'
+            'Mail',
+            'Orders'
         ];
 
         foreach ($models as $repo) {

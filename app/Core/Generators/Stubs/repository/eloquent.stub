@@ -2,8 +2,8 @@
 
 $NAMESPACE$
 
-use App\Core\Eloquent\BaseRepository;
-use App\Core\Criteria\RequestCriteria;
+use RepositoryLab\Repository\Eloquent\BaseRepository;
+use RepositoryLab\Repository\Criteria\RequestCriteria;
 use $REPOSITORY$
 use $MODEL$;
 

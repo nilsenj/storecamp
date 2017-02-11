@@ -27,6 +27,7 @@ class UsersSystem implements UsersSystemContract
 
     /**
      * UsersSystem constructor.
+     *
      * @param UserRepository $userRepository
      * @param RolesRepository $rolesRepository
      */

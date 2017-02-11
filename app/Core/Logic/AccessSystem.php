@@ -13,11 +13,11 @@ class AccessSystem implements AccessSystemContract
      * @var RolesRepository
      */
     public $rolesRepository;
+
     /**
      * @var PermissionRepository
      */
     public $permissionRepository;
-
 
     /**
      * AccessSystem constructor.

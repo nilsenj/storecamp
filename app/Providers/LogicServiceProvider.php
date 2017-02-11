@@ -33,7 +33,8 @@ class LogicServiceProvider extends ServiceProvider
             'UsersSystem',
             'LogViewerSystem',
             'ProductReviewSystem',
-            'AccessSystem'
+            'AccessSystem',
+            'OrdersSystem'
         ];
 
         foreach ($models as $repo) {

@@ -18,6 +18,27 @@ trait CacheableRepository {
     protected $cacheRepository = null;
 
     /**
+     * @var bool
+     */
+    protected $activeCache = false;
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->activeCache;
+    }
+
+    /**
+     * @param bool $active
+     */
+    public function setActive(bool $active)
+    {
+        $this->activeCache = $active;
+    }
+
+    /**
      * Set Cache Repository
      *
      * @param CacheRepository $repository
