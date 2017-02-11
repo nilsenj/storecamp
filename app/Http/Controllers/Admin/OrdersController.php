@@ -6,6 +6,7 @@ use App\Core\Contracts\OrdersSystemContract;
 use App\Core\Repositories\OrdersRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class OrdersControllersController

@@ -85,7 +85,7 @@
         $(function () {
             new Chart($('canvas#stats-doughnut-chart'), {
                 type: 'doughnut',
-                data: {{ $chartData }},
+                data: {!! $chartData !!},
                 options: {
                     legend: {
                         position: 'bottom'

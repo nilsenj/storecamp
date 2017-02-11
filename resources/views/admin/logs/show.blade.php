@@ -73,7 +73,7 @@
             <div class="panel panel-default">
                 @if ($entries->hasPages())
                     <div class="panel-heading">
-                        {{ $entries->render() }}
+                        {!! $entries->render() !!}
 
                         <span class="label label-info pull-right">
                             Page {{ $entries->currentPage() }} of {{ $entries->lastPage() }}
@@ -125,7 +125,7 @@
                                 <tr>
                                     <td colspan="5" class="stack">
                                         <div class="stack-content collapse" id="log-stack-{{ $key }}">
-                                            {{ $entry->stack() }}
+                                            {!! $entry->stack() !!}
                                         </div>
                                     </td>
                                 </tr>
