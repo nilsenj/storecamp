@@ -181,7 +181,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        storecamp\HtmlElements\HtmlElementsServiceProvider::class,
+        storecamp\htmlelements\HtmlElementsServiceProvider::class,
 
         \Bootstrapper\BootstrapperL5ServiceProvider::class,
         \App\Providers\AttributeGroupDescriptionServiceProvider::class,
