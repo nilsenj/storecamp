@@ -180,6 +180,10 @@ return [
         //Instances Providers
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        storecamp\HtmlElements\HtmlElementsServiceProvider::class,
+
+        \Bootstrapper\BootstrapperL5ServiceProvider::class,
         \App\Providers\AttributeGroupDescriptionServiceProvider::class,
         \App\Providers\AttributeGroupServiceProvider::class,
         \App\Providers\CategoryServiceProvider::class,

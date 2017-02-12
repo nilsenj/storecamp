@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ivan
- * Date: 26.12.2015
- * Time: 9:56
- */
 
 namespace App\Core\components\Timezone;
 
@@ -24,7 +18,7 @@ class TimezoneBuilder extends Timezone
      * @param $formAttributes
      * @param $optionAttributes
      */
-    public function __construct($selected = null, $placeholder = null, array $formAttributes = [],array $optionAttributes = [])
+    public function __construct($selected = null, $placeholder = null, array $formAttributes = [], array $optionAttributes = [])
     {
         $this->selected = $selected;
         $this->placeholder = $placeholder;
@@ -33,7 +27,7 @@ class TimezoneBuilder extends Timezone
     }
 
 
-    public function buildSelect($selected = null, $placeholder = null, array $formAttributes = [],array $optionAttributes = [])
+    public function buildSelect($selected = null, $placeholder = null, array $formAttributes = [], array $optionAttributes = [])
     {
         if (!is_null($selected)) {
             $this->selected = $selected;
@@ -47,17 +41,17 @@ class TimezoneBuilder extends Timezone
         } else {
             $this->placeholder = config('timezone.placeholder');
         }
-        if(!isset($formAttributes)) {
+        if (!isset($formAttributes)) {
             $this->formAttributes = $formAttributes;
         } else {
-            $this->formAttributes =  config('timezone.formAttributes');
+            $this->formAttributes = config('timezone.formAttributes');
         }
-        if(!isset($optionAttributes)){
+        if (!isset($optionAttributes)) {
             $this->optionAttributes = $optionAttributes;
         } else {
             $this->optionAttributes = config('timezone.optionAttributes');
         }
-       return $this->selectForm($this->selected, $this->placeholder, $this->formAttributes, $this->optionAttributes);
+        return $this->selectForm($this->selected, $this->placeholder, $this->formAttributes, $this->optionAttributes);
 
     }
 

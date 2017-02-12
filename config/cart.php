@@ -12,7 +12,7 @@ return [
     'tax' => 21,
     /*
     |--------------------------------------------------------------------------
-    | Storecamp cart database settings
+    | storecamp cart database settings
     |--------------------------------------------------------------------------
     |
     | Here you can set the connection that the cart should use when

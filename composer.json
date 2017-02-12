@@ -73,6 +73,7 @@
       "app/Core/Drivers/FolderToDb"
     ],
     "psr-4": {
+      "storecamp\\htmlelements\\": "packages/storecamp/htmlelements/src",
       "App\\": "app/",
       "Core\\": "app/Core/",
       "RepositoryLab\\Repository\\": "app/Core/RepositoryLab/",
@@ -118,12 +119,13 @@
         "packages/nilsenj/toastr-laravel/composer.json",
         "packages/vinkla/hashids/composer.json",
         "packages/juggl/unique-hashids/composer.json",
-        "packages/laravel-auditing/composer.json"
+        "packages/laravel-auditing/composer.json",
+        "packages/patricktalmadge/bootstrapper/composer.json"
       ],
       "recurse": true,
       "replace": false,
       "merge-dev": true,
-      "merge-extra": true,
+      "merge-extra": false,
       "merge-extra-deep": false
     }
   },
