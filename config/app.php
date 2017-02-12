@@ -228,7 +228,9 @@ return [
         \Webpatser\Countries\CountriesServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         nilsenj\Toastr\ToastrServiceProvider::class,
-        Vinkla\Hashids\HashidsServiceProvider::class
+        Vinkla\Hashids\HashidsServiceProvider::class,
+        JeroenG\Packager\PackagerServiceProvider::class,
+        Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class,
     ],
 
     /*

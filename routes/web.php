@@ -11,10 +11,6 @@
 |
 */
 
-$this->get('/', [
-    'uses' => 'LandingController@index'
-]);
-
 // Password reset routes...
 $this->get('password/reset', 'Auth\ResetPasswordController@showResetForm');
 $this->get('password/reset/{token}', 'Auth\PasswordController@getReset');
@@ -28,9 +24,7 @@ Auth::routes();
 $this->get('/logout', ['uses' => 'Auth\LoginController@logout']);
 
 $this->get('/home', 'HomeController@home');
-$this->group(/**
- *
- */
+$this->group(
     ['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], function () {
 
     $this->get('dashboard', [
@@ -42,9 +36,6 @@ $this->group(/**
         'as' => 'dashboard'
     ]);
 
-    $this->get('sales', [
-        'uses' => 'Admin\AdminController@sales'
-    ]);
     $this->group(['prefix' => 'users', 'as' => 'users::'], function () {
 
         $this->get('/', [
@@ -154,11 +145,6 @@ $this->group(/**
             'uses' => 'Admin\MediaController@folderDestroy',
             'as' => 'get.folder.delete'
         ])->middleware('folderLocked');
-
-        $this->get('bytag/{disk}/{path?}/{tag}', [
-            'uses' => 'Admin\MediaController@getByTag',
-            'as' => 'get.tag'
-        ]);
 
     });
 
@@ -556,12 +542,6 @@ $this->group(/**
         ]);
     });
     $this->group(['prefix' => 'audits', 'as' => 'audits::'], function () {
-
-        $this->get('/{model?}', [
-            'uses' => 'Admin\AuditsController@index',
-            'as' => 'index'
-        ]);
-
         $this->get('show/{model}/{id}',
             [
                 'uses' => 'Admin\AuditsController@show',
@@ -570,9 +550,7 @@ $this->group(/**
     });
 });
 
-$this->group(/**
- *
- */
+$this->group(
     ['prefix' => '/admin/log-viewer',], function () {
 
     $this->get('/', [

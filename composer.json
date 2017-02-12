@@ -38,7 +38,9 @@
     "laravel/socialite": "^2.0",
     "laravel/tinker": "1.0.x-dev",
     "wikimedia/composer-merge-plugin": "^1.3",
-    "ramsey/uuid": "^3.5"
+    "ramsey/uuid": "^3.5",
+    "jeroen-g/laravel-packager": "^1.5",
+    "mpociot/laravel-apidoc-generator": "1.7.0"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",

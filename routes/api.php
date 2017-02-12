@@ -24,7 +24,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('jwt.auth');
 Route::get('/users', 'Api\AuthController@getUsers')->middleware('jwt.auth');
 
-Route::resource('authenticate', 'Api\AuthController', ['only' => ['index']]);
+//Route::resource('authenticate', 'Api\AuthController');
 Route::post('authenticate', 'Api\AuthController@authenticate');
 Route::post('register', 'Api\AuthController@register');
 Route::post('getUser', 'Api\AuthController@getAuthenticatedUser')->middleware('user.additional');
