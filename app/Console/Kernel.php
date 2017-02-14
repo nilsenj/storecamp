@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Core\Commands\ClearTablesCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -19,7 +20,8 @@ class Kernel extends ConsoleKernel
         'App\Core\Generators\Commands\TransformerCommand',
         'App\Core\Generators\Commands\PresenterCommand',
         'App\Core\Generators\Commands\EntityCommand',
-        'App\Core\Generators\Commands\cControllerCommand'
+        'App\Core\Generators\Commands\cControllerCommand',
+        ClearTablesCommand::class
     ];
 
     /**

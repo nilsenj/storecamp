@@ -29,7 +29,7 @@ class Thread extends Eloquent
      *
      * @var array
      */
-    protected $fillable = ['subject', 'product_reviews_id', 'parent_id'];
+    protected $fillable = ['subject', 'parent_id'];
 
     /**
      * The attributes that should be mutated to dates.
@@ -49,6 +49,14 @@ class Thread extends Eloquent
      * @var string|null
      */
     private $usersTable = null;
+
+    /**
+     * Get all of the owning commentable models.
+     */
+    public function commentable()
+    {
+        return $this->morphTo();
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

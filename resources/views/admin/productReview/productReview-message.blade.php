@@ -14,7 +14,7 @@
             </a>
         </strong>
         <span class="text-info">|</span>
-        @if($productReview->thread->first()->isUnread($currentUserId))
+        @if($productReview->comments->first()->isUnread($currentUserId))
             <span class="review-item-status label label-warning">not read</span>
         @else
             <span class="review-item-status label label-default">read</span>
@@ -82,7 +82,7 @@
     <hr>
     <div class="box-footer box-comments" style="display: block;">
         <b class="text-muted">comments:</b>
-        @include('admin.productReview.messages', [$messages = $productReview->thread->first()->messages])
+        @include('admin.productReview.messages', [$messages = $productReview->comments->first()->messages])
     </div>
     <div class="clearfix"></div>
     @include('admin.productReview.productReview-form')

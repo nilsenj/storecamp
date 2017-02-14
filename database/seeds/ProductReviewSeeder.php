@@ -25,12 +25,12 @@ class ProductReviewSeeder extends Seeder
                 $data['product_id'] = $product->id;
                 $data['hidden'] = false;
                 $productReview = $user->productReview()->create($data);
+
                 $data["subject"] = $product->title;
-                $thread = \App\Core\Components\Messenger\Models\Thread::create(
-                    [
-                        'product_reviews_id' => $productReview->id,
-                        'subject' => $data["subject"],
-                    ]);
+
+                $thread = $productReview->comments()->create([
+                    'subject' => $data["subject"]
+                ]);
 
                 $roleAdmin = \App\Core\Models\Role::find(1);
                 $adminArr = $roleAdmin->getRoleUsers("Admin");
@@ -63,11 +63,10 @@ class ProductReviewSeeder extends Seeder
                 $data['hidden'] = false;
                 $productReview = $user->productReview()->create($data);
                 $data["subject"] = $product->title;
-                $thread = \App\Core\Components\Messenger\Models\Thread::create(
-                    [
-                        'product_reviews_id' => $productReview->id,
-                        'subject' => $data["subject"],
-                    ]);
+                $thread =  $thread =  $productReview->comments()->create([
+                    'subject' => $data["subject"]
+                ]);
+
 
                 $roleAdmin = \App\Core\Models\Role::find(1);
                 $adminArr = $roleAdmin->getRoleUsers("Admin");

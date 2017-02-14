@@ -96,9 +96,9 @@ class ProductReviewSystem implements ProductReviewSystemContract
      */
     public function markAsRead($id, $data)
     {
-        $productReview = $this->productReview->find($id);
+        $productReview = $this->productReview->with('comments')->find($id);
         $currentUser = \Auth::user();
-        $productReview->thread->first()->markAsRead($currentUser->id);
+        $productReview->comments->first()->markAsRead($currentUser->id);
     }
 
     /**
@@ -107,14 +107,12 @@ class ProductReviewSystem implements ProductReviewSystemContract
      */
     public function create(array $data)
     {
-        $thread = new \App\Core\Components\Messenger\Models\Thread();
         $product = $this->product->find($data['product_id']);
         unset($data['product_id']);
         $review = $product->productReview()->create($data);
         $subject = $product->title;
-        $thread = $thread->create(
+        $thread = $product->comments()->create(
             [
-                'product_reviews_id' => $review->id,
                 'subject' => $subject
             ]);
         $user = new User();

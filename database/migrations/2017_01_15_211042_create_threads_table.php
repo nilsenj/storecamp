@@ -16,11 +16,11 @@ class CreateThreadsTable extends Migration
         Schema::create('threads', function (Blueprint $table) {
             $table->increments('id');
             $table->string('subject')->default('review');
-            $table->integer('product_reviews_id')->unsigned();
+            $table->integer('commentable_id')->unsigned();
+            $table->string('commentable_type');
             $table->integer('parent_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('product_reviews_id')->references('id')->on('product_reviews')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -33,7 +33,6 @@ class CreateThreadsTable extends Migration
     {
         Schema::drop('threads', function(Blueprint $table) {
             $table->dropSoftDeletes();
-            $table->dropForeign('threads_product_reviews_id_foreign');
         });
     }
 }

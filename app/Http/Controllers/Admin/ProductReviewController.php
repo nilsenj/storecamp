@@ -62,7 +62,7 @@ class ProductReviewController extends BaseController
     {
         try {
             $data = $request->all();
-            $productReviews = $this->productReviewSystem->present($data, null, ['product', 'user', 'thread']);
+            $productReviews = $this->productReviewSystem->present($data, null, ['product', 'user', 'comments']);
             $no = $productReviews->firstItem();
 
             return $this->view('index', compact('productReviews', 'no'));
@@ -82,12 +82,10 @@ class ProductReviewController extends BaseController
     {
         try {
             $data = $request->all();
-            $productReview = $this->productReviewSystem->present($data, $id, ['product', 'user', 'thread']);;
+            $productReview = $this->productReviewSystem->present($data, $id, ['product', 'user', 'comments']);;
             $currentUserId = \Auth::user()->id;
-            $productReview->thread->first()->markAsRead($currentUserId);
-
+            $productReview->comments->first()->markAsRead($currentUserId);
             return $this->view('show', compact('productReview', 'currentUserId'));
-
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
         } catch (\Throwable $e) {
@@ -149,7 +147,7 @@ class ProductReviewController extends BaseController
     {
         try {
             $data = $request->all();
-            $productReview = $this->productReviewSystem->present($data, $id, ['product', 'user', 'thread']);;
+            $productReview = $this->productReviewSystem->present($data, $id, ['product', 'user', 'comments']);;
             $product = $productReview->product;
             return $this->view('edit', compact('productReview', 'product'));
         } catch (ModelNotFoundException $e) {

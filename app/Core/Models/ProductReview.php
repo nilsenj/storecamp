@@ -14,9 +14,9 @@ use App\Core\Components\Messenger\Models\Thread;
 use Toastr;
 
 /**
- * Class FeedBack
+ * Class ProductReview
  *
- * @package SXC\Models
+ * @package App\Core\Models
  * @property int $id
  * @property int $user_id
  * @property int $product_id
@@ -85,6 +85,16 @@ class ProductReview extends Model implements Transformable
     }
 
     /**
+     * Get all of the product reviews's comments.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function comments()
+    {
+        return $this->morphMany(Thread::class, 'commentable');
+    }
+
+    /**
      * @param $date
      */
     public function setDateAttribute($date)
@@ -110,23 +120,13 @@ class ProductReview extends Model implements Transformable
         return $this->belongsTo(Product::class, "product_id");
     }
 
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function thread()
-    {
-
-        return $this->hasMany(Thread::class, 'product_reviews_id');
-    }
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function getThread()
     {
 
-        return $this->thread()->first();
+        return $this->comments()->first();
     }
 
     /**

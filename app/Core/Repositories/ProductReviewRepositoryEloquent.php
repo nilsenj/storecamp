@@ -158,8 +158,8 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
      */
     public function replyProductReview($id, $message)
     {
-        $productReview = $this->find($id);
-        $thread = $productReview->thread->first();
+        $productReview = $this->with('comments')->find($id);
+        $thread = $productReview->comments->first();
         $thread->activateAllParticipants();
         $user_id = \Auth::user()->id;
         // Message
