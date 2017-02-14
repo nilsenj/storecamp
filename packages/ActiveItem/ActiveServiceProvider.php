@@ -1,18 +1,38 @@
 <?php
 
-namespace App\Core\components\ActiveItem;
+namespace App\Core\Components\ActiveItem;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\Application;
+use Illuminate\Routing\Events\RouteMatched;
 
 class ActiveServiceProvider extends ServiceProvider
 {
-
     /**
      * Indicates if loading of the provider is deferred.
      *
      * @var bool
      */
     protected $defer = false;
+
+    public function boot()
+    {
+        // Update the instances each time a request is resolved and a route is matched
+        $instance = app('active');
+        if (version_compare(Application::VERSION, '5.2.0', '>=')) {
+            app('router')->matched(
+                function (RouteMatched $event) use ($instance) {
+                    $instance->updateInstances($event->route, $event->request);
+                }
+            );
+        } else {
+            app('router')->matched(
+                function ($route, $request) use ($instance) {
+                    $instance->updateInstances($route, $request);
+                }
+            );
+        }
+    }
 
     /**
      * Register the service provider.
@@ -21,21 +41,14 @@ class ActiveServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('active', function ($app)
-        {
-            return new Active($app['router']);
-        });
+        $this->app->singleton(
+            'active',
+            function ($app) {
 
+                $instance = new Active($app['router']->getCurrentRequest());
+
+                return $instance;
+            }
+        );
     }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return array('active');
-    }
-
 }

@@ -24,7 +24,7 @@ class ControllerGenerator extends Generator {
      */
     public function getRootNamespace()
     {
-        return config('generators.generator.customControllerNamespace', $this->getAppNamespace());
+        return config('generators.generator.customControllerNamespace', $this->getAppNamespace()).$this->getFor();
     }
 
     /**
@@ -34,7 +34,7 @@ class ControllerGenerator extends Generator {
      */
     public function getPathConfigNode()
     {
-        return 'controllers';
+        return 'controller';
     }
 
     /**
@@ -55,19 +55,7 @@ class ControllerGenerator extends Generator {
      */
     public function getPath()
     {
-        return $this->getBasePath() . '/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '/' . $this->getFor() . '/' . $this->getName() . '.php';
-    }
-
-    /**
-     * Get array replacements.
-     *
-     * @return array
-     */
-    public function getReplacements()
-    {
-        return array_merge(parent::getReplacements(), [
-            'fillable' => $this->getFillable()
-        ]);
+        return $this->getBasePath() . '/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '/' . $this->getFor() . '/' . $this->getName(). str_studly($this->getPathConfigNode()) . '.php';
     }
 
     /**

@@ -43,7 +43,12 @@ class RepositoriesServiceProvider extends ServiceProvider
             'Subscribers',
             'Campaign',
             'Mail',
-            'Orders'
+            'Orders',
+            'Banner',
+            'Layout',
+            'Promocode',
+            'Returns',
+            'StaticPages'
         ];
 
         foreach ($models as $repo) {

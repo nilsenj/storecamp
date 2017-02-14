@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
  * Class $CLASS$sController
  * @package App\Http\Controllers
  */
-class $CLASS$sController extends Controller {
+class $CLASS$Controller extends Controller {
 
     private $repository;
 

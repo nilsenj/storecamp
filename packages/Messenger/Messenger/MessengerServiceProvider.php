@@ -13,7 +13,7 @@ class MessengerServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __dir__.'/../config/config.php' => config_path('messenger.php'),
-            __dir__.'/../migrations' => base_path('database/migrations'),
+//            __dir__.'/../migrations' => base_path('database/migrations'),
         ]);
     }
 

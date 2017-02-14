@@ -1,14 +1,10 @@
 <?php
 
-namespace App\Core\components\ActiveItem\Facades;
+namespace App\Core\Components\ActiveItem\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-/**
- * Active facade class
- *
- * @author Hieu Le
- */
+
 class Active extends Facade
 {
 

@@ -10,7 +10,7 @@ return [
     'generator'=>[
         'basePath'=> app_path().'/Core',
         'rootNamespace'=>'App\\Core\\',
-        'controllerBasePath'=> app_path().'/Http/',
+        'controllerBasePath'=> app_path().'/Http/Controllers',
         'customControllerNamespace'=>'App\\Http\\Controllers\\',
         'paths'=>[
             'models'=>'Models',

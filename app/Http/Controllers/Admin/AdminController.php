@@ -18,6 +18,10 @@ class AdminController extends Controller
         $this->middleware("role:Admin");
     }
 
+    public function htmlElements() {
+        return view("admin.htmlElements.elements");
+    }
+
     public function index()
     {
         //

@@ -181,9 +181,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        storecamp\htmlelements\HtmlElementsServiceProvider::class,
 
-        \Bootstrapper\BootstrapperL5ServiceProvider::class,
         \App\Providers\AttributeGroupDescriptionServiceProvider::class,
         \App\Providers\AttributeGroupServiceProvider::class,
         \App\Providers\CategoryServiceProvider::class,
@@ -201,6 +199,7 @@ return [
         \App\Core\Components\Auditing\AuditingServiceProvider::class,
         \App\Providers\LogicServiceProvider::class,
         \App\Providers\MailServiceProvider::class,
+        \App\Providers\MenuBuilderProvider::class,
         //Apis service providers
         \App\Core\APIs\Youtube\YoutubeServiceProviderLaravel5::class,
         //End of API service providers
@@ -235,6 +234,7 @@ return [
         Vinkla\Hashids\HashidsServiceProvider::class,
         JeroenG\Packager\PackagerServiceProvider::class,
         Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class,
+        storecamp\htmlelements\HtmlElementsServiceProvider::class,
     ],
 
     /*
@@ -293,11 +293,36 @@ return [
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
         'MediaUploader' => Plank\Mediable\MediaUploaderFacade::class,
         'Countries' => Webpatser\Countries\CountriesFacade::class,
-        'Active' => App\Core\components\ActiveItem\Facades\Active::class,
+        'Active' => App\Core\Components\ActiveItem\Facades\Active::class,
         'Flash' => App\Core\Components\Flash\Flash::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Toastr' => nilsenj\Toastr\Facades\Toastr::class,
-        'Hashids' => Vinkla\Hashids\Facades\Hashids::class
+        'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
+        'Accordion' => 'storecamp\htmlelements\Facades\Accordion',
+        'Alert' => 'storecamp\htmlelements\Facades\Alert',
+        'Badge' => 'storecamp\htmlelements\Facades\Badge',
+        'Breadcrumb' => 'storecamp\htmlelements\Facades\Breadcrumb',
+        'Button' => 'storecamp\htmlelements\Facades\Button',
+        'ButtonGroup' => 'storecamp\htmlelements\Facades\ButtonGroup',
+        'Carousel' => 'storecamp\htmlelements\Facades\Carousel',
+        'ControlGroup' => 'storecamp\htmlelements\Facades\ControlGroup',
+        'DropdownButton' => 'storecamp\htmlelements\Facades\DropdownButton',
+        'Forms' => 'storecamp\htmlelements\Facades\Form',
+        'Helpers' => 'storecamp\htmlelements\Facades\Helpers',
+        'Icon' => 'storecamp\htmlelements\Facades\Icon',
+        'InputGroup' => 'storecamp\htmlelements\Facades\InputGroup',
+        'Images' => 'storecamp\htmlelements\Facades\Image',
+        'Label' => 'storecamp\htmlelements\Facades\Label',
+        'MediaObject' => 'storecamp\htmlelements\Facades\MediaObject',
+        'Modal' => 'storecamp\htmlelements\Facades\Modal',
+        'Navbar' => 'storecamp\htmlelements\Facades\Navbar',
+        'Navigation' => 'storecamp\htmlelements\Facades\Navigation',
+        'Panel' => 'storecamp\htmlelements\Facades\Panel',
+        'ProgressBar' => 'storecamp\htmlelements\Facades\ProgressBar',
+        'Tabbable' => 'storecamp\htmlelements\Facades\Tabbable',
+        'Table' => 'storecamp\htmlelements\Facades\Table',
+        'Thumbnail' => 'storecamp\htmlelements\Facades\Thumbnail',
+        'Menu' => \storecamp\htmlelements\Facades\Menu::class,
     ],
 
 ];

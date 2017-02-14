@@ -20,6 +20,12 @@ $this->get('/', [
     'uses' => 'HomeController@index',
     'as' => 'home::'
 ]);
+
+$this->get('/htmlElements', [
+    'uses' => 'Admin\AdminController@htmlElements',
+    'as' => 'htmlElements'
+]);
+
 Auth::routes();
 $this->get('/logout', ['uses' => 'Auth\LoginController@logout']);
 
@@ -497,7 +503,6 @@ $this->group(
 
 
     });
-
     $this->group(['prefix' => 'campaign', 'as' => 'campaign::'], function () {
 
         $this->get('/', ['uses' => 'Admin\CampaignController@index', 'as' => 'index']);
@@ -541,6 +546,145 @@ $this->group(
             'as' => 'get::json'
         ]);
     });
+
+    $this->group(['prefix' => 'design', 'as' => 'design::'], function () {
+        $this->group(['prefix' => 'layouts', 'as' => 'layouts::'], function () {
+
+            $this->get('/', [
+                'uses' => 'Admin\LayoutController@index',
+                'as' => 'index'
+
+            ]);
+
+            $this->get('create', [
+                'uses' => 'Admin\LayoutController@create',
+                'as' => 'create'
+
+            ]);
+
+            $this->get('edit/{id}', [
+                'uses' => 'Admin\LayoutController@edit',
+                'as' => 'edit'
+            ]);
+
+            $this->put('update/{id}', [
+                'uses' => 'Admin\LayoutController@update',
+                'as' => 'update'
+            ]);
+
+            $this->delete('{id}', [
+                'uses' => 'Admin\LayoutController@destroy',
+                'as' => 'delete'
+            ]);
+
+            $this->post('store', [
+                'uses' => 'Admin\LayoutController@store',
+                'as' => 'store'
+            ]);
+
+            $this->get('/delete/{id}', [
+                'uses' => 'Admin\LayoutController@destroy',
+                'as' => 'get::delete'
+            ]);
+
+            $this->get('/layouts/json', [
+
+                'uses' => 'Admin\LayoutController@getJson',
+                'as' => 'get::json'
+            ]);
+        });
+        $this->group(['prefix' => 'banners', 'as' => 'banners::'], function () {
+
+            $this->get('/', [
+                'uses' => 'Admin\BannerController@index',
+                'as' => 'index'
+
+            ]);
+
+            $this->get('create', [
+                'uses' => 'Admin\BannerController@create',
+                'as' => 'create'
+
+            ]);
+
+            $this->get('edit/{id}', [
+                'uses' => 'Admin\BannerController@edit',
+                'as' => 'edit'
+            ]);
+
+            $this->put('update/{id}', [
+                'uses' => 'Admin\BannerController@update',
+                'as' => 'update'
+            ]);
+
+            $this->delete('{id}', [
+                'uses' => 'Admin\BannerController@destroy',
+                'as' => 'delete'
+            ]);
+
+            $this->post('store', [
+                'uses' => 'Admin\BannerController@store',
+                'as' => 'store'
+            ]);
+
+            $this->get('/delete/{id}', [
+                'uses' => 'Admin\BannerController@destroy',
+                'as' => 'get::delete'
+            ]);
+
+            $this->get('/layouts/json', [
+
+                'uses' => 'Admin\BannerController@getJson',
+                'as' => 'get::json'
+            ]);
+        });
+        $this->group(['prefix' => 'staticPages', 'as' => 'staticPages::'], function () {
+
+            $this->get('/', [
+                'uses' => 'Admin\StaticController@index',
+                'as' => 'index'
+
+            ]);
+
+            $this->get('create', [
+                'uses' => 'Admin\StaticController@create',
+                'as' => 'create'
+
+            ]);
+
+            $this->get('edit/{id}', [
+                'uses' => 'Admin\StaticController@edit',
+                'as' => 'edit'
+            ]);
+
+            $this->put('update/{id}', [
+                'uses' => 'Admin\StaticController@update',
+                'as' => 'update'
+            ]);
+
+            $this->delete('{id}', [
+                'uses' => 'Admin\StaticController@destroy',
+                'as' => 'delete'
+            ]);
+
+            $this->post('store', [
+                'uses' => 'Admin\StaticController@store',
+                'as' => 'store'
+            ]);
+
+            $this->get('/delete/{id}', [
+                'uses' => 'Admin\StaticController@destroy',
+                'as' => 'get::delete'
+            ]);
+
+            $this->get('/layouts/json', [
+
+                'uses' => 'Admin\StaticController@getJson',
+                'as' => 'get::json'
+            ]);
+        });
+    });
+
     $this->group(['prefix' => 'audits', 'as' => 'audits::'], function () {
         $this->get('show/{model}/{id}',
             [

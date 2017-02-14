@@ -28,10 +28,15 @@ class PresentersServiceProvider extends ServiceProvider
     public function register()
     {
         $models = [
-            'Basket',
-            'Item',
+            'File',
             'AttributeGroup',
-            'AttributeGroupDescription'
+            'AttributeGroupDescription',
+            'Orders',
+            'Banner',
+            'Layout',
+            'Promocode',
+            'Returns',
+            'StaticPages'
         ];
         foreach($models as $model) {
             $this->app->bind("FBA\\Presenters\\{$model}Presenter");

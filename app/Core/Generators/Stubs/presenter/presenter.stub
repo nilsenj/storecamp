@@ -2,7 +2,7 @@
 
 $NAMESPACE$
 
-use $APPNAMESPACE$\Core\Transformers\$CLASS$Transformer;
+use $APPNAMESPACE$Core\Transformers\$CLASS$Transformer;
 use RepositoryLab\Repository\Presenter\FractalPresenter;
 
 /**
