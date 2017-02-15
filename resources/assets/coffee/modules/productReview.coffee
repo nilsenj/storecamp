@@ -1,19 +1,21 @@
 $.StoreCamp.productReview =
   options: {
-
+    editMessageClass:  "editMessage"
+    commentsBlock: "box-comments"
+    confirmBtn: "confirm-edit"
   }
   activate: () ->
     this.editMessage()
   editMessage: () ->
     _this = this
-    $(".editMessage").on "click", (e) ->
+    $("."+ this.options.editMessageClass).on "click", (e) ->
       messsageBlockAttr = $(e.target).attr("data-message-block")
-      messageBlock = $(".box-comments ##{messsageBlockAttr}")
+      messageBlock = $(".#{_this.options.commentsBlock} ##{messsageBlockAttr}")
       message = messageBlock.text()
       href = $(e.target).attr("data-href")
-      textArea = "<textarea id='body-#{messsageBlockAttr}' name='message' class='form-control' rows='6' style='height: auto;'>#{message}</textarea><button class='btn btn-primary pull-right confirm-edit'>Edit Message</button>"
+      textArea = "<textarea id='body-#{messsageBlockAttr}' name='message' class='form-control' rows='6' style='height: auto;margin-bottom: 10px'>#{message}</textarea><button class='btn btn-primary pull-right #{_this.options.confirmBtn}'>Edit Message</button>"
       $.StoreCamp.templates.modal("review-"+messsageBlockAttr, textArea, "Edit Message")
-      $(".confirm-edit").on "click", (e) ->
+      $(".#{_this.options.confirmBtn}").on "click", (e) ->
         e.preventDefault()
         console.log(e)
         dataObject = {

@@ -35,34 +35,24 @@ class ClearTablesCommand extends Command
      */
     public function handle()
     {
-        if ($this->confirm('Would you like to clear all Tables? [y|N]')) {
-            if (\App::environment('local', 'staging', 'testing')) {
-                // set tables don't want to truncate here
-                $excepts = ['migrations']; /*TODO add excepts option to command*/
-                $tables = \DB::connection()
-                    ->getPdo()
-                    ->query("SHOW FULL TABLES")
-                    ->fetchAll();
-                $tableNames = [];
+//        if ($this->confirm('Would you like to clear all Tables? [y|N]')) {
+        if (\App::environment('local', 'staging', 'testing')) {
+            // set tables don't want to truncate here
 
-                $keys = array_keys($tables[0]);
-                $keyName = $keys[0];
-                $keyType = $keys[1];
-
-                foreach ($tableNames as $name) {
-                    //if you don't want to truncate migrations
-                    if (in_array($name[$keyName], $excepts))
-                        continue;
-
-                    // truncate tables only
-                    if ('BASE TABLE' !== $name[$keyType])
-                        continue;
-
-                    \DB::table($name)->truncate();
+            $tableNames = \Schema::getConnection()->getDoctrineSchemaManager()->listTableNames();
+            foreach ($tableNames as $name) {
+                //if you don't want to truncate migrations
+                if ($name == 'migrations') {
+                    continue;
                 }
-            } else {
-                $this->warn("Tables not cleared. Not allowed on production env");
+                \DB::statement("SET foreign_key_checks=0");
+                \DB::table($name)->truncate();
+                $this->info("table " . $name );
+                $this->warn(" - truncated");
             }
+        } else {
+            $this->warn("Tables not cleared. Not allowed on production env");
         }
+//        }
     }
 }

@@ -24,8 +24,8 @@
     <script>
         $('.review-item-status.read').on({
             "click": function (event) {
-                var feedId = $(this).data('feed-id'),
-                    feedStatus = $(this).data('feed-status');
+                var feedId = $(".review-list-item").data('feed-id'),
+                    feedStatus = $(".review-list-item").data('feed-status');
 
                 if (feedStatus == false) {
                     $.ajax({

@@ -968,22 +968,26 @@
 
 (function() {
   $.StoreCamp.productReview = {
-    options: {},
+    options: {
+      editMessageClass: "editMessage",
+      commentsBlock: "box-comments",
+      confirmBtn: "confirm-edit"
+    },
     activate: function() {
       return this.editMessage();
     },
     editMessage: function() {
       var _this;
       _this = this;
-      return $(".editMessage").on("click", function(e) {
+      return $("." + this.options.editMessageClass).on("click", function(e) {
         var href, message, messageBlock, messsageBlockAttr, textArea;
         messsageBlockAttr = $(e.target).attr("data-message-block");
-        messageBlock = $(".box-comments #" + messsageBlockAttr);
+        messageBlock = $("." + _this.options.commentsBlock + " #" + messsageBlockAttr);
         message = messageBlock.text();
         href = $(e.target).attr("data-href");
-        textArea = "<textarea id='body-" + messsageBlockAttr + "' name='message' class='form-control' rows='6' style='height: auto;'>" + message + "</textarea><button class='btn btn-primary pull-right confirm-edit'>Edit Message</button>";
+        textArea = "<textarea id='body-" + messsageBlockAttr + "' name='message' class='form-control' rows='6' style='height: auto;margin-bottom: 10px'>" + message + "</textarea><button class='btn btn-primary pull-right " + _this.options.confirmBtn + "'>Edit Message</button>";
         $.StoreCamp.templates.modal("review-" + messsageBlockAttr, textArea, "Edit Message");
-        return $(".confirm-edit").on("click", function(e) {
+        return $("." + _this.options.confirmBtn).on("click", function(e) {
           var dataObject;
           e.preventDefault();
           console.log(e);
