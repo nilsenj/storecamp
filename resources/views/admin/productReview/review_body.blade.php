@@ -32,7 +32,7 @@
             <!-- /.review-paper-heading -->
                     @foreach($productReviews as $productReview)
                         <div class="review-list-item" data-fill-color="true" data-feed-id="{{$productReview->id}}"
-                             data-feed-status="{{$productReview->comments->first()->isUnread($productReview->user->id) ? "false" : "true"}}">
+                             data-feed-status="{{$productReview->comments->first()->isUnread($currentUserId) ? "false" : "true"}}">
                             @include('admin.productReview.productReview-message')
                         </div><!-- /.panel.review-list-item -->
                     @endforeach

@@ -969,12 +969,55 @@
 (function() {
   $.StoreCamp.productReview = {
     options: {
+      confirmMessageClass: "confirmMessage",
+      confirmMessageBody: "confirmMessageBody",
+      confirmMessageBtn: "confirmMessageBtn",
       editMessageClass: "editMessage",
+      deleteMessageClass: "deleteMessage",
+      commentBlock: "box-comment",
       commentsBlock: "box-comments",
-      confirmBtn: "confirm-edit"
+      confirmEditBtn: "confirm-edit"
     },
     activate: function() {
-      return this.editMessage();
+      this.postMessage();
+      this.editMessage();
+      return this.deleteMessage();
+    },
+    postMessage: function() {
+      var _this;
+      _this = this;
+      return $("." + this.options.confirmMessageBtn).on("click", function(e) {
+        var _token, commentsBlock, dataObject, href, message, messageBlock;
+        messageBlock = $("." + _this.options.confirmMessageBody);
+        commentsBlock = $("." + _this.options.commentsBlock);
+        message = messageBlock.val();
+        href = $(e.target).attr("data-href");
+        e.preventDefault();
+        _token = $('meta[name="csrf-token"]').attr('content');
+        dataObject = {
+          reply_message: message,
+          _token: _token
+        };
+        return $.ajax({
+          url: href,
+          type: 'put',
+          _method: "put",
+          headers: {
+            'X-CSRF-TOKEN': _token
+          },
+          data: dataObject,
+          success: function(data) {
+            $.StoreCamp.templates.alert('success', "Message Created", "Everything ok");
+            commentsBlock.append(data.message);
+            _this.scrollToBottom();
+            messageBlock.val(null);
+          },
+          error: function(xhr, textStatus, errorThrown) {
+            $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared');
+            console.error(xhr);
+          }
+        }, false);
+      });
     },
     editMessage: function() {
       var _this;
@@ -985,9 +1028,9 @@
         messageBlock = $("." + _this.options.commentsBlock + " #" + messsageBlockAttr);
         message = messageBlock.text();
         href = $(e.target).attr("data-href");
-        textArea = "<textarea id='body-" + messsageBlockAttr + "' name='message' class='form-control' rows='6' style='height: auto;margin-bottom: 10px'>" + message + "</textarea><button class='btn btn-primary pull-right " + _this.options.confirmBtn + "'>Edit Message</button>";
-        $.StoreCamp.templates.modal("review-" + messsageBlockAttr, textArea, "Edit Message");
-        return $("." + _this.options.confirmBtn).on("click", function(e) {
+        textArea = "<textarea id='body-" + messsageBlockAttr + "' name='message' class='form-control' rows='6' style='height: auto;margin-bottom: 10px'>" + message + "</textarea>";
+        $.StoreCamp.templates.withAdditionalBtn("Edit Message", null, "btn btn-primary pull-left " + _this.options.confirmEditBtn).modal("review-" + messsageBlockAttr, textArea, "Edit Message");
+        return $("." + _this.options.confirmEditBtn).on("click", function(e) {
           var dataObject;
           e.preventDefault();
           console.log(e);
@@ -1013,6 +1056,42 @@
           }, false);
         });
       });
+    },
+    deleteMessage: function() {
+      var _this;
+      _this = this;
+      return $("." + this.options.deleteMessageClass).on("click", function(e) {
+        var href, message, messageBlock, messsageBlockAttr;
+        messsageBlockAttr = $(e.target).attr("data-message-block");
+        messageBlock = $("." + _this.options.commentBlock + "[data-message-block='" + messsageBlockAttr + "'");
+        message = messageBlock.text();
+        href = $(e.target).attr("data-href");
+        e.preventDefault();
+        console.log(e);
+        return $.ajax({
+          url: href,
+          type: 'POST',
+          _method: "post",
+          success: function(data) {
+            $.StoreCamp.templates.alert('success', "Message Deleted", data.message);
+            messageBlock.remove();
+          },
+          error: function(xhr, textStatus, errorThrown) {
+            $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared');
+            console.error(xhr);
+          }
+        }, false);
+      });
+    },
+    scrollToBottom: function() {
+      var $messageList, _this;
+      _this = this;
+      $messageList = $("." + _this.options.commentsBlock);
+      if ($messageList.length) {
+        $messageList.animate({
+          scrollTop: $messageList[0].scrollHeight
+        }, 500);
+      }
     }
   };
 
@@ -1022,12 +1101,16 @@
 
 (function() {
   $.StoreCamp.templates = {
+    additionalModalButtonRenderState: null,
     options: {
       alertTemplate: function(type, title, message) {
         return "<div class=\"alert alert-" + type + " alert-dismissible\">\n<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>\n<h4>" + title + "</h4>\n" + message + "\n</div>";
       },
+      additionalBtnTemplate: function(text, id, className) {
+        return "<button type=\"button\" data-dismiss=\"modal\" class=\"btn " + className + "\"  style='margin: auto 10px' id=\"" + id + "\">" + text + "</button>";
+      },
       modalTemplate: function(modalId, Message, Header, AriaLabel, Ok, Cancel) {
-        return "<div class=\"modal fade\" id=\"" + modalId + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"" + AriaLabel + "\" aria-hidden=\"true\">\n<div class=\"modal-dialog\"><div class=\"modal-content\"><div class=\"modal-header\">\n<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n<h3>" + Header + "</h3></div>\n<div class=\"modal-body\"><p>" + Message + "</p></div>\n<div class='clearfix'></div> <div class=\"modal-footer\">\n<button class=\"btn btn-default\" data-dismiss=\"modal\">" + Cancel + "</button></div>\n</div></div></div>";
+        return "<div class=\"modal fade\" id=\"" + modalId + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"" + AriaLabel + "\" aria-hidden=\"true\">\n<div class=\"modal-dialog\"><div class=\"modal-content\"><div class=\"modal-header\">\n<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n<h3>" + Header + "</h3></div>\n<div class=\"modal-body\"><p>" + Message + "</p></div>\n<div class='clearfix'></div> <div class=\"modal-footer\">\n" + $.StoreCamp.templates.additionalModalButtonRenderState + "\n<button class=\"btn btn-default\" data-dismiss=\"modal\">" + Cancel + "</button></div>\n</div></div></div>";
       }
     },
     activate: function() {
@@ -1075,6 +1158,12 @@
         genericModal.modal('hide');
         defaultCallback(confirmLink);
       });
+    },
+    withAdditionalBtn: function(text, id, className) {
+      var _this;
+      _this = this;
+      _this.additionalModalButtonRenderState = _this.options.additionalBtnTemplate(text, id, className);
+      return _this;
     }
   };
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Core\Contracts\ProductReviewSystemContract;
+use App\Core\Models\ProductReview;
 use App\Core\Repositories\ProductReviewRepository;
 use App\Core\Validators\ProductReview\ProductReviewFormRequest;
 use App\Core\Validators\ProductReview\ReplyProductReviewFormRequest;
@@ -46,7 +47,8 @@ class ProductReviewController extends BaseController
      * @param UserRepository $user
      * @param ProductReviewRepository $productReview
      */
-    public function __construct(ProductReviewSystemContract $productReviewSystem, ProductsRepository $product, UserRepository $user, ProductReviewRepository $productReview)
+    public function __construct(ProductReviewSystemContract $productReviewSystem, ProductsRepository $product,
+                                UserRepository $user, ProductReviewRepository $productReview)
     {
         $this->productReviewSystem = $productReviewSystem;
         $this->product = $productReviewSystem->product;
@@ -84,7 +86,7 @@ class ProductReviewController extends BaseController
             $data = $request->all();
             $productReview = $this->productReviewSystem->present($data, $id, ['product', 'user', 'comments']);;
             $currentUserId = \Auth::user()->id;
-            $productReview->comments->first()->markAsRead($currentUserId);
+//            $productReview->comments->first()->markAsRead($currentUserId);
             return $this->view('show', compact('productReview', 'currentUserId'));
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -158,9 +160,11 @@ class ProductReviewController extends BaseController
     }
 
     /**
+     * edit message in review
+     *
      * @param Request $request
-     * @param $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @param $messageId
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function editMessage(Request $request, $messageId)
     {
@@ -169,6 +173,29 @@ class ProductReviewController extends BaseController
             $message = $this->productReviewSystem->editMessage($data, $messageId);
             if ($request->ajax()) {
                 return response()->json(['body' => $message->body], 200);
+            }
+            return redirect()->back();
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound($e);
+        } catch (\Throwable $e) {
+            return $this->redirectError($e);
+        }
+    }
+
+    /**
+     * delete message in review
+     *
+     * @param Request $request
+     * @param $messageId
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function deleteMessage(Request $request, $messageId)
+    {
+        try {
+            $data = $request->all();
+            $message = $this->productReviewSystem->deleteMessage($messageId, $data);
+            if ($request->ajax() && $message) {
+                return response()->json(['message' => 'message deleted successfully'], 200);
             }
             return redirect()->back();
         } catch (ModelNotFoundException $e) {
@@ -188,6 +215,11 @@ class ProductReviewController extends BaseController
         try {
             $data = $request->all();
             $productReviews = $this->productReviewSystem->replyProductReview($id, $data);
+            if($request->ajax()) {
+                $message = $productReviews->comments->last()->messages->last();
+                $messageView = $this->view('message-item', compact('message'));
+                return response()->json(['message' => $messageView->render()]);
+            }
 
             return redirect()->to(route("admin::reviews::show", $productReviews->id));
         } catch (ModelNotFoundException $e) {
@@ -226,7 +258,9 @@ class ProductReviewController extends BaseController
             $data = $request->all();
             if ($request->ajax()) {
                 $this->productReviewSystem->markAsRead($id, $data);
-                return response()->json(['message' => 'productReview marked as read', 'messages_count' => \Auth::user()->newMessagesCount()], 200);
+                return response()->json(
+                    ['message' => 'productReview marked as read', 'messages_count' => \Auth::user()->newMessagesCount()]
+                    , 200);
             } else {
                 return response()->json('not allowed', 400);
             }

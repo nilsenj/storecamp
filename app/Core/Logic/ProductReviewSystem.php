@@ -56,15 +56,15 @@ class ProductReviewSystem implements ProductReviewSystemContract
     public function present(array $data, $id = null, array $with = [])
     {
         if ($id) {
-            $products = $this->productReview->find($id);
+            $reviews = $this->productReview->find($id);
         } else {
             if (!empty($with)) {
-                $products = $this->productReview->with($with)->paginate();
+                $reviews = $this->productReview->with($with)->paginate();
             } else {
-                $products = $this->productReview->paginate();
+                $reviews = $this->productReview->paginate();
             }
         }
-        return $products;
+        return $reviews;
     }
 
     /**
@@ -116,6 +116,17 @@ class ProductReviewSystem implements ProductReviewSystemContract
         $message->body = $data['body'];
         $message->save();
         return $message;
+    }
+
+    /**
+     * @param int $messageId
+     * @param array $data
+     * @return mixed
+     */
+    public function deleteMessage(int $messageId, array $data = [])
+    {
+        $deleted = $this->message->find($messageId)->delete();
+        return $deleted;
     }
 
 

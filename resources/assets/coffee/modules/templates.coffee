@@ -1,11 +1,16 @@
 $.StoreCamp.templates =
-  options: {
+  additionalModalButtonRenderState: null
+  options:
     alertTemplate: (type, title, message) ->
       """<div class="alert alert-#{type} alert-dismissible">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
           <h4>#{title}</h4>
           #{message}
           </div>"""
+    additionalBtnTemplate: (text, id, className) ->
+      """
+    <button type="button" data-dismiss="modal" class="btn #{className}"  style='margin: auto 10px' id="#{id}">#{text}</button>
+      """
     modalTemplate: (modalId, Message, Header, AriaLabel, Ok, Cancel) ->
         """<div class="modal fade" id="#{modalId}" tabindex="-1" role="dialog" aria-labelledby="#{AriaLabel}" aria-hidden="true">
         <div class="modal-dialog"><div class="modal-content"><div class="modal-header">
@@ -13,9 +18,9 @@ $.StoreCamp.templates =
         <h3>#{Header}</h3></div>
         <div class="modal-body"><p>#{Message}</p></div>
         <div class='clearfix'></div> <div class="modal-footer">
+        #{$.StoreCamp.templates.additionalModalButtonRenderState}
         <button class="btn btn-default" data-dismiss="modal">#{Cancel}</button></div>
         </div></div></div>"""
-  }
   activate: ->
     _this = this
   alert: (type, title, message) ->
@@ -58,5 +63,9 @@ $.StoreCamp.templates =
       defaultCallback confirmLink
       return
     return
+  withAdditionalBtn: (text, id, className) ->
+    _this = this
+    _this.additionalModalButtonRenderState = _this.options.additionalBtnTemplate(text, id, className)
+    return _this
 
 $.StoreCamp.templates.activate()

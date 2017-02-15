@@ -64,6 +64,7 @@
                             <tr>
                                 <td>{{ $no }}</td>
                                 <td>{{ $productReview->product->title }}</td>
+
                                 <td>
                                     <span class="review-item-status label label-default">{{$productReview->rating}}</span>
                                 </td>

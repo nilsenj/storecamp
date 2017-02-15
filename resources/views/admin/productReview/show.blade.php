@@ -24,8 +24,9 @@
     <script>
         $('.review-item-status.read').on({
             "click": function (event) {
-                var feedId = $(".review-list-item").data('feed-id'),
-                    feedStatus = $(".review-list-item").data('feed-status');
+                console.log("button clicked");
+                var feedId = $(this).closest(".review-list-item").data('feed-id'),
+                    feedStatus = $(this).closest(".review-list-item").data('feed-status');
 
                 if (feedStatus == false) {
                     $.ajax({
@@ -43,7 +44,7 @@
                             console.log(data);
                             if (data['message']) {
                                 var navButton = $("li.productReview");
-                                var itemLabelStatus = $('.review-list-item[data-feed-id=' + feedId + '] .review-item-status');
+                                var itemLabelStatus = $('.review-list-item[data-feed-id=' + feedId + '] .review-item-status.read');
                                 navButton.find('span').text(data['messages_count']);
                                 var sidebarstatus = $('.sidebar .review-item-status');
                                 sidebarstatus.text(data['messages_count']);

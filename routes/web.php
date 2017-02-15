@@ -313,6 +313,11 @@ $this->group(
             'uses' => 'Admin\ProductReviewController@editMessage',
             'as' => 'editMessage'
         ])->middleware('belongsToUserOrAdmin');
+
+        $this->post('deleteMessage/{messageId}', [
+            'uses' => 'Admin\ProductReviewController@deleteMessage',
+            'as' => 'deleteMessage'
+        ])->middleware('belongsToUserOrAdmin');
     });
 
     $this->group(['prefix' => 'categories', 'as' => 'categories::'], function () {
