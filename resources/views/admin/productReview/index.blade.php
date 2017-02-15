@@ -68,7 +68,7 @@
                                     <span class="review-item-status label label-default">{{$productReview->rating}}</span>
                                 </td>
                                 <td>
-                                    @if($productReview->hidden)
+                                    @if($productReview->hidden === 1)
                                         <span class="review-item-status label label-warning"> hidden </span>
                                     @else
                                         <span class="review-item-status label label-info"> visible</span>

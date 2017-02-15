@@ -2,6 +2,7 @@
 
 namespace App\Core\Logic;
 
+use App\Core\Components\Messenger\Models\Message;
 use App\Core\Contracts\ProductReviewSystemContract;
 use App\Core\Models\User;
 use App\Core\Repositories\ProductReviewRepository;
@@ -30,6 +31,8 @@ class ProductReviewSystem implements ProductReviewSystemContract
      */
     public $productReview;
 
+    public $message;
+
     /**
      * ProductReviewSystem constructor.
      * @param ProductsRepository $product
@@ -41,6 +44,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
         $this->product = $product;
         $this->user = $user;
         $this->productReview = $productReview;
+        $this->message = new Message();
     }
 
     /**
@@ -100,6 +104,20 @@ class ProductReviewSystem implements ProductReviewSystemContract
         $currentUser = \Auth::user();
         $productReview->comments->first()->markAsRead($currentUser->id);
     }
+
+    /**
+     * @param array $data
+     * @param int $messageId
+     * @return bool
+     */
+    public function editMessage(array $data, int $messageId)
+    {
+        $message = $this->message->find($messageId);
+        $message->body = $data['body'];
+        $message->save();
+        return $message;
+    }
+
 
     /**
      * @param array $data

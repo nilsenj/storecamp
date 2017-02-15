@@ -25,4 +25,11 @@ interface ProductReviewSystemContract extends BaseLogicContract
      * @param $data
      */
     public function markAsRead($id, $data);
+
+    /**
+     * @param array $data
+     * @param int $messageId
+     * @return mixed
+     */
+    public function editMessage(array $data,int $messageId);
 }

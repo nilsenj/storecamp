@@ -967,6 +967,56 @@
 }).call(this);
 
 (function() {
+  $.StoreCamp.productReview = {
+    options: {},
+    activate: function() {
+      return this.editMessage();
+    },
+    editMessage: function() {
+      var _this;
+      _this = this;
+      return $(".editMessage").on("click", function(e) {
+        var href, message, messageBlock, messsageBlockAttr, textArea;
+        messsageBlockAttr = $(e.target).attr("data-message-block");
+        messageBlock = $(".box-comments #" + messsageBlockAttr);
+        message = messageBlock.text();
+        href = $(e.target).attr("data-href");
+        textArea = "<textarea id='body-" + messsageBlockAttr + "' name='message' class='form-control' rows='6' style='height: auto;'>" + message + "</textarea><button class='btn btn-primary pull-right confirm-edit'>Edit Message</button>";
+        $.StoreCamp.templates.modal("review-" + messsageBlockAttr, textArea, "Edit Message");
+        return $(".confirm-edit").on("click", function(e) {
+          var dataObject;
+          e.preventDefault();
+          console.log(e);
+          dataObject = {
+            body: $("#body-" + messsageBlockAttr).val()
+          };
+          return $.ajax({
+            url: href,
+            type: 'POST',
+            data: dataObject,
+            _method: "post",
+            success: function(data) {
+              var genericModal;
+              $.StoreCamp.templates.alert('success', "Message Saved", 'Everything Ok');
+              genericModal = $("#review-" + messsageBlockAttr);
+              genericModal.modal('hide');
+              messageBlock.html(data.body);
+            },
+            error: function(xhr, textStatus, errorThrown) {
+              $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared');
+              console.error(xhr);
+            }
+          }, false);
+        });
+      });
+    }
+  };
+
+  $.StoreCamp.productReview.activate();
+
+}).call(this);
+
+(function() {
   $.StoreCamp.templates = {
     options: {
       alertTemplate: function(type, title, message) {

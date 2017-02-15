@@ -18,12 +18,10 @@ class ClearTablesCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Clear tables';
+    protected $description = 'Clear tables INSTEAD of migrate:reset';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
+     * ClearTablesCommand constructor.
      */
     public function __construct()
     {
@@ -37,33 +35,34 @@ class ClearTablesCommand extends Command
      */
     public function handle()
     {
-        if (\App::environment('local', 'staging', 'testing')) {
-            // set tables don't want to truncate here
-            $excepts = ['migrations']; /*TODO add excepts option to command*/
-            $tables = \DB::connection()
-                ->getPdo()
-                ->query("SHOW FULL TABLES")
-                ->fetchAll();
-            $tableNames = [];
+        if ($this->confirm('Would you like to clear all Tables? [y|N]')) {
+            if (\App::environment('local', 'staging', 'testing')) {
+                // set tables don't want to truncate here
+                $excepts = ['migrations']; /*TODO add excepts option to command*/
+                $tables = \DB::connection()
+                    ->getPdo()
+                    ->query("SHOW FULL TABLES")
+                    ->fetchAll();
+                $tableNames = [];
 
-            $keys = array_keys($tables[0]);
-            $keyName = $keys[0];
-            $keyType = $keys[1];
+                $keys = array_keys($tables[0]);
+                $keyName = $keys[0];
+                $keyType = $keys[1];
 
-            foreach ($tableNames as $name) {
-                //if you don't want to truncate migrations
-                if (in_array($name[$keyName], $excepts))
-                    continue;
+                foreach ($tableNames as $name) {
+                    //if you don't want to truncate migrations
+                    if (in_array($name[$keyName], $excepts))
+                        continue;
 
-                // truncate tables only
-                if('BASE TABLE' !== $name[$keyType])
-                    continue;
+                    // truncate tables only
+                    if ('BASE TABLE' !== $name[$keyType])
+                        continue;
 
-                \DB::table($name)->truncate();
+                    \DB::table($name)->truncate();
+                }
+            } else {
+                $this->warn("Tables not cleared. Not allowed on production env");
             }
-        } else {
-            $this->warn("Tables not cleared. Not allowed on production env");
         }
-
     }
 }

@@ -158,6 +158,27 @@ class ProductReviewController extends BaseController
     }
 
     /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function editMessage(Request $request, $messageId)
+    {
+        try {
+            $data = $request->all();
+            $message = $this->productReviewSystem->editMessage($data, $messageId);
+            if ($request->ajax()) {
+                return response()->json(['body' => $message->body], 200);
+            }
+            return redirect()->back();
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound($e);
+        } catch (\Throwable $e) {
+            return $this->redirectError($e);
+        }
+    }
+
+    /**
      * @param ReplyProductReviewFormRequest $request
      * @param $id
      * @return \Illuminate\Http\RedirectResponse

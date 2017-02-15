@@ -22,7 +22,7 @@
 @endsection
 @section('scripts-add')
     <script>
-        $('.review-list-item').on({
+        $('.review-item-status.read').on({
             "click": function (event) {
                 var feedId = $(this).data('feed-id'),
                     feedStatus = $(this).data('feed-status');

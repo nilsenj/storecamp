@@ -10,7 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/**
+ * @param $this \Illuminate\Routing\Route
+ */
 // Password reset routes...
 $this->get('password/reset', 'Auth\ResetPasswordController@showResetForm');
 $this->get('password/reset/{token}', 'Auth\PasswordController@getReset');
@@ -306,6 +308,11 @@ $this->group(
             'uses' => 'Admin\ProductReviewController@markAsRead',
             'as' => 'markasread'
         ]);
+
+        $this->post('editMessage/{messageId}', [
+            'uses' => 'Admin\ProductReviewController@editMessage',
+            'as' => 'editMessage'
+        ])->middleware('belongsToUserOrAdmin');
     });
 
     $this->group(['prefix' => 'categories', 'as' => 'categories::'], function () {
@@ -351,6 +358,7 @@ $this->group(
             'as' => 'description'
         ]);
     });
+
     $this->group(['prefix' => 'attribute_groups', 'as' => 'attribute_groups::'], function () {
 
         $this->get('/', [
@@ -442,6 +450,7 @@ $this->group(
             'as' => 'get::json'
         ]);
     });
+
     $this->group(['prefix' => 'subscribers', 'as' => 'subscribers::'], function () {
 
         $this->get('/', ['uses' => 'Admin\SubscriptionController@index', 'as' => 'index']);

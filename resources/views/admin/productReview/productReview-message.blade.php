@@ -15,7 +15,7 @@
         </strong>
         <span class="text-info">|</span>
         @if($productReview->comments->first()->isUnread($currentUserId))
-            <span class="review-item-status label label-warning">not read</span>
+            <span class="review-item-status read label label-warning">click to read</span>
         @else
             <span class="review-item-status label label-default">read</span>
         @endif
