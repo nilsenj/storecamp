@@ -315,7 +315,7 @@ class CartSystem implements CartSystemContract
         $this->cartRepository->create([
             'unique_id' => $identifier,
             'instance' => $this->currentInstance(),
-            'content' => serialize($content)
+            'content' => json_encode($content)
         ]);
         $this->events->fire('cart.stored');
     }
@@ -333,7 +333,7 @@ class CartSystem implements CartSystemContract
         }
         $stored = $this->cartRepository
             ->find($identifier);
-        $storedContent = unserialize($stored->content);
+        $storedContent = json_decode($stored->content);
         $currentInstance = $this->currentInstance();
         $this->instance($stored->instance);
         $content = $this->getContent();
