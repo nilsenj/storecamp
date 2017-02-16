@@ -1,10 +1,19 @@
 $.StoreCamp.media =
-  options: {
+  options:
     players: plyr.setup(document.querySelectorAll('.js-player'), [])
     playerStatus: $('.play-status')
     mediaItems: $('.media[data-status="playable"]')
     directoryItem: $(".directories .directory-item")
     fileItem: $(".media")
+    infoData:
+      itemUrl: 'data-href'
+      itemType: 'data-file-type'
+      itemDisk: 'data-disk'
+      itemModified: 'data-modified'
+      itemName: 'data-filename'
+      itemSize: 'data-size'
+      itemId: 'data-file-id'
+
     infoTemplate: (filename, type, modified, size) ->
       """<div class='text-muted'>
                     <span class="container">
@@ -49,7 +58,7 @@ $.StoreCamp.media =
           #{this.infoTemplate(filename, type, modified, size)}
             </div>
         """
-      documentTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
+    documentTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
         """
           <div id='#{mediaId}' data-id='#{mediaId}' class="col-xs-12 col-md-12 col-lg-12 file-item" style="margin-bottom: 10px">
           <div class="text-center">
@@ -58,8 +67,7 @@ $.StoreCamp.media =
           <div class='clearfix'></div>
           #{this.infoTemplate(filename, type, modified, size)}
             </div>"""
-
-      imageTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
+    imageTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
         """
             <div id='#{mediaId}' data-id='#{mediaId}' class="col-xs-12 col-md-12 col-lg-12 file-item" style="margin-bottom: 10px">
             <div class="pull-left text-muted">
@@ -68,7 +76,7 @@ $.StoreCamp.media =
             <div class='clearfix'></div>
             #{this.infoTemplate(filename, type, modified, size)}
              </div>"""
-      pdfTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
+    pdfTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
         """
            <div id='#{mediaId}' data-id='#{mediaId}' class="col-xs-12 col-md-12 col-lg-12 file-item" style="margin-bottom: 10px">
             <div class="text-center">
@@ -82,7 +90,7 @@ $.StoreCamp.media =
             #{this.infoTemplate(filename, type, modified, size)}
              </div>"""
 
-      archiveTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
+    archiveTemplate: (mediaUrl, mediaId, filename, type, modified, size) ->
         """
            <div id='#{mediaId}' data-id='#{mediaId}' class="col-xs-12 col-md-12 col-lg-12 file-item" style="margin-bottom: 10px">
             <div class="text-center">
@@ -91,7 +99,6 @@ $.StoreCamp.media =
             <div class='clearfix'></div>
             #{this.infoTemplate(filename, type, modified, size)}
              </div>"""
-  }
   activate: ->
     _this = this
     _this.fileSystemEvents()
@@ -143,13 +150,13 @@ $.StoreCamp.media =
   infoFile: (btn) ->
     _this = this
     fileItem = btn.closest('.media')
-    itemUrl = fileItem.attr('data-href')
-    itemType = fileItem.attr('data-file-type')
-    itemDisk = fileItem.attr('data-disk')
-    itemModified = fileItem.attr('data-modified')
-    itemName = fileItem.attr('data-filename')
-    itemSize = fileItem.attr('data-size')
-    itemId = fileItem.attr('data-file-id')
+    itemUrl = fileItem.attr("#{_this.options.infoData.itemUrl}")
+    itemType = fileItem.attr("#{_this.options.infoData.itemType}")
+    itemDisk = fileItem.attr("#{_this.options.infoData.itemDisk}")
+    itemModified = fileItem.attr("#{_this.options.infoData.itemModified}")
+    itemName = fileItem.attr("#{_this.options.infoData.itemName}")
+    itemSize = fileItem.attr("#{_this.options.infoData.itemSize}")
+    itemId = fileItem.attr("#{_this.options.infoData.itemId}")
     console.log(itemType)
     if(itemType == "video")
       $.StoreCamp.templates.modal(itemId, _this.options.videoTemplate(itemUrl, itemId, itemName, itemType,itemModified, itemSize), itemName)

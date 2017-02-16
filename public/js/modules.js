@@ -825,6 +825,15 @@
       mediaItems: $('.media[data-status="playable"]'),
       directoryItem: $(".directories .directory-item"),
       fileItem: $(".media"),
+      infoData: {
+        itemUrl: 'data-href',
+        itemType: 'data-file-type',
+        itemDisk: 'data-disk',
+        itemModified: 'data-modified',
+        itemName: 'data-filename',
+        itemSize: 'data-size',
+        itemId: 'data-file-id'
+      },
       infoTemplate: function(filename, type, modified, size) {
         return "<div class='text-muted'>\n<span class=\"container\">\n  <small class=\"label pull-left bg-gray\">name: </small>\n  <p class='pull-right'>" + filename + "</p>\n </span>\n<span class=\"container\">\n  <small class=\"label pull-left bg-gray\">type: </small>\n  <p class='pull-right'>" + type + "</p>\n</span>\n<span class=\"container\">\n  <small class=\"label pull-left bg-gray\">modified: </small>\n  <p class='pull-right'>" + modified + "</p>\n</span>\n<span class=\"container\">\n  <small class=\"label pull-left bg-gray\">size: </small>\n  <p class='pull-right'>" + size + "</p>\n</span>\n</div>\n<div class='clearfix'></div>";
       },
@@ -908,13 +917,13 @@
       var _this, fileItem, item, itemDisk, itemId, itemModified, itemName, itemSize, itemType, itemUrl, players;
       _this = this;
       fileItem = btn.closest('.media');
-      itemUrl = fileItem.attr('data-href');
-      itemType = fileItem.attr('data-file-type');
-      itemDisk = fileItem.attr('data-disk');
-      itemModified = fileItem.attr('data-modified');
-      itemName = fileItem.attr('data-filename');
-      itemSize = fileItem.attr('data-size');
-      itemId = fileItem.attr('data-file-id');
+      itemUrl = fileItem.attr("" + _this.options.infoData.itemUrl);
+      itemType = fileItem.attr("" + _this.options.infoData.itemType);
+      itemDisk = fileItem.attr("" + _this.options.infoData.itemDisk);
+      itemModified = fileItem.attr("" + _this.options.infoData.itemModified);
+      itemName = fileItem.attr("" + _this.options.infoData.itemName);
+      itemSize = fileItem.attr("" + _this.options.infoData.itemSize);
+      itemId = fileItem.attr("" + _this.options.infoData.itemId);
       console.log(itemType);
       if (itemType === "video") {
         $.StoreCamp.templates.modal(itemId, _this.options.videoTemplate(itemUrl, itemId, itemName, itemType, itemModified, itemSize), itemName);
@@ -1007,13 +1016,13 @@
           },
           data: dataObject,
           success: function(data) {
-            $.StoreCamp.templates.alert('success', "Message Created", "Everything ok");
+            toastr.success('success', "Message Created <br> Everything Ok");
             commentsBlock.append(data.message);
             _this.scrollToBottom();
             messageBlock.val(null);
           },
           error: function(xhr, textStatus, errorThrown) {
-            $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared');
+            toastr.error('Sorry error appeared', " " + xhr.statusText + " ");
             console.error(xhr);
           }
         }, false);
@@ -1035,7 +1044,7 @@
           e.preventDefault();
           console.log(e);
           dataObject = {
-            body: $("#body-" + messsageBlockAttr).val()
+            reply_message: $("#body-" + messsageBlockAttr).val()
           };
           return $.ajax({
             url: href,
@@ -1044,13 +1053,13 @@
             _method: "post",
             success: function(data) {
               var genericModal;
-              $.StoreCamp.templates.alert('success', "Message Saved", 'Everything Ok');
+              toastr.success('success', "Message Saved <br> Everything Ok");
               genericModal = $("#review-" + messsageBlockAttr);
               genericModal.modal('hide');
               messageBlock.html(data.body);
             },
             error: function(xhr, textStatus, errorThrown) {
-              $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared');
+              toastr.error('Sorry error appeared', " " + xhr.statusText + " ");
               console.error(xhr);
             }
           }, false);
@@ -1073,11 +1082,11 @@
           type: 'POST',
           _method: "post",
           success: function(data) {
-            $.StoreCamp.templates.alert('success', "Message Deleted", data.message);
+            toastr.success('success', "Message Deleted <br> " + data.message);
             messageBlock.remove();
           },
           error: function(xhr, textStatus, errorThrown) {
-            $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared');
+            toastr.error('Sorry error appeared', " " + xhr.statusText + " ");
             console.error(xhr);
           }
         }, false);
@@ -1101,7 +1110,7 @@
 
 (function() {
   $.StoreCamp.templates = {
-    additionalModalButtonRenderState: null,
+    additionalModalButtonRenderState: "",
     options: {
       alertTemplate: function(type, title, message) {
         return "<div class=\"alert alert-" + type + " alert-dismissible\">\n<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>\n<h4>" + title + "</h4>\n" + message + "\n</div>";

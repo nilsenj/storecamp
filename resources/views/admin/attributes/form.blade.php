@@ -11,7 +11,7 @@
     </div>
     <div class="form-group">
         <label for="attributes_group">Attribute Group</label>
-        {{ $selector }}
+        {!! $selector  !!}
     </div>
     {{ $errors->first('product', '<div class="text-danger">:message</div>') }}
     <div class="form-group">

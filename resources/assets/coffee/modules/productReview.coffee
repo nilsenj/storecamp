@@ -36,13 +36,13 @@ $.StoreCamp.productReview =
         },
         data: dataObject
         success: (data) ->
-          $.StoreCamp.templates.alert('success', "Message Created", "Everything ok")
+          toastr.success('success', "Message Created <br> Everything Ok")
           commentsBlock.append data.message
           _this.scrollToBottom()
           messageBlock.val(null)
           return
         error: (xhr, textStatus, errorThrown) ->
-          $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared')
+          toastr.error('Sorry error appeared', " #{xhr.statusText} ")
           console.error xhr
           return
         false
@@ -61,7 +61,7 @@ $.StoreCamp.productReview =
         e.preventDefault()
         console.log(e)
         dataObject = {
-          body: $("#body-#{messsageBlockAttr}").val()
+          reply_message: $("#body-#{messsageBlockAttr}").val()
         }
         $.ajax
           url: href
@@ -69,13 +69,13 @@ $.StoreCamp.productReview =
           data: dataObject
           _method: "post"
           success: (data) ->
-            $.StoreCamp.templates.alert('success', "Message Saved", 'Everything Ok')
+            toastr.success('success', "Message Saved <br> Everything Ok")
             genericModal = $("#review-"+messsageBlockAttr)
             genericModal.modal 'hide'
             messageBlock.html(data.body)
             return
           error: (xhr, textStatus, errorThrown) ->
-            $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared')
+            toastr.error('Sorry error appeared', " #{xhr.statusText} ")
             console.error xhr
             return
           false
@@ -94,11 +94,11 @@ $.StoreCamp.productReview =
         type: 'POST'
         _method: "post"
         success: (data) ->
-          $.StoreCamp.templates.alert('success', "Message Deleted", data.message)
+          toastr.success('success', "Message Deleted <br> #{data.message}")
           messageBlock.remove()
           return
         error: (xhr, textStatus, errorThrown) ->
-          $.StoreCamp.templates.alert('danger', xhr.statusText, 'Sorry error appeared')
+          toastr.error('Sorry error appeared', " #{xhr.statusText} ")
           console.error xhr
           return
         false

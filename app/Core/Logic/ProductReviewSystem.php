@@ -113,7 +113,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
     public function editMessage(array $data, int $messageId)
     {
         $message = $this->message->find($messageId);
-        $message->body = $data['body'];
+        $message->body = $data['reply_message'];
         $message->save();
         return $message;
     }

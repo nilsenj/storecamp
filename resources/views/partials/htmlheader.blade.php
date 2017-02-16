@@ -42,7 +42,7 @@
     {{--<link href="{{ asset('/css/skins/skin-blue.css') }}" rel="stylesheet" type="text/css" />--}}
     {{--<link href="{{ asset('/css/skins/skin-blue-light.css') }}" rel="stylesheet" type="text/css" />--}}
     {{--<link href="{{ asset('/css/skins/skin-green.css') }}" rel="stylesheet" type="text/css" />--}}
-{{--<link href="{{ asset('/css/skins/skin-blue.css') }}" rel="stylesheet" type="text/css" />--}}
+    {{--<link href="{{ asset('/css/skins/skin-blue.css') }}" rel="stylesheet" type="text/css" />--}}
     <link rel="stylesheet" href="{{ asset('/css/admin_skins.css') }}">
     <link rel="stylesheet" href="{{ asset('css/alt/AdminLTE-select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/alt/AdminLTE-fullcalendar.min.css') }}">

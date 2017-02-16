@@ -162,11 +162,11 @@ class ProductReviewController extends BaseController
     /**
      * edit message in review
      *
-     * @param Request $request
+     * @param ReplyProductReviewFormRequest $request
      * @param $messageId
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function editMessage(Request $request, $messageId)
+    public function editMessage(ReplyProductReviewFormRequest $request, $messageId)
     {
         try {
             $data = $request->all();

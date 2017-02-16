@@ -45,25 +45,20 @@ $this->group(
     ]);
 
     $this->group(['prefix' => 'users', 'as' => 'users::'], function () {
-
         $this->get('/', [
             'uses' => 'Admin\UsersController@index',
             'as' => 'index'
-
         ]);
-        $this->get('/{id}', [
+
+        $this->get('/show/{id}', [
             'uses' => 'Admin\UsersController@show',
             'as' => 'show'
-
         ]);
-
-        $this->get('create', [
+        $this->get('/create', [
             'uses' => 'Admin\UsersController@create',
             'as' => 'create'
-
         ]);
-
-        $this->get('edit/{id}', [
+        $this->get('/edit/{id}', [
             'uses' => 'Admin\UsersController@edit',
             'as' => 'edit'
         ]);

@@ -58,6 +58,8 @@ desired effect
 
 @include('partials.scripts')
 @yield("scripts-add")
+<script>
+</script>
 {!! Toastr::render() !!}
 </body>
 </html>

@@ -1,5 +1,5 @@
 $.StoreCamp.templates =
-  additionalModalButtonRenderState: null
+  additionalModalButtonRenderState: ""
   options:
     alertTemplate: (type, title, message) ->
       """<div class="alert alert-#{type} alert-dismissible">

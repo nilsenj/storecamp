@@ -1,6 +1,7 @@
 <?php namespace nilsenj\Toastr;
 
 use Illuminate\Contracts\Config\Repository;
+use Illuminate\Session\SessionManager;
 
 class Toastr {
 
@@ -21,19 +22,16 @@ class Toastr {
     /**
      * Toastr config
      *
-     * @var Repository|Illuminate\Config\Repository
+     * @var Repository
      */
     protected $config;
 
     /**
-     * Constructor
-     *
+     * Toastr constructor.
      * @param \Illuminate\Session\SessionManager $session
-     * @param Repository|Illuminate\Config\Repository $config
-     *
-     * @internal param \Illuminate\Session\SessionManager $session
+     * @param Repository $config
      */
-    public function __construct(\Illuminate\Session\SessionManager $session, Repository $config) {
+    public function __construct(SessionManager $session, Repository $config) {
         $this->session = $session;
         $this->config = $config;
     }
