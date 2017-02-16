@@ -10,6 +10,9 @@ class Cart extends Model implements Transformable
 {
     use TransformableTrait;
     protected $table = "cart";
+    protected $casts = [
+        'content' => 'json'
+    ];
     protected $fillable = ['id', 'unique_id', 'instance', 'content'];
 
     public static function boot()

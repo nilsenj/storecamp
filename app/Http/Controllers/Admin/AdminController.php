@@ -57,11 +57,6 @@ class AdminController extends Controller
      */
     public function show(Request $request)
     {
-        $products = \App\Core\Models\Product::all();
-
-        foreach ($products as $product) {
-            $cart = $this->cartSystem->add($product, 1, ["some" => "option"]);
-        }
         return view("admin.dashboard");
     }
 
