@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FolderTableSeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(ProductReviewSeeder::class);
+        $this->call(CartItemsSeeder::class);
         $this->call(CampaignSeeder::class);
         $this->call(MailTemplatesToMediaSeeder::class);
 

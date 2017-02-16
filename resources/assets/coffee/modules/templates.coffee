@@ -21,8 +21,6 @@ $.StoreCamp.templates =
         #{$.StoreCamp.templates.additionalModalButtonRenderState}
         <button class="btn btn-default" data-dismiss="modal">#{Cancel}</button></div>
         </div></div></div>"""
-  activate: ->
-    _this = this
   alert: (type, title, message) ->
     _this = this
     $('#alerts').append(_this.options.alertTemplate(type, title, message))
@@ -67,5 +65,3 @@ $.StoreCamp.templates =
     _this = this
     _this.additionalModalButtonRenderState = _this.options.additionalBtnTemplate(text, id, className)
     return _this
-
-$.StoreCamp.templates.activate()

@@ -9,7 +9,7 @@ use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Juggl\UniqueHashids\GeneratesUnique;
+use App\Core\Traits\GeneratesUnique;
 use App\Core\Components\Messenger\Models\Thread;
 use Toastr;
 

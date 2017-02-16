@@ -4,7 +4,7 @@ namespace App\Core\Models;
 
 use App\Core\Components\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
-use Juggl\UniqueHashids\GeneratesUnique;
+use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 

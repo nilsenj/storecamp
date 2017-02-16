@@ -3,9 +3,10 @@
 namespace App\Core\Models;
 
 use App\Core\Components\Auditing\Auditable;
+use App\Core\Contracts\Buyable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Juggl\UniqueHashids\GeneratesUnique;
+use App\Core\Traits\GeneratesUnique;
 use Plank\Mediable\Mediable;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
@@ -83,7 +84,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
  */
-class Product extends Model implements Transformable
+class Product extends Model implements Transformable, Buyable
 {
     use TransformableTrait;
     use \Cviebrock\EloquentSluggable\Sluggable;
@@ -110,14 +111,14 @@ class Product extends Model implements Transformable
         'jan',
         'isbn',
         'mpn',
-//        'length',
-//        'width',
-//        'height',
-//        'weight',
+        'length',
+        'width',
+        'height',
+        'weight',
         'meta_tag_title',
         'meta_tag_description',
         'meta_tag_keywords',
-//        'sort_order',
+        'sort_order',
         'stock_status',
         'attr_description_id',
         'product_id',
@@ -154,7 +155,8 @@ class Product extends Model implements Transformable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function productReview() {
+    public function productReview()
+    {
 
         return $this->hasMany(ProductReview::class, "product_id");
     }
@@ -162,7 +164,8 @@ class Product extends Model implements Transformable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function categories() {
+    public function categories()
+    {
 
         return $this->belongsToMany(Category::class, 'products_categories');
 
@@ -173,10 +176,42 @@ class Product extends Model implements Transformable
      */
     public function attributeGroupDescription()
     {
-        return $this->belongsToMany(AttributeGroupDescription::class, "product_attribute", "product_id", "attr_description_id")->withPivot("value");
+        return $this->belongsToMany(AttributeGroupDescription::class,
+            "product_attribute", "product_id", "attr_description_id")->withPivot("value");
     }
 
     /**
+     * Get the identifier of the Buyable item.
+     *
+     * @return int|string
+     */
+    public function getBuyableIdentifier($options = null)
+    {
+        return $this->unique_id;
+    }
+
+    /**
+     * Get the description or title of the Buyable item.
+     *
+     * @return string
+     */
+    public function getBuyableDescription($options = null)
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param null $options
+     * @return float
+     */
+    public function getBuyablePrice($options = null)
+    {
+        return $this->price;
+    }
+
+    /**
+     * get the product category
+     *
      * @return mixed
      */
     public function getFirstCategory()
@@ -185,11 +220,43 @@ class Product extends Model implements Transformable
     }
 
     /**
+     * @param int|float $length
+     */
+    public function setLengthAttribute($length)
+    {
+        $this->attributes['length'] = $length ?? 0;
+    }
+
+    /**
+     * @param int|float $width
+     */
+    public function setWidthhAttribute($width)
+    {
+        $this->attributes['width'] = $width ?? 0;
+    }
+
+    /**
+     * @param int|float $height
+     */
+    public function setHeightAttribute($height)
+    {
+        $this->attributes['height'] = $height ?? 0;
+    }
+
+    /**
+     * @param int|float $weight
+     */
+    public function setWeightAttribute($weight)
+    {
+        $this->attributes['weight'] = $weight ?? 0;
+    }
+
+    /**
      * @param $date
      */
     public function setDateAvailableAttribute($date)
     {
-        if(!$date) {
+        if (!$date) {
             $this->attributes['date_available'] = Carbon::now();
         } else {
             $this->attributes['date_available'] = $date;
@@ -201,7 +268,7 @@ class Product extends Model implements Transformable
      */
     public function setQuantityAttribute($quantity)
     {
-        if($quantity) {
+        if ($quantity) {
             $this->attributes['quantity'] = intval($quantity);
         } else {
             $this->attributes['quantity'] = 0;
@@ -240,7 +307,7 @@ class Product extends Model implements Transformable
      */
     public function scopeDrafted($query)
     {
-        return $query->where('published_at', '!=' , null);
+        return $query->where('published_at', '!=', null);
     }
 
     /**
@@ -254,12 +321,16 @@ class Product extends Model implements Transformable
     }
 
     /**
+     * get all products
+     * by the given category
+     *
      * @param $query
      * @param Category|null $category
      * @return mixed
      */
-    public function scopeCategorized($query, Category $category=null) {
-        if ( is_null($category) ) return $query->with('categories');
+    public function scopeCategorized($query, Category $category = null)
+    {
+        if (is_null($category)) return $query->with('categories');
 
         $categoryIds = $category->children()->pluck('id');
         array_unshift($categoryIds, $category->id);

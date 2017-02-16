@@ -1,6 +1,6 @@
 <?php
 
-namespace Juggl\UniqueHashids;
+namespace App\Core\Traits;
 
 use Vinkla\Hashids\Facades\Hashids;
 
@@ -79,4 +79,3 @@ trait GeneratesUnique
         );
     }
 }
-

@@ -15,7 +15,6 @@ use Hashids\Hashids;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Lumen\Application as LumenApplication;
 
 /**
  * This is the Hashids service provider class.
@@ -45,8 +44,6 @@ class HashidsServiceProvider extends ServiceProvider
 
         if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
             $this->publishes([$source => config_path('hashids.php')]);
-        } elseif ($this->app instanceof LumenApplication) {
-            $this->app->configure('hashids');
         }
 
         $this->mergeConfigFrom($source, 'hashids');

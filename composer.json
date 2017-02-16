@@ -118,7 +118,6 @@
       "require": [
         "packages/nilsenj/toastr-laravel/composer.json",
         "packages/vinkla/hashids/composer.json",
-        "packages/juggl/unique-hashids/composer.json",
         "packages/laravel-auditing/composer.json"
       ],
       "recurse": true,

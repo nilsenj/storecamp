@@ -3,21 +3,17 @@
 namespace App\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
-class Orders extends Model implements Transformable
+class Cart extends Model implements Transformable
 {
     use TransformableTrait;
-    use GeneratesUnique;
-    protected $table = "orders";
-    protected $fillable = [
-    ];
+    protected $table = "cart";
+    protected $fillable = ['id', 'unique_id', 'instance', 'content'];
 
     public static function boot()
     {
        parent::boot();
     }
-
 }

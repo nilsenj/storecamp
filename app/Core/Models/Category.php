@@ -6,7 +6,7 @@ use App\Core\Components\Auditing\Auditable;
 use App\Core\Traits\Nestedset\NodeTrait;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
-use Juggl\UniqueHashids\GeneratesUnique;
+use App\Core\Traits\GeneratesUnique;
 use Plank\Mediable\Mediable;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;

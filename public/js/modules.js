@@ -1122,10 +1122,6 @@
         return "<div class=\"modal fade\" id=\"" + modalId + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"" + AriaLabel + "\" aria-hidden=\"true\">\n<div class=\"modal-dialog\"><div class=\"modal-content\"><div class=\"modal-header\">\n<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n<h3>" + Header + "</h3></div>\n<div class=\"modal-body\"><p>" + Message + "</p></div>\n<div class='clearfix'></div> <div class=\"modal-footer\">\n" + $.StoreCamp.templates.additionalModalButtonRenderState + "\n<button class=\"btn btn-default\" data-dismiss=\"modal\">" + Cancel + "</button></div>\n</div></div></div>";
       }
     },
-    activate: function() {
-      var _this;
-      return _this = this;
-    },
     alert: function(type, title, message) {
       var _this;
       _this = this;
@@ -1175,8 +1171,6 @@
       return _this;
     }
   };
-
-  $.StoreCamp.templates.activate();
 
 }).call(this);
 

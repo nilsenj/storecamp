@@ -4,7 +4,7 @@ namespace App\Core\Models;
 
 use App\Core\Components\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
-use Juggl\UniqueHashids\GeneratesUnique;
+use App\Core\Traits\GeneratesUnique;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
 
@@ -36,10 +36,10 @@ class Mail extends Model implements Transformable
 {
     use TransformableTrait;
     use Auditable;
+    use GeneratesUnique;
 
     protected $table = "mails";
     protected $fillable = ["from", "to", "subject", "message", "user_id"];
-    use GeneratesUnique;
 
     /**
      * bootable methods fix
