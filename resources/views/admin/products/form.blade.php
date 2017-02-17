@@ -155,7 +155,7 @@
                 <label class="control-label" for="input-stock-status">
                     <span data-toggle="tooltip" title=""
                           data-original-title="Status shown when a product is out of stock">Out Of Stock Status</span></label>
-                {{ Form::select('stock_status', config('stock-statuses'), old('stock_status'), ["id" => "input-stock-status", "class" => "form-control"]) }}
+                {{ Form::select('stock_status', config('constants.stock-statuses'), old('stock_status'), ["id" => "input-stock-status", "class" => "form-control"]) }}
                 {{ $errors->first('quantity', '<div class="text-danger">:message</div>') }}
             </div>
             <div class="form-group">

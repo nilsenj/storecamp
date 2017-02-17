@@ -86,9 +86,8 @@ class CategoriesController extends BaseController
             $data = $request->all();
             $category = $this->categorySystem->create($data);
             return redirect('admin/categories');
-
-        } catch (\Exception $exception) {
-            return redirect()->back($this->errorRedirectPath)->withErrors(\Flash::error($exception->getCode(), $exception->getMessage()));
+        } catch (\Throwable $exception) {
+            return $this->redirectError($exception);
         }
     }
 
@@ -106,7 +105,7 @@ class CategoriesController extends BaseController
             $categories = $this->repository->all();
             return $this->view('show', compact('category', 'categories'));
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 
@@ -141,7 +140,7 @@ class CategoriesController extends BaseController
             $preferredTag = "thumbnail";
             return $this->view('edit', compact('category', 'parent', 'categories', 'preferredTag'));
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 
@@ -157,7 +156,7 @@ class CategoriesController extends BaseController
             $category = $this->categorySystem->update($data, $id);
             return redirect('admin/categories');
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 
@@ -176,7 +175,7 @@ class CategoriesController extends BaseController
             }
             return redirect('admin/categories');
         } catch (ModelNotFoundException $e) {
-            return $this->redirectNotFound();
+            return $this->redirectNotFound($e);
         }
     }
 }

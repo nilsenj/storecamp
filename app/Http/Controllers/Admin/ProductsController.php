@@ -79,14 +79,15 @@ class ProductsController extends BaseController
      */
     public function store(Create $request)
     {
-//        try {
+        try {
             $data = $request->all();
             $product = $this->productSystem->create($data);
             return redirect('admin/products');
-//        } catch (\Exception $exception) {
-//            Flash::error($exception->getCode(), $exception->getMessage());
-//            return redirect()->to($this->errorRedirectPath)->withErrors($exception);
-//        }
+        } catch (ModelNotFoundException $e) {
+            return $this->redirectNotFound($e);
+        } catch (\Throwable $e) {
+            return $this->redirectError($e);
+        }
     }
 
     /**
@@ -124,6 +125,8 @@ class ProductsController extends BaseController
 
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
+        } catch (\Throwable $e) {
+            return $this->redirectError($e);
         }
     }
 
@@ -141,8 +144,10 @@ class ProductsController extends BaseController
             $this->productSystem->update($data, $id);
             return redirect('admin/products');
 
-        } catch (ModelNotFoundException $e) {
+        }  catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
+        } catch (\Throwable $e) {
+            return $this->redirectError($e);
         }
     }
 

@@ -210,6 +210,14 @@ class Product extends Model implements Transformable, Buyable
     }
 
     /**
+     * @return mixed
+     */
+    public function getStockStatus()
+    {
+        return config('constants.stock-statuses.'.$this->stock_status);
+    }
+
+    /**
      * get the product category
      *
      * @return mixed
@@ -219,6 +227,17 @@ class Product extends Model implements Transformable, Buyable
         return $this->categories()->first();
     }
 
+    /**
+     * @param $stock_status
+     */
+    public function setStockStatusAttribute($stock_status)
+    {
+        if (!$stock_status) {
+            $this->attributes['stock_status'] = 0;
+        } else {
+            $this->attributes['stock_status'] = $stock_status;
+        }
+    }
     /**
      * @param int|float $length
      */
