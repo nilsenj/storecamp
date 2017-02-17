@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-02-16.
+    * Generated on 2017-02-17.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -55,7 +55,6 @@ namespace PHPSTORM_META {
             'command.mail.campaign' instanceof \App\Core\Components\EmailMarketer\MailCampaigner,
             'App\Core\Components\Auditing\Auditing' instanceof \App\Core\Components\Auditing\Auditing,
             'App\Core\Components\Auditing\AuditorManager' instanceof \App\Core\Components\Auditing\AuditorManager,
-            'App\Core\Contracts\MediaSystemContract' instanceof \App\Core\Logic\MediaSystem,
             'App\Core\Contracts\CategorySystemContract' instanceof \App\Core\Logic\CategorySystem,
             'App\Core\Contracts\ProductSystemContract' instanceof \App\Core\Logic\ProductSystem,
             'App\Core\Contracts\AttributeGroupSystemContract' instanceof \App\Core\Logic\AttributeGroupSystem,
@@ -64,7 +63,6 @@ namespace PHPSTORM_META {
             'App\Core\Contracts\ProductReviewSystemContract' instanceof \App\Core\Logic\ProductReviewSystem,
             'App\Core\Contracts\AccessSystemContract' instanceof \App\Core\Logic\AccessSystem,
             'App\Core\Contracts\OrdersSystemContract' instanceof \App\Core\Logic\OrdersSystem,
-            'breadcrumbs' instanceof \DaveJamesMiller\Breadcrumbs\Manager,
             'Cviebrock\EloquentSluggable\SluggableObserver' instanceof \Cviebrock\EloquentSluggable\SluggableObserver,
             'Laracasts\Flash\SessionStore' instanceof \Laracasts\Flash\LaravelSessionStore,
             'flash' instanceof \App\Core\Components\Flash\FlashNotifier,
@@ -310,7 +308,6 @@ namespace PHPSTORM_META {
             'command.mail.campaign' instanceof \App\Core\Components\EmailMarketer\MailCampaigner,
             'App\Core\Components\Auditing\Auditing' instanceof \App\Core\Components\Auditing\Auditing,
             'App\Core\Components\Auditing\AuditorManager' instanceof \App\Core\Components\Auditing\AuditorManager,
-            'App\Core\Contracts\MediaSystemContract' instanceof \App\Core\Logic\MediaSystem,
             'App\Core\Contracts\CategorySystemContract' instanceof \App\Core\Logic\CategorySystem,
             'App\Core\Contracts\ProductSystemContract' instanceof \App\Core\Logic\ProductSystem,
             'App\Core\Contracts\AttributeGroupSystemContract' instanceof \App\Core\Logic\AttributeGroupSystem,
@@ -319,7 +316,6 @@ namespace PHPSTORM_META {
             'App\Core\Contracts\ProductReviewSystemContract' instanceof \App\Core\Logic\ProductReviewSystem,
             'App\Core\Contracts\AccessSystemContract' instanceof \App\Core\Logic\AccessSystem,
             'App\Core\Contracts\OrdersSystemContract' instanceof \App\Core\Logic\OrdersSystem,
-            'breadcrumbs' instanceof \DaveJamesMiller\Breadcrumbs\Manager,
             'Cviebrock\EloquentSluggable\SluggableObserver' instanceof \Cviebrock\EloquentSluggable\SluggableObserver,
             'Laracasts\Flash\SessionStore' instanceof \Laracasts\Flash\LaravelSessionStore,
             'flash' instanceof \App\Core\Components\Flash\FlashNotifier,
@@ -565,7 +561,6 @@ namespace PHPSTORM_META {
             'command.mail.campaign' instanceof \App\Core\Components\EmailMarketer\MailCampaigner,
             'App\Core\Components\Auditing\Auditing' instanceof \App\Core\Components\Auditing\Auditing,
             'App\Core\Components\Auditing\AuditorManager' instanceof \App\Core\Components\Auditing\AuditorManager,
-            'App\Core\Contracts\MediaSystemContract' instanceof \App\Core\Logic\MediaSystem,
             'App\Core\Contracts\CategorySystemContract' instanceof \App\Core\Logic\CategorySystem,
             'App\Core\Contracts\ProductSystemContract' instanceof \App\Core\Logic\ProductSystem,
             'App\Core\Contracts\AttributeGroupSystemContract' instanceof \App\Core\Logic\AttributeGroupSystem,
@@ -574,7 +569,6 @@ namespace PHPSTORM_META {
             'App\Core\Contracts\ProductReviewSystemContract' instanceof \App\Core\Logic\ProductReviewSystem,
             'App\Core\Contracts\AccessSystemContract' instanceof \App\Core\Logic\AccessSystem,
             'App\Core\Contracts\OrdersSystemContract' instanceof \App\Core\Logic\OrdersSystem,
-            'breadcrumbs' instanceof \DaveJamesMiller\Breadcrumbs\Manager,
             'Cviebrock\EloquentSluggable\SluggableObserver' instanceof \Cviebrock\EloquentSluggable\SluggableObserver,
             'Laracasts\Flash\SessionStore' instanceof \Laracasts\Flash\LaravelSessionStore,
             'flash' instanceof \App\Core\Components\Flash\FlashNotifier,
@@ -820,7 +814,6 @@ namespace PHPSTORM_META {
             'command.mail.campaign' instanceof \App\Core\Components\EmailMarketer\MailCampaigner,
             'App\Core\Components\Auditing\Auditing' instanceof \App\Core\Components\Auditing\Auditing,
             'App\Core\Components\Auditing\AuditorManager' instanceof \App\Core\Components\Auditing\AuditorManager,
-            'App\Core\Contracts\MediaSystemContract' instanceof \App\Core\Logic\MediaSystem,
             'App\Core\Contracts\CategorySystemContract' instanceof \App\Core\Logic\CategorySystem,
             'App\Core\Contracts\ProductSystemContract' instanceof \App\Core\Logic\ProductSystem,
             'App\Core\Contracts\AttributeGroupSystemContract' instanceof \App\Core\Logic\AttributeGroupSystem,
@@ -829,7 +822,6 @@ namespace PHPSTORM_META {
             'App\Core\Contracts\ProductReviewSystemContract' instanceof \App\Core\Logic\ProductReviewSystem,
             'App\Core\Contracts\AccessSystemContract' instanceof \App\Core\Logic\AccessSystem,
             'App\Core\Contracts\OrdersSystemContract' instanceof \App\Core\Logic\OrdersSystem,
-            'breadcrumbs' instanceof \DaveJamesMiller\Breadcrumbs\Manager,
             'Cviebrock\EloquentSluggable\SluggableObserver' instanceof \Cviebrock\EloquentSluggable\SluggableObserver,
             'Laracasts\Flash\SessionStore' instanceof \Laracasts\Flash\LaravelSessionStore,
             'flash' instanceof \App\Core\Components\Flash\FlashNotifier,

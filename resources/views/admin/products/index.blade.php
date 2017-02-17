@@ -5,7 +5,7 @@
     @endsection
     @include('admin.partial._contentheader_title', [$model = $products, $message = "All Products"])
     @section('contentheader_description')
-            @include('admin.partial._content-head_btns', [$routeName = "admin::products::create", $createBtn = 'Add new product'])
+        @include('admin.partial._content-head_btns', [$routeName = "admin::products::create", $createBtn = 'Add new product'])
     @endsection
 </h1>
 @section('main-content')
@@ -85,4 +85,4 @@
         {{ $products->links() }}
     </div>
 @endsection
-@include('admin.components.modal-description', [$attrName = "activity" ])
+@include('admin.components.modal-description', [$attrName = "activity"])

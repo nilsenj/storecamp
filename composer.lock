@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "506b560e3e7adf0cfdc27a69564f50c2",
+    "content-hash": "3a1644ffb8dc28f7b67b936dcf322a18",
     "packages": [
         {
             "name": "a6digital/laravel-default-profile-image",
@@ -728,55 +728,6 @@
                 "schemaless"
             ],
             "time": "2016-06-17T00:11:13+00:00"
-        },
-        {
-            "name": "davejamesmiller/laravel-breadcrumbs",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/davejamesmiller/laravel-breadcrumbs.git",
-                "reference": "6ca5a600003ecb52a5b5af14dad82033058604e1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/davejamesmiller/laravel-breadcrumbs/zipball/6ca5a600003ecb52a5b5af14dad82033058604e1",
-                "reference": "6ca5a600003ecb52a5b5af14dad82033058604e1",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "5.*",
-                "illuminate/view": "5.*",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "0.9.*",
-                "orchestra/testbench": "3.2.*|3.3.*",
-                "phpunit/phpunit": "4.*",
-                "satooshi/php-coveralls": "0.6.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "DaveJamesMiller\\Breadcrumbs\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT License"
-            ],
-            "authors": [
-                {
-                    "name": "Dave James Miller",
-                    "email": "dave@davejamesmiller.com",
-                    "homepage": "https://davejamesmiller.com/"
-                }
-            ],
-            "description": "A simple Laravel-style way to create breadcrumbs in Laravel 4+.",
-            "homepage": "https://laravel-breadcrumbs.readthedocs.io/",
-            "keywords": [
-                "laravel"
-            ],
-            "time": "2017-01-30T21:16:53+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1921,16 +1872,16 @@
         },
         {
             "name": "jeroen-g/laravel-packager",
-            "version": "v1.5.2",
+            "version": "v1.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Jeroen-G/laravel-packager.git",
-                "reference": "a8da7063f3466507ab8fd78b3f87998a2cc4ae58"
+                "reference": "a813e6deeb09b49908809f24794db90485dd3709"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Jeroen-G/laravel-packager/zipball/a8da7063f3466507ab8fd78b3f87998a2cc4ae58",
-                "reference": "a8da7063f3466507ab8fd78b3f87998a2cc4ae58",
+                "url": "https://api.github.com/repos/Jeroen-G/laravel-packager/zipball/a813e6deeb09b49908809f24794db90485dd3709",
+                "reference": "a813e6deeb09b49908809f24794db90485dd3709",
                 "shasum": ""
             },
             "require": {
@@ -1965,7 +1916,7 @@
                 "package",
                 "packager"
             ],
-            "time": "2017-02-10T21:45:53+00:00"
+            "time": "2017-02-16T20:16:53+00:00"
         },
         {
             "name": "laravel/framework",
@@ -3848,7 +3799,7 @@
         },
         {
             "name": "symfony/class-loader",
-            "version": "v3.2.3",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/class-loader.git",
@@ -4022,7 +3973,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v3.2.3",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -4684,16 +4635,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.2.3",
+            "version": "v3.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "e1718c6bf57e1efbb8793ada951584b2ab27775b"
+                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/e1718c6bf57e1efbb8793ada951584b2ab27775b",
-                "reference": "e1718c6bf57e1efbb8793ada951584b2ab27775b",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/9724c684646fcb5387d579b4bfaa63ee0b0c64c8",
+                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8",
                 "shasum": ""
             },
             "require": {
@@ -4735,7 +4686,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-21T17:06:35+00:00"
+            "time": "2017-02-16T22:46:52+00:00"
         },
         {
             "name": "that0n3guy/transliteration",
@@ -6871,7 +6822,6 @@
     "stability-flags": {
         "intervention/image": 20,
         "codezero/mailer": 20,
-        "davejamesmiller/laravel-breadcrumbs": 20,
         "cviebrock/eloquent-sluggable": 15,
         "nilsenj/toastr-laravel": 20,
         "laravel/tinker": 20,

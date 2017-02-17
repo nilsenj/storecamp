@@ -181,7 +181,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-
         \App\Providers\AttributeGroupDescriptionServiceProvider::class,
         \App\Providers\AttributeGroupServiceProvider::class,
         \App\Providers\CategoryServiceProvider::class,
@@ -205,13 +204,11 @@ return [
         //End of API service providers
 
         //Vendor Providers
-        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         App\Core\Access\AccessServiceProvider::class,
-        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         Laracasts\Generators\GeneratorsServiceProvider::class,
         Webpatser\Countries\CountriesServiceProvider::class,
         Camroncade\Timezone\TimezoneServiceProvider::class,
@@ -290,7 +287,7 @@ return [
         'Image' => 'Intervention\Image\Facades\Image',
         'Socialite' => 'Laravel\Socialite\Facades\Socialite',
         'Access' => \App\Core\Access\AccessFacade::class,
-        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        'Breadcrumbs' => \storecamp\htmlelements\Breadcrumbs\Breadcrumbs::class,
         'MediaUploader' => Plank\Mediable\MediaUploaderFacade::class,
         'Countries' => Webpatser\Countries\CountriesFacade::class,
         'Active' => App\Core\Components\ActiveItem\Facades\Active::class,

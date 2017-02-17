@@ -4,6 +4,7 @@ namespace storecamp\htmlelements;
 
 use Illuminate\Support\ServiceProvider;
 use Collective\Html\HtmlBuilder;
+use storecamp\htmlelements\Breadcrumbs\Manager;
 use storecamp\htmlelements\Bridges\Config\Laravel5Config;
 use storecamp\htmlelements\Facades\Menu;
 
@@ -17,11 +18,12 @@ class HtmlElementsServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(__DIR__.'/views', 'elements');
+
+        $this->regitserBreaCrumbSystemFiles();
 //        $this->publishes([
 //            __DIR__.'/views' => resource_path('views/vendor/htmlelements'),
 //        ]);
 //        $this->loadViewsFrom(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'views', MenuManager::PLUGIN_NAME);
-
     }
 
     /**
@@ -42,7 +44,7 @@ class HtmlElementsServiceProvider extends ServiceProvider
             __DIR__ . '/config/htmlelements.php',
             'htmlelements'
         );
-
+        $this->registerBreadcrumbSystem();
         $this->registerMenu();
         $this->registerAccordion();
         $this->registerAlert();
@@ -70,6 +72,41 @@ class HtmlElementsServiceProvider extends ServiceProvider
         $this->registerTable();
         $this->registerThumbnail();
 
+    }
+    private function regitserBreaCrumbSystemFiles() {
+        // Load the app breadcrumbs if they're in routes/breadcrumbs.php (Laravel 5.3)
+        if (file_exists($file = $this->app['path.base'].'/routes/breadcrumbs.php'))
+        {
+            require $file;
+        }
+
+        // Load the app breadcrumbs if they're in app/Http/breadcrumbs.php (Laravel 5.0-5.2)
+        elseif (file_exists($file = $this->app['path'].'/Http/breadcrumbs.php'))
+        {
+            require $file;
+        }
+        // Load the app breadcrumbs if they're in app/Http/breadcrumbs.php (Storecamp)
+        if (file_exists($file = $this->app['path'].'/Core/Http/routes/breadcrumbs.php'))
+        {
+            require $file;
+        }
+    }
+    // This method can be overridden in a child class
+    private function registerBreadcrumbSystem()
+    {
+        $this->app->singleton('breadcrumbs', function ($app)
+        {
+            $breadcrumbs = $this->app->make(
+                \storecamp\htmlelements\Breadcrumbs\Manager::class);
+            $viewPath = __DIR__ . '/views/breadcrumb-system';
+
+            $this->loadViewsFrom($viewPath, 'breadcrumbs');
+            $this->loadViewsFrom($viewPath, 'laravel-breadcrumbs'); // Backwards-compatibility with 2.x
+
+            $breadcrumbs->setView($app['config']['htmlelements.breadcrumb-system-view']);
+
+            return $breadcrumbs;
+        });
     }
 
     private function registerMenu() {
@@ -419,4 +456,10 @@ class HtmlElementsServiceProvider extends ServiceProvider
         );
 
     }
+
+    public function provides()
+    {
+        return ['breadcrumbs'];
+    }
+
 }
