@@ -48,14 +48,14 @@
                                 </td>
                                 @if($product->availability)
                                     <td>
-                                        <div class="label bg-green">enabled</div>
+                                        <div class="label bg-green">{{$product->getAvailability()}}</div>
                                     </td>
                                 @else
                                     <td>
-                                        <div class="label bg-warning">disabled</div>
+                                        <div class="label bg-warning">{{$product->getAvailability()}}</div>
                                     </td>
                                 @endif
-                                <td>{{ $product->stock_status }}</td>
+                                <td>{{ $product->getStockStatus() }}</td>
                                 <td>
                                     <a class="edit" href="{{ route('admin::reviews::create', $product->unique_id) }}"
                                        title="Make Review">

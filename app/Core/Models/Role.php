@@ -32,6 +32,8 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Role whereAdmin()
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
+ * @property string $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Role whereDeletedAt($value)
  */
 class Role extends AccessRole implements Transformable
 {

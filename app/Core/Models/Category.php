@@ -51,6 +51,18 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
+ * @property int $_lft
+ * @property int $_rgt
+ * @property string $type
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Media[] $media
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category d()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category onlyParent()
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereHasMedia($tags, $match_all = false)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereHasMediaMatchAll($tags)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereLft($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category whereRgt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category withMedia($tags = array(), $match_all = false)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Category withMediaMatchAll($tags = array())
  */
 class Category extends Model implements Transformable
 {

@@ -29,6 +29,8 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Permission whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
+ * @property string $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Permission whereDeletedAt($value)
  */
 class Permission extends AccessPermission implements Transformable
 {

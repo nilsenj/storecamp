@@ -50,6 +50,7 @@ use Toastr;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\ProductReview byRating($reason)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Messenger\Models\Thread[] $comments
  */
 class ProductReview extends Model implements Transformable
 {

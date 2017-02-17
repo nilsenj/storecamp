@@ -38,6 +38,8 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
+ * @property bool $locked
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Folder whereLocked($value)
  */
 class Folder extends Model implements Transformable
 {

@@ -7,6 +7,8 @@ use App\Core\Contracts\Buyable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\GeneratesUnique;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Plank\Mediable\Mediable;
 use RepositoryLab\Repository\Contracts\Transformable;
 use RepositoryLab\Repository\Traits\TransformableTrait;
@@ -83,6 +85,11 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Media[] $media
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereHasMedia($tags, $match_all = false)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product whereHasMediaMatchAll($tags)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product withMedia($tags = array(), $match_all = false)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product withMediaMatchAll($tags = array())
  */
 class Product extends Model implements Transformable, Buyable
 {
@@ -135,7 +142,7 @@ class Product extends Model implements Transformable, Buyable
      *
      * @return array
      */
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
@@ -155,16 +162,15 @@ class Product extends Model implements Transformable, Buyable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function productReview()
+    public function productReview(): HasMany
     {
-
         return $this->hasMany(ProductReview::class, "product_id");
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function categories()
+    public function categories(): BelongsToMany
     {
 
         return $this->belongsToMany(Category::class, 'products_categories');
@@ -174,7 +180,7 @@ class Product extends Model implements Transformable, Buyable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function attributeGroupDescription()
+    public function attributeGroupDescription(): BelongsToMany
     {
         return $this->belongsToMany(AttributeGroupDescription::class,
             "product_attribute", "product_id", "attr_description_id")->withPivot("value");
@@ -210,11 +216,23 @@ class Product extends Model implements Transformable, Buyable
     }
 
     /**
+     * @return string
+     */
+    public function getAvailability(): string
+    {
+        if ($this->availability) {
+            return "enabled";
+        } else {
+            return "disabled";
+        }
+    }
+
+    /**
      * @return mixed
      */
-    public function getStockStatus()
+    public function getStockStatus(): string
     {
-        return config('constants.stock-statuses.'.$this->stock_status);
+        return config('constants.stock-statuses.' . $this->stock_status);
     }
 
     /**
@@ -222,7 +240,7 @@ class Product extends Model implements Transformable, Buyable
      *
      * @return mixed
      */
-    public function getFirstCategory()
+    public function getFirstCategory(): Category
     {
         return $this->categories()->first();
     }
@@ -238,6 +256,7 @@ class Product extends Model implements Transformable, Buyable
             $this->attributes['stock_status'] = $stock_status;
         }
     }
+
     /**
      * @param int|float $length
      */

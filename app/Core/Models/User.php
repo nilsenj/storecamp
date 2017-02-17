@@ -61,6 +61,11 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User findSimilarSlugs(\Illuminate\Database\Eloquent\Model $model, $attribute, $config, $slug)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Components\Auditing\Auditing[] $audits
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Core\Models\Media[] $media
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereHasMedia($tags, $match_all = false)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User whereHasMediaMatchAll($tags)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User withMedia($tags = array(), $match_all = false)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\User withMediaMatchAll($tags = array())
  */
 class User extends Authenticatable implements Transformable, AuthenticatableContract,
     CanResetPasswordContract
