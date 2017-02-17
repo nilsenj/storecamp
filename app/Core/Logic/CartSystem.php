@@ -255,6 +255,7 @@ class CartSystem implements CartSystemContract
         }, 0);
         return cartNumberFormat($subTotal, $decimals, $decimalPoint, $thousandSeperator);
     }
+
     /**
      * Search the cart content for a cart item matching the given search closure.
      *
@@ -266,6 +267,7 @@ class CartSystem implements CartSystemContract
         $content = $this->getContent();
         return $content->filter($search);
     }
+
     /**
      * Associate the cart item with the given rowId with the given model.
      *

@@ -224,15 +224,23 @@ class Product extends Model implements Transformable, Buyable
      */
     public function setLengthAttribute($length)
     {
-        $this->attributes['length'] = $length ?? 0;
+        if (!$length) {
+            $this->attributes['length'] = 0.00000000;
+        } else {
+            $this->attributes['length'] = $length;
+        }
     }
 
     /**
      * @param int|float $width
      */
-    public function setWidthhAttribute($width)
+    public function setWidthAttribute($width)
     {
-        $this->attributes['width'] = $width ?? 0;
+        if (!$width) {
+            $this->attributes['width'] = 0.00000000;
+        } else {
+            $this->attributes['width'] = $width;
+        }
     }
 
     /**
@@ -240,7 +248,11 @@ class Product extends Model implements Transformable, Buyable
      */
     public function setHeightAttribute($height)
     {
-        $this->attributes['height'] = $height ?? 0;
+        if (!$height) {
+            $this->attributes['height'] = 0.00000000;
+        } else {
+            $this->attributes['height'] = $height;
+        }
     }
 
     /**
@@ -248,7 +260,11 @@ class Product extends Model implements Transformable, Buyable
      */
     public function setWeightAttribute($weight)
     {
-        $this->attributes['weight'] = $weight ?? 0;
+        if (!$weight) {
+            $this->attributes['weight'] = 0.0000;
+        } else {
+            $this->attributes['weight'] = $weight;
+        }
     }
 
     /**
@@ -272,6 +288,18 @@ class Product extends Model implements Transformable, Buyable
             $this->attributes['quantity'] = intval($quantity);
         } else {
             $this->attributes['quantity'] = 0;
+        }
+    }
+
+    /**
+     * @param $sort_order
+     */
+    public function setSortOrderAttribute($sort_order)
+    {
+        if ($sort_order) {
+            $this->attributes['sort_order'] = intval($sort_order);
+        } else {
+            $this->attributes['sort_order'] = 0;
         }
     }
 

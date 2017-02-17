@@ -2,6 +2,7 @@
 
 namespace App\Core\Classes\Cart;
 
+use App\Core\Models\User;
 use Illuminate\Contracts\Support\Arrayable;
 use App\Core\Contracts\Buyable;
 
@@ -14,6 +15,10 @@ class CartItem implements Arrayable
      */
     public $rowId;
 
+    /**
+     * @var int|string
+     */
+    public $userId;
     /**
      * The ID of the cart item.
      *
@@ -85,6 +90,7 @@ class CartItem implements Arrayable
         }
 
         $this->id       = $id;
+        $this->userId       = \Auth::check() ? \Auth::user()->id : null;
         $this->name     = $name;
         $this->price    = floatval($price);
         $this->options  = new CartItemOptions($options);
@@ -121,6 +127,10 @@ class CartItem implements Arrayable
 
         if($attribute === 'taxTotal') {
             return $this->tax * $this->qty;
+        }
+
+        if($attribute === 'user') {
+            return $this->userId ? User::find($this->userId) : null;
         }
 
         if($attribute === 'model') {
@@ -345,6 +355,7 @@ class CartItem implements Arrayable
         return [
             'rowId'    => $this->rowId,
             'id'       => $this->id,
+            'userId'     => \Auth::check() ? \Auth::user()->id : null,
             'name'     => $this->name,
             'qty'      => $this->qty,
             'price'    => $this->price,

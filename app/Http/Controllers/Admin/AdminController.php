@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Core\Contracts\CartSystemContract;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Session\SessionManager;
 
 /**
  * Class AdminController
@@ -15,18 +12,24 @@ use Illuminate\Session\SessionManager;
 class AdminController extends Controller
 {
 
-    protected $cartSystem;
-
-    public function __construct(CartSystemContract $cartSystem)
+    /**
+     * AdminController constructor.
+     */
+    public function __construct()
     {
-        $this->cartSystem = $cartSystem;
         $this->middleware("role:Admin");
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function htmlElements() {
         return view("admin.htmlElements.elements");
     }
 
+    /**
+     *
+     */
     public function index()
     {
 
