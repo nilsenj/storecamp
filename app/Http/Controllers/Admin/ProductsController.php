@@ -121,7 +121,8 @@ class ProductsController extends BaseController
             $chosenCategory = $product->categories->first();
             $attributesList = $product->attributeGroupDescription->pluck("name", "id");
             $preferredTag = "gallery";
-            return $this->view('edit', compact('product', 'categories', 'pictures', 'chosenCategory', 'attributesList', 'preferredTag'));
+            return $this->view('edit', compact('product', 'categories', 'pictures',
+                'chosenCategory', 'attributesList', 'preferredTag'));
 
         } catch (ModelNotFoundException $e) {
             return $this->redirectNotFound($e);
@@ -173,7 +174,8 @@ class ProductsController extends BaseController
     {
         if(strlen(trim($request->get('search'))) > 0) {
             $query = $this->parserSearchValue($request->get('search'));
-            $products = $this->productRepository->getModel()->where("title", "like", $query)->select('title', 'id')->get();
+            $products = $this->productRepository->getModel()->where("title", "like", $query)
+                ->select('title', 'id')->get();
             $productGroupArr = [];
             foreach ($products as $key => $attrGroupItem) {
                 $productGroupArr[$key]['text'] = $attrGroupItem['title'];
