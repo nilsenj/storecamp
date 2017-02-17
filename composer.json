@@ -15,6 +15,7 @@
     "tymon/jwt-auth": "^0.5.9",
     "intervention/image": "dev-master",
     "codezero/mailer": "dev-master",
+    "davejamesmiller/laravel-breadcrumbs": "dev-master",
     "cviebrock/eloquent-sluggable": ">=3.0.0-alpha",
     "laravelcollective/html": "^5.3",
     "league/fractal": "^0.14.0",

@@ -13,6 +13,5 @@ return [
         'li_class' => "item",
         'ul_class' => "item-menu",
         'a_class' => "link"
-    ],
-    'breadcrumb-system-view' => 'partials.breadcrumbs'
+    ]
 ];

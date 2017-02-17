@@ -1,5 +1,4 @@
 <?php
-
 // Home
 Breadcrumbs::register('/', function($breadcrumbs)
 {

@@ -204,6 +204,7 @@ return [
         //End of API service providers
 
         //Vendor Providers
+        DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Laracasts\Flash\FlashServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
@@ -287,7 +288,6 @@ return [
         'Image' => 'Intervention\Image\Facades\Image',
         'Socialite' => 'Laravel\Socialite\Facades\Socialite',
         'Access' => \App\Core\Access\AccessFacade::class,
-        'Breadcrumbs' => \storecamp\htmlelements\Breadcrumbs\Breadcrumbs::class,
         'MediaUploader' => Plank\Mediable\MediaUploaderFacade::class,
         'Countries' => Webpatser\Countries\CountriesFacade::class,
         'Active' => App\Core\Components\ActiveItem\Facades\Active::class,
@@ -320,6 +320,7 @@ return [
         'Table' => 'storecamp\htmlelements\Facades\Table',
         'Thumbnail' => 'storecamp\htmlelements\Facades\Thumbnail',
         'Menu' => \storecamp\htmlelements\Facades\Menu::class,
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
     ],
 
 ];
