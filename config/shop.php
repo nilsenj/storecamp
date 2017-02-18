@@ -34,7 +34,7 @@ return [
    | Shop name.
    |
    */
-    'name' => 'Laravel Shop',
+    'name' => 'StoreCamp',
 
     /*
     |--------------------------------------------------------------------------
@@ -86,7 +86,7 @@ return [
     | This is the table used by LaravelShop to save order status data to the database.
     |
     */
-    'order_status_table' => 'order_status',
+    'order_status_table' => 'order_statuses',
 
     /*
     |--------------------------------------------------------------------------
@@ -97,7 +97,7 @@ return [
     | Update the model if it is in a different namespace.
     |
     */
-    'item' => 'App\Core\Item',
+    'item' => 'App\Core\Product',
 
     /*
     |--------------------------------------------------------------------------
@@ -107,7 +107,7 @@ return [
     | This is the table used by LaravelShop to save cart data to the database.
     |
     */
-    'item_table' => 'items',
+    'item_table' => 'products',
 
     /*
     |--------------------------------------------------------------------------
@@ -139,7 +139,7 @@ return [
     | Update the model if it is in a different namespace.
     |
     */
-    'coupon' => 'App\Coupon',
+    'coupon' => 'App\Core\Coupon',
 
     /*
     |--------------------------------------------------------------------------

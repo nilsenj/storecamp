@@ -2,15 +2,6 @@
 
 namespace App\Core\Classes;
 
-/**
- * This file is part of LaravelShop,
- * A shop solution for Laravel.
- *
- * @author Alejandro Mostajo
- * @copyright Amsgames, LLC
- * @license MIT
- * @package App\Core
- */
 
 use App\Core\Models\Orders;
 use JsonSerializable;

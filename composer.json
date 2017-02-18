@@ -41,7 +41,8 @@
     "ramsey/uuid": "^3.5",
     "jeroen-g/laravel-packager": "^1.5",
     "mpociot/laravel-apidoc-generator": "1.7.0",
-    "amsgames/laravel-shop-gateway-paypal": "^1.0"
+    "amsgames/laravel-shop-gateway-paypal": "^1.0",
+    "graham-campbell/manager": "^2.4"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
@@ -141,7 +142,6 @@
     ],
     "post-update-cmd": [
       "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-      "php artisan ide-helper:generate",
       "php artisan ide-helper:meta",
       "php artisan optimize"
     ]

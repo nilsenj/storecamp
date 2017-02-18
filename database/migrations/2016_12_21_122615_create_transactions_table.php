@@ -16,6 +16,8 @@ class CreateTransactionsTable extends Migration
         // Create table for storing transactions
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('unique_id')->unique();
+
             $table->bigInteger('order_id')->unsigned();
             $table->string('gateway', 64);
             $table->string('transaction_id', 64);
@@ -24,7 +26,7 @@ class CreateTransactionsTable extends Migration
             $table->timestamps();
             $table->foreign('order_id')
                 ->references('id')
-                ->on('{{ $orderTable }}')
+                ->on('orders')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->index(['order_id']);
