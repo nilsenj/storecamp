@@ -1,37 +1,31 @@
 <?php
 
-namespace App\Core\Models;
+namespace App\Core\Traits;
 
-use App\Core\Contracts\CartInterface;
-use App\Core\Traits\CalculationsTrait;
-use App\Core\Traits\GeneratesUnique;
-use Illuminate\Database\Eloquent\Model;
-use RepositoryLab\Repository\Contracts\Transformable;
-use RepositoryLab\Repository\Traits\TransformableTrait;
+/**
+ * This file is part of LaravelShop,
+ * A shop solution for Laravel.
+ *
+ * @author Alejandro Mostajo
+ * @copyright Amsgames, LLC
+ * @license MIT
+ * @package App\Core
+ */
 
-class Cart extends Model implements Transformable, CartInterface
+use App\Core\Models\Orders;
+use Shop;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use InvalidArgumentException;
+
+trait CartTrait
 {
-    use TransformableTrait;
-    use GeneratesUnique;
-    use CalculationsTrait;
-    protected $table;
-    protected $fillable = ['user_id'];
-    private $cartCalculations = null;
-
-    /**
-     * Creates a new instance of the model.
-     *
-     * @param array $attributes
-     */
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->table = config('shop.cart_table');
-    }
     /**
      * Property used to stored calculations.
      * @var array
      */
+    private $cartCalculations = null;
 
     /**
      * Boot the user model
@@ -60,7 +54,7 @@ class Cart extends Model implements Transformable, CartInterface
      */
     public function user()
     {
-        return $this->belongsTo(config('auth.providers.users.model'), 'user_id');
+        return $this->belongsTo(config('auth.model'), 'user_id');
     }
 
     /**
@@ -76,14 +70,12 @@ class Cart extends Model implements Transformable, CartInterface
     /**
      * Adds item to cart.
      *
-     * @param mixed $item     Item to add, can be an Store Item, a Model with ItemTrait or an array.
+     * @param mixed $item     Item to add, can be an Store Item, a Model with ShopItemTrait or an array.
      * @param int   $quantity Item quantity in cart.
      */
     public function add($item, $quantity = 1, $quantityReset = false)
     {
-        if (!is_array($item) && !$item->isShoppable) {
-            return;
-        }
+        if (!is_array($item) && !$item->isShoppable) return;
         // Get item
         $cartItem = $this->getItem(is_array($item) ? $item['sku'] : $item->sku);
         // Add new or sum quantity
@@ -97,32 +89,32 @@ class Cart extends Model implements Transformable, CartInterface
                 'cart_id'       => $this->attributes['id'],
                 'sku'           => is_array($item) ? $item['sku'] : $item->sku,
                 'price'         => is_array($item) ? $item['price'] : $item->price,
-                'tax'           => is_array($item)
-                    ? (array_key_exists('tax', $item)
-                        ?   $item['tax']
-                        :   0
-                    )
-                    : (isset($item->tax) && !empty($item->tax)
-                        ?   $item->tax
-                        :   0
-                    ),
-                'shipping'      => is_array($item)
-                    ? (array_key_exists('shipping', $item)
-                        ?   $item['shipping']
-                        :   0
-                    )
-                    : (isset($item->shipping) && !empty($item->shipping)
-                        ?   $item->shipping
-                        :   0
-                    ),
+                'tax'           => is_array($item) 
+                                    ? (array_key_exists('tax', $item)
+                                        ?   $item['tax']
+                                        :   0
+                                    ) 
+                                    : (isset($item->tax) && !empty($item->tax)
+                                        ?   $item->tax
+                                        :   0
+                                    ),
+                'shipping'      => is_array($item) 
+                                    ? (array_key_exists('shipping', $item)
+                                        ?   $item['shipping']
+                                        :   0
+                                    ) 
+                                    : (isset($item->shipping) && !empty($item->shipping)
+                                        ?   $item->shipping
+                                        :   0
+                                    ),
                 'currency'      => config('shop.currency'),
                 'quantity'      => $quantity,
                 'class'         => is_array($item) ? null : $reflection->getName(),
                 'reference_id'  => is_array($item) ? null : $item->shopId,
             ]);
         } else {
-            $cartItem->quantity = $quantityReset
-                ? $quantity
+            $cartItem->quantity = $quantityReset 
+                ? $quantity 
                 : $cartItem->quantity + $quantity;
             $cartItem->save();
         }
@@ -148,9 +140,7 @@ class Cart extends Model implements Transformable, CartInterface
             if (!empty($quantity)) {
                 $cartItem->quantity -= $quantity;
                 $cartItem->save();
-                if ($cartItem->quantity > 0) {
-                    return true;
-                }
+                if ($cartItem->quantity > 0) return true;
             }
             $cartItem->delete();
         }
@@ -159,10 +149,11 @@ class Cart extends Model implements Transformable, CartInterface
     }
 
     /**
-     * Checks if the cart item has sku
+     * Checks if the user has a role by its name.
      *
-     * @param $sku
-     * @param bool $requireAll
+     * @param string|array $name       Role name or array of role names.
+     * @param bool         $requireAll All roles in the array are required.
+     *
      * @return bool
      */
     public function hasItem($sku, $requireAll = false)
@@ -177,6 +168,10 @@ class Cart extends Model implements Transformable, CartInterface
                     return false;
                 }
             }
+
+            // If we've made it this far and $requireAll is FALSE, then NONE of the roles were found
+            // If we've made it this far and $requireAll is TRUE, then ALL of the roles were found.
+            // Return the value of $requireAll;
             return $requireAll;
         } else {
             foreach ($this->items as $item) {
@@ -211,10 +206,8 @@ class Cart extends Model implements Transformable, CartInterface
      */
     public function scopeWhereCurrent($query)
     {
-        if (\Auth::guest()) {
-            return $query;
-        }
-        return $query->whereUser(\Auth::user()->shopId);
+        if (Auth::guest()) return $query;
+        return $query->whereUser(Auth::user()->shopId);
     }
 
     /**
@@ -222,17 +215,15 @@ class Cart extends Model implements Transformable, CartInterface
      *
      * @param \Illuminate\Database\Eloquent\Builder $query  Query.
      *
-     * @return this
+     * @return $this
      */
     public function scopeCurrent($query)
     {
-        if (\Auth::guest()) {
-            return;
-        }
+        if (\Auth::guest()) return;
         $cart = $query->whereCurrent()->first();
         if (empty($cart)) {
             $cart = call_user_func( config('shop.cart') . '::create', [
-                'user_id' =>  \Auth::user()->shopId
+                'user_id' =>  Auth::user()->shopId
             ]);
         }
         return $cart;
@@ -243,13 +234,11 @@ class Cart extends Model implements Transformable, CartInterface
      *
      * @param \Illuminate\Database\Eloquent\Builder $query  Query.
      *
-     * @return this
+     * @return $this
      */
     public function scopeFindByUser($query, $userId)
     {
-        if (empty($userId)) {
-            return;
-        }
+        if (empty($userId)) return;
         $cart = $query->whereUser($userId)->first();
         if (empty($cart)) {
             $cart = call_user_func( config('shop.cart') . '::create', [
@@ -265,18 +254,16 @@ class Cart extends Model implements Transformable, CartInterface
      *
      * @param string $statusCode Order status to create order with.
      *
-     * @return Order
+     * @return Orders
      */
     public function placeOrder($statusCode = null)
     {
-        $statusCode = empty($statusCode) ? config('shop.order_status_placement') : $statusCode;
-
+        if (empty($statusCode)) $statusCode = config('shop.order_status_placement');
         // Create order
         $order = call_user_func( config('shop.order') . '::create', [
             'user_id'       => $this->user_id,
             'statusCode'    => $statusCode
         ]);
-
         // Map cart items into order
         for ($i = count($this->items) - 1; $i >= 0; --$i) {
             // Attach to order
@@ -286,7 +273,6 @@ class Cart extends Model implements Transformable, CartInterface
             // Update
             $this->items[$i]->save();
         }
-
         $this->resetCalculations();
         return $order;
     }
@@ -318,6 +304,5 @@ class Cart extends Model implements Transformable, CartInterface
             ->where('cart_id', $this->attributes['id'])
             ->first();
     }
-
 
 }

@@ -1,60 +1,22 @@
 <?php
 
-namespace App\Core\Models;
-
-use App\Core\Contracts\OrderInterface;
-use App\Core\Traits\CalculationsTrait;
-use Illuminate\Database\Eloquent\Model;
-use App\Core\Traits\GeneratesUnique;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use \Illuminate\Database\Eloquent\Builder;
-use RepositoryLab\Repository\Contracts\Transformable;
-use RepositoryLab\Repository\Traits\TransformableTrait;
+namespace App\Core\Traits;
 
 /**
- * App\Core\Models\Orders
+ * This file is part of LaravelShop,
+ * A shop solution for Laravel.
  *
- * @property int $id
- * @property string $unique_id
- * @property int $user_id
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereUniqueId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Orders whereUserId($value)
- * @mixin \Eloquent
+ * @author Alejandro Mostajo
+ * @copyright Amsgames, LLC
+ * @license MIT
+ * @package App\Core
  */
-class Orders extends Model implements Transformable, OrderInterface
-{
-    use TransformableTrait;
-    use GeneratesUnique;
-    use CalculationsTrait;
-    protected $table;
 
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    /**
-     * Fillable attributes for mass assignment.
-     *
-     * @var array
-     */
-    protected $fillable = ['user_id', 'statusCode'];
-    /**
-     * Creates a new instance of the model.
-     *
-     * @param array $attributes
-     */
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->table = config('shop.order_table');
-    }
+use Illuminate\Support\Facades\Config;
+use InvalidArgumentException;
+
+trait OrderTrait
+{
     /**
      * Boot the user model
      * Attach event listener to remove the relationship records when trying to delete
@@ -65,50 +27,56 @@ class Orders extends Model implements Transformable, OrderInterface
     public static function boot()
     {
         parent::boot();
+
         static::deleting(function($user) {
-            if (!method_exists(config('auth.providers.users.model'), 'bootSoftDeletingTrait')) {
+            if (!method_exists(Config::get('auth.model'), 'bootSoftDeletingTrait')) {
                 $user->items()->sync([]);
             }
+
             return true;
         });
     }
 
     /**
-     * @return BelongsTo
+     * One-to-One relations with the user model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function user(): BelongsTo
+    public function user()
     {
-        return $this->belongsTo(config('auth.providers.users.model'), 'user_id');
+        return $this->belongsTo(Config::get('auth.model'), 'user_id');
     }
 
     /**
      * One-to-Many relations with Item.
      *
-     * @return HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function items(): HasMany
+    public function items()
     {
-        return $this->hasMany(config('shop.item'), 'order_id');
+        return $this->hasMany(Config::get('shop.item'), 'order_id');
     }
+
     /**
      * One-to-Many relations with Item.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function transactions(): HasMany
+    public function transactions()
     {
-        return $this->hasMany(config('shop.transaction'), 'order_id');
+        return $this->hasMany(Config::get('shop.transaction'), 'order_id');
     }
+
     /**
      * Returns flag indicating if order is lock and cant be modified by the user.
      * An order is locked the moment it enters pending status.
      *
      * @return bool
      */
-    public function getIsLockedAttribute(): bool
-    {
-        return in_array($this->attributes['statusCode'], config('shop.order_status_lock'));
+    public function getIsLockedAttribute() {
+        return in_array($this->attributes['statusCode'], Config::get('shop.order_status_lock'));
     }
+
     /**
      * Scopes class by user ID and returns object.
      * Optionally, scopes by status.
@@ -116,31 +84,31 @@ class Orders extends Model implements Transformable, OrderInterface
      * @param \Illuminate\Database\Eloquent\Builder $query  Query.
      * @param mixed                                 $userId User ID.
      *
-     * @return Builder
+     * @return this
      */
-    public function scopeWhereUser($query, $userId): Builder {
-
+    public function scopeWhereUser($query, $userId) {
         return $query->where('user_id', $userId);
     }
+
     /**
      * Scopes class by item sku.
      * Optionally, scopes by status.
      *
-     * @param Builder $query  Query.
+     * @param \Illuminate\Database\Eloquent\Builder $query  Query.
      * @param mixed                                 $sku    Item SKU.
      *
-     * @return Builder
+     * @return this
      */
-    public function scopeWhereSKU($query, $sku): Builder
-    {
+    public function scopeWhereSKU($query, $sku) {
         return $query->join(
-            config('shop.item_table'),
-            config('shop.item_table') . '.order_id',
-            '=',
-            $this->table . '.id'
-        )
+                config('shop.item_table'), 
+                config('shop.item_table') . '.order_id', 
+                '=', 
+                $this->table . '.id'
+            )
             ->where(config('shop.item_table') . '.sku', $sku);
     }
+
     /**
      * Scopes class by user ID and returns object.
      * Optionally, scopes by status.
@@ -148,24 +116,24 @@ class Orders extends Model implements Transformable, OrderInterface
      * @param \Illuminate\Database\Eloquent\Builder $query      Query.
      * @param string                                $statusCode Status.
      *
-     * @return Builder
+     * @return this
      */
-    public function scopeWhereStatus($query, $statusCode): Builder
-    {
+    public function scopeWhereStatus($query, $statusCode) {
         return $query = $query->where('statusCode', $statusCode);
     }
+
     /**
      * Scopes class by status codes.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query       Query.
      * @param array                                 $statusCodes Status.
      *
-     * @return Builder
+     * @return this
      */
-    public function scopeWhereStatusIn($query, array $statusCodes): Builder
-    {
+    public function scopeWhereStatusIn($query, array $statusCodes) {
         return $query = $query->whereIn('statusCode', $statusCodes);
     }
+
     /**
      * Scopes class by user ID and returns object.
      * Optionally, scopes by status.
@@ -174,10 +142,9 @@ class Orders extends Model implements Transformable, OrderInterface
      * @param mixed                                 $userId     User ID.
      * @param string                                $statusCode Status.
      *
-     * @return Builder
+     * @return this
      */
-    public function scopeFindByUser($query, $userId, $statusCode = null): Builder
-    {
+    public function scopeFindByUser($query, $userId, $statusCode = null) {
         if (!empty($status)) {
             $query = $query->whereStatus($status);
         }
@@ -185,67 +152,77 @@ class Orders extends Model implements Transformable, OrderInterface
     }
 
     /**
-     * @param string $statusCode
+     * Returns flag indicating if order is in the status specified.
+     *
+     * @param string $status Status code.
+     *
      * @return bool
      */
-    public function is(string $statusCode): bool
+    public function is($statusCode)
     {
         return $this->attributes['statusCode'] == $statusCode;
     }
+
     /**
      * Returns flag indicating if order is completed.
      *
      * @return bool
      */
-    public function getIsCompletedAttribute(): bool
+    public function getIsCompletedAttribute()
     {
         return $this->attributes['statusCode'] == 'completed';
     }
+
     /**
      * Returns flag indicating if order has failed.
      *
      * @return bool
      */
-    public function getHasFailedAttribute(): bool
+    public function getHasFailedAttribute()
     {
         return $this->attributes['statusCode'] == 'failed';
     }
+
     /**
      * Returns flag indicating if order is canceled.
      *
      * @return bool
      */
-    public function getIsCanceledAttribute(): bool
+    public function getIsCanceledAttribute()
     {
         return $this->attributes['statusCode'] == 'canceled';
     }
+
     /**
      * Returns flag indicating if order is in process.
      *
      * @return bool
      */
-    public function getIsInProcessAttribute(): bool
+    public function getIsInProcessAttribute()
     {
         return $this->attributes['statusCode'] == 'in_process';
     }
+
     /**
      * Returns flag indicating if order is in creation.
      *
      * @return bool
      */
-    public function getIsInCreationAttribute(): bool
+    public function getIsInCreationAttribute()
     {
         return $this->attributes['statusCode'] == 'in_creation';
     }
+
     /**
      * Returns flag indicating if order is in creation.
      *
      * @return bool
      */
-    public function getIsPendingAttribute(): bool
+    public function getIsPendingAttribute()
     {
         return $this->attributes['statusCode'] == 'pending';
     }
+
     /**
      * Creates the order's transaction.
      *
@@ -255,9 +232,9 @@ class Orders extends Model implements Transformable, OrderInterface
      *
      * @return object
      */
-    public function placeTransaction(string $gateway, $transactionId, string $detail = null, $token = null)
+    public function placeTransaction($gateway, $transactionId, $detail = null, $token = null)
     {
-        return call_user_func(config('shop.transaction') . '::create', [
+        return call_user_func(Config::get('shop.transaction') . '::create', [
             'order_id'          => $this->attributes['id'],
             'gateway'           => $gateway,
             'transaction_id'    => $transactionId,
@@ -265,6 +242,7 @@ class Orders extends Model implements Transformable, OrderInterface
             'token'             => $token,
         ]);
     }
+
     /**
      * Retrieves item from order;
      *
@@ -272,13 +250,12 @@ class Orders extends Model implements Transformable, OrderInterface
      *
      * @return mixed
      */
-    private function getItem(string $sku)
+    private function getItem($sku)
     {
-        $className  = config('shop.item');
+        $className  = Config::get('shop.item');
         $item       = new $className();
         return $item->where('sku', $sku)
             ->where('order_id', $this->attributes['id'])
             ->first();
     }
-
 }

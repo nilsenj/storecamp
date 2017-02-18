@@ -14,15 +14,15 @@ class CreateCartTable extends Migration
     public function up()
     {
         Schema::create('cart', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('unique_id')->unique();
-            $table->string('instance');
-            if ((DB::connection()->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME) == 'mysql') && version_compare(DB::connection()->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION), '5.7.8', 'ge')) {
-                $table->json('content')->nullable();
-            } else {
-                $table->text('content')->nullable();
-            }
-            $table->nullableTimestamps();
+            $table->bigIncrements('id');
+            $table->integer('user_id')->unsigned();
+            $table->timestamps();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->unique('user_id');
         });
     }
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "506b560e3e7adf0cfdc27a69564f50c2",
+    "content-hash": "7ef742b94636b38cd5826642a13a4c08",
     "packages": [
         {
             "name": "a6digital/laravel-default-profile-image",
@@ -46,6 +46,58 @@
                 "laravel default profile image"
             ],
             "time": "2017-01-27T06:06:12+00:00"
+        },
+        {
+            "name": "amsgames/laravel-shop-gateway-paypal",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/amsgames/laravel-shop-gateway-paypal.git",
+                "reference": "c0ba041bda3fdcc696e4a01278647f386e9d8715"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/amsgames/laravel-shop-gateway-paypal/zipball/c0ba041bda3fdcc696e4a01278647f386e9d8715",
+                "reference": "c0ba041bda3fdcc696e4a01278647f386e9d8715",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "~5.0",
+                "illuminate/support": "~5.0",
+                "paypal/rest-api-sdk-php": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "sami/sami": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Amsgames\\LaravelShopGatewayPaypal\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Amsgames, LLC",
+                    "email": "support@amsgames.com"
+                },
+                {
+                    "name": "Alejandro Mostajo",
+                    "email": "amostajo@gmail.com"
+                }
+            ],
+            "description": "PayPal gateway for Laravel Shop package.",
+            "keywords": [
+                "gateway",
+                "laravel shop",
+                "laravel-shop",
+                "paypal"
+            ],
+            "time": "2015-09-19T04:10:42+00:00"
         },
         {
             "name": "arcanedev/log-viewer",
@@ -3193,6 +3245,55 @@
                 "random"
             ],
             "time": "2016-11-07T23:38:38+00:00"
+        },
+        {
+            "name": "paypal/rest-api-sdk-php",
+            "version": "1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/paypal/PayPal-PHP-SDK.git",
+                "reference": "7e664f12be32b975575371e8ad3bc17b6b318851"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/paypal/PayPal-PHP-SDK/zipball/7e664f12be32b975575371e8ad3bc17b6b318851",
+                "reference": "7e664f12be32b975575371e8ad3bc17b6b318851",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=5.3.0",
+                "psr/log": "^1.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PayPal": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "PayPal",
+                    "homepage": "https://github.com/paypal/rest-api-sdk-php/contributors"
+                }
+            ],
+            "description": "PayPal's PHP SDK for REST APIs",
+            "homepage": "http://paypal.github.io/PayPal-PHP-SDK/",
+            "keywords": [
+                "payments",
+                "paypal",
+                "rest",
+                "sdk"
+            ],
+            "time": "2016-12-14T21:59:21+00:00"
         },
         {
             "name": "php-di/invoker",

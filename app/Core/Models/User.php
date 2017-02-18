@@ -2,14 +2,12 @@
 
 namespace App\Core\Models;
 
-
 use App\Core\Access\Traits\AccessUserTrait;
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Components\Messenger\Traits\Messagable;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\GeneratesUnique;
 use Plank\Mediable\Mediable;
 use RepositoryLab\Repository\Contracts\Transformable;
@@ -79,6 +77,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     use Messagable;
     use Auditable;
     use Mediable;
+
     /**
      * @var string
      */
@@ -90,7 +89,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
      * @var array
      */
     protected $fillable = [
-        'name','notify', 'email', 'password', 'logo_path'
+        'name', 'notify', 'email', 'password', 'logo_path'
     ];
 
     /**
@@ -129,18 +128,75 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     }
 
     /**
+     * One-to-Many relations with cart.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function cart()
+    {
+        return $this->hasOne(config('shop.cart'), 'user_id');
+    }
+
+    /**
+     * One-to-Many relations with Item.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function items()
+    {
+        return $this->hasMany(config('shop.item'), 'user_id');
+    }
+
+    /**
+     * One-to-Many relations with Order.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders()
+    {
+        return $this->hasMany(config('shop.order'), 'user_id');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function productReview()
     {
         return $this->hasMany(ProductReview::class, 'user_id');
     }
+
+    /**
+     * Returns the user ID value based on the primary key set for the table.
+     *
+     * @return int
+     */
+    public function getShopIdAttribute()
+    {
+        return is_array($this->primaryKey) ? 0 : $this->attributes[$this->primaryKey];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRole()
+    {
+        return $this->roles()->first();
+    }
+
     /**
      * @return mixed
      */
     public function getRememberToken()
     {
         return $this->remember_token;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRememberTokenName()
+    {
+        return 'remember_token';
     }
 
     /**
@@ -152,32 +208,20 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     }
 
     /**
-     * @return string
+     * @var array
      */
-    public function getRememberTokenName()
-    {
-        return 'remember_token';
-    }
 
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = \Hash::make($value);
+    }
 
     /**
      * @param $date
      */
     public function setDateAttribute($date)
     {
-
         $this->attributes['date'] = Carbon::today();
-
-    }
-
-    /**
-     * @param $query
-     */
-    public function scopeToday($query)
-    {
-
-        return $query->where('date', '=', Carbon::today());
-
     }
 
     /**
@@ -187,15 +231,6 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     public function isAdmin()
     {
         return $this->hasRole('Admin');
-    }
-
-    /**
-     * @var array
-     */
-
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = \Hash::make($value);
     }
 
     /**
@@ -216,8 +251,15 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
      */
     public function scopeByMailOrName($query, $name)
     {
-
         $query->where("name", $name)->orWhere('email', $name);
+    }
+
+    /**
+     * @param $query
+     */
+    public function scopeToday($query)
+    {
+        return $query->where('date', '=', Carbon::today());
     }
 
     /**
@@ -226,7 +268,6 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
      */
     public function scopeAllExcept($query)
     {
-
         return $query->where('id', '<>', \Auth::id());
     }
 
@@ -235,17 +276,7 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
      */
     public function scopeUsers($query)
     {
-
         return $query->where('user_id', '=', \Auth::id());
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRole()
-    {
-
-        return $this->roles()->first();
     }
 
     /**
@@ -256,7 +287,6 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
      */
     public static function findBySlug($slug)
     {
-
         return self::where('slug', $slug)->first();
     }
 }

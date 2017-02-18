@@ -199,7 +199,7 @@ if (!function_exists('if_query')) {
      * contains the $value
      *
      * @param string $key
-     * @param mixed  $value
+     * @param mixed $value
      *
      * @return bool
      */
@@ -341,5 +341,23 @@ if (!function_exists('cartNumberFormat')) {
                 ? ',' : config('cart.format.thousand_seperator');
         }
         return number_format($value, $decimals, $decimalPoint, $thousandSeperator);
+    }
+}
+if (!function_exists('shopFormat')) {
+    function shopFormat(string $value)
+    {
+        return preg_replace(
+            [
+                '/:symbol/',
+                '/:price/',
+                '/:currency/'
+            ],
+            [
+                config('shop.currency_symbol'),
+                $value,
+                config('shop.currency')
+            ],
+            config('shop.display_price_format')
+        );
     }
 }

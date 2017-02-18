@@ -4,6 +4,8 @@ namespace App\Core\Models;
 
 use App\Core\Components\Auditing\Auditable;
 use App\Core\Contracts\Buyable;
+use App\Core\Contracts\ProductInterface;
+use App\Core\Logic\ShopSystem;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\GeneratesUnique;
@@ -91,7 +93,7 @@ use RepositoryLab\Repository\Traits\TransformableTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product withMedia($tags = array(), $match_all = false)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\Models\Product withMediaMatchAll($tags = array())
  */
-class Product extends Model implements Transformable, Buyable
+class Product extends Model implements Transformable, Buyable, ProductInterface
 {
     use TransformableTrait;
     use \Cviebrock\EloquentSluggable\Sluggable;
@@ -129,8 +131,50 @@ class Product extends Model implements Transformable, Buyable
         'stock_status',
         'attr_description_id',
         'product_id',
-        'value'
+        'value',
+        'user_id',
+        'cart_id',
+        'shop_id',
+        'sku',
+        'price',
+        'tax',
+        'shipping',
+        'currency',
+        'quantity',
+        'class',
+        'reference_id'
     ];
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table;
+
+    /**
+     * Name of the route to generate the item url.
+     *
+     * @var string
+     */
+    protected $itemRouteName = '';
+
+    /**
+     * Name of the attributes to be included in the route params.
+     *
+     * @var string
+     */
+    protected $itemRouteParams = [];
+
+    /**
+     * Creates a new instance of the model.
+     *
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->table = config('shop.item_table');
+    }
 
     /**
      * @var array
@@ -158,7 +202,35 @@ class Product extends Model implements Transformable, Buyable
     {
         parent::boot();
     }
+    /**
+     * Many-to-Many relations with the user model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function user()
+    {
+        return $this->belongsTo(config('auth.providers.users.model'), 'user_id');
+    }
 
+    /**
+     * One-to-One relations with the cart model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function cart()
+    {
+        return $this->belongsTo(config('shop.cart'), 'cart_id');
+    }
+
+    /**
+     * One-to-One relations with the order model.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function order()
+    {
+        return $this->belongsTo(config('shop.order'), 'order_id');
+    }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -172,9 +244,7 @@ class Product extends Model implements Transformable, Buyable
      */
     public function categories(): BelongsToMany
     {
-
         return $this->belongsToMany(Category::class, 'products_categories');
-
     }
 
     /**
@@ -407,4 +477,148 @@ class Product extends Model implements Transformable, Buyable
     }
 
 
+    /**
+     * Returns flag indicating if item has an object.
+     *
+     * @return bool
+     */
+    public function getHasObjectAttribute()
+    {
+        return array_key_exists('class', $this->attributes) && !empty($this->attributes['class']);
+    }
+
+    /**
+     * Returns flag indicating if the object is shoppable or not.
+     *
+     * @return bool
+     */
+    public function getIsShoppableAttribute()
+    {
+        return true;
+    }
+
+    /**
+     * Returns attached object.
+     *
+     * @return mixed
+     */
+    public function getObjectAttribute()
+    {
+        return $this->hasObject ? call_user_func($this->attributes['class'] . '::find', $this->attributes['reference_id']) : null;
+    }
+
+    /**
+     * Returns item name.
+     *
+     * @return string
+     */
+    public function getDisplayNameAttribute()
+    {
+        if ($this->hasObject) return $this->object->displayName;
+        return isset($this->itemName)
+            ? $this->attributes[$this->itemName]
+            : (array_key_exists('name', $this->attributes)
+                ? $this->attributes['name']
+                : ''
+            );
+    }
+
+    /**
+     * Returns item id.
+     *
+     * @return mixed
+     */
+    public function getShopIdAttribute()
+    {
+        return is_array($this->primaryKey) ? 0 : $this->attributes[$this->primaryKey];
+    }
+
+    /**
+     * Returns item url.
+     *
+     * @return string
+     */
+    public function getShopUrlAttribute()
+    {
+        if ($this->hasObject) return $this->object->shopUrl;
+        if (!property_exists($this, 'itemRouteName') && !property_exists($this, 'itemRouteParams')) return '#';
+        $params = [];
+        foreach (array_keys($this->attributes) as $attribute) {
+            if (in_array($attribute, $this->itemRouteParams)) $params[$attribute] = $this->attributes[$attribute];
+        }
+        return empty($this->itemRouteName) ? '#' : \route($this->itemRouteName, $params);
+    }
+
+    /**
+     * Returns price formatted for display.
+     *
+     * @return string
+     */
+    public function getDisplayPriceAttribute()
+    {
+        return ShopSystem::format($this->attributes['price']);
+    }
+
+    /**
+     * Scope class by a given sku.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query  Query.
+     * @param mixed                                 $sku    SKU.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWhereSKU($query, $sku)
+    {
+        return $query->where('sku', $sku);
+    }
+
+    /**
+     * Scope class by a given sku.
+     * Returns item found.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query  Query.
+     * @param mixed                                 $sku    SKU.
+     *
+     * @return this
+     */
+    public function scopeFindBySKU($query, $sku)
+    {
+        return $query->whereSKU($sku)->first();
+    }
+
+    /**
+     * Returns formatted tax for display.
+     *
+     * @return string
+     */
+    public function getDisplayTaxAttribute()
+    {
+        return ShopSystem::format(array_key_exists('tax', $this->attributes) ? $this->attributes['tax'] : 0.00);
+    }
+
+    /**
+     * Returns formatted tax for display.
+     *
+     * @return string
+     */
+    public function getDisplayShippingAttribute()
+    {
+        return ShopSystem::format(array_key_exists('shipping',
+            $this->attributes) ? $this->attributes['shipping'] : 0.00);
+    }
+
+    /**
+     * Returns flag indicating if item was purchased by user.
+     *
+     * @return bool
+     */
+    public function getWasPurchasedAttribute()
+    {
+        if (\Auth::guest()) return false;
+        return \Auth::user()
+                ->orders()
+                ->whereSKU($this->attributes['sku'])
+                ->whereStatusIn(config('shop.order_status_purchase'))
+                ->count() > 0;
+    }
 }

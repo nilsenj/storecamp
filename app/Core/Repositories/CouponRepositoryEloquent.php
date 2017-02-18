@@ -4,14 +4,14 @@ namespace App\Core\Repositories;
 
 use RepositoryLab\Repository\Eloquent\BaseRepository;
 use RepositoryLab\Repository\Criteria\RequestCriteria;
-use App\Core\Repositories\CartRepository;
-use App\Core\Models\Cart;
+use App\Core\Repositories\CouponRepository;
+use App\Core\Models\Coupon;
 
 /**
- * Class CartRepositoryEloquent
+ * Class CouponRepositoryEloquent
  * @package namespace App\Core\Repositories;
  */
-class CartRepositoryEloquent extends BaseRepository implements CartRepository
+class CouponRepositoryEloquent extends BaseRepository implements CouponRepository
 {
     /**
      * Specify Model class name
@@ -20,7 +20,7 @@ class CartRepositoryEloquent extends BaseRepository implements CartRepository
      */
     public function model()
     {
-        return Cart::class;
+        return Coupon::class;
     }
 
     /**
@@ -30,6 +30,4 @@ class CartRepositoryEloquent extends BaseRepository implements CartRepository
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
-
-
 }

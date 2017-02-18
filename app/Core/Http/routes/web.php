@@ -10,6 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+$this->group(['prefix' => 'shop', 'as' => 'shop::'], function (\Illuminate\Routing\Router $router) {
+    $router->get('callback/payment/{status}/{id}/{shoptoken}', ['as' => 'callback', 'uses' => 'Site\CallbackController@process']);
+    $router->post('callback/payment/{status}/{id}/{shoptoken}', ['as' => 'callback', 'uses' => 'Site\CallbackController@process']);
+});
 /**
  * @param $this \Illuminate\Routing\Route
  */
@@ -204,7 +209,7 @@ $this->group(
 
         ]);
 
-        $this->get('show/{id}',[
+        $this->get('show/{id}', [
             'uses' => 'Admin\ProductsController@show',
             'as' => 'show'
         ]);
@@ -265,13 +270,13 @@ $this->group(
         ]);
 
         $this->put('reply/review/{id}', [
-                'uses' => 'Admin\ProductReviewController@replyFeedback',
-                'as' => 'reply'
+            'uses' => 'Admin\ProductReviewController@replyFeedback',
+            'as' => 'reply'
         ]);
 
         $this->delete('delete/review/{id}', [
-                'uses' => 'Admin\ProductReviewController@delete',
-                'as' => 'destroy'
+            'uses' => 'Admin\ProductReviewController@delete',
+            'as' => 'destroy'
         ]);
 
         $this->get('create/{productId}', [
@@ -290,8 +295,8 @@ $this->group(
         ]);
 
         $this->post('store/{productId}', [
-                'uses' => 'Admin\ProductReviewController@store',
-                'as' => 'store'
+            'uses' => 'Admin\ProductReviewController@store',
+            'as' => 'store'
         ]);
 
         $this->get('toggle_visibility/{id}', [
