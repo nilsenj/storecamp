@@ -13,10 +13,11 @@ class CreateProductsCategories extends Migration
      */
     public function up()
     {
-        Schema::create('products_categories', function(Blueprint $t) {
-            $t->integer('product_id');
-            $t->integer('category_id');
-            $t->primary(['product_id', 'category_id']);
+        Schema::create('products_categories', function(Blueprint $table) {
+            $table->integer('product_id');
+            $table->integer('category_id');
+            $table->primary(['product_id', 'category_id']);
+            $table->index(['product_id', 'category_id']);
         });
     }
 
@@ -27,9 +28,9 @@ class CreateProductsCategories extends Migration
      */
     public function down()
     {
-        Schema::drop('products_categories', function(Blueprint $t) {
-            $t->dropPrimary('products_categories_product_id_primary');
-            $t->dropPrimary('products_categories_category_id_primary');
+        Schema::drop('products_categories', function(Blueprint $table) {
+            $table->dropPrimary('products_categories_product_id_primary');
+            $table->dropPrimary('products_categories_category_id_primary');
         });
     }
 }

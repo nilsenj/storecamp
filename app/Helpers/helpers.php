@@ -361,3 +361,19 @@ if (!function_exists('shopFormat')) {
         );
     }
 }
+
+if(!function_exists('pushParentCategoryBreadcrumbs')){
+    /**
+     * @param $category
+     * @param $breadcrumbs
+     */
+    function pushParentCategoryBreadcrumbs($category, $breadcrumbs)
+    {
+        while ($category->parent_id != null) {
+            $newParent = app('App\Core\Repositories\CategoryRepository')->find($category->parent_id);
+            $breadcrumbs->push($newParent->name, route('site::products::index', [$newParent->unique_id]));
+            return pushParentCategoryBreadcrumbs($newParent, $breadcrumbs);
+        }
+        return;
+    }
+}

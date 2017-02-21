@@ -21,6 +21,11 @@ class CreateThreadsTable extends Migration
             $table->integer('parent_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->index(['commentable_id', 'id']);
+            $table->index(['commentable_id', 'commentable_type']);
+            $table->index(['commentable_id', 'id', 'commentable_type']);
+            $table->index(['commentable_id', 'parent_id']);
         });
     }
 

@@ -42,6 +42,10 @@ class CreateProductsTable extends Migration
             $table->text('meta_tag_keywords')->nullable();
             $table->tinyInteger('sort_order')->default(0);
             $table->timestamps();
+            $table->index(['unique_id']);
+            $table->index(['slug']);
+            $table->index(['unique_id', 'price']);
+            $table->index(['unique_id', 'viewed']);
         });
     }
 

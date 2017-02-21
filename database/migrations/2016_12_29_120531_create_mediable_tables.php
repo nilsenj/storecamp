@@ -29,6 +29,7 @@ class CreateMediableTables extends Migration
             $table->index(['disk', 'directory']);
             $table->unique(['disk', 'directory', 'filename', 'extension']);
             $table->index(['aggregate_type', 'directory_id']);
+            $table->index(['disk', 'aggregate_type', 'directory_id']);
         });
 
         Schema::create('mediables', function (Blueprint $table) {
