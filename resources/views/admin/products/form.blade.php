@@ -104,8 +104,8 @@
             <div class="form-group">
                 <label class="control-label" for="input-sku"><span data-toggle="tooltip" title=""
                                                                    data-original-title="Stock Keeping Unit">SKU</span></label>
-                {{ Form::text('sku', old('sku'), ["id" => "input-sku", "placeholder" => "SKU", "class" => "form-control"]) !!}
-                {!! $errors->first('sku', '<div class="text-danger">:message</div>') }}
+                {{ Form::text('sku', old('sku'), ["id" => "input-sku", "placeholder" => "SKU", "class" => "form-control"]) }}
+                {!! $errors->first('sku', '<div class="text-danger">:message</div>') !!}
 
             </div>
             <div class="form-group">
@@ -208,7 +208,7 @@
 {{ Form::close() }}
 @section('scripts-add')
     <script>
-        var attribute_row = {{ isset($key) ? $key+1 : 0 }};
+        var attribute_row = {!!  isset($key) ? $key+1 : 0  !!};
 
         function addAttribute() {
             html = '<tr id="attribute-row' + attribute_row + '">';
