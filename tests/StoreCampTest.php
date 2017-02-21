@@ -195,7 +195,7 @@ class StoreCampTest extends TestCase
             ->type('passw0RD', 'password')
             ->type('passw0RD', 'password_confirmation')
             ->press('Register')
-            ->seePageIs('/home')
+            ->seePageIs('/')
             ->seeInDatabase('users', ['email' => 'sergiturbadenas@gmail.com',
                 'name' => 'Sergi Tur Badenas',]);
     }
