@@ -26,7 +26,7 @@ class CreateCategoriesTable extends Migration
             $table->boolean('status')->default(true);
             $table->boolean('top')->default(false);
             $table->tinyInteger('sort_order')->default(0);
-            \App\Core\Classes\Nestedset\NestedSet::columns($table);
+            \App\Core\Support\Nestedset\NestedSet::columns($table);
             $table->timestamps();
         });
     }
@@ -39,7 +39,7 @@ class CreateCategoriesTable extends Migration
     public function down()
     {
         Schema::drop('categories', function(Blueprint $t) {
-            \App\Core\Classes\Nestedset\NestedSet::dropColumns($t);
+            \App\Core\Support\Nestedset\NestedSet::dropColumns($t);
         });
     }
 }

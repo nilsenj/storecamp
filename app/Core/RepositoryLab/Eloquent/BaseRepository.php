@@ -168,7 +168,14 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         if($this->hasScopePrefix($method)) { //handle dynamic scope call from the model
             $this->applyCriteria();
             $this->applyScope();
-            $this->model = $this->model->$method($this->getModel()->newQuery(), ...$parameters);
+//            dd($method);
+            if(!empty($parameters)) {
+                $methodName = $this->prepareSopePrefix($method);
+                $this->model = $this->model->$methodName($this->getModel()->newQuery(), ...$parameters);
+            } else {
+                $this->model = $this->model->$method($this->getModel()->newQuery(), ...$parameters);
+            }
+
             return $this;
         }
     }
@@ -974,6 +981,14 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         return method_exists($this->getModel(), 'scope'.Str::studly($key));
     }
 
+    /**
+     * @param $key
+     * @return string
+     */
+    private function prepareSopePrefix($key)
+    {
+        return 'scope'.Str::studly($key);
+    }
     /**
      * determine if the method belongs to this class
      *

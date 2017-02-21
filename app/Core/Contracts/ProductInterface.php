@@ -1,86 +1,151 @@
 <?php
 
-namespace App\Core\Contracts;
+namespace app\Core\Contracts;
 
+
+use App\Core\Models\Category;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 interface ProductInterface
 {
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable(): array;
+    /**
+     * bootable methods fix
+     */
+    public static function boot();
 
     /**
-     * One-to-One relations with the user model.
-     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function productReview(): HasMany;
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function user();
+    public function categories(): BelongsToMany;
 
     /**
-     * One-to-One relations with the cart model.
-     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function cart();
+    public function attributeGroupDescription(): BelongsToMany;
 
     /**
-     * One-to-One relations with Order.
+     * Get the identifier of the Buyable item.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return int|string
      */
-    public function order();
+    public function getBuyableIdentifier($options = null);
 
     /**
-     * Returns flag indicating if item has an object.
+     * Get the description or title of the Buyable item.
      *
-     * @return bool
+     * @return string
      */
-    public function getHasObjectAttribute();
+    public function getBuyableDescription($options = null);
 
     /**
-     * Returns attached object.
+     * @param null $options
+     * @return float
+     */
+    public function getBuyablePrice($options = null);
+
+    /**
+     * @return string
+     */
+    public function getAvailability(): string;
+
+    /**
+     * @return mixed
+     */
+    public function getStockStatus(): string;
+
+    /**
+     * get the product category
      *
      * @return mixed
      */
-    public function getObjectAttribute();
-    
+    public function getFirstCategory(): Category;
     /**
-     * Returns item name.
-     *
-     * @return string
+     * @param $stock_status
      */
-    public function getDisplayNameAttribute();
+    public function setStockStatusAttribute($stock_status);
 
     /**
-     * Returns shop it.
-     *
+     * @param int|float $length
+     */
+    public function setLengthAttribute($length);
+
+    /**
+     * @param int|float $width
+     */
+    public function setWidthAttribute($width);
+
+    /**
+     * @param int|float $height
+     */
+    public function setHeightAttribute($height);
+
+    /**
+     * @param int|float $weight
+     */
+    public function setWeightAttribute($weight);
+
+    /**
+     * @param $date
+     */
+    public function setDateAvailableAttribute($date);
+
+    /**
+     * @param $quantity
+     */
+    public function setQuantityAttribute($quantity);
+
+    /**
+     * @param $sort_order
+     */
+    public function setSortOrderAttribute($sort_order);
+
+    /**
+     * @param $query
+     */
+    public function scopeUnpublished($query);
+
+    /**
+     * @param $query
+     */
+    public function scopePublished($query);
+    /**
+     * @param $query
      * @return mixed
      */
-    public function getShopIdAttribute();
+    public function scopeNewest($query);
 
     /**
-     * Returns formatted price for display.
-     *
-     * @return string
+     * @param $query
+     * @return mixed
      */
-    public function getDisplayPriceAttribute();
+    public function scopeDrafted($query);
 
     /**
-     * Returns formatted tax for display.
-     *
-     * @return string
+     * @param $query
+     * @param $id
+     * @return mixed
      */
-    public function getDisplayTaxAttribute();
+    public function scopeBySlugOrId($query, $id);
 
     /**
-     * Returns formatted tax for display.
+     * get all products
+     * by the given category
      *
-     * @return string
+     * @param $query
+     * @param Category|null $category
+     * @return mixed
      */
-    public function getDisplayShippingAttribute();
-
-    /**
-     * Returns flag indicating if item was purchased by user.
-     *
-     * @return bool
-     */
-    public function getWasPurchasedAttribute();
-
+    public function scopeCategorized($query, $category = null);
 }

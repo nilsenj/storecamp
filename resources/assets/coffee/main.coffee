@@ -193,16 +193,23 @@
 
 # ---
 do ($) ->
-  items = [$('.sidebar-menu'), $('.media_tags')]
+  items = [$('.sidebar-menu'), $('.media_tags'), $('.site_sidebar')]
   items.forEach (item, i , arr) ->
     nav = item
-    anchor = nav.find('a')
-    current = window.location.href
-    i = 0
-    while i < anchor.length
-      definedLinks = anchor[i].href
-      if definedLinks == current
-        $(anchor[i]).parent().addClass('active')
-      i++
+    makeAnchorActive = (navigtation) ->
+      anchor = navigtation.find('a')
+      current = window.location.href
+      i = 0
+      while i < anchor.length
+        definedLinks = anchor[i].href
+        if definedLinks == current
+          activeParents = nav.attr('data-active-parents')
+          if(activeParents)
+            $(anchor[i]).parent().parent().closest('li').addClass('active')
+            $(anchor[i]).parent().addClass('active')
+          else
+          $(anchor[i]).parent().addClass('active')
+        i++
+    makeAnchorActive(nav)
   return
 

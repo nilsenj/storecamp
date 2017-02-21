@@ -1,12 +1,10 @@
 @extends('admin/app')
-<h1>
     @section('contentheader_title')
         Edit Category        &middot;
     @endsection
     @section('contentheader_description')
         @include('admin.partial._content-head_btns', [$routeName = "admin::categories::index", $createBtn = 'Back', $showFilters = false])
     @endsection
-</h1>
 @section('main-content')
     {{ Form::model($category, ['route' => ['admin::categories::update', $category->unique_id], 'method' => 'PUT', 'class' => '']) }}
     <div class="nav-tabs-custom">

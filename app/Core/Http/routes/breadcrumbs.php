@@ -1,8 +1,9 @@
 <?php
+
 // Home
 Breadcrumbs::register('/', function($breadcrumbs)
 {
-    $breadcrumbs->push('Main', route('home::'));
+    $breadcrumbs->push('Site', url('/'));
 });
 
 // / > About
@@ -103,3 +104,24 @@ Breadcrumbs::register('page', function($breadcrumbs, $page)
     $breadcrumbs->parent('categories', $page->category);
     $breadcrumbs->push($page->title, route('page', $page->id));
 });
+
+// SITE Section
+// Home
+Breadcrumbs::register('Home', function($breadcrumbs)
+{
+    $breadcrumbs->push('Home', route('site::'));
+});
+
+// / > Site
+Breadcrumbs::register('Products', function($breadcrumbs, $category=null)
+{
+    $breadcrumbs->parent('Home');
+    if(!$category)
+    {
+        $breadcrumbs->push('Products', route('site::products::index'));
+    }  else {
+        $breadcrumbs->push('Products', route('site::products::index'));
+        $breadcrumbs->push($category->name, route('site::products::index', [$category->unique_id]));
+    }
+});
+

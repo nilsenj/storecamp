@@ -1,5 +1,4 @@
 @extends('admin/app')
-<h1>
     @section('breadcrumb')
         {!! Breadcrumbs::render('categories', 'Categories') !!}
     @endsection
@@ -7,7 +6,6 @@
     @section('contentheader_description')
         {{--@include('admin.partial._content-head_btns', [$routeName = "admin::categories::create", $createBtn = 'Add New Category'])--}}
     @endsection
-</h1>
 @section('main-content')
     <div class="row">
         <div class="col-xs-12">

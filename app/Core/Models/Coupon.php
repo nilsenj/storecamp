@@ -2,7 +2,7 @@
 
 namespace App\Core\Models;
 
-use App\Core\Classes\Nestedset\QueryBuilder;
+use App\Core\Support\Nestedset\QueryBuilder;
 use App\Core\Contracts\CouponInterface;
 use Illuminate\Database\Eloquent\Model;
 use App\Core\Traits\GeneratesUnique;

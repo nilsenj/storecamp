@@ -188,7 +188,7 @@ class Orders extends Model implements Transformable, OrderInterface
      * @param string $statusCode
      * @return bool
      */
-    public function is(string $statusCode): bool
+    public function isStatus(string $statusCode): bool
     {
         return $this->attributes['statusCode'] == $statusCode;
     }

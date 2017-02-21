@@ -16,7 +16,7 @@ class MakeViewCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:view {view} {for?}';
+    protected $signature = 'storecamp:view {view} {for?}';
 
     /**
      * The console command description.

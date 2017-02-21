@@ -1,20 +1,36 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+/**
+ * Client routes
+ */
+$this->group(['prefix' => '/', 'as' => 'site::'], function(\Illuminate\Routing\Router $router) {
+    $router->get('/', [
+        'uses' => 'Site\IndexController@home',
+        'as' => 'home'
+    ]);
+    $router->get('/home', function () {
+        return redirect()->route('site::home');
+    });
 
-$this->group(['prefix' => 'shop', 'as' => 'shop::'], function (\Illuminate\Routing\Router $router) {
+    $this->group(['prefix' => 'products', 'as' => 'products::'], function () {
+        $this->get('index/{category?}', [
+            'uses' => 'Site\ProductController@index',
+            'as' => 'index'
+        ]);
+        $this->get('show/{product?}', [
+            'uses' => 'Site\ProductController@show',
+            'as' => 'show'
+        ]);
+    });
+
+    /**
+     * site payment callbacks
+     */
     $router->get('callback/payment/{status}/{id}/{shoptoken}', ['as' => 'callback', 'uses' => 'Site\CallbackController@process']);
     $router->post('callback/payment/{status}/{id}/{shoptoken}', ['as' => 'callback', 'uses' => 'Site\CallbackController@process']);
 });
+
+
 /**
  * @param $this \Illuminate\Routing\Route
  */
@@ -23,10 +39,6 @@ $this->get('password/reset', 'Auth\ResetPasswordController@showResetForm');
 $this->get('password/reset/{token}', 'Auth\PasswordController@getReset');
 $this->post('password/reset', 'Auth\PasswordController@postReset');
 
-$this->get('/', [
-    'uses' => 'HomeController@index',
-    'as' => 'home::'
-]);
 
 $this->get('/htmlElements', [
     'uses' => 'Admin\AdminController@htmlElements',
@@ -36,7 +48,6 @@ $this->get('/htmlElements', [
 Auth::routes();
 $this->get('/logout', ['uses' => 'Auth\LoginController@logout']);
 
-$this->get('/home', 'HomeController@home');
 $this->group(
     ['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], function () {
 
@@ -705,6 +716,15 @@ $this->group(
                 'uses' => 'Admin\AuditsController@show',
                 'as' => 'show'
             ]);
+    });
+
+    $this->group(['prefix' => 'sales', 'as' => 'sales::'], function () {
+        $this->group(['prefix' => 'orders', 'as' => 'orders::'], function () {
+            $this->get('/', [
+                'uses' => 'Admin\OrdersController@index',
+                'as' => 'index'
+            ]);
+        });
     });
 });
 

@@ -65,6 +65,8 @@ class Navbar extends RenderedObject
      */
     protected $fluid = false;
 
+    protected $domId;
+
     /**
      * Creates a new Navbar
      *
@@ -86,11 +88,11 @@ class Navbar extends RenderedObject
             $this->attributes,
             [
                 'class' => "navbar {$this->type} {$this->position}",
+                'id' => "{$this->domId}",
                 'role' => 'navigation'
             ]
         );
-
-        $string = "<div {$attributes}>";
+        $string = "<div {$attributes} >";
         $string .= $this->fluid ?
             "<div class='container-fluid'>" :
             "<div class='container'>";
@@ -247,6 +249,17 @@ class Navbar extends RenderedObject
     public function setPosition($position)
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * @param string $domId
+     * @return $this
+     */
+    public function setId(string $domId)
+    {
+        $this->domId = $domId;
 
         return $this;
     }

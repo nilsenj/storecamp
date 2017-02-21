@@ -1,6 +1,7 @@
 <?php
 namespace App\Core\Generators\Commands;
 
+use App\Core\Generators\MigrationGenerator;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,7 +15,7 @@ class EntityCommand extends Command
      *
      * @var string
      */
-    protected $name = 'make:entity';
+    protected $name = 'storecamp:entity';
 
     /**
      * The description of command.
@@ -35,7 +36,7 @@ class EntityCommand extends Command
      */
     public function fire()
     {
-        $this->call('make:repository', [
+        $this->call('storecamp:repository', [
             'name'       => $this->argument('name'),
             '--fillable' => $this->option('fillable'),
             '--rules'    => $this->option('rules'),
@@ -43,10 +44,20 @@ class EntityCommand extends Command
         ]);
 
         if ($this->confirm('Would you like to create a Presenter? [y|N]')) {
-            $this->call('make:presenter', [
+            $this->call('storecamp:presenter', [
                 'name'    => $this->argument('name'),
                 '--force' => $this->option('force'),
             ]);
+        }
+        if($this->confirm('Would you like to create a Migration? [y|N]')) {
+            (new MigrationGenerator([
+                'name'  => "create_".$this->argument('name'),
+                'action' => null,
+                'table'  => $this->argument('name')."Table",
+                'fields_up'  => null,
+                'fields_down'  => null,
+                'force' => $this->option('force'),
+            ]))->run();
         }
     }
 

@@ -5,7 +5,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
 
-@include('partials.htmlheader')
+@include('site.partials.htmlheader')
 
 <!--
 BODY TAG OPTIONS:
@@ -27,39 +27,33 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-@yield("styles-add")
-<body class="fixed sidebar-mini skin-blue-light">
+@yield('styles-add')
+<body class="hold-transition layout-top-nav">
 <div class="wrapper">
-
-    {{--@include('partials.mainheader')--}}
-
-    {{--@include('partials.sidebar')--}}
-
+    @include('site.partials.mainheader')
+    <div class="container-fluid">
     <!-- Content Wrapper. Contains page content -->
-        {{--@include('partials.contentheader')--}}
-
+        @include('site.partials.contentheader')
+        <div class="clearfix"></div>
         <!-- Main content -->
         <section class="content">
-            @if (Session::has('flash_notification.message'))
-                <div class="alert alert-{{ Session::get('flash_notification.level') }}">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-
-                    {{ Session::get('flash_notification.message') }}
-                </div>
-            @endif
-            <!-- Your Page Content Here -->
-            @yield('main-content')
-
+            <div id="alerts" style="display: block; height: auto; width: 100%; background: whitesmoke">
+                @include('components.flash.message')
+            </div>
+            <div class="col-md-3">
+                @include('site.partials.sidebar')
+            </div>
+        <!-- Your Page Content Here -->
+            <div class="col-md-9">
+                @yield('breadcrumbs')
+                @yield('main-content')
+            </div>
         </section><!-- /.content -->
-    </div><!-- /.content-wrapper -->
-
-    {{--@include('partials.controlsidebar')--}}
-
-
+    </div>
+</div>
 @include('partials.scripts')
 @yield("scripts-add")
-<script>
-</script>
+@stack('scripts-add_on')
 {!! Toastr::render() !!}
 </body>
 </html>

@@ -1,5 +1,4 @@
-@extends('admin/app')
-<h1>
+@extends("admin/app")
     @section('breadcrumb')
         {!! Breadcrumbs::render('products', 'Products') !!}
     @endsection
@@ -7,8 +6,7 @@
     @section('contentheader_description')
         @include('admin.partial._content-head_btns', [$routeName = "admin::products::create", $createBtn = 'Add new product'])
     @endsection
-</h1>
-@section('main-content')
+@section("main-content")
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
@@ -31,7 +29,7 @@
                         <th>Stock Status</th>
                         <th>Review</th>
                         <th>Created At</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center"><em class="fa fa-cog"></em> Actions</th>
                         </thead>
                         <tbody>
                         @foreach ($products as $product)
@@ -62,15 +60,13 @@
                                         <i class="fa fa-eye"></i> Make review</a>
                                 </td>
                                 <td>{{ $product->created_at }}</td>
-                                <td class="text-center">
-
-                                    <a class="edit" href="{{ route('admin::products::edit', $product->unique_id) }}"
+                                <td align="center">
+                                    <a class="btn btn-default edit" href="{{ route('admin::products::edit', $product->unique_id) }}"
                                        title="Edit">
-                                        <i class="fa fa-pencil-square-o"></i></a>
-                                    <a class="delete text-warning"
+                                        <em class="fa fa-pencil"></em></a>
+                                    <a class="btn btn-danger delete text-warning"
                                        href="{{ route('admin::products::get::delete', $product->unique_id) }}"
-                                       title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
-
+                                       title="Are you sure you want to delete?"><em class="fa fa-trash"></em></a>
                                 </td>
                             </tr>
                             <?php $no++;?>
@@ -85,4 +81,3 @@
         {{ $products->links() }}
     </div>
 @endsection
-@include('admin.components.modal-description', [$attrName = "activity"])

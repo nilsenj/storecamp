@@ -209,22 +209,33 @@
 
   (function($) {
     var items;
-    items = [$('.sidebar-menu'), $('.media_tags')];
+    items = [$('.sidebar-menu'), $('.media_tags'), $('.site_sidebar')];
     items.forEach(function(item, i, arr) {
-      var anchor, current, definedLinks, nav, results;
+      var makeAnchorActive, nav;
       nav = item;
-      anchor = nav.find('a');
-      current = window.location.href;
-      i = 0;
-      results = [];
-      while (i < anchor.length) {
-        definedLinks = anchor[i].href;
-        if (definedLinks === current) {
-          $(anchor[i]).parent().addClass('active');
+      makeAnchorActive = function(navigtation) {
+        var activeParents, anchor, current, definedLinks, results;
+        anchor = navigtation.find('a');
+        current = window.location.href;
+        i = 0;
+        results = [];
+        while (i < anchor.length) {
+          definedLinks = anchor[i].href;
+          if (definedLinks === current) {
+            activeParents = nav.attr('data-active-parents');
+            if (activeParents) {
+              $(anchor[i]).parent().parent().closest('li').addClass('active');
+              $(anchor[i]).parent().addClass('active');
+            } else {
+
+            }
+            $(anchor[i]).parent().addClass('active');
+          }
+          results.push(i++);
         }
-        results.push(i++);
-      }
-      return results;
+        return results;
+      };
+      return makeAnchorActive(nav);
     });
   })($);
 

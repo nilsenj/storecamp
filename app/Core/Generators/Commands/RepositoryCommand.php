@@ -17,7 +17,7 @@ class RepositoryCommand extends Command
      *
      * @var string
      */
-    protected $name = 'make:repository';
+    protected $name = 'storecamp:repository';
 
     /**
      * The description of command.

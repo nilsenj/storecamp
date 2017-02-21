@@ -1,5 +1,4 @@
 @extends('admin/app')
-<h1>
     @section('breadcrumb')
         {!! Breadcrumbs::render('reviews', 'reviews')  !!}
     @endsection
@@ -9,7 +8,6 @@
     @section('contentheader_description')
         @include('admin.partial._content-head_btns', [$routeName = "admin::reviews::index", $createBtn = 'Back', $showFilters = false])
     @endsection
-</h1>
 @section('main-content')
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">

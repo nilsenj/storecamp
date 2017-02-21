@@ -23,12 +23,5 @@ class CartItemsSeeder extends Seeder
      */
     public function run()
     {
-        $products = \App\Core\Models\Product::all();
-
-        foreach ($products as $product) {
-            $cart = $this->cartSystem->add($product, 1, ["some" => "option"]);
-            $this->cartSystem->store($cart->rowId);
-//            $this->cartSystem->restore($cart->rowId);// Just for  test
-        }
     }
 }

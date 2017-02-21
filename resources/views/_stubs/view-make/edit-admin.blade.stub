@@ -1,13 +1,11 @@
 <?php $model = ''; ?>{{--specify the model here--}}
 @extends('admin.app')
-<h1>
     @section('contentheader_title')
         Edit $VIEW$
     @endsection
     @section('contentheader_description')
         <b>{!! link_to_route("admin::$VIEW$::index", 'Back') !!}</b>
     @endsection
-</h1>
 @section('main-content')
     {!! Form::model($model, ['route' => ["admin::$VIEW$::update", $model], 'method' => 'PUT', 'class' => '']) !!}
     <div class="nav-tabs-custom">

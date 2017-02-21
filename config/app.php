@@ -180,6 +180,14 @@ return [
         //Instances Providers
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        \RepositoryLab\Repository\RepositoryServiceProvider::class,
+        App\Providers\PresentersServiceProvider::class,
+        App\Providers\RepositoriesServiceProvider::class,
+        App\Providers\TransformersServiceProvider::class,
+        \Robbo\Presenter\PresenterServiceProvider::class,
+        \App\Providers\LogicServiceProvider::class,
+        \App\Providers\SupportProvider::class,
+        \App\Providers\ViewComposerServiceProvider::class,
 
         \App\Providers\AttributeGroupDescriptionServiceProvider::class,
         \App\Providers\AttributeGroupServiceProvider::class,
@@ -196,7 +204,6 @@ return [
         \App\Core\Components\EmailMarketer\EmailMarketerServiceProvider::class,
         \App\Core\Components\Messenger\MessengerServiceProvider::class,
         \App\Core\Components\Auditing\AuditingServiceProvider::class,
-        \App\Providers\LogicServiceProvider::class,
         \App\Providers\MailServiceProvider::class,
         \App\Providers\MenuBuilderProvider::class,
         //Apis service providers
@@ -217,11 +224,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
         \Cviebrock\ImageValidator\ImageValidatorServiceProvider::class,
-        \RepositoryLab\Repository\RepositoryServiceProvider::class,
-        App\Providers\PresentersServiceProvider::class,
-        App\Providers\RepositoriesServiceProvider::class,
-        App\Providers\TransformersServiceProvider::class,
-        \Robbo\Presenter\PresenterServiceProvider::class,
+
         Plank\Mediable\MediableServiceProvider::class,
         That0n3guy\Transliteration\TransliterationServiceProvider::class,
         App\Core\Components\ActiveItem\ActiveServiceProvider::class,

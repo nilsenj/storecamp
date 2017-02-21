@@ -11,7 +11,7 @@ class PhpUnitPrepareCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'run:phpunit';
+    protected $signature = 'storecamp:run:phpunit';
 
     /**
      * The console command description.

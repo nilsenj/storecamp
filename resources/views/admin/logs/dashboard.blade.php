@@ -1,5 +1,4 @@
-@extends('admin.app')
-<h1>
+@extends('admin/app')
     @section('breadcrumb')
         {!! Breadcrumbs::render('LogsDashboard', 'DashBoard') !!}
     @endsection
@@ -24,7 +23,6 @@
             </b>
         @endif
     @endsection
-</h1>
 @section('main-content')
     <div class="row">
         <div class="col-xs-12">

@@ -11,5 +11,5 @@ use App\Core\Models\Product;
  */
 interface ProductSystemContract extends BaseLogicContract
 {
-
+    public function categorized(array $data, $category, array $with = []);
 }

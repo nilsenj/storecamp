@@ -1,13 +1,12 @@
 @extends('admin/app')
-<h1>
     @section('breadcrumb')
         {!! Breadcrumbs::render('reviews', 'Product reviews') !!}
     @endsection
     @include('admin.partial._contentheader_title', [$model = $productReviews, $message = "All Product Reviews"])
     @section('contentheader_description')
-{{--            @include('admin.partial._content-head_btns', [$routeName = "admin::reviews::create", $createBtn = 'Add New Product Review'])--}}
+            @include('admin.partial._content-head_btns', [$routeName = "admin::products::index", $createBtn = 'Get Product For Review'])
     @endsection
-</h1>
+
 @section('main-content')
     <div class="row">
         <div class="col-xs-2">
@@ -57,7 +56,7 @@
                         <th>Hidden</th>
                         <th>Author</th>
                         <th>Created</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center"><em class="fa fa-cog"></em> Actions</th>
                         </thead>
                         <tbody>
                         @foreach ($productReviews as $key => $productReview)
@@ -80,17 +79,16 @@
                                     </a>
                                 </td>
                                 <td>{{ $productReview->created_at }}</td>
-                                <td class="">
+                                <td align="center">
                                     <div class="btn-group">
-                                        <a class="show" href="{{ route('admin::reviews::show', $productReview->id) }}" title="Show and Reply">
-                                            <i class="fa fa-eye"></i> Show and Reply
+                                        <a class="btn btn-default show" href="{{ route('admin::reviews::show', $productReview->id) }}" title="Show and Reply">
+                                            <em class="fa fa-eye"></em>
                                         </a>
-                                        <a class="edit" href="{{ route('admin::reviews::edit', $productReview->id) }}" title="Edit">
-                                            <i class="fa fa-pencil-square-o"></i> Edit
+                                        <a class="btn btn-default edit" href="{{ route('admin::reviews::edit', $productReview->id) }}" title="Edit">
+                                            <em class="fa fa-pencil"></em>
                                         </a>
-                                        <a class="delete text-warning" href="{{ route('admin::reviews::get.delete', $productReview->id) }}"
-                                           title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i>
-                                            Delete
+                                        <a class="btn btn-danger delete text-warning" href="{{ route('admin::reviews::get.delete', $productReview->id) }}"
+                                           title="Are you sure you want to delete?"><em class="fa fa-trash"></em>
                                         </a>
                                     </div>
                                 </td>

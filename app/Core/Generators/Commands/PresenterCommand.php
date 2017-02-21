@@ -15,7 +15,7 @@ class PresenterCommand extends Command
      *
      * @var string
      */
-    protected $name = 'make:presenter';
+    protected $name = 'storecamp:presenter';
 
     /**
      * The description of command.
@@ -38,7 +38,7 @@ class PresenterCommand extends Command
         $this->info("Presenter created successfully.");
 
 
-        if (!\File::exists(app_path() . '/Transformers/' . $this->argument('name') . 'Transformer.php')) {
+        if (!\File::exists(app_path() . '/Core/Transformers/' . $this->argument('name') . 'Transformer.php')) {
             if ($this->confirm('Would you like to create a Transformer? [y|N]')) {
                 (new TransformerGenerator([
                     'name'  => $this->argument('name'),

@@ -37,8 +37,6 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
-
 @push('scripts-add_on')
 <script>
     $(function () {

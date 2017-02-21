@@ -15,7 +15,7 @@ class TransformerCommand extends Command
      *
      * @var string
      */
-    protected $name = 'make:transformer';
+    protected $name = 'storecamp:transformer';
 
     /**
      * The description of command.

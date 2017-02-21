@@ -15,7 +15,7 @@ namespace App\Core\Gateways;
 use App\Core\Exceptions\CheckoutException;
 use App\Core\Exceptions\GatewayException;
 use App\Core\Exceptions\ShopException;
-use App\Core\Classes\PaymentGateway;
+use App\Core\Support\PaymentGateway;
 use App\Core\Models\Orders;
 
 class GatewayFail extends PaymentGateway

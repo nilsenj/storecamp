@@ -43,16 +43,12 @@ desired effect
             </div>
             <!-- Your Page Content Here -->
             @yield('main-content')
-
         </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
-
     @include('partials.controlsidebar')
-
 </div><!-- ./wrapper -->
-
 @include('partials.scripts')
-@yield("scripts-add")
+@yield('scripts-add')
 @stack('scripts-add_on')
 {!! Toastr::render() !!}
 </body>

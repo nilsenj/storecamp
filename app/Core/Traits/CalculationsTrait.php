@@ -15,7 +15,7 @@ trait CalculationsTrait
      *
      * @return int
      */
-    public function getCountAttribute()
+    public function getCountAttribute(): int
     {
         if (empty($this->shopCalculations)) $this->runCalculations();
         return round($this->shopCalculations->itemCount, 2);
@@ -25,7 +25,7 @@ trait CalculationsTrait
      *
      * @return float
      */
-    public function getTotalPriceAttribute()
+    public function getTotalPriceAttribute(): float
     {
         if (empty($this->shopCalculations)) $this->runCalculations();
         return round($this->shopCalculations->totalPrice, 2);
@@ -35,7 +35,7 @@ trait CalculationsTrait
      *
      * @return float
      */
-    public function getTotalTaxAttribute()
+    public function getTotalTaxAttribute(): float
     {
         if (empty($this->shopCalculations)) $this->runCalculations();
         return round($this->shopCalculations->totalTax + ($this->totalPrice * config('shop.tax')), 2);
@@ -45,7 +45,7 @@ trait CalculationsTrait
      *
      * @return float
      */
-    public function getTotalShippingAttribute()
+    public function getTotalShippingAttribute(): float
     {
         if (empty($this->shopCalculations)) $this->runCalculations();
         return round($this->shopCalculations->totalShipping, 2);
@@ -55,13 +55,13 @@ trait CalculationsTrait
      *
      * @return float
      */
-    public function getTotalDiscountAttribute() { /* TODO */ }
+    public function getTotalDiscountAttribute(): float { /* TODO */ }
     /**
      * Returns total amount to be charged base on total price, tax and discount.
      *
      * @return float
      */
-    public function getTotalAttribute()
+    public function getTotalAttribute(): float
     {
         if (empty($this->shopCalculations)) $this->runCalculations();
         return $this->totalPrice + $this->totalTax + $this->totalShipping;
@@ -71,7 +71,7 @@ trait CalculationsTrait
      *
      * @return string
      */
-    public function getDisplayTotalPriceAttribute()
+    public function getDisplayTotalPriceAttribute(): string
     {
         return shopFormat($this->totalPrice);
     }
@@ -80,7 +80,7 @@ trait CalculationsTrait
      *
      * @return string
      */
-    public function getDisplayTotalTaxAttribute()
+    public function getDisplayTotalTaxAttribute(): string
     {
         return shopFormat($this->totalTax);
     }
@@ -89,7 +89,7 @@ trait CalculationsTrait
      *
      * @return string
      */
-    public function getDisplayTotalShippingAttribute()
+    public function getDisplayTotalShippingAttribute(): string
     {
         return shopFormat($this->totalShipping);
     }
@@ -98,13 +98,13 @@ trait CalculationsTrait
      *
      * @return string
      */
-    public function getDisplayTotalDiscountAttribute() { /* TODO */ }
+    public function getDisplayTotalDiscountAttribute(): string { /* TODO */ }
     /**
      * Returns formatted total amount to be charged base on total price, tax and discount.
      *
      * @return string
      */
-    public function getDisplayTotalAttribute()
+    public function getDisplayTotalAttribute(): string
     {
         return shopFormat($this->total);
     }
@@ -114,7 +114,7 @@ trait CalculationsTrait
      *
      * @return string.
      */
-    public function getCalculationsCacheKeyAttribute()
+    public function getCalculationsCacheKeyAttribute(): string
     {
         return 'shop_' . $this->table . '_' . $this->attributes['id'] . '_calculations';
     }

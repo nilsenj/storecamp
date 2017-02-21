@@ -1,5 +1,4 @@
 ﻿@extends('admin/app')
-<h1>
     @section('breadcrumb')
         {!! Breadcrumbs::render('users', 'Attributes') !!}
     @endsection
@@ -7,7 +6,6 @@
     @section('contentheader_description')
           @include('admin.partial._content-head_btns', [$routeName = "admin::attributes::create", $createBtn = 'Add New Attribute'])
     @endsection
-</h1>
 @section('main-content')
     <div class="row">
         <div class="col-xs-12">
@@ -26,7 +24,7 @@
                         <th>Attribute Group</th>
                         <th>Sort Order</th>
                         <th>Created</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center"><em class="fa fa-cog"></em> Actions</th>
                         </thead>
                         <tbody>
                         @foreach ($groupDescriptions as $groupDescription)
@@ -37,13 +35,13 @@
                                 <td>{{ $groupDescription->sort_order }}</td>
                                 <td>{{ $groupDescription->created_at }}</td>
                                 <td class="text-center">
-                                    <a class="edit"
+                                    <a class="btn btn-default edit"
                                        href="{{ route('admin::attributes::edit', $groupDescription->unique_id) }}"
                                        title="Edit">
-                                        <i class="fa fa-pencil-square-o"></i></a>
-                                    <a class="delete text-warning"
+                                        <em class="fa fa-pencil-square-o"></em></a>
+                                    <a class="btn btn-danger delete text-warning"
                                        href="{{ route('admin::attributes::get::delete', $groupDescription->unique_id) }}"
-                                       title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
+                                       title="Are you sure you want to delete?"><em class="fa fa-trash-o"></em></a>
                                 </td>
                             </tr>
                             <?php $no++;?>

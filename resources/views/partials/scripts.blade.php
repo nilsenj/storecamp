@@ -3,7 +3,6 @@
 <!-- jQuery 2.1.4 -->
 
 <script src="{{ asset('custom_vendors/jQuery/jQuery-2.1.4.min.js') }}"></script>
-<script src="{{ asset('custom_vendors/jQueryUI/jquery-ui-1.10.3.min.js') }}" type="text/javascript"></script>
 
 <!-- Bootstrap 3.3.2 JS -->
 <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}" type="text/javascript"></script>
@@ -167,5 +166,4 @@
       user experience. Slimscroll is required when using the
       fixed layout. -->
 <script src="{{asset("js/modules.js")}}"></script>
-@yield('scripts_add')
 <a data-toggle="modal" style="display: none" href="#generic" class="hidden modal-auto-Trigger">Trigger Modal</a>

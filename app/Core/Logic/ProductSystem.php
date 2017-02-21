@@ -4,7 +4,9 @@ namespace App\Core\Logic;
 
 
 use App\Core\Contracts\ProductSystemContract;
+use App\Core\Models\Category;
 use App\Core\Repositories\AttributeGroupDescriptionRepository;
+use App\Core\Repositories\CategoryRepository;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Traits\MediableCore;
 
@@ -52,6 +54,27 @@ class ProductSystem implements ProductSystemContract
             } else {
                 $products = $this->productRepository->newest()->paginate();
             }
+        }
+        return $products;
+    }
+
+    /**
+     * @param array $data
+     * @param $category
+     * @param array $with
+     * @return mixed
+     */
+    public function categorized(array $data, $category, array $with = [])
+    {
+        // receive CategoryRepository from IOC container
+        $categoryInstance = app(CategoryRepository::class);
+
+        $category = $categoryInstance->findOrFail($category);
+
+        if (!empty($with)) {
+            $products = $this->productRepository->with($with)->categorized($category)->paginate();
+        } else {
+            $products = $this->productRepository->categorized($category)->paginate();
         }
         return $products;
     }

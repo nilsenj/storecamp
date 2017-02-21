@@ -1,6 +1,5 @@
 <?php $model = ''; ?>{{--specify the model here--}}
 @extends('admin.app')
-<h1>
     @section('contentheader_title')
         Create new orders
     @endsection
@@ -8,7 +7,6 @@
 
         <b>{{ link_to_route("admin::orders::index", 'Back') }}</b>
     @endsection
-</h1>
 @section('main-content')
     <div>
         {{ Form::open(['files' => true, 'route' => "admin::orders::store"]) }}

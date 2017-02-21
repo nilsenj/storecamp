@@ -1,14 +1,5 @@
-<?php $model = ''; ?>{{--specify the model here--}}
-@extends('admin.app')
-<h1>
-    @section('breadcrumb')
-        {{--{{ Breadcrumbs::render('', '') }}--}}
-    @endsection
-    @include('admin.partial._contentheader_title', [$model, $message = "All orders'])
-    @section('contentheader_description')
-        <b>{{ link_to_route("admin::orders::create", 'Add New orders') }}</b>
-    @endsection
-</h1>
+@extends('admin/app')
+
 @section('main-content')
     <div class="row">
         <div class="col-xs-12">
@@ -23,14 +14,72 @@
                     <table class="table table-hover">
                         <thead>
                         <th>#</th>
-                        <th>Name</th>
-                        <th>Created</th>
-                        <th class="text-center">Actions</th>
+                        <th>Order ID</th>
+                        <th>Item</th>
+                        <th>Status</th>
+                        <th>Popularity</th>
+                        <th class="text-center">Actions <em class="fa fa-cog"></em></th>
                         </thead>
                         <tbody>
+                        <tr>
+                            <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                            <td>Call of Duty IV</td>
+                            <td><span class="label label-success">Shipped</span></td>
+                            <td>
+                                <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                            <td>Samsung Smart TV</td>
+                            <td><span class="label label-warning">Pending</span></td>
+                            <td>
+                                <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                            <td>iPhone 6 Plus</td>
+                            <td><span class="label label-danger">Delivered</span></td>
+                            <td>
+                                <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                            <td>Samsung Smart TV</td>
+                            <td><span class="label label-info">Processing</span></td>
+                            <td>
+                                <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                            <td>Samsung Smart TV</td>
+                            <td><span class="label label-warning">Pending</span></td>
+                            <td>
+                                <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                            <td>iPhone 6 Plus</td>
+                            <td><span class="label label-danger">Delivered</span></td>
+                            <td>
+                                <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                            <td>Call of Duty IV</td>
+                            <td><span class="label label-success">Shipped</span></td>
+                            <td>
+                                <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+                            </td>
+                        </tr>
+
                         </tbody>
                     </table>
-
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div>

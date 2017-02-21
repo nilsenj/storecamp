@@ -1,5 +1,4 @@
 ﻿@extends('admin/app')
-<h1>
     @section('breadcrumb')
         {!! Breadcrumbs::render('media', $disk) !!}
     @endsection
@@ -7,7 +6,6 @@
     @section('contentheader_description')
                 @include('admin.media.navigation_path')
     @endsection
-</h1>
 @section('main-content')
     <div class="row">
         <div class="col-xs-12">

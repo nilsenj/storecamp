@@ -1,5 +1,4 @@
 ﻿@extends('admin/app')
-<h1>
     @section('breadcrumb')
         {!! Breadcrumbs::render('users', 'Attributes') !!}
     @endsection
@@ -7,7 +6,6 @@
     @section('contentheader_description')
         @include('admin.partial._content-head_btns', [$routeName = "admin::mail::create", $createBtn = 'Compose Campaign'])
     @endsection
-</h1>
 @section('main-content')
     <!-- Main content -->
     <div class="row">

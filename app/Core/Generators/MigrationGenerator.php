@@ -3,6 +3,7 @@
 namespace App\Core\Generators;
 use App\Core\Generators\Migrations\NameParser;
 use App\Core\Generators\Migrations\SchemaParser;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 /**
  * Class MigrationGenerator
@@ -68,7 +69,7 @@ class MigrationGenerator extends Generator
      */
     public function getFileName()
     {
-        return date('Y_m_d_His_') . $this->getMigrationName();
+        return date('Y_m_d_His_') . $this->action .'_'. $this->getMigrationName() .'_table';
     }
     /**
      * Get schema parser.
@@ -96,12 +97,71 @@ class MigrationGenerator extends Generator
     public function getStub()
     {
         $parser = $this->getNameParser();
+        $action = $parser->getAction();
+        switch ($action) {
+            case 'add':
+            case 'append':
+            case 'update':
+            case 'insert':
+                $file = 'change';
+                $replacements = [
+                    'class'       => $this->getClass(),
+                    'table'       => $parser->getTable(),
+                    'fields_up'   => $this->getSchemaParser()->up(),
+                    'fields_down' => $this->getSchemaParser()->down(),
+                ];
+                break;
+            case 'delete':
+            case 'remove':
+            case 'alter':
+                $file = 'change';
+                $replacements = [
+                    'class'       => $this->getClass(),
+                    'table'       => $parser->getTable(),
+                    'fields_down' => $this->getSchemaParser()->up(),
+                    'fields_up'   => $this->getSchemaParser()->down(),
+                ];
+                break;
+            default:
+                $file = 'create';
+                $replacements = [
+                    'class'  => $this->getClass(),
+                    'table'  => $parser->getTable(),
+                    'fields' => $this->getSchemaParser()->up(),
+                ];
+                break;
+        }
+        $path = __DIR__;
+        if (!file_exists($path . "/Stubs/migration/{$file}.stub")) {
+            throw new FileNotFoundException($path . "/Stubs/migration/{$file}.stub");
+        }
+        return Stub::create($path . "/Stubs/migration/{$file}.stub", $replacements);
+    }
 
-        return Stub::create(__DIR__ . '/Stubs/migration/add.stub', [
-            'class' => $this->getClass(),
-            'table' => $parser->getTable(),
-            'fields_up' => $this->getSchemaParser()->up(),
-            'fields_down' => $this->getSchemaParser()->down()
-        ]);
+    /**
+     * @param bool $backup
+     * @return string
+     * @throws FileAlreadyExistsException
+     */
+    protected function checkFileExists($backup = false)
+    {
+        $path = $this->getPath();
+        if ( $this->checkMigrationExists() && !$this->force) {
+            if (! $backup) {
+                throw new FileAlreadyExistsException($this->getMigrationName());
+            }
+        }
+        return $path;
+    }
+    /**
+     * Check if migration exists.
+     *
+     * @return bool
+     */
+    protected function checkMigrationExists()
+    {
+        $iterator = new \FilesystemIterator(dirname($this->getPath()));
+        $filter = new \RegexIterator($iterator, '/' . $this->getMigrationName() . '.php$/');
+        return iterator_count($filter);
     }
 }

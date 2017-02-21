@@ -1,5 +1,4 @@
 @extends('admin/app')
-<h1>
     @section('breadcrumb')
         {!! Breadcrumbs::render('users', 'Attributes') !!}
     @endsection
@@ -7,8 +6,6 @@
     @section('contentheader_description')
         <b>{{ link_to_route('admin::attributes::create', 'Compose Email Campaign') }}</b>
     @endsection
-</h1>
-
 @section('main-content')
 <!-- Content Header (Page header) -->
 <section class="content-header">

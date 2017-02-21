@@ -67,9 +67,10 @@
       "app/Core/Observers",
       "app/Core/Contracts",
       "app/Core/Logic",
-      "app/Core/Classes",
+      "app/Core/Support",
       "app/Core/Generators",
       "app/Core/Components",
+      "app/Core/Http/Composers",
       "app/Core/MailComposers",
       "app/Core/Components/EmailMarketer",
       "app/Core/Drivers/FolderToDb"
@@ -93,7 +94,8 @@
       "App\\Core\\Contracts\\": "app/Core/Contracts/",
       "App\\Core\\Policies\\": "app/Core/Policies/",
       "App\\Core\\Traits\\": "app/Core/Traits/",
-      "App\\Core\\Classes\\": "app/Core/Classes/",
+      "App\\Core\\Http\\Composers\\": "App/Core/Http/Composers/",
+      "App\\Core\\Support\\": "app/Core/Support/",
       "App\\Core\\Generators\\": "app/Core/Generators/",
       "App\\Core\\APIs\\": "app/Core/APIs/",
       "App\\Core\\APIs\\Youtube\\": "app/Core/APIs/Youtube/",
@@ -142,6 +144,7 @@
     ],
     "post-update-cmd": [
       "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+      "php artisan ide-helper:generate",
       "php artisan ide-helper:meta",
       "php artisan optimize"
     ]

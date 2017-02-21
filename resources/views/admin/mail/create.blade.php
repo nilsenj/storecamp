@@ -1,5 +1,4 @@
 @extends('admin/app')
-<h1>
     @section('breadcrumb')
         {{--{{ Breadcrumbs::render('admin') }}--}}
         {!! Breadcrumbs::render('attributes', 'Attributes') !!}
@@ -11,7 +10,6 @@
         &middot;
         <b>{{ link_to_route('admin::attributes::index', 'Back') }}</b>
     @endsection
-</h1>
 @section('main-content')
     <div>
         <div class="nav-tabs-custom">

@@ -11,17 +11,18 @@
      @endif
      data-href="{{ $file->getUrl() }}">
     <div class="pull-left text-muted">
-    @if($file->aggregate_type == "image")
-        <img src="{{$file->getUrl()}}" class="item-icons" alt="{{$file->filename}}">
-    @else
-        <i class="{{ $icon }}"></i>
-    @endif
+        @if($file->aggregate_type == "image")
+            <img src="{{$file->getUrl()}}" class="item-icons" alt="{{$file->filename}}">
+        @else
+            <i class="{{ $icon }}"></i>
+        @endif
     </div>
     <div class="media-body">
         <div>
             <div class="pull-right inline items-list">
                 <a class="btn info-btn btn-default btn-xs" data-name="{{ $file->filename }}"
-                   data-id="{{ $file->id }}" data-url="{{$file->getUrl()}}" data-toggle="modal" type="rename" role="button"
+                   data-id="{{ $file->id }}" data-url="{{$file->getUrl()}}" data-toggle="modal" type="rename"
+                   role="button"
                    href="#info-modal">
                     <i class="fa fa-play" aria-hidden="true"></i>
                     info

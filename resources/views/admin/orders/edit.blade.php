@@ -1,13 +1,11 @@
 <?php $model = ''; ?>{{--specify the model here--}}
 @extends('admin.app')
-<h1>
     @section('contentheader_title')
         Edit orders
     @endsection
     @section('contentheader_description')
         <b>{{ link_to_route("admin::orders::index", 'Back') }}</b>
     @endsection
-</h1>
 @section('main-content')
     {{ Form::model($model, ['route' => ["admin::orders::update", $model], 'method' => 'PUT', 'class' => '']) }}
     <div class="nav-tabs-custom">

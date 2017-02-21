@@ -1,5 +1,4 @@
 ﻿@extends('admin/app')
-<h1>
     @section('breadcrumb')
         {!! Breadcrumbs::render('users', 'Users') !!}
     @endsection
@@ -7,8 +6,6 @@
     @section('contentheader_description')
             @include('admin.partial._content-head_btns', [$routeName = "admin::users::create", $createBtn = 'Add New User'])
     @endsection
-</h1>
-
 @section('main-content')
     @if(isset($search))
         @include('admin::users.search-form')
@@ -30,7 +27,7 @@
                         <th>Email</th>
                         <th>Created</th>
                         <th>Role</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center"><em class="fa fa-cog"></em> Actions</th>
                         </thead>
                         <tbody>
                         @foreach ($users as $user)
@@ -44,12 +41,12 @@
                                         {{ $role->name }}
                                     @endforeach</td>
                                 <td class="text-center">
-                                    <a class="edit" href="{{ route('admin::users::edit', $user->unique_id) }}"
+                                    <a class="btn btn-default edit" href="{{ route('admin::users::edit', $user->unique_id) }}"
                                        title="Edit">
-                                        <i class="fa fa-pencil-square-o"></i></a>
-                                    <a class="delete text-warning"
+                                        <em class="fa fa-pencil-square-o"></em></a>
+                                    <a class="btn btn-danger delete text-warning"
                                        href="{{ route('admin::users::get::delete', $user->unique_id) }}"
-                                       title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
+                                       title="Are you sure you want to delete?"><em class="fa fa-trash-o"></em></a>
                                 </td>
                             </tr>
                             <?php $no++;?>

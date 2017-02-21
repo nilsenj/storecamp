@@ -1,4 +1,8 @@
-<?php $user = Auth::user() ? Auth::user() : null; ?>
+<?php
+/**
+ * @param $auth \Illuminate\Auth\AuthManager
+ */
+$user = $auth->user() ? $auth->user() : null; ?>
 <!-- Main Header -->
 <header class="main-header">
     <!-- Logo -->
@@ -8,7 +12,6 @@
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg navbar-brand"><img style="" src="{{asset('img/Logo!.png')}}" alt="{{env('APP_NAME')}}"/></span>
     </a>
-
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top"  role="navigation">
         <!-- Sidebar toggle button-->

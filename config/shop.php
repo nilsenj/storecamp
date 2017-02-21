@@ -90,14 +90,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Item Model
+    | Product Model
     |--------------------------------------------------------------------------
     |
     | This is the Item model used by LaravelShop to create correct relations.
     | Update the model if it is in a different namespace.
     |
     */
-    'item' => 'App\Core\Product',
+    'product' => 'App\Core\Product',
 
     /*
     |--------------------------------------------------------------------------
@@ -107,7 +107,29 @@ return [
     | This is the table used by LaravelShop to save cart data to the database.
     |
     */
-    'item_table' => 'products',
+    'product_table' => 'products',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Item Model
+    |--------------------------------------------------------------------------
+    |
+    | This is the Item model used by LaravelShop to create correct relations.
+    | Update the model if it is in a different namespace.
+    |
+    */
+    'item' => 'App\Core\CartItem',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Item Database Table
+    |--------------------------------------------------------------------------
+    |
+    | This is the table used by LaravelShop to save cart data to the database.
+    |
+    */
+    'item_table' => 'cart_items',
 
     /*
     |--------------------------------------------------------------------------

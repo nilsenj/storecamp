@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Core\Commands\ClearTablesCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -20,8 +19,8 @@ class Kernel extends ConsoleKernel
         'App\Core\Generators\Commands\TransformerCommand',
         'App\Core\Generators\Commands\PresenterCommand',
         'App\Core\Generators\Commands\EntityCommand',
-        'App\Core\Generators\Commands\cControllerCommand',
-        ClearTablesCommand::class
+        'App\Core\Generators\Commands\ControllerCommand',
+        'App\Core\Commands\ClearTablesCommand'
     ];
 
     /**
@@ -44,5 +43,6 @@ class Kernel extends ConsoleKernel
     protected function commands()
     {
         require base_path('routes/console.php');
+        require app_path('Core/Http/routes/console.php');
     }
 }

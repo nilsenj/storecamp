@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nilse
- * Date: 13.02.2017
- * Time: 19:14
- */
 
 namespace App\Core\Components\Menu;
 
@@ -38,7 +32,7 @@ class SidebarMenuBuilder
 
         $sales = app('elements.menu.manager')
             ->createMenu('<i class="fa fa-shopping-cart"></i> Sales')
-            ->addLink('Orders', ['route' => 'admin::attributes::index'])
+            ->addLink('Orders', ['route' => 'admin::sales::orders::index'])
             ->addLink('Returns', ['route' => ['admin::attribute_groups::index']])
             ->addLink('Promocodes', ['route' => ['admin::attribute_groups::index']]);
 

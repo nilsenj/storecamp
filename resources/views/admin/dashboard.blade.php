@@ -4,7 +4,7 @@
 @endsection
 
 @section("main-content")
-
+{{-- TODO  Implement dash widgets --}}
 @include("admin.partial._dash")
 
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\CategorySystemContract;
+use App\Core\Validators\Category\CategoriesFormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Core\Repositories\CategoryRepository;
@@ -77,10 +78,10 @@ class CategoriesController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @return Redirect
+     * @param CategoriesFormRequest $request
+     * @return \Illuminate\Http\RedirectResponse|Redirect
      */
-    public function store(Request $request)
+    public function store(CategoriesFormRequest $request)
     {
         try {
             $data = $request->all();

@@ -1,14 +1,11 @@
 ﻿@extends('admin/app')
-<h1>
-    @section('breadcrumb')
+@section('breadcrumb')
         {!! Breadcrumbs::render('attribute groups', 'Attribute Groups') !!}
     @endsection
     @include('admin.partial._contentheader_title', [$model = $groupAttributes, $message = "Amount of Group Attributes"])
     @section('contentheader_description')
             @include('admin.partial._content-head_btns', [$routeName = "admin::attribute_groups::create", $createBtn = 'Add New Group Attribute'])
     @endsection
-</h1>
-
 @section('main-content')
 
     <div class="row">
@@ -27,7 +24,7 @@
                         <th>Attribute Group name</th>
                         <th>Sort Order</th>
                         <th>Created</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center"><em class="fa fa-cog"></em> Actions</th>
                         </thead>
                         <tbody>
                         @foreach ($groupAttributes as $groupAttribute)
@@ -37,13 +34,13 @@
                                 <td>{{ $groupAttribute->sort_order }}</td>
                                 <td>{{ $groupAttribute->created_at }}</td>
                                 <td class="text-center">
-                                    <a class="edit"
+                                    <a class="btn btn-default edit"
                                        href="{{ route('admin::attribute_groups::edit', $groupAttribute->unique_id) }}"
                                        title="Edit">
-                                        <i class="fa fa-pencil-square-o"></i></a>
-                                    <a class="delete text-warning"
+                                        <em class="fa fa-pencil-square-o"></em></a>
+                                    <a class="btn btn-danger delete text-warning"
                                        href="{{ route('admin::attribute_groups::get::delete', $groupAttribute->unique_id) }}"
-                                       title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
+                                       title="Are you sure you want to delete?"><em class="fa fa-trash-o"></em></a>
                                 </td>
                             </tr>
                             <?php $no++;?>

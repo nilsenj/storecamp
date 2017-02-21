@@ -8,7 +8,7 @@
         </div>
         <!-- /btn-group -->
         {{ Form::text('new_path', null, ['class' => 'form-control folder-new-path']) }}
-        {{ $errors->first('new_path', '<div class="text-danger">:message</div>') }}
+        {!! $errors->first('new_path', '<div class="text-danger">:message</div>') !!}
         {{ Form::text('folder', $folder->unique_id, ['class' => 'form-control folder-id hidden']) }}    </div>
     {{ Form::submit('confirm folder creation', ['class' => "btn btn-default"]) }}
 </div>

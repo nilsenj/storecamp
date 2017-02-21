@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Core\Http\Controllers;
+namespace App\Core\Http\Controllers\Admin;
 
 use App\Core\Contracts\OrdersSystemContract;
 use App\Core\Repositories\OrdersRepository;
 use Illuminate\Http\Request;
-use App\Core\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class OrdersControllersController
  * @package App\Core\Http\Controllers
  */
-class OrdersController extends Controller {
-
+class OrdersController extends BaseController
+{
+    public $viewPathBase = "admin.orders.";
+    public $errorRedirectPath = "admin.orders";
     /**
      * @var OrdersSystemContract
      */
@@ -35,9 +35,11 @@ class OrdersController extends Controller {
 
     /**
      * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
+        return $this->view('index');
     }
 
     /**

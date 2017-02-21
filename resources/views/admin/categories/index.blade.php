@@ -1,5 +1,5 @@
-@extends('admin/app')
-<h1>
+@extends("admin/app")
+
     @section('breadcrumb')
         {!! Breadcrumbs::render('categories', 'Categories') !!}
     @endsection
@@ -7,8 +7,8 @@
     @section('contentheader_description')
             @include('admin.partial._content-head_btns', [$routeName = "admin::categories::create", $createBtn = 'Add New Category'])
     @endsection
-</h1>
-@section('main-content')
+@section("main-content")
+    @include('admin.components.modal-description', [$attrName = "Description"])
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
@@ -28,10 +28,9 @@
                         <th>Status</th>
                         <th>Sort Order</th>
                         <th>Created</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center"><em class="fa fa-cog"></em> Actions</th>
                         </thead>
                         <tbody>
-
                         @foreach ($categories as $category)
                             <?php $no++; ?>
                             @include('admin.categories.category', [$category, $no])
@@ -46,9 +45,4 @@
     <div class="text-center">
         {{ $categories->links() }}
     </div>
-@endsection
-
-@include('admin.components.modal-description', [$attrName = "Description" ])
-@section('scripts-add')
-
 @endsection

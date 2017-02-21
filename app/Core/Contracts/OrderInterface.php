@@ -121,7 +121,7 @@ interface OrderInterface
      * @param string $statusCode
      * @return bool
      */
-    public function is(string $statusCode): bool;
+    public function isStatus(string $statusCode): bool;
     /**
      * Creates the order's transaction.
      *

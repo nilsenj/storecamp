@@ -25,9 +25,11 @@
     @endif
     <td>{{ $category->sort_order }}</td>
     <td>{{ $category->created_at }}</td>
-    <td><a class="edit" href="{{ route('admin::categories::edit', $category->unique_id) }}" title="Edit">
-            <i class="fa fa-pencil-square-o"></i></a>
-        <a class="delete text-warning" href="{{ route('admin::categories::get::delete', $category->unique_id) }}"
-           title="Are you sure you want to delete?"><i class="fa fa-trash-o"></i></a>
+    <td align="center"><a class="btn btn-default edit" href="{{ route('admin::categories::edit', $category->unique_id) }}" title="Edit">
+            <em class="fa fa-pencil-square-o"></em>
+        </a>
+        <a class="btn btn-danger delete text-warning" href="{{ route('admin::categories::get::delete', $category->unique_id) }}"
+           title="Are you sure you want to delete?"><em class="fa fa-trash-o"></em>
+        </a>
     </td>
 </tr>

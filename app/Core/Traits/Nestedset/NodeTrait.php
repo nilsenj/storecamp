@@ -2,10 +2,10 @@
 
 namespace App\Core\Traits\Nestedset;
 
-use App\Core\Classes\Nestedset\Collection;
-use App\Core\Classes\Nestedset\DescendantsRelation;
-use App\Core\Classes\Nestedset\NestedSet;
-use App\Core\Classes\Nestedset\QueryBuilder;
+use App\Core\Support\Nestedset\Collection;
+use App\Core\Support\Nestedset\DescendantsRelation;
+use App\Core\Support\Nestedset\NestedSet;
+use App\Core\Support\Nestedset\QueryBuilder;
 use Exception;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Model;

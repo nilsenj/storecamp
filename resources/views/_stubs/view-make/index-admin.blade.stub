@@ -1,6 +1,5 @@
 <?php $model = ''; ?>{{--specify the model here--}}
 @extends('admin.app')
-<h1>
     @section('breadcrumb')
         {{--{!! Breadcrumbs::render('', '') !!}--}}
     @endsection
@@ -8,7 +7,6 @@
     @section('contentheader_description')
         <b>{!! link_to_route("admin::$VIEW$::create", 'Add New '. $VIEW$) !!}</b>
     @endsection
-</h1>
 @section('main-content')
     <div class="row">
         <div class="col-xs-12">

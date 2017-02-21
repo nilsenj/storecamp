@@ -1,7 +1,5 @@
 @extends('admin/app')
-<h1>
     @section('breadcrumb')
-        {{--{{ Breadcrumbs::render('admin') }}--}}
         {!! Breadcrumbs::render('attributes', 'Attributes') !!}
     @endsection
     @section('contentheader_title')
@@ -10,7 +8,6 @@
     @section('contentheader_description')
         @include('admin.partial._content-head_btns', [$routeName = "admin::attributes::index", $createBtn = 'Back', $showFilters = false])
     @endsection
-</h1>
 @section('main-content')
     <div>
         <div class="nav-tabs-custom">

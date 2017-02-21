@@ -1,5 +1,4 @@
-@extends('admin.app')
-<h1>
+@extends('admin/app')
     @section('breadcrumb')
         {!! Breadcrumbs::render('Logs', $log->date ) !!}
     @endsection
@@ -16,7 +15,6 @@
             </a>
         </b>
     @endsection
-</h1>
 @section('main-content')
     <h1 class="page-header">Log [{{ $log->date }}]</h1>
 

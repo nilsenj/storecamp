@@ -1,5 +1,4 @@
-@extends('admin.app')
-<h1>
+@extends('admin/app')
     @section('breadcrumb')
         {!! Breadcrumbs::render('Logs', 'Logs') !!}
     @endsection
@@ -24,7 +23,6 @@
             </b>
         @endif
     @endsection
-</h1>
 @section('main-content')
     <h1 class="page-header">List of Logs</h1>
     <div class="table-responsive">
