@@ -50,7 +50,7 @@ class StoreCampTest extends TestCase
      */
     public function testLandingPage()
     {
-        $this->visit('/home')
+        $this->visit('/')
             ->see('StoreCamp-laravel')
             ->see('nilsenj');
     }
@@ -64,7 +64,7 @@ class StoreCampTest extends TestCase
     {
         $user = factory(\App\Core\Models\User::class)->create();
         $this->actingAs($user)
-            ->visit('/home')
+            ->visit('/')
             ->see('StoreCamp-laravel')
             ->see('nilsenj')
             ->see($user->name);
@@ -95,7 +95,7 @@ class StoreCampTest extends TestCase
             ->type($user->email, 'email')
             ->type('passw0RD', 'password')
             ->press('Sign In')
-            ->seePageIs('/home')
+            ->seePageIs('/')
             ->see($user->name);
     }
 
@@ -146,7 +146,7 @@ class StoreCampTest extends TestCase
         $user = factory(\App\Core\Models\User::class)->create();
 
         $this->actingAs($user)
-            ->visit('/home')
+            ->visit('/')
             ->see($user->name);
     }
 
@@ -159,12 +159,12 @@ class StoreCampTest extends TestCase
     {
         $user = factory(\App\Core\Models\User::class)->create();
 
-        $form = $this->actingAs($user)->visit('/home')->getForm('logout');
+        $form = $this->actingAs($user)->visit('/')->getForm('logout');
 
         $this->actingAs($user)
-            ->visit('/home')
+            ->visit('/')
             ->makeRequestUsingForm($form)
-            ->seePageIs('/home');
+            ->seePageIs('/');
     }
 
     /**
