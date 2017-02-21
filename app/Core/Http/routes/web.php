@@ -6,18 +6,19 @@
 $this->group(['prefix' => '/', 'as' => 'site::'], function(\Illuminate\Routing\Router $router) {
     $router->get('/', [
         'uses' => 'Site\IndexController@home',
+        'as' => ''
+    ]);
+    $router->get('/home', [
+        'uses' => 'Site\IndexController@home',
         'as' => 'home'
     ]);
-    $router->get('/home', function () {
-        return redirect()->route('site::home');
-    });
 
-    $this->group(['prefix' => 'products', 'as' => 'products::'], function () {
-        $this->get('index/{category?}', [
+    $router->group(['prefix' => 'products', 'as' => 'products::'], function (\Illuminate\Routing\Router $router) {
+        $router->get('index/{category?}', [
             'uses' => 'Site\ProductController@index',
             'as' => 'index'
         ]);
-        $this->get('show/{product?}', [
+        $router->get('show/{product?}', [
             'uses' => 'Site\ProductController@show',
             'as' => 'show'
         ]);
