@@ -5,6 +5,7 @@ namespace App\Core\Http\Controllers\Auth;
 use App\Core\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 
 class LoginController extends Controller
 {
@@ -41,7 +42,7 @@ class LoginController extends Controller
      * @param $user
      * @return mixed
      */
-    private function redirectTo($redirector, $user) {
+    private function redirectTo(Redirector $redirector, $user) {
         if($user->hasRole('Admin')) {
             return $redirector->to($this->redirectTo);
         } else {

@@ -18,7 +18,7 @@ $this->group(['prefix' => '/', 'as' => 'site::'], function(\Illuminate\Routing\R
             'uses' => 'Site\ProductController@index',
             'as' => 'index'
         ]);
-        $router->get('show/{product?}', [
+        $router->get('show/{product}', [
             'uses' => 'Site\ProductController@show',
             'as' => 'show'
         ]);

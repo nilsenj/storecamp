@@ -18,7 +18,10 @@ class Sidebar
         $this->categoryRepository = $categoryRepository;
     }
 
-
+    /**
+     * @param View $view
+     * @return View
+     */
     public function compose(View $view)
     {
         return $view->with('categories', $this->categoryRepository->with('children')->all());

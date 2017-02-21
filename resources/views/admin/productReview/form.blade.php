@@ -1,6 +1,7 @@
 <div class="tab-pane active" id="general">
     @if(isset($productReview))
-        {{ Form::model($productReview, ['route' => ['admin::reviews::update', $productReview->id], 'method' => 'PUT', "role" => "form",'files' => false ]) }}
+        {{ Form::model($productReview, ['route' => ['admin::reviews::update',
+        $productReview->id], 'method' => 'PUT', "role" => "form",'files' => false ]) }}
     @else
         {{ Form::open(['route' => ['admin::reviews::store', $product->id], 'method' => 'POST', "role" => "form", ]) }}
     @endif
@@ -19,7 +20,8 @@
             <div class="box-tools pull-right">
                 <label for="hidden" class="pull-left text-info" style="padding: 7px;">visibility filter</label>
                 <div class="form-group pull-right" style="width: auto">
-                    {{ Form::select('hidden', ["0"=> 'visible', "1"=> 'hidden'], [old('hidden')], ["class" => "form-control pull-right", "id" => "hidden"]) }}
+                    {{ Form::select('hidden', ["0"=> 'visible', "1"=> 'hidden'], [old('hidden')],
+                    ["class" => "form-control pull-right", "id" => "hidden"]) }}
                 </div>
                 {!! $errors->first('hidden', '<div class="text-danger">:message</div>') !!}
             </div>
@@ -33,7 +35,8 @@
     </div>
     <h3 class="text-muted"><b>Product review point</b></h3>
     <div class="col-md-6">
-        @include('admin.partial._rating', [$selected = old('rating') ? old('rating') : isset($productReview) ? $productReview->rating : null])
+        @include('admin.partial._rating', [$selected = old('rating') ?
+        old('rating') : isset($productReview) ? $productReview->rating : null])
         {!! $errors->first('rating', '<div class="text-danger">:message</div>') !!}
 </div>
 <div class="form-group text-right">

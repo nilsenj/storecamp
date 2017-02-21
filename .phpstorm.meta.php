@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2017-02-19.
+    * Generated on 2017-02-21.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -65,6 +65,7 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\SubscribersRepository' instanceof \App\Core\Repositories\SubscribersRepositoryEloquent,
             'App\Core\Repositories\CampaignRepository' instanceof \App\Core\Repositories\CampaignRepositoryEloquent,
             'App\Core\Repositories\MailRepository' instanceof \App\Core\Repositories\MailRepositoryEloquent,
+            'App\Core\Repositories\OrdersRepository' instanceof \App\Core\Repositories\OrdersRepositoryEloquent,
             'App\Core\Repositories\BannerRepository' instanceof \App\Core\Repositories\BannerRepositoryEloquent,
             'App\Core\Repositories\LayoutRepository' instanceof \App\Core\Repositories\LayoutRepositoryEloquent,
             'App\Core\Repositories\PromocodeRepository' instanceof \App\Core\Repositories\PromocodeRepositoryEloquent,
@@ -321,6 +322,7 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\SubscribersRepository' instanceof \App\Core\Repositories\SubscribersRepositoryEloquent,
             'App\Core\Repositories\CampaignRepository' instanceof \App\Core\Repositories\CampaignRepositoryEloquent,
             'App\Core\Repositories\MailRepository' instanceof \App\Core\Repositories\MailRepositoryEloquent,
+            'App\Core\Repositories\OrdersRepository' instanceof \App\Core\Repositories\OrdersRepositoryEloquent,
             'App\Core\Repositories\BannerRepository' instanceof \App\Core\Repositories\BannerRepositoryEloquent,
             'App\Core\Repositories\LayoutRepository' instanceof \App\Core\Repositories\LayoutRepositoryEloquent,
             'App\Core\Repositories\PromocodeRepository' instanceof \App\Core\Repositories\PromocodeRepositoryEloquent,
@@ -577,6 +579,7 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\SubscribersRepository' instanceof \App\Core\Repositories\SubscribersRepositoryEloquent,
             'App\Core\Repositories\CampaignRepository' instanceof \App\Core\Repositories\CampaignRepositoryEloquent,
             'App\Core\Repositories\MailRepository' instanceof \App\Core\Repositories\MailRepositoryEloquent,
+            'App\Core\Repositories\OrdersRepository' instanceof \App\Core\Repositories\OrdersRepositoryEloquent,
             'App\Core\Repositories\BannerRepository' instanceof \App\Core\Repositories\BannerRepositoryEloquent,
             'App\Core\Repositories\LayoutRepository' instanceof \App\Core\Repositories\LayoutRepositoryEloquent,
             'App\Core\Repositories\PromocodeRepository' instanceof \App\Core\Repositories\PromocodeRepositoryEloquent,
@@ -833,6 +836,7 @@ namespace PHPSTORM_META {
             'App\Core\Repositories\SubscribersRepository' instanceof \App\Core\Repositories\SubscribersRepositoryEloquent,
             'App\Core\Repositories\CampaignRepository' instanceof \App\Core\Repositories\CampaignRepositoryEloquent,
             'App\Core\Repositories\MailRepository' instanceof \App\Core\Repositories\MailRepositoryEloquent,
+            'App\Core\Repositories\OrdersRepository' instanceof \App\Core\Repositories\OrdersRepositoryEloquent,
             'App\Core\Repositories\BannerRepository' instanceof \App\Core\Repositories\BannerRepositoryEloquent,
             'App\Core\Repositories\LayoutRepository' instanceof \App\Core\Repositories\LayoutRepositoryEloquent,
             'App\Core\Repositories\PromocodeRepository' instanceof \App\Core\Repositories\PromocodeRepositoryEloquent,
