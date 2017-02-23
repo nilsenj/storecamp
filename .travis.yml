@@ -15,6 +15,9 @@ install:
   - travis_retry composer self-update
   - travis_retry composer clear-cache
   - travis_retry composer update
+  - php artisan cache:clear
+  - php artisan view:clear
+  - php artisan route:clear
   - mysql -e 'create database testing;' -uroot
   - mysql -e "grant all privileges on *.* to ''@'localhost' with grant option;" -uroot
 
