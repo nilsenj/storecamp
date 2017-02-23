@@ -23,10 +23,9 @@ use App\Core\Components\Messenger\Models\Participant;
  * Class ProductReviewRepositoryEloquent
  * @package App\Core\Repositories
  */
-class ProductReviewRepositoryEloquent extends BaseRepository implements ProductReviewRepository, CacheableInterface
+class ProductReviewRepositoryEloquent extends BaseRepository implements ProductReviewRepository
 {
 
-    use CacheableRepository;
     /**
      * @var RolesRepository
      */
@@ -59,7 +58,10 @@ class ProductReviewRepositoryEloquent extends BaseRepository implements ProductR
      * @param RolesRepository $roleRepository
      * @param ProductsRepository $product
      */
-    public function __construct(Application $app, Dispatcher $dispatcher, RolesRepository $roleRepository, ProductsRepository $product)
+    public function __construct(Application $app,
+                                Dispatcher $dispatcher,
+                                RolesRepository $roleRepository,
+                                ProductsRepository $product)
     {
         parent::__construct($app, $dispatcher);
         $this->roleRepository = $roleRepository;

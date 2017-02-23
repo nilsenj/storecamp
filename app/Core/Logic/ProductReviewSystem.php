@@ -39,7 +39,9 @@ class ProductReviewSystem implements ProductReviewSystemContract
      * @param UserRepository $user
      * @param ProductReviewRepository $productReview
      */
-    public function __construct(ProductsRepository $product, UserRepository $user, ProductReviewRepository $productReview)
+    public function __construct(ProductsRepository $product,
+                                UserRepository $user,
+                                ProductReviewRepository $productReview)
     {
         $this->product = $product;
         $this->user = $user;
@@ -140,7 +142,7 @@ class ProductReviewSystem implements ProductReviewSystemContract
         unset($data['product_id']);
         $review = $product->productReview()->create($data);
         $subject = $product->title;
-        $thread = $product->comments()->create(
+        $thread = $review->comments()->create(
             [
                 'subject' => $subject
             ]);

@@ -108,6 +108,9 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      * @var string
      */
     protected $itemName = 'title';
+    /**
+     * @var array
+     */
     protected $itemRouteParams = ['unique_id'];
 
     /**
@@ -431,6 +434,9 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
             ->whereIn('products_categories.category_id', $categoryIds);
     }
 
+    /**
+     * @return float|int
+     */
     public function getRatingCounter()
     {
         $reviews = $this->productReview()->select('rating')->pluck('rating')->toArray();
