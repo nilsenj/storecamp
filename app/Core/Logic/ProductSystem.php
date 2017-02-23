@@ -32,7 +32,8 @@ class ProductSystem implements ProductSystemContract
      * @param ProductsRepository $productRepository
      * @param AttributeGroupDescriptionRepository $attributeGroupDescriptionRepository
      */
-    public function __construct(ProductsRepository $productRepository, AttributeGroupDescriptionRepository $attributeGroupDescriptionRepository)
+    public function __construct(ProductsRepository $productRepository,
+                                AttributeGroupDescriptionRepository $attributeGroupDescriptionRepository)
     {
         $this->productRepository = $productRepository;
         $this->attributeGroupDescriptionRepository = $attributeGroupDescriptionRepository;
@@ -47,7 +48,12 @@ class ProductSystem implements ProductSystemContract
     public function present(array $data, $id = null, array $with = [])
     {
         if ($id) {
-            $products = $this->productRepository->find($id);
+            if (!empty($with)) {
+                $products = $this->productRepository->with($with);
+            } else {
+                $products = $this->productRepository;
+            }
+            $products = $products->findOrFail($id);
         } else {
             if (!empty($with)) {
                 $products = $this->productRepository->with($with)->newest()->paginate();
@@ -62,15 +68,13 @@ class ProductSystem implements ProductSystemContract
      * @param array $data
      * @param $category
      * @param array $with
-     * @return mixed
+     * @return $this|ProductsRepository
      */
     public function categorized(array $data, $category, array $with = [])
     {
         // receive CategoryRepository from IOC container
         $categoryInstance = app(CategoryRepository::class);
-
         $category = $categoryInstance->findOrFail($category);
-
         if (!empty($with)) {
             $products = $this->productRepository->with($with)->categorized($category)->paginate();
         } else {

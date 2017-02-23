@@ -6,7 +6,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html>
 
 @include('site.partials.htmlheader')
-
 <!--
 BODY TAG OPTIONS:
 =================
@@ -32,7 +31,7 @@ desired effect
 <div class="wrapper">
     @include('site.partials.mainheader')
     <div class="container-fluid">
-    <!-- Content Wrapper. Contains page content -->
+        <!-- Content Wrapper. Contains page content -->
         @include('site.partials.contentheader')
         <div class="clearfix"></div>
         <!-- Main content -->
@@ -40,11 +39,11 @@ desired effect
             <div id="alerts" style="display: block; height: auto; width: 100%; background: whitesmoke">
                 @include('components.flash.message')
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2 col-sm-3">
                 @include('site.partials.sidebar')
             </div>
-        <!-- Your Page Content Here -->
-            <div class="col-md-9">
+            <!-- Your Page Content Here -->
+            <div class="col-md-10 col-sm-9">
                 @yield('breadcrumbs')
                 @yield('main-content')
             </div>

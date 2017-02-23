@@ -44,21 +44,6 @@ class StoreCampTest extends TestCase
     }
 
     /**
-     * Test Landing Page.
-     *
-     * @return void
-     */
-    public function testLandingPageWithUserLogged()
-    {
-        $user = factory(\App\Core\Models\User::class)->create();
-        $this->actingAs($user)
-            ->visit('/')
-            ->see('StoreCamp-laravel')
-            ->see('nilsenj')
-            ->see($user->name);
-    }
-
-    /**
      * Test Login Page.
      *
      * @return void

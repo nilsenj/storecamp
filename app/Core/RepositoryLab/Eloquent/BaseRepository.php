@@ -475,7 +475,6 @@ abstract class BaseRepository implements RepositoryInterface, RepositoryCriteria
         $this->applyCriteria();
         $this->applyScope();
         $result = $this->find($id, $columns);
-
         if (is_array($id)) {
             if (count($result) == count(array_unique($id))) {
                 $this->resetModel();

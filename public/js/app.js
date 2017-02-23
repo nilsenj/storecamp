@@ -207,6 +207,32 @@
     setup();
   })(jQuery, $.StoreCamp);
 
+  $(document).ready(function() {
+    return $('.product-popup-gallery').magnificPopup({
+      delegate: 'a',
+      type: 'image',
+      tLoading: 'Loading image #%curr%...',
+      mainClass: 'mfp-img-mobile',
+      gallery: {
+        enabled: true,
+        navigateByImgClick: true,
+        preload: [0, 1]
+      },
+      image: {
+        tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+        titleSrc: function(item) {
+          return item.el.attr('title') + '<small>StoreCamp - online platform</small>';
+        }
+      },
+      callbacks: {
+        beforeOpen: function() {
+          this.st.mainClass = this.st.el.attr('data-effect');
+        }
+      },
+      midClick: true
+    });
+  });
+
   (function($) {
     var items;
     items = [$('.sidebar-menu'), $('.media_tags'), $('.site_sidebar')];

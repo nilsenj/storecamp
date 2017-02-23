@@ -2327,6 +2327,9 @@ a:focus {
   font-size: 10px;
   font-weight: 400;
 }
+.breadcrumb {
+  display: inline-block;
+}
 /*
  * Component: Callout
  * ------------------

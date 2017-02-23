@@ -10,14 +10,15 @@ use Illuminate\Http\Request;
  */
 class IndexController extends BaseController
 {
-    public $viewPathBase = "site.home.";
-    public $errorRedirectPath = "site::";
-    public function __construct()
-    {
-    }
+    public $viewPathBase = 'site.home.';
+    public $errorRedirectPath = 'site::';
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
     public function home(Request $request)
     {
-        return $this->view('home');
+        return $this->view('index');
     }
 }

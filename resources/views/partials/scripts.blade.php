@@ -47,6 +47,7 @@
 <script src="{{ asset('plugins/toastr/toastr.js') }}"></script>
 <script src="{{ asset('plugins/jquery-bar-rating/dist/jquery.barrating.min.js') }}"></script>
 <script src="{{ asset('plugins/summernote/dist/summernote.min.js') }}"></script>
+<script src="{{asset('plugins/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
 <script src="{{ asset('/js/app.js') }}" type="text/javascript"></script>
 
 <!-- Page script -->

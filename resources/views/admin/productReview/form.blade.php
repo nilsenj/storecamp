@@ -1,10 +1,10 @@
 <div class="tab-pane active" id="general">
-    @if(isset($productReview))
-        {{ Form::model($productReview, ['route' => ['admin::reviews::update',
-        $productReview->id], 'method' => 'PUT', "role" => "form",'files' => false ]) }}
-    @else
-        {{ Form::open(['route' => ['admin::reviews::store', $product->id], 'method' => 'POST', "role" => "form", ]) }}
-    @endif
+@if(isset($productReview))
+    {{ Form::model($productReview, ['route' => ['admin::reviews::update',
+    $productReview->id], 'method' => 'PUT', "role" => "form",'files' => false ]) }}
+@else
+    {{ Form::open(['route' => ['admin::reviews::store', $product->id], 'method' => 'POST', "role" => "form", ]) }}
+@endif
 <!-- Message Form Input -->
     <div class="form-group">
         <div class="box-header with-border">
@@ -38,9 +38,9 @@
         @include('admin.partial._rating', [$selected = old('rating') ?
         old('rating') : isset($productReview) ? $productReview->rating : null])
         {!! $errors->first('rating', '<div class="text-danger">:message</div>') !!}
-</div>
-<div class="form-group text-right">
-<button class="btn btn-primary">Confirm</button>
-</div>
-{{ Form::close() }}
+    </div>
+    <div class="form-group text-right">
+        <button class="btn btn-primary">Confirm</button>
+    </div>
+    {{ Form::close() }}
 </div>

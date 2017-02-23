@@ -430,4 +430,14 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
             ->join('products_categories', 'products_categories.product_id', '=', 'products.id')
             ->whereIn('products_categories.category_id', $categoryIds);
     }
+
+    public function getRatingCounter()
+    {
+        $reviews = $this->productReview()->select('rating')->pluck('rating')->toArray();
+        if (!empty($reviews)) {
+            return array_sum($reviews)/(count($reviews) + 1);
+        } else {
+           return $reviews;
+        }
+    }
 }

@@ -100,9 +100,7 @@ class ProductReview extends Model implements Transformable
      */
     public function setDateAttribute($date)
     {
-
         $this->attributes['date'] = Carbon::today();
-
     }
 
     /**
@@ -126,7 +124,6 @@ class ProductReview extends Model implements Transformable
      */
     public function getThread()
     {
-
         return $this->comments()->first();
     }
 
@@ -135,7 +132,6 @@ class ProductReview extends Model implements Transformable
      */
     public function scopeUsers($query)
     {
-
         $query->where("user_id", \Auth::user()->id);
     }
 
@@ -144,53 +140,36 @@ class ProductReview extends Model implements Transformable
      */
     public function scopeToday($query)
     {
-
         $query->where('date', '=', Carbon::today());
-
     }
 
     /**
      * @param $query
-     * @param $id
-     */
-    public function scopeUsersByID($query, $id)
-    {
-        try {
-            $query->where('user_id', '=', $id);
-
-        } catch (ModelNotFoundException $e) {
-
-            return Toastr::error("Error appeared", "Model not Found");
-        }
-    }
-
-    /**
-     * @param $query
+     * @return mixed
      */
     public function scopeOnlyVisible($query)
     {
 
-        $query->where("hidden", false);
+        return $query->where("hidden", false);
     }
 
     /**
      * @param $query
+     * @return mixed
      */
     public function scopeOnlyHidden($query)
     {
-        $query->where("hidden", true);
+        return $query->where("hidden", true);
     }
 
     /**
      * @param $query
-     * @param $reason
+     * @param $rating
+     * @return mixed
      */
-    public function scopeByRating($query, $reason)
+    public function scopeByRating($query, $rating)
     {
-
-        $query->where("rating", $reason);
-
+        return $query->where("rating", $rating);
     }
-
 
 }

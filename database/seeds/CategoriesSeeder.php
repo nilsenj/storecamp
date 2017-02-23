@@ -47,7 +47,6 @@ class CategoriesSeeder extends Seeder
                 'Doogee',
                 'Alcatel',
                 'Apple',
-                'Asus',
                 'Doogee',
                 'Fly',
                 'Gigabyte',

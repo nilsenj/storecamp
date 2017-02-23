@@ -32,7 +32,7 @@ class ProductController extends BaseController
     public function index(Request $request, $category = null)
     {
         $data = $request->all();
-        if($category) {
+        if ($category) {
             $products = $this->productSystem->categorized($data, $category, []);
             $categoryInstance = app("App\\Core\\Repositories\\CategoryRepository");
             $category = $categoryInstance->find($category);
@@ -44,10 +44,14 @@ class ProductController extends BaseController
 
     /**
      * @param Request $request
+     * @param $productId
      * @return \Illuminate\View\View
      */
-    public function show(Request $request)
+    public function show(Request $request, $productId)
     {
-
+        $data = $request->all();
+        $product = $this->productSystem->present($data, $productId, ['categories', 'productReview']);
+        $category = $product->categories->first();
+        return $this->view('show', compact('product', 'category'));
     }
 }

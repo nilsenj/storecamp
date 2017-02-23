@@ -28,7 +28,7 @@ class CreateCategoriesTable extends Migration
             $table->tinyInteger('sort_order')->default(0);
             \App\Core\Support\Nestedset\NestedSet::columns($table);
             $table->timestamps();
-            $table->index(['unique_id']);
+            $table->unique(['parent_id', 'unique_id', 'id', 'name']);
             $table->index(['parent_id','unique_id']);
             $table->index(['unique_id', 'slug']);
         });
