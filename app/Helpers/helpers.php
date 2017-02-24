@@ -321,12 +321,12 @@ if (!function_exists('cartNumberFormat')) {
      * Get the Formated number
      *
      * @param $value
-     * @param $decimals
-     * @param $decimalPoint
-     * @param $thousandSeperator
+     * @param null $decimals
+     * @param null $decimalPoint
+     * @param null $thousandSeperator
      * @return string
      */
-    function cartNumberFormat($value, $decimals, $decimalPoint, $thousandSeperator)
+    function cartNumberFormat($value, $decimals = null, $decimalPoint = null, $thousandSeperator = null)
     {
         if (is_null($decimals)) {
             $decimals = is_null(config('cart.format.decimals'))

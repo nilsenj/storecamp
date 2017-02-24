@@ -6,7 +6,7 @@ use App\Core\Models\User;
 use Illuminate\Contracts\Support\Arrayable;
 use App\Core\Contracts\Buyable;
 
-class CartItem implements Arrayable
+class CartItem implements Arrayable, CartItemContract
 {
     /**
      * The rowID of the cart item.

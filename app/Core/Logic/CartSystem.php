@@ -64,7 +64,7 @@ class CartSystem implements CartSystemContract
         $this->cartRepository = $cartRepository;
         $this->session = $session;
         $this->events = $events;
-                $this->productsRepository = $productsRepository;
+        $this->productsRepository = $productsRepository;
 
         $this->instance(self::DEFAULT_INSTANCE);
     }
@@ -90,8 +90,8 @@ class CartSystem implements CartSystemContract
     {
         $product = $this->productsRepository->find($productId);
         $productMedia = $product->getMedia('gallery');
-        $quantity = $data['quantity'] ?? 1;
-        $options = $data['options'] ?? [];
+        $quantity = isset($data['quantity']) ? $data['quantity'] : 1;
+        $options = isset($data['options']) ? $data['options'] : [];
         $options['status'] = $product->getStockStatus();
         $options['thumb'] = $productMedia->count() ? $productMedia->first()->getUrl() : asset("/img/Image-not-found.gif");
         return $this->add($product, $quantity, $options);
@@ -281,9 +281,9 @@ class CartSystem implements CartSystemContract
      * @param int    $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
-     * @return float
+     * @return float|string
      */
-    public function subtotal($decimals = null, $decimalPoint = null, $thousandSeperator = null): float
+    public function subtotal($decimals = null, $decimalPoint = null, $thousandSeperator = null): string
     {
         $content = $this->getContent();
         $subTotal = $content->reduce(function ($subTotal, CartItem $cartItem) {

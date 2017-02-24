@@ -24,12 +24,8 @@ class SupportProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            "App\\Core\\Support\\Cart\\CartDbContract",
-            "App\\Core\\Support\\Cart\\CartDb"
-        );
-        $this->app->bind(
-            "App\\Core\\Support\\Cart\\CartSessionContract",
-            "App\\Core\\Support\\Cart\\CartSession"
+            "App\\Core\\Support\\Cart\\CartItemContract",
+            "App\\Core\\Support\\Cart\\CartItem"
         );
     }
 }

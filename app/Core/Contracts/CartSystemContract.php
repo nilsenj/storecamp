@@ -109,9 +109,9 @@ interface CartSystemContract
      * @param int $decimals
      * @param string $decimalPoint
      * @param string $thousandSeperator
-     * @return float
+     * @return float|string
      */
-    public function subtotal($decimals = null, $decimalPoint = null, $thousandSeperator = null): float;
+    public function subtotal($decimals = null, $decimalPoint = null, $thousandSeperator = null): string;
 
     /**
      * Search the cart content for a cart item matching the given search closure.
