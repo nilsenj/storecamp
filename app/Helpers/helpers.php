@@ -326,7 +326,7 @@ if (!function_exists('cartNumberFormat')) {
      * @param $thousandSeperator
      * @return string
      */
-    function cartNumberFormat($value, $decimals, $decimalPoint, $thousandSeperator): string
+    function cartNumberFormat($value, $decimals, $decimalPoint, $thousandSeperator)
     {
         if (is_null($decimals)) {
             $decimals = is_null(config('cart.format.decimals'))

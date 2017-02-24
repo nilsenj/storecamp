@@ -35,12 +35,12 @@ $this->group(['prefix' => '/', 'as' => 'site::'], function(\Illuminate\Routing\R
             'as' => 'add'
         ]);
 
-        $router->post('remove/{cartId}/{itemId}', [
+        $router->put('remove/{itemId}', [
             'uses' => 'Site\CartController@remove',
             'as' => 'remove'
         ]);
 
-        $router->post('delete/{cartId}', [
+        $router->post('delete', [
             'uses' => 'Site\CartController@delete',
             'as' => 'delete'
         ]);

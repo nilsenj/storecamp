@@ -45,7 +45,7 @@ return [
     | Update the model if it is in a different namespace.
     |
     */
-    'cart' => 'App\Core\Cart',
+    'cart' => 'App\Core\Models\Cart',
 
     /*
     |--------------------------------------------------------------------------
@@ -66,7 +66,7 @@ return [
     | Update the model if it is in a different namespace.
     |
     */
-    'order' => 'App\Core\Order',
+    'order' => 'App\Core\Models\Order',
 
     /*
     |--------------------------------------------------------------------------
@@ -97,7 +97,7 @@ return [
     | Update the model if it is in a different namespace.
     |
     */
-    'product' => 'App\Core\Product',
+    'product' => 'App\Core\Models\Product',
 
     /*
     |--------------------------------------------------------------------------
@@ -109,28 +109,6 @@ return [
     */
     'product_table' => 'products',
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Item Model
-    |--------------------------------------------------------------------------
-    |
-    | This is the Item model used by LaravelShop to create correct relations.
-    | Update the model if it is in a different namespace.
-    |
-    */
-    'item' => 'App\Core\CartItem',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Item Database Table
-    |--------------------------------------------------------------------------
-    |
-    | This is the table used by LaravelShop to save cart data to the database.
-    |
-    */
-    'item_table' => 'cart_items',
-
     /*
     |--------------------------------------------------------------------------
     | Transaction Model
@@ -140,7 +118,7 @@ return [
     | Update the model if it is in a different namespace.
     |
     */
-    'transaction' => 'App\Core\Transaction',
+    'transaction' => 'App\Core\Models\Transaction',
 
     /*
     |--------------------------------------------------------------------------
@@ -161,7 +139,7 @@ return [
     | Update the model if it is in a different namespace.
     |
     */
-    'coupon' => 'App\Core\Coupon',
+    'coupon' => 'App\Core\Models\Coupon',
 
     /*
     |--------------------------------------------------------------------------

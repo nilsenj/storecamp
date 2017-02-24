@@ -210,7 +210,7 @@ class CartSession implements CartSessionContract
      * @param string $thousandSeperator
      * @return string
      */
-    public function total($decimals = null, $decimalPoint = null, $thousandSeperator = null): string
+    public function total($decimals = null, $decimalPoint = null, $thousandSeperator = null)
     {
         $content = $this->getContent();
         $total = $content->reduce(function ($total, CartItem $cartItem) {
@@ -311,6 +311,7 @@ class CartSession implements CartSessionContract
         }
         $this->cartRepository->create([
             'unique_id' => $identifier,
+            'user_id' => !\Auth::guest() ? \Auth::user()->id : null,
             'instance' => $this->currentInstance(),
             'content' => json_encode($content)
         ]);

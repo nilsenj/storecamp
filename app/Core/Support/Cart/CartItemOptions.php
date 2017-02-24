@@ -14,6 +14,7 @@ class CartItemOptions extends Collection
      */
     public function __get($key)
     {
-        return $this->get($key);
+        $option = $this->get($key);
+        return $option;
     }
 }

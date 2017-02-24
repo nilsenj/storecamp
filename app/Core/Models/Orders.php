@@ -84,15 +84,6 @@ class Orders extends Model implements Transformable, OrderInterface
     /**
      * One-to-Many relations with Item.
      *
-     * @return HasMany
-     */
-    public function items(): HasMany
-    {
-        return $this->hasMany(config('shop.item'), 'order_id');
-    }
-    /**
-     * One-to-Many relations with Item.
-     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function transactions(): HasMany
@@ -265,6 +256,7 @@ class Orders extends Model implements Transformable, OrderInterface
             'token'             => $token,
         ]);
     }
+
     /**
      * Retrieves item from order;
      *

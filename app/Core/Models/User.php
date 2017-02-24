@@ -138,16 +138,6 @@ class User extends Authenticatable implements Transformable, AuthenticatableCont
     }
 
     /**
-     * One-to-Many relations with Item.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function items()
-    {
-        return $this->hasMany(config('shop.item'), 'user_id');
-    }
-
-    /**
      * One-to-Many relations with Order.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

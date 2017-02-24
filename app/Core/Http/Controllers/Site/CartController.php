@@ -38,7 +38,8 @@ class CartController extends BaseController
     {
         $data = $request->all();
         $cart = $this->cartSystem->show($data);
-        return $this->view('show', compact('cart'));
+        $cartSystem = $this->cartSystem;
+        return $this->view('show', compact('cart', 'cartSystem'));
     }
 
     /**
@@ -59,35 +60,31 @@ class CartController extends BaseController
 
     /**
      * @param Request $request
-     * @param $cartId
      * @param $itemId
      * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
-    public function remove(Request $request, $cartId, $itemId)
+    public function remove(Request $request, $itemId)
     {
-        $data = $request->all();
-        $cart = $this->cartSystem->removeItem($data, $cartId, $itemId);
+        $this->cartSystem->remove($itemId);
         if($request->ajax()) {
-            return response()->json(['cart'=> json_encode($cart), 'message' => 'cart item deleted'], 200);
+            return response()->json(['message' => 'cart item deleted'], 200);
         } else {
-            return $this->view('index', compact('cart'));
+            return redirect()->back();
         }
 
     }
 
     /**
      * @param Request $request
-     * @param $cartId
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function delete(Request $request, $cartId)
+    public function delete(Request $request)
     {
-        $data = $request->all();
-        $cart = $this->cartSystem->deleteItem($data, $cartId);
+        $this->cartSystem->destroy();
         if($request->ajax()) {
             return response()->json(['message'=> 'cart deleted'], 200);
         } else {
-            return $this->view('index');
+            return redirect()->back();
         }
     }
 

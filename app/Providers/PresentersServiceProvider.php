@@ -39,7 +39,7 @@ class PresentersServiceProvider extends ServiceProvider
             'StaticPages'
         ];
         foreach($models as $model) {
-            $this->app->bind("FBA\\Presenters\\{$model}Presenter");
+            $this->app->bind("App\\Core\\Presenters\\{$model}Presenter");
         }
     }
 }

@@ -74,7 +74,7 @@ interface CartSessionContract
      * @param string $thousandSeperator
      * @return string
      */
-    public function total($decimals = null, $decimalPoint = null, $thousandSeperator = null): string;
+    public function total($decimals = null, $decimalPoint = null, $thousandSeperator = null);
 
     /**
      * Get the total tax of the items in the cart.

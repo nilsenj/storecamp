@@ -22,13 +22,6 @@ interface OrderInterface
      *
      * @return HasMany
      */
-    public function items(): HasMany;
-
-    /**
-     * One-to-Many relations with Item.
-     *
-     * @return HasMany
-     */
     public function transactions(): HasMany;
     /**
      * Returns flag indicating if order is lock and cant be modified by the user.
