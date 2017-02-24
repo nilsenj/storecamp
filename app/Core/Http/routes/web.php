@@ -5,8 +5,7 @@
  */
 $this->group(['prefix' => '/', 'as' => 'site::'], function(\Illuminate\Routing\Router $router) {
     $router->get('/', [
-        'uses' => 'Site\IndexController@home',
-        'as' => ''
+        'uses' => 'Site\IndexController@home'
     ]);
     $router->get('/home', [
         'uses' => 'Site\IndexController@home',
@@ -24,6 +23,29 @@ $this->group(['prefix' => '/', 'as' => 'site::'], function(\Illuminate\Routing\R
         ]);
     });
 
+    $router->group(['prefix' => 'cart', 'as' => 'cart::'], function (\Illuminate\Routing\Router $router) {
+
+        $router->get('show', [
+            'uses' => 'Site\CartController@show',
+            'as' => 'show'
+        ]);
+
+        $router->put('add/{cartId}', [
+            'uses' => 'Site\CartController@add',
+            'as' => 'add'
+        ]);
+
+        $router->post('remove/{cartId}/{itemId}', [
+            'uses' => 'Site\CartController@remove',
+            'as' => 'remove'
+        ]);
+
+        $router->post('delete/{cartId}', [
+            'uses' => 'Site\CartController@delete',
+            'as' => 'delete'
+        ]);
+    });
+
     /**
      * site payment callbacks
      */
@@ -35,19 +57,18 @@ $this->group(['prefix' => '/', 'as' => 'site::'], function(\Illuminate\Routing\R
 /**
  * @param $this \Illuminate\Routing\Route
  */
+Auth::routes();
 // Password reset routes...
 $this->get('password/reset', 'Auth\ResetPasswordController@showResetForm');
 $this->get('password/reset/{token}', 'Auth\PasswordController@getReset');
 $this->post('password/reset', 'Auth\PasswordController@postReset');
+$this->get('/logout', ['uses' => 'Auth\LoginController@logout']);
 
 
 $this->get('/htmlElements', [
     'uses' => 'Admin\AdminController@htmlElements',
     'as' => 'htmlElements'
 ]);
-
-Auth::routes();
-$this->get('/logout', ['uses' => 'Auth\LoginController@logout']);
 
 $this->group(
     ['prefix' => 'admin', 'as' => 'admin::', 'middleware' => 'auth'], function () {

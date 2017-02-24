@@ -125,3 +125,8 @@ Breadcrumbs::register('Products', function($breadcrumbs, $category=null)
         $breadcrumbs->push($category->name, route('site::products::index', [$category->unique_id]));
     }
 });
+
+Breadcrumbs::register('Carts', function ($breadcrumbs) {
+    $breadcrumbs->parent('Home');
+    $breadcrumbs->push('Cart', route('site::cart::show'));
+});

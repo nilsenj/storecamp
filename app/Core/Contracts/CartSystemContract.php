@@ -12,5 +12,9 @@ use Illuminate\Support\Collection;
  */
 interface CartSystemContract
 {
-
+    public function show(array $data);
+    public function addItem(array $data, $productId);
+    public function removeItem(array $data, $cartId, $productId);
+    public function deleteItem(array $data, $cartId);
+    public function countItems();
 }

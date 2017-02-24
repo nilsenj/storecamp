@@ -425,7 +425,8 @@ class Product extends Model implements Transformable, Buyable, ProductInterface
      * @param Category|null $category
      * @return mixed
      */
-    public function scopeCategorized($query, $category=null) {
+    public function scopeCategorized($query, $category=null)
+    {
         if ( is_null($category) ) return $query->with('categories');
         $categoryIds = $category->getDescendants(['id'])->pluck('id')->toArray();
         array_unshift($categoryIds, $category->id);

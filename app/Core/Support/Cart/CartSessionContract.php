@@ -43,7 +43,7 @@ interface CartSessionContract
      * @param string $rowId
      * @return CartItem
      */
-    public function get($rowId);
+    public function find($rowId);
 
     /**
      * Destroy the current cart instance.

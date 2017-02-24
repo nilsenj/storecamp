@@ -7,7 +7,7 @@ use App\Core\Exceptions\CartAlreadyStoredException;
 use App\Core\Exceptions\InvalidRowIDException;
 use App\Core\Exceptions\UnknownModelException;
 use Illuminate\Support\Collection;
-use App\Core\Components\Auditing\Contracts\Dispatcher;
+use Illuminate\Events\Dispatcher;
 use App\Core\Contracts\Buyable;
 use App\Core\Support\Cart\CartSessionContract;
 use App\Core\Repositories\CartRepository;
@@ -116,7 +116,7 @@ class CartSession implements CartSessionContract
      */
     public function update($rowId, $qty)
     {
-        $cartItem = $this->get($rowId);
+        $cartItem = $this->find($rowId);
         if ($qty instanceof Buyable) {
             $cartItem->updateFromBuyable($qty);
         } elseif (is_array($qty)) {
@@ -128,7 +128,7 @@ class CartSession implements CartSessionContract
         if ($rowId !== $cartItem->rowId) {
             $content->pull($rowId);
             if ($content->has($cartItem->rowId)) {
-                $existingCartItem = $this->get($cartItem->rowId);
+                $existingCartItem = $this->find($cartItem->rowId);
                 $cartItem->setQuantity($existingCartItem->qty + $cartItem->qty);
             }
         }
@@ -150,7 +150,7 @@ class CartSession implements CartSessionContract
      */
     public function remove($rowId)
     {
-        $cartItem = $this->get($rowId);
+        $cartItem = $this->find($rowId);
         $content = $this->getContent();
         $content->pull($cartItem->rowId);
         $this->events->fire('cart.removed', $cartItem);
@@ -162,7 +162,7 @@ class CartSession implements CartSessionContract
      * @param string $rowId
      * @return CartItem
      */
-    public function get($rowId)
+    public function find($rowId)
     {
         $content = $this->getContent();
         if ( ! $content->has($rowId))
@@ -275,7 +275,7 @@ class CartSession implements CartSessionContract
         if(is_string($model) && ! class_exists($model)) {
             throw new UnknownModelException("The supplied model {$model} does not exist.");
         }
-        $cartItem = $this->get($rowId);
+        $cartItem = $this->find($rowId);
         $cartItem->associate($model);
         $content = $this->getContent();
         $content->put($cartItem->rowId, $cartItem);
@@ -290,7 +290,7 @@ class CartSession implements CartSessionContract
      */
     public function setTax($rowId, $taxRate)
     {
-        $cartItem = $this->get($rowId);
+        $cartItem = $this->find($rowId);
         $cartItem->setTaxRate($taxRate);
         $content = $this->getContent();
         $content->put($cartItem->rowId, $cartItem);
