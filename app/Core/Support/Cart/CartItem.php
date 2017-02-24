@@ -110,15 +110,15 @@ class CartItem implements Arrayable, CartItemContract
         }
 
         if($attribute === 'priceTax') {
-            return $this->price + $this->tax;
+            return round($this->price + $this->tax, 2);
         }
 
         if($attribute === 'subtotal') {
-            return $this->qty * $this->price;
+            return round($this->qty * $this->price, 2);
         }
 
         if($attribute === 'total') {
-            return $this->qty * ($this->priceTax);
+            return round($this->qty * ($this->priceTax), 2);
         }
 
         if($attribute === 'tax') {
@@ -297,7 +297,7 @@ class CartItem implements Arrayable, CartItemContract
      * @param array $options
      * @return CartItem
      */
-    public static function fromBuyable(Buyable $item, array $options = []): CartItem
+    public static function fromBuyable($item, array $options = []): CartItem
     {
         return new self($item->getBuyableIdentifier($options),
             $item->getBuyableDescription($options), $item->getBuyablePrice($options),

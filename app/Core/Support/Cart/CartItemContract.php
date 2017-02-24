@@ -114,7 +114,7 @@ interface CartItemContract
      * @param array $options
      * @return CartItem
      */
-    public static function fromBuyable(Buyable $item, array $options = []): CartItem;
+    public static function fromBuyable($item, array $options = []): CartItem;
 
     /**
      * Create a new instance from the given array.

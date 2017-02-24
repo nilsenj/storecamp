@@ -94,7 +94,7 @@ class CartSystem implements CartSystemContract
         $options = isset($data['options']) ? $data['options'] : [];
         $options['status'] = $product->getStockStatus();
         $options['thumb'] = $productMedia->count() ? $productMedia->first()->getUrl() : asset("/img/Image-not-found.gif");
-        return $this->add($product, $quantity, $options);
+        return $this->add($product, null, $quantity, null, $options);
     }
 
     /**
@@ -430,8 +430,8 @@ class CartSystem implements CartSystemContract
     {
         //detect if $id is model and implements Buyable Interface
         if ($id instanceof Buyable) {
-            $cartItem = CartItem::fromBuyable($id, $qty ?: []);
-            $cartItem->setQuantity($name ?: 1);
+            $cartItem = CartItem::fromBuyable($id, $options ? $options : []);
+            $cartItem->setQuantity($qty ?: 1);
             $cartItem->associate($id);
         } elseif (is_array($id)) {
             $cartItem = CartItem::fromArray($id);
