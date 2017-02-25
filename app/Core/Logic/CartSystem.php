@@ -10,6 +10,7 @@ use App\Core\Repositories\CartRepository;
 use App\Core\Repositories\ProductsRepository;
 use App\Core\Support\Cart\CartItem;
 use app\Core\Contracts\CartSystemContract;
+use App\Core\Support\Cart\CartItemContract;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Session\SessionManager;
 use Illuminate\Support\Collection;
@@ -49,7 +50,6 @@ class CartSystem implements CartSystemContract
      * @var string
      */
     private $instance;
-
 
     /**
      * CartSystem constructor.
